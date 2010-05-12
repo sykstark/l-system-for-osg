@@ -1,13 +1,16 @@
 #pragma once
 
+#include <sstream>
+#include <map>
+
 namespace AP_LSystem {
 class Configuration
 {
 public:
 	
-	bool loadCfgFile(string);
-	void setProperty(const string &, const double &);
-	bool getProperty(const string &, double &);
+    bool loadCfgFile(std::string);
+    void setProperty(const std::string &, const double &);
+    bool getProperty(const std::string &, double &);
 	static Configuration * get();
 	
 private:
@@ -16,7 +19,7 @@ private:
 	~Configuration();
 
 	
-	static inline bool uncomment(stringstream&);
-	map<string, double> properties; 
+        static inline bool uncomment(std::stringstream&);
+        std::map<std::string, double> properties;
 };
 }
