@@ -14,7 +14,7 @@ public:
 		// strcpy( this->str, str);
 	}
 
-	StaticString( string str )
+        StaticString( std::string str )
 	{
 		this->length = str.length();
 		this->str = new char[length];

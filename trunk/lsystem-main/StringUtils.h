@@ -1,4 +1,6 @@
 #pragma once
+#include <cstdio>
+#include <cstdlib>
 #include "AbstractGrammar.h"
 #include "Configuration.h"
 
@@ -7,65 +9,65 @@ namespace AP_LSystem {
 class StringUtils
 {
 public:	
-	static void uncommentLine(string &);
-	static std::string processLine(std::fstream * , std::stringstream & );
+    static void uncommentLine(std::string &);
+    static std::string processLine(std::fstream * , std::stringstream & );
 };
 
 class LongString
 {
 private:
-	char * pStr;
-	unsigned int _length;
-	unsigned int _allocated;
-	unsigned int _increment;
-	
-	void resize()
-	{
-		if(pStr)
-		{
-			char * pOld = pStr;
+    char * pStr;
+    unsigned int _length;
+    unsigned int _allocated;
+    unsigned int _increment;
 
-			_allocated += _increment;
-			pStr = new char[_allocated];
-			for( unsigned int i =0; i < _length; i++)
-			{
-				pStr[i] = pOld[i];
-			}
+    void resize()
+    {
+        if(pStr)
+        {
+            char * pOld = pStr;
 
-			delete[] pOld;
-		}
-		
-	}
+            _allocated += _increment;
+            pStr = new char[_allocated];
+            for( unsigned int i =0; i < _length; i++)
+            {
+                    pStr[i] = pOld[i];
+            }
+
+            delete[] pOld;
+        }
+
+    }
 
 public:
-	LongString(): _length(0)
-	{
-		_allocated =_increment = 100000;
-		pStr = new char[_allocated];
-	};
-	void appendStr( const char * str, unsigned int length )
-	{
-		while(_allocated < length + _length)
-		{
-			resize( );
-		}
+    LongString(): _length(0)
+    {
+        _allocated =_increment = 100000;
+        pStr = new char[_allocated];
+    };
+    void appendStr( const char * str, unsigned int length )
+    {
+        while(_allocated < length + _length)
+        {
+                resize( );
+        }
 
-		for(unsigned int i=0 ; i < length; i++)
-		{
-			pStr[_length + i ] = str[i];
-		}
+        for(unsigned int i=0 ; i < length; i++)
+        {
+                pStr[_length + i ] = str[i];
+        }
 
-		_length += length;
-	}
+        _length += length;
+    }
 
-	void appendChar( const char ch )
-	{
-		if(_allocated < _length + 1)
-		{
-			resize( );
-		}
-		pStr[_length++] = ch;
-	}
+    void appendChar( const char ch )
+    {
+        if(_allocated < _length + 1)
+        {
+                resize( );
+        }
+        pStr[_length++] = ch;
+    }
 
 	void appendDouble( const double i )
 	{
