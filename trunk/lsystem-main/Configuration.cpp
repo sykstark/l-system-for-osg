@@ -1,4 +1,7 @@
+#ifndef QT_APP
 #include "precompiled.h"
+#endif
+
 #include "Configuration.h"
 
 using namespace AP_LSystem;
@@ -31,7 +34,7 @@ Configuration * Configuration::get()
 	return config;
 }
 
-void Configuration::setProperty(const string &name, const double &value)
+void Configuration::setProperty(const std::string &name, const double &value)
 {
 	properties[name] = value;
 }
@@ -51,10 +54,10 @@ bool Configuration::getProperty(const std::string & name, double & value)
 }
 
 
-bool Configuration::uncomment(stringstream& ss)
+bool Configuration::uncomment(std::stringstream& ss)
 {
-	string temp;
-	if((ss >> temp)&&((temp.size()<2)||(temp[0]!='/')&&(temp[1]!='/')))
+    std::string temp;
+        if( ss >> temp && ( temp.size()<2 || ( temp[0]!='/' && temp[1]!='/' )))
 	{
 		return false;
 	}

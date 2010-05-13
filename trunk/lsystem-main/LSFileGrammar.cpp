@@ -1,6 +1,11 @@
+#ifndef QT_APP
 #include "precompiled.h"
+#endif
 #include "LSFileGrammar.h"
 #include "StringUtils.h"
+#include <fstream>
+
+#include "fparser/fparser.hh"
 
 using namespace AP_LSystem;
 
@@ -15,7 +20,7 @@ LSFileGrammar::~LSFileGrammar(void)
 
 void LSFileGrammar::loadFromFile( std::string * filename )
 {
-	fstream * grammarFile = new fstream(filename->c_str());
+    std::fstream * grammarFile = new std::fstream(filename->c_str());
 //	ifstream grammarFile(filename.c_str());
 	if(!grammarFile)
 	{	
@@ -232,7 +237,7 @@ void LSFileGrammar::addRule(std::string * rule)
 	this->_rules.insert(make_pair< char, Rule >(nonTerminal, r ));
 }
 
-void LSFileGrammar::setAxiom(std::string * axiom)
+void LSFileGrammar::setAxiom(const std::string * axiom)
 {
 	_axiom = *axiom;
 

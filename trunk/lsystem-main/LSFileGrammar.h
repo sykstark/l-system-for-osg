@@ -12,7 +12,7 @@ public:
 	~LSFileGrammar(void);
 
 	virtual void addRule(std::string *);
-	virtual void setAxiom(std::string *);
+        virtual void setAxiom(const std::string *);
 	virtual void addHomomorphism( std::string * );
 
 	virtual void loadFromFile( std::string * );

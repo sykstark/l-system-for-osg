@@ -21,13 +21,13 @@ protected:
     map<string, string> _homomorphisms;
     vector<string> _subGrammarsFilenames;
     int _iteration;
-    string _axiom;
+    std::string _axiom;
     map<string, string> _subGrammarsWords;	
 
 public:
 //	virtual ~LS_Grammar();
-    AbstractGrammar():_name(""), _iteration(0), _axiom(""), _word(NULL) {};
-    bool generateSubGrammars(){};
+    AbstractGrammar():_word(NULL), _name(""), _iteration(0), _axiom("") {};
+    bool generateSubGrammars(){ return false; };
     virtual void nextIteration() = 0;
     virtual char* translate() = 0;
     virtual void addRule( std::string * ) = 0;
