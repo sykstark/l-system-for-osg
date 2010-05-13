@@ -1,5 +1,21 @@
+#ifndef QT_APP
 #include "precompiled.h"
+#endif
 #include "StringUtils.h"
+#include <iostream>
+#include <istream>
+#include <string>
+#include <cstdlib>
+#include <cstdio>
+#include <ostream>
+#include <sstream>
+#include <fstream>
+#include <map>
+#include <set>
+#include <vector>
+#include <stack>
+#include <string>
+#include <exception>
 
 using namespace AP_LSystem;
 
@@ -56,7 +72,7 @@ void StringUtils::LoadCfgFile(Configuration * cfg, const char * filename)
 
 void StringUtils::uncommentLine(std::string & line)
 {
-	int pos = line.find( "//" );
+        unsigned int pos = line.find( "//" );
 	if(pos != std::string::npos ) line.erase ( pos );
 
 /*	string temp;
@@ -76,7 +92,7 @@ std::string StringUtils::processLine(std::fstream * pFile, std::stringstream & p
 
 	std::string s_line, word;
 
-	if(!getline(*pFile, s_line))
+        if(!getline(*pFile, s_line))
 	{
 		// throw exception
 	}
