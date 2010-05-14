@@ -43,33 +43,34 @@ void LSFileGrammar::loadFromFile( std::string * filename )
 	
 				if(id=="#set")
 				{
-					string prop; // property name
-					double value;  // value of property
-					line >> prop >> value;
-					Configuration::get()->setProperty(prop, value);  // property setting
+                    string prop; // property name
+                    double value;  // value of property
+                    line >> prop >> value;
+                    Configuration::get()->setProperty(prop, value);  // property setting
 				}
 				else if(id=="#axiom")
 				{
-					this->setAxiom( &StringUtils::processLine( grammarFile, line) );
-					if( StringUtils::processLine( grammarFile, line) != "#endaxiom")
-					{
-						// throw exception						
-					}
+                    string axiom = StringUtils::processLine( grammarFile, line);
+                    this->setAxiom( &axiom );
+                    if( StringUtils::processLine( grammarFile, line) != "#endaxiom")
+                    {
+                            // throw exception
+                    }
 				}
 				else if(id=="#rules")
 				{
-					while(true)
-					{	
-						id = StringUtils::processLine( grammarFile, line);
-						if( id!="#endrules" ) 
-						{
-							this->addRule( &id );
-						}
-						else
-						{
-							break;
-						}
-					}
+                    while(true)
+                    {
+                        id = StringUtils::processLine( grammarFile, line);
+                        if( id!="#endrules" )
+                        {
+                            this->addRule( &id );
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
 				}
 				else if(id=="#homomorphisms")
 				{
