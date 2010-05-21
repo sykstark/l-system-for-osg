@@ -3,7 +3,7 @@
 #endif
 #include "LSFileGrammar.h"
 #include "StringUtils.h"
-#include <fstream>
+#include "lsfile.h"
 
 #include "fparser/fparser.hh"
 
@@ -20,85 +20,39 @@ LSFileGrammar::~LSFileGrammar(void)
 
 void LSFileGrammar::loadFromFile( std::string * filename )
 {
-    std::fstream * grammarFile = new std::fstream(filename->c_str());
-//	ifstream grammarFile(filename.c_str());
-	if(!grammarFile)
-	{	
-		//throw - soubor nelze otevrit
-	}	
-	
-	std::stringstream line;
-	std::string id, s_line, temp;
+    AbstractFile * file;
 
-//	while( 1 )
-	{
-		id = StringUtils::processLine( grammarFile, line );
-		if(id=="#grammar")
-		{
-			line >> this->_name;
-			while( true )
-			{
-				id = StringUtils::processLine( grammarFile, line);
-				if(id=="#endgrammar" ) break;
-	
-				if(id=="#set")
-				{
-                    string prop; // property name
-                    double value;  // value of property
-                    line >> prop >> value;
-                    Configuration::get()->setProperty(prop, value);  // property setting
-				}
-				else if(id=="#axiom")
-				{
-                    string axiom = StringUtils::processLine( grammarFile, line);
-                    this->setAxiom( &axiom );
-                    if( StringUtils::processLine( grammarFile, line) != "#endaxiom")
-                    {
-                            // throw exception
-                    }
-				}
-				else if(id=="#rules")
-				{
-                    while(true)
-                    {
-                        id = StringUtils::processLine( grammarFile, line);
-                        if( id!="#endrules" )
-                        {
-                            this->addRule( &id );
-                        }
-                        else
-                        {
-                            break;
-                        }
-                    }
-				}
-				else if(id=="#homomorphisms")
-				{
-					while(true)
-					{	
-						id = StringUtils::processLine( grammarFile, line);
-						if( id!="#endhomomorphisms" ) 
-						{
-							this->addHomomorphism( &id );
-						}
-						else
-						{
-							break;
-						}
-					}
-				}
-				// dodelat prazdny radek jen s komentarem
+    if( filename->empty() )
+    {
+        return;
+    }
 
-			}
-		}
-		else
-		{
-			//if(configFile) configFile.close();
-			//throw - chyba syntaxe
-		}	
-	}
-	grammarFile->close();
-	delete grammarFile;	
+    unsigned int pos = filename->rfind( '.' );
+    if( pos == std::string::npos )
+    {
+        return;
+    }
+
+    std::string ext = filename->substr( pos + 1, std::string::npos );
+
+    if( ext == "ls" )
+    {
+        file = new LSFile;
+    }
+    else
+    {
+        return; // unknown extension
+    }
+
+    file->loadFromFile(filename);
+
+    this->setAxiom( file->getAxiom() );
+
+    vector<std::string>::iterator itRules = file->getRules()->begin();
+    for(; itRules != file->getRules()->end(); itRules++)
+    {
+        this->addRule( &*itRules );
+    }
 }
 
 void LSFileGrammar::addRule(std::string * rule)
@@ -238,13 +192,13 @@ void LSFileGrammar::addRule(std::string * rule)
 	this->_rules.insert(make_pair< char, Rule >(nonTerminal, r ));
 }
 
-void LSFileGrammar::setAxiom(const std::string * axiom)
+void LSFileGrammar::setAxiom(const std::string & axiom)
 {
-	_axiom = *axiom;
+    _axiom = axiom;
 
 	if(_word) delete _word;
 	_word = new LongString( );
-	_word->appendStr( axiom->c_str(), axiom->length() );
+    _word->appendStr( axiom.c_str(), axiom.length() );
 }
 
 void LSFileGrammar::addHomomorphism(std::string * homomorphism)

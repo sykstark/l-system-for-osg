@@ -34,35 +34,49 @@ Configuration * Configuration::get()
 	return config;
 }
 
-void Configuration::setProperty(const std::string &name, const double &value)
+void Configuration::setProperty(const std::string &property, const double &value)
 {
-	properties[name] = value;
+    globalProperties[property] = value;
+}
+
+void Configuration::setProperty(const std::string &grammarID, const std::string &name, const double &value)
+{
+    grammarProperties[ grammarID ][ name ] = value;
 }
 
 bool Configuration::getProperty(const std::string & name, double & value)
 {
-	if(properties.find(name)==properties.end())
+    if(globalProperties.find(name)==globalProperties.end())
 	{
 		value = 0.0;
 		return false;
 	}
 	else
 	{
-		value = properties[name];
+        value = globalProperties[name];
 		return true;
 	}
 }
 
-
-bool Configuration::uncomment(std::stringstream& ss)
+bool Configuration::getProperty(const std::string &grammarID, const std::string & name, double & value)
 {
-    std::string temp;
-        if( ss >> temp && ( temp.size()<2 || ( temp[0]!='/' && temp[1]!='/' )))
-	{
-		return false;
-	}
-	else 
-	{
-		return true;
-	}
+    if(grammarProperties.find(grammarID)==grammarProperties.end())
+    {
+        value = 0.0;
+        return false;
+    }
+    else
+    {
+        if(grammarProperties[grammarID].find(name) == grammarProperties[grammarID].end())
+        {
+            value = 0.0;
+            return false;
+        }
+        else
+        {
+            value = grammarProperties[grammarID][name];
+            return true;
+        }
+    }
 }
+

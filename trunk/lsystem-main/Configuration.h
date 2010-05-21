@@ -10,7 +10,9 @@ public:
 	
     bool loadCfgFile(std::string);
     void setProperty(const std::string &, const double &);
+    void setProperty(const std::string &, const std::string &, const double &);
     bool getProperty(const std::string &, double &);
+    bool getProperty(const std::string &, const std::string &, double &);
 	static Configuration * get();
 	
 private:
@@ -18,8 +20,7 @@ private:
 	static Configuration* config;
 	~Configuration();
 
-	
-        static inline bool uncomment(std::stringstream&);
-        std::map<std::string, double> properties;
+    std::map<std::string, double> globalProperties;
+    std::map<std::string, std::map< std::string, double > > grammarProperties;
 };
 }
