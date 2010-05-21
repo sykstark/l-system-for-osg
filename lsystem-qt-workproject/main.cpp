@@ -6,8 +6,6 @@ using namespace AP_LSystem;
 
 int main(int argc, char *argv[])
 {
-//    QCoreApplication a(argc, argv);
-
     AbstractGrammar * grammar;
 
     std::string filename = "c:\\Documents and Settings\\mpa\\Dokumenty\\lsystem\\ls\\loadingTest02.ls";
@@ -33,8 +31,6 @@ int main(int argc, char *argv[])
                     grammar->nextIteration();
             }
 
-        cout << dynamic_cast<LSFileGrammar *>(grammar)->wordLength();
+        cout << dynamic_cast<LSFileGrammar *>(grammar)->wordLength() << endl;
     }
-
- //   return a.exec();
 }

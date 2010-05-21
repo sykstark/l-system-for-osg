@@ -12,13 +12,17 @@ SOURCES += main.cpp \
     ../Garden/Configuration.cpp \
     ../Garden/LSFileGrammar.cpp \
     ../Garden/fparser/fpoptimizer.cc \
-    ../Garden/fparser/fparser.cc
+    ../Garden/fparser/fparser.cc \
+    ../Garden/lsfile.cpp
 HEADERS += ../Garden/LSFileGrammar.h \
     ../Garden/AbstractGrammar.h \
     ../Garden/StaticString.h \
     ../Garden/Rule.h \
     ../Garden/Configuration.h \
     ../Garden/StringUtils.h \
-    precompiled.h
+    precompiled.h \
+    ../Garden/abstractfile.h \
+    ../Garden/lsfile.h \
+    ../Garden/lsystemexception.h
 INCLUDEPATH += ../Garden/ \
     ../Garden/fparser
