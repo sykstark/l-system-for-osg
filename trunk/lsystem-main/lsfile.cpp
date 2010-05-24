@@ -14,14 +14,13 @@ LSFile::LSFile()
 {
 }
 
-void LSFile::loadFromFile(std::string * filename)
+void LSFile::open(std::string * filename)
 {
     std::fstream * file = new std::fstream(filename->c_str());
 
     if(!file)
     {
-        throw LSystemException( "TESTOVACI" );
-        //throw - soubor nelze otevrit
+        throw FileException( "file " + *filename + " cannot be opened" );
     }
 
     std::stringstream line;
@@ -50,7 +49,7 @@ void LSFile::loadFromFile(std::string * filename)
 
                 if( StringUtils::processLine( file, line) != "#endaxiom")
                 {
-                        // throw exception
+                    throw ParsingException("#endaxiom not found");
                 }
             }
             else if(id=="#rules")
@@ -83,14 +82,18 @@ void LSFile::loadFromFile(std::string * filename)
                     }
                 }
             }
+            else if(id.length())
+            {
+                throw ParsingException("Unknown expression: " + id);
+            }
             // dodelat prazdny radek jen s komentarem
 
         }
     }
     else
     {
-        //if(configFile) configFile.close();
-        //throw - chyba syntaxe
+        if(file) file->close();
+        throw ParsingException("#grammar not found");
     }
     file->close();
     delete file;

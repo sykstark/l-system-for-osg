@@ -17,6 +17,8 @@
 #include <string>
 #include <exception>
 
+#include "lsystemexception.h"
+
 using namespace AP_LSystem;
 
 /*
@@ -72,7 +74,7 @@ void StringUtils::LoadCfgFile(Configuration * cfg, const char * filename)
 
 void StringUtils::uncommentLine(std::string & line)
 {
-        unsigned int pos = line.find( "//" );
+    unsigned int pos = line.find( "//" );
 	if(pos != std::string::npos ) line.erase ( pos );
 
 /*	string temp;
@@ -92,15 +94,15 @@ std::string StringUtils::processLine(std::fstream * pFile, std::stringstream & p
 
 	std::string s_line, word;
 
-        if(!getline(*pFile, s_line))
+    if(!getline(*pFile, s_line))
 	{
-		// throw exception
+        throw ParsingException( "line expected" );
 	}
 	uncommentLine(s_line);
 	pLine << s_line;	
-	if(!(pLine >> word)||(word == ""))
+    if(!(pLine >> word))
 	{
-		// throw exception
+        throw LSystemException( "read error" );
 	}
 
 	//*pLine >> word;

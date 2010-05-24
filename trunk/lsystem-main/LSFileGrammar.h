@@ -1,11 +1,20 @@
 #pragma once
+
+#include <map>
+
 #include "AbstractGrammar.h"
+#include "Rule.h"
 
 namespace AP_LSystem{
 class LSFileGrammar : public AbstractGrammar
 {
 private:
-	
+    LongString * _word;
+    multimap<char, Rule> _rules;
+    map<string, string> _homomorphisms;
+    vector<string> _subGrammarsFilenames;
+    map<string, string> _subGrammarsWords;
+    //std::string _axiom;
 
 public:
 	LSFileGrammar( std::string * );
