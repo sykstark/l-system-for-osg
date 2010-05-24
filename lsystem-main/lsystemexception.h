@@ -1,43 +1,39 @@
+#pragma once
+
 #ifndef ABSTRACTLSYSTEMEX_H
 #define ABSTRACTLSYSTEMEX_H
 
 #include <exception>
 #include <string>
+#include <iostream>/*temporarily*/
 
 class LSystemException : public exception
 {
 public:
     std::string type, message;
 
-    const char * toString() throw()
-    {
-        if( message.empty() )
-        {
-            return string( this->type + "Unspecified error" ).c_str();
-        }
-        else
-        {
-            return string( this->type + this->message ).c_str();
-        }
-    };
-
 public:
     LSystemException()
     {
-        type = "LSystem: ";
+        appendType();
     };
 
     LSystemException( const char * description)
     {
-        LSystemException();
-        this->message = description;
+        appendType();
+        this->message.append(description);
     };
 
     ~LSystemException() throw() {};
 
     virtual const char * what() const throw()
+    {  
+        return this->message.c_str();
+    };
+
+    virtual void appendType()
     {
-        return this->toString();
+        message = "LSystem: ";
     };
 };
 
@@ -46,14 +42,51 @@ class ParsingException : public LSystemException
 public:
     ParsingException()
     {
-        type.append( "parsing error: " );
+        appendType();
     };
 
-    ParsingException( const char * description)
+    ParsingException( const char * description )
     {
-        ParsingException();
-        this->message = description;
+        appendType();
+        this->message.append(description);
     };
+
+    ParsingException( std::string description )
+    {
+        appendType();
+        this->message.append(description);
+    };
+
+    virtual void appendType()
+    {
+        this->message.append( "parsing error: " );
+    }
+};
+
+class FileException : public LSystemException
+{
+public:
+    FileException()
+    {
+        appendType();
+    };
+
+    FileException( const char * description)
+    {
+        appendType();
+        this->message.append(description);
+    };
+
+    FileException( std::string description)
+    {
+        appendType();
+        this->message.append(description);
+    };
+
+    virtual void appendType()
+    {
+        type.append( "file i/o error: " );
+    }
 };
 
 #endif // ABSTRACTLSYSTEMEX_H

@@ -18,10 +18,7 @@ Configuration::~Configuration(void)
 
 bool Configuration::loadCfgFile(std::string filename)
 {
-	//TODO try 
-//	FileLoaders::LoadCfgFile(config, filename.c_str());
 
-	//catch
 
 	return true;
 

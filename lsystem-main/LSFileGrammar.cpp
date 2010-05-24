@@ -4,12 +4,13 @@
 #include "LSFileGrammar.h"
 #include "StringUtils.h"
 #include "lsfile.h"
+#include "lsystemexception.h"
 
 #include "fparser/fparser.hh"
 
 using namespace AP_LSystem;
 
-LSFileGrammar::LSFileGrammar( std::string * filename)
+LSFileGrammar::LSFileGrammar( std::string * filename): _word(NULL)//, _axiom("")
 {
 	this->loadFromFile(filename);		
 }
@@ -41,10 +42,10 @@ void LSFileGrammar::loadFromFile( std::string * filename )
     }
     else
     {
-        return; // unknown extension
+        throw FileException("unknown extension: ");
     }
 
-    file->loadFromFile(filename);
+    file->open(filename);
 
     this->setAxiom( file->getAxiom() );
 
@@ -88,8 +89,7 @@ void LSFileGrammar::addRule(std::string * rule)
 		pos = rule->find( ')', it - rule->begin() );
 		if ( pos == std::string::npos )
 		{
-			// throw exception
-			return;
+            throw ParsingException("missing ending bracket");
 		}
 		else
 		{
@@ -100,8 +100,7 @@ void LSFileGrammar::addRule(std::string * rule)
 
 	if( *it++ != ':' )
 	{
-		//throw exception
-		return;
+        throw ParsingException("\':\' was expected");
 	}
 
 	if( *it != '*' )
@@ -144,7 +143,7 @@ void LSFileGrammar::addRule(std::string * rule)
 		
 		if( closingPar == std::string::npos )
 		{
-			// exception
+            throw ParsingException("missing ending bracket");
 		}
 
 		
@@ -175,8 +174,7 @@ void LSFileGrammar::addRule(std::string * rule)
 			// parse string inside brackets
 			if ( fp->Parse( string( it, end ), r.variables, false ) != -1 )
 			{
-				//throw exception
-				return;
+                throw ParsingException("parsing of expression error");
 			}
 
 			it = end + 1;
@@ -194,7 +192,7 @@ void LSFileGrammar::addRule(std::string * rule)
 
 void LSFileGrammar::setAxiom(const std::string & axiom)
 {
-    _axiom = axiom;
+    //_axiom = axiom;
 
 	if(_word) delete _word;
 	_word = new LongString( );
