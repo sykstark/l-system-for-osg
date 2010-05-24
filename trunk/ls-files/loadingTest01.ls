@@ -1,13 +1,9 @@
 #grammar TEST01
-#set Recursion 10 // hloubka rekurze 
-#set DefaultTurtleAngle 22.5 // implicitni uhel natoceni zelvy 
-#set DefaultPipeWidth 30 // tloustka vetvi 
 #axiom 
-A
+A(10,10)
 #endaxiom
 #rules  
-A:*->BCB
-B:*->A
-C:*->ABA
+A(x,y):*->B(x+y,x-y)A(2*y,2*x)
+B(x,y):*->A(1+x,y+1)
 #endrules
 #endgrammar
