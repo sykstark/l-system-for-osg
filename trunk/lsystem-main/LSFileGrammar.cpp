@@ -93,8 +93,10 @@ void LSFileGrammar::addRule(std::string * rule)
 		}
 		else
 		{
-			r.variables = string( *rule, it - rule->begin(), pos);
+            r.variables = string( it, rule->begin() + pos);
 		}
+
+        it = rule->begin() + pos + 1;
 
 	}
 
@@ -119,8 +121,7 @@ void LSFileGrammar::addRule(std::string * rule)
 
 	if( (*it++ != '-') || (*it++ != '>') )
 	{
-		// throw exception
-		return;
+        throw ParsingException("\'->\' was expected");
 	}
 
 	// look for opening bracket - end of static string
@@ -161,12 +162,17 @@ void LSFileGrammar::addRule(std::string * rule)
 			continue;
 		}
 
-		str = string(start, end);
-		r.staticStrings.push_back( StaticString( str.c_str(), end - start ) );
-		it = ++end;
+        // add static string - with (
+        str = string(start, end + 1);
+        r.staticStrings.push_back( StaticString( str.c_str(), end - start + 1 ) );
+
+        cout << "static:" << str << endl;
+
+        //end++;
 		// look for end bracket or another function
-		do
+        while(true)
 		{
+            it = ++end;
 			pos  = rule->find_first_of( ",)", it - rule->begin() );
 			end = rule->begin() + pos;
 			
@@ -176,15 +182,28 @@ void LSFileGrammar::addRule(std::string * rule)
 			{
                 throw ParsingException("parsing of expression error");
 			}
+            r.dynamicStrings.push_back( fp );
 
-			it = end + 1;
-		} while ( rule->at(pos) !=')' );
+            cout << "parser:" << string( it, end ) << endl;
 
-		start = it;
+            if( rule->at(pos) == ')' )
+            {
+                break;
+            }
+            else
+            {
+                r.staticStrings.push_back( StaticString(*end) );
+                cout << "static:" << *end << endl;
+            }
+        }
+
+        start = end;
 	}
 	// insert last part of rule - after last ')'
 	str = string(start, rule->end( ));
 	r.staticStrings.push_back( StaticString( str.c_str(), rule->end( ) - start ) );
+
+    cout << "static:" << str << endl;
 
 	// insert new rule into map with rules
 	this->_rules.insert(make_pair< char, Rule >(nonTerminal, r ));
@@ -204,7 +223,7 @@ void LSFileGrammar::addHomomorphism(std::string * homomorphism)
 	
 }
 
-void LSFileGrammar::nextIteration( )
+bool LSFileGrammar::nextIteration( )
 {
 	LongString * newWord = new LongString();
 	multimap<char, Rule>::iterator ruleIt;
@@ -231,7 +250,10 @@ void LSFileGrammar::nextIteration( )
 		{
 			parCnt = 0;
 			// ziskej paramtery z pozice za pismenem
-			newWord->getParamaters( i, pParams, parCnt );
+            if( !_word->getParamaters( i, pParams, parCnt ))
+            {
+                return false;
+            }
 			for( ruleIt = result.first; ruleIt != result.second; ruleIt++ )
 			{
 				if( ruleIt->second.condition != NULL )
@@ -246,8 +268,10 @@ void LSFileGrammar::nextIteration( )
 					stStrIt++, dynStrIt++)
 				{
 					// pridani statickych a dynamickych retezcu do slova ( krome posledniho statickeho )
-					newWord->appendStr( stStrIt->str, stStrIt->length );
 
+                    cout << "appending static " << stStrIt->toString() <<endl;
+					newWord->appendStr( stStrIt->str, stStrIt->length );
+                    cout << "params " << pParams[0] << "," << pParams[1] << endl;
 					newWord->appendDouble( (*dynStrIt)->Eval( pParams ) );
 
 				}
@@ -258,6 +282,8 @@ void LSFileGrammar::nextIteration( )
 		}
 	}
 	_word = newWord;
+
+    return true;
 }
 
 char * LSFileGrammar::translate()

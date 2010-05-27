@@ -27,7 +27,7 @@ public:
 	virtual void loadFromFile( std::string * );
 
 	// temporarily
-	virtual void nextIteration();
+    virtual bool nextIteration();
 	virtual char* translate();
 
 	unsigned int wordLength() { return _word->length(); };
