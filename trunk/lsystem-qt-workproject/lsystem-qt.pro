@@ -13,7 +13,18 @@ SOURCES += main.cpp \
     ../Garden/LSFileGrammar.cpp \
     ../Garden/fparser/fpoptimizer.cc \
     ../Garden/fparser/fparser.cc \
-    ../Garden/lsfile.cpp
+    ../Garden/lsfile.cpp \
+    ../boost_1_43_0/libs/program_options/src/winmain.cpp \
+    ../boost_1_43_0/libs/program_options/src/variables_map.cpp \
+    ../boost_1_43_0/libs/program_options/src/value_semantic.cpp \
+    ../boost_1_43_0/libs/program_options/src/utf8_codecvt_facet.cpp \
+    ../boost_1_43_0/libs/program_options/src/split.cpp \
+    ../boost_1_43_0/libs/program_options/src/positional_options.cpp \
+    ../boost_1_43_0/libs/program_options/src/parsers.cpp \
+    ../boost_1_43_0/libs/program_options/src/options_description.cpp \
+    ../boost_1_43_0/libs/program_options/src/convert.cpp \
+    ../boost_1_43_0/libs/program_options/src/config_file.cpp \
+    ../boost_1_43_0/libs/program_options/src/cmdline.cpp
 HEADERS += ../Garden/LSFileGrammar.h \
     ../Garden/AbstractGrammar.h \
     ../Garden/StaticString.h \
@@ -25,4 +36,5 @@ HEADERS += ../Garden/LSFileGrammar.h \
     ../Garden/lsfile.h \
     ../Garden/lsystemexception.h
 INCLUDEPATH += ../Garden/ \
-    ../Garden/fparser
+    ../Garden/fparser \
+    ../boost_1_43_0
