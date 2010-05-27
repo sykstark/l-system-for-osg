@@ -98,10 +98,10 @@ public:
 	}
 
 	//mozna nekdy bool
-	void getParamaters( unsigned int & pos, double * pParams, int & paramsCnt )
+    bool getParamaters( unsigned int & pos, double * pParams, int & paramsCnt )
 	{
 		if( (pos + 1 > _length) || ( pStr[pos + 1] != '(' ) )
-			return;
+            return false;
 		char * pPos = pStr + pos + 2; // skip nonterminal and (
 		char * pEnd = 0;
 		do
@@ -112,6 +112,8 @@ public:
 		while ( *pEnd == ',' );
 
 		pos = pPos - pStr;
+
+        return true;
 	}
 
 	char * c_str( )

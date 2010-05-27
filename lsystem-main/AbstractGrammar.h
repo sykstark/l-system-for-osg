@@ -18,7 +18,7 @@ protected:
 public:
     AbstractGrammar(): _name(""), _iteration(0) {};
     bool generateSubGrammars(){ return false; };
-    virtual void nextIteration() = 0;
+    virtual bool nextIteration() = 0;
     virtual char* translate() = 0;
     virtual void addRule( std::string * ) = 0;
     virtual void addHomomorphism( std::string * ) = 0;

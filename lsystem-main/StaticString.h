@@ -1,11 +1,12 @@
 #pragma once
-#include "cstring"
+#include <string>
+#include <cstring>
 
 namespace AP_LSystem {
 class StaticString
 {
 public:
-	const char * str;
+    char * str;
 	int length;
 
 	StaticString( const char * str, int length ):length(length)
@@ -13,9 +14,15 @@ public:
 		this->str = new char[length];
 		memcpy( (void *) this->str, str, length);
 		// strcpy( this->str, str);
-	}
+    };
 
-        StaticString( std::string str )
+    StaticString( char ch ):length(1)
+    {
+        this->str = new char[1];
+        this->str[0] = ch;
+    };
+
+    StaticString( std::string str )
 	{
 		this->length = str.length();
 		this->str = new char[length];
@@ -38,6 +45,11 @@ public:
 
 		return *this;
 	}
+
+    std::string toString()
+    {
+        return std::string(this->str, this->length);
+    }
 
 	~StaticString( )
 	{
