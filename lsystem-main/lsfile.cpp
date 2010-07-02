@@ -38,10 +38,9 @@ void LSFile::open(std::string * filename)
 
             if(id=="#set")
             {
-                string prop; // property name
-                double value;  // value of property
-                line >> prop >> value;
-                Configuration::get()->setProperty(grammarID, prop, value);  // property setting
+                string prop; // property
+                line >> prop;
+                Configuration::get()->setProperty(grammarID, prop);  // property setting
             }
             else if(id=="#axiom")
             {
