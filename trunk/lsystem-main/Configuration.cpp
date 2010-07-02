@@ -2,6 +2,8 @@
 #include "precompiled.h"
 #endif
 
+#include <iostream>
+#include <fstream>
 #include "Configuration.h"
 
 using namespace AP_LSystem;
@@ -10,6 +12,9 @@ Configuration *Configuration::config = 0;
 
 Configuration::Configuration(void)
 {
+    description.add_options()
+            ("texture", value<std::string>())
+            ("default_angle", value<double>());
 }
 
 Configuration::~Configuration(void)
@@ -18,10 +23,17 @@ Configuration::~Configuration(void)
 
 bool Configuration::loadCfgFile(std::string filename)
 {
+    std::ifstream ifs(filename.c_str());
 
-
-	return true;
-
+    if(ifs)
+    {
+        store(parse_config_file(ifs, description), globalProperties);
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 Configuration * Configuration::get()
@@ -31,49 +43,51 @@ Configuration * Configuration::get()
 	return config;
 }
 
-void Configuration::setProperty(const std::string &property, const double &value)
+void Configuration::setProperty(const std::string &property)
 {
-    globalProperties[property] = value;
+    std::stringstream stream;
+    stream << property;
+
+    store(parse_config_file( stream, description), globalProperties );
+    notify(globalProperties);
 }
 
-void Configuration::setProperty(const std::string &grammarID, const std::string &name, const double &value)
+void Configuration::setProperty(const std::string &grammarID, const std::string &property)
 {
-    grammarProperties[ grammarID ][ name ] = value;
+    std::stringstream stream;
+    stream << property;
+
+    store(parse_config_file( stream, description), grammarProperties[ grammarID ] );
 }
 
-bool Configuration::getProperty(const std::string & name, double & value)
+const variable_value * Configuration::getProperty(const std::string & name)
 {
-    if(globalProperties.find(name)==globalProperties.end())
+    if(!globalProperties.count(name))
 	{
-		value = 0.0;
-		return false;
+        return NULL;
 	}
 	else
-	{
-        value = globalProperties[name];
-		return true;
+    {
+        return &globalProperties[name];
 	}
 }
 
-bool Configuration::getProperty(const std::string &grammarID, const std::string & name, double & value)
+const variable_value * Configuration::getProperty(const std::string &grammarID, const std::string & name)
 {
-    if(grammarProperties.find(grammarID)==grammarProperties.end())
+    if(grammarProperties.count(grammarID))
     {
-        value = 0.0;
-        return false;
+        if(grammarProperties[grammarID].count(name))
+        {
+            return &grammarProperties[grammarID][name];
+        }
+    }
+    if(globalProperties.count(name))
+    {
+        return &globalProperties[name];
     }
     else
     {
-        if(grammarProperties[grammarID].find(name) == grammarProperties[grammarID].end())
-        {
-            value = 0.0;
-            return false;
-        }
-        else
-        {
-            value = grammarProperties[grammarID][name];
-            return true;
-        }
+        return NULL;
     }
 }
 

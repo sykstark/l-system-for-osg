@@ -166,7 +166,7 @@ void LSFileGrammar::addRule(std::string * rule)
         str = string(start, end + 1);
         r.staticStrings.push_back( StaticString( str.c_str(), end - start + 1 ) );
 
-        cout << "static:" << str << endl;
+//        cout << "static:" << str << endl;
 
         //end++;
 		// look for end bracket or another function
@@ -184,7 +184,7 @@ void LSFileGrammar::addRule(std::string * rule)
 			}
             r.dynamicStrings.push_back( fp );
 
-            cout << "parser:" << string( it, end ) << endl;
+//            cout << "parser:" << string( it, end ) << endl;
 
             if( rule->at(pos) == ')' )
             {
@@ -193,7 +193,7 @@ void LSFileGrammar::addRule(std::string * rule)
             else
             {
                 r.staticStrings.push_back( StaticString(*end) );
-                cout << "static:" << *end << endl;
+//                cout << "static:" << *end << endl;
             }
         }
 
@@ -203,7 +203,7 @@ void LSFileGrammar::addRule(std::string * rule)
 	str = string(start, rule->end( ));
 	r.staticStrings.push_back( StaticString( str.c_str(), rule->end( ) - start ) );
 
-    cout << "static:" << str << endl;
+//    cout << "static:" << str << endl;
 
 	// insert new rule into map with rules
 	this->_rules.insert(make_pair< char, Rule >(nonTerminal, r ));
@@ -236,6 +236,8 @@ bool LSFileGrammar::nextIteration( )
 	double * pParams = parameters; // parameters pointer
 	int parCnt = 0; // parameters counter
 
+//    cout << "word: ";
+
 	for(unsigned int i = 0; i < _word->length(); i++ )
 	{
 		// mozna dodat kontrolu estli jde o pismeno
@@ -245,13 +247,14 @@ bool LSFileGrammar::nextIteration( )
 		if( result.first == result.second )
 		{
 			newWord->appendChar( (*_word)[i] );
+//            cout << (*_word)[i] << " | ";
 		}
 		else
 		{
 			parCnt = 0;
 			// ziskej paramtery z pozice za pismenem
             if( !_word->getParamaters( i, pParams, parCnt ))
-            {
+            { 
                 return false;
             }
 			for( ruleIt = result.first; ruleIt != result.second; ruleIt++ )
@@ -262,25 +265,28 @@ bool LSFileGrammar::nextIteration( )
 						continue;
 				}
 
+
+
 				for( stStrIt= ruleIt->second.staticStrings.begin(), 
 					dynStrIt = ruleIt->second.dynamicStrings.begin();
 					dynStrIt != ruleIt->second.dynamicStrings.end();
 					stStrIt++, dynStrIt++)
 				{
 					// pridani statickych a dynamickych retezcu do slova ( krome posledniho statickeho )
-
-                    cout << "appending static " << stStrIt->toString() <<endl;
 					newWord->appendStr( stStrIt->str, stStrIt->length );
-                    cout << "params " << pParams[0] << "," << pParams[1] << endl;
 					newWord->appendDouble( (*dynStrIt)->Eval( pParams ) );
+
+//                    cout << stStrIt->toString() << " | " << (*dynStrIt)->Eval( pParams ) << " | ";
 
 				}
 				// pridani posledniho statickeho retezce
+//                cout << stStrIt->toString();
 				newWord->appendStr( stStrIt->str, stStrIt->length );
 
 			}
 		}
 	}
+//    cout << endl;
 	_word = newWord;
 
     return true;
