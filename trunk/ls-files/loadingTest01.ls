@@ -1,4 +1,5 @@
 #grammar TEST01
+#set texture=texture.bmp
 #axiom 
 A(10,10)
 #endaxiom
