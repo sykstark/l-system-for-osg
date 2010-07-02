@@ -32,45 +32,58 @@ int main(int argc, char *argv[])
 
     cout << d << endl;*/
 
-    options_description config_file_options;
+ /*   options_description config_file_options;
     variables_map vm;
     std::ifstream ifs(cfg.c_str());
     config_file_options.add_options()
-            ("vec1",value<double>());
+            ("vec1",value<double>())
+            ("vec2",value<double>());
 
+    std::stringstream stream;
+    stream << "vec1=2.3" << endl;
+    stream << "vec2=3.5" << endl;
 
-    if(ifs)
+    if(stream)
     {
-        store(parse_config_file(ifs, config_file_options), vm);
-
+        store(parse_config_file(stream, config_file_options), vm);
     }
- //   config_file_options.add_options()("vec1", value<double>()->default_value(3.0));
-    vm["vec1"];
+//    config_file_options.add_options()("vec1", value<double>()->default_value(3.0));
+
     if (vm.count("vec1"))
     {
         cout << "vec1: "
              << vm["vec1"].as< double >() << "\n";
     }
+    if (vm.count("vec2"))
+    {
+        cout << "vec2: "
+             << vm["vec2"].as< double >() << "\n";
+    }*/
 
-/*
+
     AbstractGrammar * grammar;
 
     try
     {
         grammar = new LSFileGrammar( &filename );
-        for( int i = 0; i < 3 ; i++)
+        for( int i = 0; i < 2 ; i++)
         {
             grammar->nextIteration();
         }
 
-        cout << grammar->translate() << endl;
+        //cout << grammar->translate() << endl;
 
         cout << dynamic_cast<LSFileGrammar *>(grammar)->wordLength() << endl;
+
+        if (Configuration::get()->getProperty( "texture", "TEST01" ))
+        {
+            cout << Configuration::get()->getProperty( "texture", "TEST01" )->as<string>() << endl;
+        }
     }
     catch( LSystemException &ex)
     {
         cout << ex.what() << endl;
-    }*/
+    }
 
     return 0;
 }
