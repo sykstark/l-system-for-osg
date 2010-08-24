@@ -75,9 +75,9 @@ int main(int argc, char *argv[])
 
         cout << dynamic_cast<LSFileGrammar *>(grammar)->wordLength() << endl;
 
-        if (Configuration::get()->getProperty( "texture", "TEST01" ))
+        if (Configuration::get()->getProperty( "TEST01", "texture" ) != NULL )
         {
-            cout << Configuration::get()->getProperty( "texture", "TEST01" )->as<string>() << endl;
+            cout << Configuration::get()->getProperty( "TEST01", "texture" )->as<string>() << endl;
         }
     }
     catch( LSystemException &ex)

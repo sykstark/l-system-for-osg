@@ -2,6 +2,7 @@
 # Project created by QtCreator 2010-05-12T16:08:43
 # -------------------------------------------------
 QT -= gui
+QT += core
 TARGET = lsystem-qt
 CONFIG += console
 CONFIG -= app_bundle
