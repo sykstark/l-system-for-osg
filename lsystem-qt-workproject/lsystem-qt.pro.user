@@ -1,301 +1,111 @@
 <!DOCTYPE QtCreatorProject>
 <qtcreator>
  <data>
-  <variable>RunConfiguration0-BaseEnvironmentBase</variable>
-  <value type="int">2</value>
- </data>
- <data>
-  <variable>RunConfiguration0-CommandLineArguments</variable>
-  <valuelist type="QVariantList"/>
- </data>
- <data>
-  <variable>RunConfiguration0-ProFile</variable>
-  <value type="QString">lsystem-qt.pro</value>
- </data>
- <data>
-  <variable>RunConfiguration0-RunConfiguration.name</variable>
-  <value type="QString">lsystem-qt</value>
- </data>
- <data>
-  <variable>RunConfiguration0-UseDyldImageSuffix</variable>
-  <value type="bool">false</value>
- </data>
- <data>
-  <variable>RunConfiguration0-UseTerminal</variable>
-  <value type="bool">true</value>
- </data>
- <data>
-  <variable>RunConfiguration0-UserEnvironmentChanges</variable>
-  <valuelist type="QVariantList"/>
- </data>
- <data>
-  <variable>RunConfiguration0-UserSetName</variable>
-  <value type="bool">false</value>
- </data>
- <data>
-  <variable>RunConfiguration0-UserSetWorkingDirectory</variable>
-  <value type="bool">false</value>
- </data>
- <data>
-  <variable>RunConfiguration0-UserWorkingDirectory</variable>
-  <value type="QString"></value>
- </data>
- <data>
-  <variable>RunConfiguration0-type</variable>
-  <value type="QString">Qt4ProjectManager.Qt4RunConfiguration</value>
- </data>
- <data>
-  <variable>activeRunConfiguration</variable>
+  <variable>ProjectExplorer.Project.ActiveTarget</variable>
   <value type="int">0</value>
  </data>
  <data>
-  <variable>activebuildconfiguration</variable>
-  <value type="QString">Debug</value>
- </data>
- <data>
-  <variable>buildConfiguration-Debug</variable>
+  <variable>ProjectExplorer.Project.EditorSettings</variable>
   <valuemap type="QVariantMap">
-   <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Debug</value>
-   <value key="QtVersionId" type="int">0</value>
-   <value key="ToolChain" type="int">2</value>
-   <value key="addQDumper" type=""></value>
-   <value key="buildConfiguration" type="int">2</value>
+   <value key="EditorConfiguration.Codec" type="QByteArray">System</value>
   </valuemap>
  </data>
  <data>
-  <variable>buildConfiguration-Release</variable>
+  <variable>ProjectExplorer.Project.Target.0</variable>
   <valuemap type="QVariantMap">
-   <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Release</value>
-   <value key="QtVersionId" type="int">0</value>
-   <value key="ToolChain" type="int">2</value>
-   <value key="addQDumper" type=""></value>
-   <value key="buildConfiguration" type="int">0</value>
+   <value key="ProjectExplorer.ProjectConfiguration.DisplayName" type="QString">Desktop</value>
+   <value key="ProjectExplorer.ProjectConfiguration.Id" type="QString">Qt4ProjectManager.Target.DesktopTarget</value>
+   <value key="ProjectExplorer.Target.ActiveBuildConfiguration" type="int">0</value>
+   <value key="ProjectExplorer.Target.ActiveRunConfiguration" type="int">0</value>
+   <valuemap key="ProjectExplorer.Target.BuildConfiguration.0" type="QVariantMap">
+    <valuemap key="ProjectExplorer.BuildConfiguration.BuildStep.0" type="QVariantMap">
+     <value key="ProjectExplorer.ProjectConfiguration.DisplayName" type="QString"></value>
+     <value key="ProjectExplorer.ProjectConfiguration.Id" type="QString">QtProjectManager.QMakeBuildStep</value>
+     <valuelist key="QtProjectManager.QMakeBuildStep.QMakeArguments" type="QVariantList"/>
+    </valuemap>
+    <valuemap key="ProjectExplorer.BuildConfiguration.BuildStep.1" type="QVariantMap">
+     <value key="ProjectExplorer.ProjectConfiguration.DisplayName" type="QString"></value>
+     <value key="ProjectExplorer.ProjectConfiguration.Id" type="QString">Qt4ProjectManager.MakeStep</value>
+     <value key="Qt4ProjectManager.MakeStep.Clean" type="bool">false</value>
+     <valuelist key="Qt4ProjectManager.MakeStep.MakeArguments" type="QVariantList"/>
+     <value key="Qt4ProjectManager.MakeStep.MakeCommand" type="QString"></value>
+    </valuemap>
+    <value key="ProjectExplorer.BuildConfiguration.BuildStepsCount" type="int">2</value>
+    <valuemap key="ProjectExplorer.BuildConfiguration.CleanStep.0" type="QVariantMap">
+     <value key="ProjectExplorer.ProjectConfiguration.DisplayName" type="QString"></value>
+     <value key="ProjectExplorer.ProjectConfiguration.Id" type="QString">Qt4ProjectManager.MakeStep</value>
+     <value key="Qt4ProjectManager.MakeStep.Clean" type="bool">true</value>
+     <valuelist key="Qt4ProjectManager.MakeStep.MakeArguments" type="QVariantList">
+      <value type="QString">clean</value>
+     </valuelist>
+     <value key="Qt4ProjectManager.MakeStep.MakeCommand" type="QString"></value>
+    </valuemap>
+    <value key="ProjectExplorer.BuildConfiguration.CleanStepsCount" type="int">1</value>
+    <value key="ProjectExplorer.BuildConfiguration.ClearSystemEnvironment" type="bool">false</value>
+    <valuelist key="ProjectExplorer.BuildConfiguration.UserEnvironmentChanges" type="QVariantList"/>
+    <value key="ProjectExplorer.ProjectConfiguration.DisplayName" type="QString">Debug</value>
+    <value key="ProjectExplorer.ProjectConfiguration.Id" type="QString">Qt4ProjectManager.Qt4BuildConfiguration</value>
+    <value key="Qt4ProjectManager.Qt4BuildConfiguration.BuildConfiguration" type="int">2</value>
+    <value key="Qt4ProjectManager.Qt4BuildConfiguration.BuildDirectory" type="QString">C:/Documents and Settings/mpa/Dokumenty/lsystem/lsystem-qt-build-desktop</value>
+    <value key="Qt4ProjectManager.Qt4BuildConfiguration.QtVersionId" type="int">5</value>
+    <value key="Qt4ProjectManager.Qt4BuildConfiguration.ToolChain" type="int">2</value>
+    <value key="Qt4ProjectManager.Qt4BuildConfiguration.UseShadowBuild" type="bool">true</value>
+   </valuemap>
+   <valuemap key="ProjectExplorer.Target.BuildConfiguration.1" type="QVariantMap">
+    <valuemap key="ProjectExplorer.BuildConfiguration.BuildStep.0" type="QVariantMap">
+     <value key="ProjectExplorer.ProjectConfiguration.DisplayName" type="QString"></value>
+     <value key="ProjectExplorer.ProjectConfiguration.Id" type="QString">QtProjectManager.QMakeBuildStep</value>
+     <valuelist key="QtProjectManager.QMakeBuildStep.QMakeArguments" type="QVariantList"/>
+    </valuemap>
+    <valuemap key="ProjectExplorer.BuildConfiguration.BuildStep.1" type="QVariantMap">
+     <value key="ProjectExplorer.ProjectConfiguration.DisplayName" type="QString"></value>
+     <value key="ProjectExplorer.ProjectConfiguration.Id" type="QString">Qt4ProjectManager.MakeStep</value>
+     <value key="Qt4ProjectManager.MakeStep.Clean" type="bool">false</value>
+     <valuelist key="Qt4ProjectManager.MakeStep.MakeArguments" type="QVariantList"/>
+     <value key="Qt4ProjectManager.MakeStep.MakeCommand" type="QString"></value>
+    </valuemap>
+    <value key="ProjectExplorer.BuildConfiguration.BuildStepsCount" type="int">2</value>
+    <valuemap key="ProjectExplorer.BuildConfiguration.CleanStep.0" type="QVariantMap">
+     <value key="ProjectExplorer.ProjectConfiguration.DisplayName" type="QString"></value>
+     <value key="ProjectExplorer.ProjectConfiguration.Id" type="QString">Qt4ProjectManager.MakeStep</value>
+     <value key="Qt4ProjectManager.MakeStep.Clean" type="bool">true</value>
+     <valuelist key="Qt4ProjectManager.MakeStep.MakeArguments" type="QVariantList"/>
+     <value key="Qt4ProjectManager.MakeStep.MakeCommand" type="QString"></value>
+    </valuemap>
+    <value key="ProjectExplorer.BuildConfiguration.CleanStepsCount" type="int">1</value>
+    <value key="ProjectExplorer.BuildConfiguration.ClearSystemEnvironment" type="bool">false</value>
+    <valuelist key="ProjectExplorer.BuildConfiguration.UserEnvironmentChanges" type="QVariantList"/>
+    <value key="ProjectExplorer.ProjectConfiguration.DisplayName" type="QString">Release</value>
+    <value key="ProjectExplorer.ProjectConfiguration.Id" type="QString">Qt4ProjectManager.Qt4BuildConfiguration</value>
+    <value key="Qt4ProjectManager.Qt4BuildConfiguration.BuildConfiguration" type="int">0</value>
+    <value key="Qt4ProjectManager.Qt4BuildConfiguration.BuildDirectory" type="QString">C:/Documents and Settings/mpa/Dokumenty/lsystem/lsystem-qt-build-desktop</value>
+    <value key="Qt4ProjectManager.Qt4BuildConfiguration.QtVersionId" type="int">5</value>
+    <value key="Qt4ProjectManager.Qt4BuildConfiguration.ToolChain" type="int">2</value>
+    <value key="Qt4ProjectManager.Qt4BuildConfiguration.UseShadowBuild" type="bool">true</value>
+   </valuemap>
+   <value key="ProjectExplorer.Target.BuildConfigurationCount" type="int">2</value>
+   <valuemap key="ProjectExplorer.Target.RunConfiguration.0" type="QVariantMap">
+    <value key="ProjectExplorer.ProjectConfiguration.DisplayName" type="QString">lsystem-qt</value>
+    <value key="ProjectExplorer.ProjectConfiguration.Id" type="QString">Qt4ProjectManager.Qt4RunConfiguration</value>
+    <value key="Qt4ProjectManager.Qt4RunConfiguration.BaseEnvironmentBase" type="int">2</value>
+    <valuelist key="Qt4ProjectManager.Qt4RunConfiguration.CommandLineArguments" type="QVariantList"/>
+    <value key="Qt4ProjectManager.Qt4RunConfiguration.ProFile" type="QString">lsystem-qt.pro</value>
+    <value key="Qt4ProjectManager.Qt4RunConfiguration.UseDyldImageSuffix" type="bool">false</value>
+    <value key="Qt4ProjectManager.Qt4RunConfiguration.UseTerminal" type="bool">true</value>
+    <valuelist key="Qt4ProjectManager.Qt4RunConfiguration.UserEnvironmentChanges" type="QVariantList"/>
+    <value key="Qt4ProjectManager.Qt4RunConfiguration.UserSetName" type="bool">false</value>
+    <value key="Qt4ProjectManager.Qt4RunConfiguration.UserSetWorkingDirectory" type="bool">false</value>
+    <value key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory" type="QString"></value>
+   </valuemap>
+   <value key="ProjectExplorer.Target.RunConfigurationCount" type="int">1</value>
   </valuemap>
  </data>
  <data>
-  <variable>buildconfiguration-Debug-buildstep0</variable>
-  <valuemap type="QVariantMap">
-   <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Debug</value>
-   <valuelist key="abstractProcess.Environment" type="QVariantList">
-    <value type="QString">ALLUSERSPROFILE=C:\Documents and Settings\All Users</value>
-    <value type="QString">APPDATA=C:\Documents and Settings\mpa\Data aplikací</value>
-    <value type="QString">COMMONPROGRAMFILES=C:\Program Files\Common Files</value>
-    <value type="QString">COMPUTERNAME=HDC-MPA-D</value>
-    <value type="QString">COMSPEC=C:\WINDOWS\system32\cmd.exe</value>
-    <value type="QString">FP_NO_HOST_CHECK=NO</value>
-    <value type="QString">HOMEDRIVE=P:</value>
-    <value type="QString">HOMEPATH=\</value>
-    <value type="QString">HOMESHARE=\\leela\userdocuments\mpa</value>
-    <value type="QString">HYP_TOOLKIT=C:\PROGRA~1\Hypercom\Optimum</value>
-    <value type="QString">INCLUDE=C:\Program Files\Microsoft Visual Studio\VC98\atl\include;C:\Program Files\Microsoft Visual Studio\VC98\mfc\include;C:\Program Files\Microsoft Visual Studio\VC98\include</value>
-    <value type="QString">LIB=C:\Program Files\Microsoft Visual Studio\VC98\mfc\lib;C:\Program Files\Microsoft Visual Studio\VC98\lib</value>
-    <value type="QString">LOGONSERVER=\\LEELA</value>
-    <value type="QString">MSDEVDIR=C:\Program Files\Microsoft Visual Studio\Common\MSDev98</value>
-    <value type="QString">NUMBER_OF_PROCESSORS=2</value>
-    <value type="QString">OS=Windows_NT</value>
-    <value type="QString">PATH=C:\Qt\2010.02.1\mingw\bin;C:\Qt\2010.02.1\qt\bin;C:\Program Files\CollabNet\Subversion Client;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\Program Files\Intel\DMIX;C:\Program Files\NTRU Cryptosystems\NTRU TCG Software Stack\bin\;C:\Program Files\Wave Systems Corp\Gemalto\Access Client\v5\;c:\Program Files\Common Files\Roxio Shared\DLLShared\;c:\Program Files\Common Files\Roxio Shared\10.0\DLLShared\;C:\WINDOWS\system32\WindowsPowerShell\v1.0;C:\Program Files\QuickTime Alternative\QTSystem;C:\Program Files\TortoiseSVN\bin;C:\Program Files\Microsoft Visual Studio\Common\Tools\WinNT;C:\Program Files\Microsoft Visual Studio\Common\MSDev98\Bin;C:\Program Files\Microsoft Visual Studio\Common\Tools;C:\Program Files\Microsoft Visual Studio\VC98\bin</value>
-    <value type="QString">PATHEXT=.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.PSC1</value>
-    <value type="QString">PROCESSOR_ARCHITECTURE=x86</value>
-    <value type="QString">PROCESSOR_IDENTIFIER=x86 Family 6 Model 23 Stepping 10, GenuineIntel</value>
-    <value type="QString">PROCESSOR_LEVEL=6</value>
-    <value type="QString">PROCESSOR_REVISION=170a</value>
-    <value type="QString">PROGRAMFILES=C:\Program Files</value>
-    <value type="QString">PSMODULEPATH=C:\WINDOWS\system32\WindowsPowerShell\v1.0\Modules\</value>
-    <value type="QString">QTDIR=C:/Qt/2010.02.1/qt</value>
-    <value type="QString">ROXIOCENTRAL=c:\Program Files\Common Files\Roxio Shared\10.0\Roxio Central36\</value>
-    <value type="QString">SESSIONNAME=Console</value>
-    <value type="QString">SYSTEMDRIVE=C:</value>
-    <value type="QString">SYSTEMROOT=C:\WINDOWS</value>
-    <value type="QString">TEMP=C:\DOCUME~1\mpa\LOCALS~1\Temp</value>
-    <value type="QString">TMP=C:\DOCUME~1\mpa\LOCALS~1\Temp</value>
-    <value type="QString">USERDNSDOMAIN=LESON.LOCAL</value>
-    <value type="QString">USERDOMAIN=LESON</value>
-    <value type="QString">USERNAME=mpa</value>
-    <value type="QString">USERPROFILE=C:\Documents and Settings\mpa</value>
-    <value type="QString">WINDIR=C:\WINDOWS</value>
-   </valuelist>
-   <valuelist key="abstractProcess.arguments" type="QVariantList">
-    <value type="QString">C:/Documents and Settings/mpa/Dokumenty/lsystem/lsystem-qt/lsystem-qt.pro</value>
-    <value type="QString">-spec</value>
-    <value type="QString">win32-g++</value>
-    <value type="QString">-r</value>
-   </valuelist>
-   <value key="abstractProcess.command" type="QString">c:/qt/2010.02.1/qt/bin/qmake.exe</value>
-   <value key="abstractProcess.enabled" type="bool">true</value>
-   <value key="abstractProcess.workingDirectory" type="QString">C:/Documents and Settings/mpa/Dokumenty/lsystem/lsystem-qt</value>
-  </valuemap>
+  <variable>ProjectExplorer.Project.TargetCount</variable>
+  <value type="int">1</value>
  </data>
  <data>
-  <variable>buildconfiguration-Debug-buildstep1</variable>
-  <valuemap type="QVariantMap">
-   <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Debug</value>
-   <valuelist key="abstractProcess.Environment" type="QVariantList">
-    <value type="QString">ALLUSERSPROFILE=C:\Documents and Settings\All Users</value>
-    <value type="QString">APPDATA=C:\Documents and Settings\mpa\Data aplikací</value>
-    <value type="QString">COMMONPROGRAMFILES=C:\Program Files\Common Files</value>
-    <value type="QString">COMPUTERNAME=HDC-MPA-D</value>
-    <value type="QString">COMSPEC=C:\WINDOWS\system32\cmd.exe</value>
-    <value type="QString">FP_NO_HOST_CHECK=NO</value>
-    <value type="QString">HOMEDRIVE=P:</value>
-    <value type="QString">HOMEPATH=\</value>
-    <value type="QString">HOMESHARE=\\leela\userdocuments\mpa</value>
-    <value type="QString">HYP_TOOLKIT=C:\PROGRA~1\Hypercom\Optimum</value>
-    <value type="QString">INCLUDE=C:\Program Files\Microsoft Visual Studio\VC98\atl\include;C:\Program Files\Microsoft Visual Studio\VC98\mfc\include;C:\Program Files\Microsoft Visual Studio\VC98\include</value>
-    <value type="QString">LIB=C:\Program Files\Microsoft Visual Studio\VC98\mfc\lib;C:\Program Files\Microsoft Visual Studio\VC98\lib</value>
-    <value type="QString">LOGONSERVER=\\LEELA</value>
-    <value type="QString">MSDEVDIR=C:\Program Files\Microsoft Visual Studio\Common\MSDev98</value>
-    <value type="QString">NUMBER_OF_PROCESSORS=2</value>
-    <value type="QString">OS=Windows_NT</value>
-    <value type="QString">PATH=C:\Qt\2010.02.1\mingw\bin;C:\Qt\2010.02.1\qt\bin;C:\Program Files\CollabNet\Subversion Client;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\Program Files\Intel\DMIX;C:\Program Files\NTRU Cryptosystems\NTRU TCG Software Stack\bin\;C:\Program Files\Wave Systems Corp\Gemalto\Access Client\v5\;c:\Program Files\Common Files\Roxio Shared\DLLShared\;c:\Program Files\Common Files\Roxio Shared\10.0\DLLShared\;C:\WINDOWS\system32\WindowsPowerShell\v1.0;C:\Program Files\QuickTime Alternative\QTSystem;C:\Program Files\TortoiseSVN\bin;C:\Program Files\Microsoft Visual Studio\Common\Tools\WinNT;C:\Program Files\Microsoft Visual Studio\Common\MSDev98\Bin;C:\Program Files\Microsoft Visual Studio\Common\Tools;C:\Program Files\Microsoft Visual Studio\VC98\bin</value>
-    <value type="QString">PATHEXT=.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.PSC1</value>
-    <value type="QString">PROCESSOR_ARCHITECTURE=x86</value>
-    <value type="QString">PROCESSOR_IDENTIFIER=x86 Family 6 Model 23 Stepping 10, GenuineIntel</value>
-    <value type="QString">PROCESSOR_LEVEL=6</value>
-    <value type="QString">PROCESSOR_REVISION=170a</value>
-    <value type="QString">PROGRAMFILES=C:\Program Files</value>
-    <value type="QString">PSMODULEPATH=C:\WINDOWS\system32\WindowsPowerShell\v1.0\Modules\</value>
-    <value type="QString">QTDIR=C:/Qt/2010.02.1/qt</value>
-    <value type="QString">ROXIOCENTRAL=c:\Program Files\Common Files\Roxio Shared\10.0\Roxio Central36\</value>
-    <value type="QString">SESSIONNAME=Console</value>
-    <value type="QString">SYSTEMDRIVE=C:</value>
-    <value type="QString">SYSTEMROOT=C:\WINDOWS</value>
-    <value type="QString">TEMP=C:\DOCUME~1\mpa\LOCALS~1\Temp</value>
-    <value type="QString">TMP=C:\DOCUME~1\mpa\LOCALS~1\Temp</value>
-    <value type="QString">USERDNSDOMAIN=LESON.LOCAL</value>
-    <value type="QString">USERDOMAIN=LESON</value>
-    <value type="QString">USERNAME=mpa</value>
-    <value type="QString">USERPROFILE=C:\Documents and Settings\mpa</value>
-    <value type="QString">WINDIR=C:\WINDOWS</value>
-   </valuelist>
-   <value key="abstractProcess.IgnoreReturnValue" type="bool">false</value>
-   <valuelist key="abstractProcess.arguments" type="QVariantList">
-    <value type="QString">-w</value>
-   </valuelist>
-   <value key="abstractProcess.command" type="QString">C:/Qt/2010.02.1/mingw/bin/mingw32-make.exe</value>
-   <value key="abstractProcess.enabled" type="bool">true</value>
-   <value key="abstractProcess.workingDirectory" type="QString">C:/Documents and Settings/mpa/Dokumenty/lsystem/lsystem-qt</value>
-  </valuemap>
- </data>
- <data>
-  <variable>buildconfiguration-Debug-cleanstep0</variable>
-  <valuemap type="QVariantMap">
-   <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Debug</value>
-   <valuelist key="abstractProcess.Environment" type="QVariantList">
-    <value type="QString">ALLUSERSPROFILE=C:\Documents and Settings\All Users</value>
-    <value type="QString">APPDATA=C:\Documents and Settings\mpa\Data aplikací</value>
-    <value type="QString">COMMONPROGRAMFILES=C:\Program Files\Common Files</value>
-    <value type="QString">COMPUTERNAME=HDC-MPA-D</value>
-    <value type="QString">COMSPEC=C:\WINDOWS\system32\cmd.exe</value>
-    <value type="QString">FP_NO_HOST_CHECK=NO</value>
-    <value type="QString">HOMEDRIVE=P:</value>
-    <value type="QString">HOMEPATH=\</value>
-    <value type="QString">HOMESHARE=\\leela\userdocuments\mpa</value>
-    <value type="QString">HYP_TOOLKIT=C:\PROGRA~1\Hypercom\Optimum</value>
-    <value type="QString">INCLUDE=C:\Program Files\Microsoft Visual Studio\VC98\atl\include;C:\Program Files\Microsoft Visual Studio\VC98\mfc\include;C:\Program Files\Microsoft Visual Studio\VC98\include</value>
-    <value type="QString">LIB=C:\Program Files\Microsoft Visual Studio\VC98\mfc\lib;C:\Program Files\Microsoft Visual Studio\VC98\lib</value>
-    <value type="QString">LOGONSERVER=\\LEELA</value>
-    <value type="QString">MSDEVDIR=C:\Program Files\Microsoft Visual Studio\Common\MSDev98</value>
-    <value type="QString">NUMBER_OF_PROCESSORS=2</value>
-    <value type="QString">OS=Windows_NT</value>
-    <value type="QString">PATH=C:\Qt\2010.02.1\mingw\bin;C:\Qt\2010.02.1\qt\bin;C:\Program Files\CollabNet\Subversion Client;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\Program Files\Intel\DMIX;C:\Program Files\NTRU Cryptosystems\NTRU TCG Software Stack\bin\;C:\Program Files\Wave Systems Corp\Gemalto\Access Client\v5\;c:\Program Files\Common Files\Roxio Shared\DLLShared\;c:\Program Files\Common Files\Roxio Shared\10.0\DLLShared\;C:\WINDOWS\system32\WindowsPowerShell\v1.0;C:\Program Files\QuickTime Alternative\QTSystem;C:\Program Files\TortoiseSVN\bin;C:\Program Files\Microsoft Visual Studio\Common\Tools\WinNT;C:\Program Files\Microsoft Visual Studio\Common\MSDev98\Bin;C:\Program Files\Microsoft Visual Studio\Common\Tools;C:\Program Files\Microsoft Visual Studio\VC98\bin</value>
-    <value type="QString">PATHEXT=.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.PSC1</value>
-    <value type="QString">PROCESSOR_ARCHITECTURE=x86</value>
-    <value type="QString">PROCESSOR_IDENTIFIER=x86 Family 6 Model 23 Stepping 10, GenuineIntel</value>
-    <value type="QString">PROCESSOR_LEVEL=6</value>
-    <value type="QString">PROCESSOR_REVISION=170a</value>
-    <value type="QString">PROGRAMFILES=C:\Program Files</value>
-    <value type="QString">PSMODULEPATH=C:\WINDOWS\system32\WindowsPowerShell\v1.0\Modules\</value>
-    <value type="QString">QTDIR=C:/Qt/2010.02.1/qt</value>
-    <value type="QString">ROXIOCENTRAL=c:\Program Files\Common Files\Roxio Shared\10.0\Roxio Central36\</value>
-    <value type="QString">SESSIONNAME=Console</value>
-    <value type="QString">SYSTEMDRIVE=C:</value>
-    <value type="QString">SYSTEMROOT=C:\WINDOWS</value>
-    <value type="QString">TEMP=C:\DOCUME~1\mpa\LOCALS~1\Temp</value>
-    <value type="QString">TMP=C:\DOCUME~1\mpa\LOCALS~1\Temp</value>
-    <value type="QString">USERDNSDOMAIN=LESON.LOCAL</value>
-    <value type="QString">USERDOMAIN=LESON</value>
-    <value type="QString">USERNAME=mpa</value>
-    <value type="QString">USERPROFILE=C:\Documents and Settings\mpa</value>
-    <value type="QString">WINDIR=C:\WINDOWS</value>
-   </valuelist>
-   <value key="abstractProcess.IgnoreReturnValue" type="bool">true</value>
-   <valuelist key="abstractProcess.arguments" type="QVariantList">
-    <value type="QString">clean</value>
-    <value type="QString">-w</value>
-   </valuelist>
-   <value key="abstractProcess.command" type="QString">C:/Qt/2010.02.1/mingw/bin/mingw32-make.exe</value>
-   <value key="abstractProcess.enabled" type="bool">true</value>
-   <value key="abstractProcess.workingDirectory" type="QString">C:/Documents and Settings/mpa/Dokumenty/lsystem/lsystem-qt</value>
-   <value key="cleanConfig" type="bool">true</value>
-   <valuelist key="makeargs" type="QVariantList">
-    <value type="QString">clean</value>
-   </valuelist>
-  </valuemap>
- </data>
- <data>
-  <variable>buildconfiguration-Release-buildstep0</variable>
-  <valuemap type="QVariantMap">
-   <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Release</value>
-  </valuemap>
- </data>
- <data>
-  <variable>buildconfiguration-Release-buildstep1</variable>
-  <valuemap type="QVariantMap">
-   <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Release</value>
-  </valuemap>
- </data>
- <data>
-  <variable>buildconfiguration-Release-cleanstep0</variable>
-  <valuemap type="QVariantMap">
-   <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Release</value>
-  </valuemap>
- </data>
- <data>
-  <variable>buildconfigurations</variable>
-  <valuelist type="QVariantList">
-   <value type="QString">Debug</value>
-   <value type="QString">Release</value>
-  </valuelist>
- </data>
- <data>
-  <variable>buildstep0</variable>
-  <valuemap type="QVariantMap">
-   <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString"></value>
-   <value key="mkspec" type="QString"></value>
-  </valuemap>
- </data>
- <data>
-  <variable>buildstep1</variable>
-  <valuemap type="QVariantMap">
-   <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString"></value>
-  </valuemap>
- </data>
- <data>
-  <variable>buildsteps</variable>
-  <valuelist type="QVariantList">
-   <value type="QString">trolltech.qt4projectmanager.qmake</value>
-   <value type="QString">trolltech.qt4projectmanager.make</value>
-  </valuelist>
- </data>
- <data>
-  <variable>cleanstep0</variable>
-  <valuemap type="QVariantMap">
-   <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString"></value>
-   <value key="clean" type="bool">true</value>
-  </valuemap>
- </data>
- <data>
-  <variable>cleansteps</variable>
-  <valuelist type="QVariantList">
-   <value type="QString">trolltech.qt4projectmanager.make</value>
-  </valuelist>
- </data>
- <data>
-  <variable>defaultFileEncoding</variable>
-  <value type="QByteArray">System</value>
- </data>
- <data>
-  <variable>project</variable>
-  <valuemap type="QVariantMap"/>
+  <variable>ProjectExplorer.Project.Updater.FileVersion</variable>
+  <value type="int">4</value>
  </data>
 </qtcreator>
