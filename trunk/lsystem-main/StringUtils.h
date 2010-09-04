@@ -14,6 +14,53 @@ public:
     static std::string processLine(std::fstream * , std::stringstream & );
 };
 
+class ParseableString
+{
+private:
+	char * pStr;
+	unsigned int _pos, _length;
+	bool _eof;
+public:
+	ParsableString( char * string ): pStr(string), _pos(0), _eof(false) 
+	{
+		_length = strlen( string );
+	};
+
+	bool eof() inline
+	{
+		return _eof;
+	}
+
+	bool reset() inline
+	{
+		_pos = 0;
+		_eof = false;
+	}
+	char next(double * pParams, int & paramsCnt) inline
+	{
+		if( _eof ) 
+			return '\0';
+
+		_pos++;
+
+		if( (_pos + 1 >= _length) || ( pStr[pos + 1] != '(' ) )
+            return false;
+		char * pPos = pStr + pos + 2; // skip nonterminal and (
+		char * pEnd = 0;
+		do
+		{
+			pParams[paramsCnt++] = strtod( pPos, &pEnd );
+			pPos = pEnd + 1;
+		}
+		while ( *pEnd == ',' );
+
+		if(_pos + 1 >= _length)
+			_eof = true;
+
+		return pStr[_pos];
+	}
+};
+
 class LongString
 {
 private:
@@ -128,7 +175,7 @@ public:
 	//mozna nekdy bool
     bool getParamaters( unsigned int & pos, double * pParams, int & paramsCnt )
 	{
-		if( (pos + 1 > _length) || ( pStr[pos + 1] != '(' ) )
+		if( (pos + 1 >= _length) || ( pStr[pos + 1] != '(' ) )
             return false;
 		char * pPos = pStr + pos + 2; // skip nonterminal and (
 		char * pEnd = 0;
