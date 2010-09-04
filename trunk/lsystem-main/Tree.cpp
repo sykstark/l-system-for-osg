@@ -39,7 +39,7 @@ void Tree::postInitialize()
 	// Schedule the parent EO for regular updates
 	getWorldPtr()->getSchedulerPtr()->addEntity(this, 60);
 	
-	AP_LSystem::Configuration::getCfg()->loadCfgFile("vreckoAP_Garden.cfg");
+	AP_LSystem::Configuration::get()->loadCfgFile("vreckoAP_Garden.cfg");
 	draw();
 }
 
@@ -68,7 +68,7 @@ bool Tree::loadXMLParameters(XERCES_CPP_NAMESPACE_QUALIFIER DOMNode *pParameters
 	}
 	return true;
 }
-/*
+
 void Tree::draw()
 {
 	osg::ref_ptr<osg::Geometry> geom = new osg::Geometry;
@@ -81,7 +81,7 @@ void Tree::draw()
 	// Create an array of four colors.
 	osg::ref_ptr<osg::Vec4Array> c = new osg::Vec4Array;
 	geom->setColorArray( c.get() );
-	geom->setColorBinding( osg::Geometry::BIND_PER_VERTEX );
+	geom->setColorBinding( osg::Geometry::BIND_OVERALL );
 	c->push_back( osg::Vec4( 1.f, 0.f, 0.f, 1.f ) );
 	c->push_back( osg::Vec4( 0.f, 1.f, 0.f, 1.f ) );
 	c->push_back( osg::Vec4( 0.f, 0.f, 1.f, 1.f ) );
@@ -96,16 +96,74 @@ void Tree::draw()
 	new osg::DrawArrays( osg::PrimitiveSet::QUADS, 0, 4 ) );
 	// Add the Geometry (Drawable) to a Geode and
 	// return the Geode.
-	
 	osg::Geode* geode = new osg::Geode();
+
+	//geode->addDrawable(new ShapeDrawable(new Sphere(Vec3(), 1)));
+	
+
+	osg::ref_ptr<osg::Image> image = osgDB::readImageFile( "data\\ls\\bitmap.jpg" );
+
+	osg::ref_ptr<osg::Texture2D> tex = new osg::Texture2D;
+	if(image.get())
+	{
+		tex->setImage( image.get() );
+
+		osg::ref_ptr<osg::StateSet> state = geode->getOrCreateStateSet();
+		state->setTextureAttributeAndModes( 0, tex.get(), osg::StateAttribute::OFF );
+	}
+
+	AddAnother( geom.get() );	
+	
 	geode->addDrawable( geom.get() );
 
 	pEOOwner->addChild((osg::Group *)geode);
 	if (pOSGGeode != NULL)
 		pEOOwner->removeChild((osg::Group *)pOSGGeode);
 	pOSGGeode = geode;
-}*/
+}
 
+void Tree::AddAnother( osg::Geometry * geom)
+{
+	osg::ref_ptr<osg::Vec3Array> v = dynamic_cast<osg::Vec3Array*>(geom->getVertexArray());
+	cout << endl << "Elements number: " << v->getNumElements( ) << endl ;
+
+	v->push_back( osg::Vec3( -1.f, 3.f, -1.f ) );
+	v->push_back( osg::Vec3( 1.f, 3.f, -1.f ) );
+	v->push_back( osg::Vec3( 1.f, 3.f, 1.f ) );
+	v->push_back( osg::Vec3( -1.f, 3.f, 1.f ) );
+
+	osg::ref_ptr<osg::Vec2Array> t = dynamic_cast<osg::Vec2Array*>(geom->getTexCoordArray(0));
+
+	//cout << endl << "number of ref: " << t->referenceCount() << endl ;
+	
+	if(!t.get())
+	{
+		t = new osg::Vec2Array;
+		cout << endl << "number of ref: " << t->referenceCount() << endl ;
+		geom->setTexCoordArray(0,t.get());
+	}
+
+	cout << endl << "number of ref: " << t->referenceCount() << endl ;
+
+	t->push_back( osg::Vec2( 0.f, 0.f ) );
+	t->push_back( osg::Vec2( 1.f, 0.f ) );
+	t->push_back( osg::Vec2( 1.f, 1.f ) );
+	t->push_back( osg::Vec2( 0.f, 1.f ) );
+
+	t->push_back( osg::Vec2( 0.f, 0.f ) );
+	t->push_back( osg::Vec2( 1.f, 0.f ) );
+	t->push_back( osg::Vec2( 1.f, 1.f ) );
+	t->push_back( osg::Vec2( 0.f, 1.f ) );
+
+	geom->addPrimitiveSet(
+		new osg::DrawArrays( osg::PrimitiveSet::QUADS, 4, 4 ) );
+
+	osg::PrimitiveSet * p = geom->getPrimitiveSet(geom->getPrimitiveSetList().size() - 1 );
+	cout << endl << "Indices number: " << p->getNumIndices() << endl ;
+	cout << endl << "number of ref: " << t->referenceCount() << endl ;
+	//cout << endl << "Elements number: " << v->getNumElements( ) << endl ;
+}
+/*
 void Tree::draw() 
 {
 	AbstractGrammar * grammar;
@@ -130,7 +188,7 @@ void Tree::draw()
 	}
 
 	
-	/*unsigned int ttype = (turtleType == "jointed")?0:1;
+	unsigned int ttype = (turtleType == "jointed")?0:1;
 	Lparser lp(thickness,angle,length,(unsigned int)lod, ttype);
 	if(filename.empty())
 	{
@@ -182,7 +240,7 @@ void Tree::draw()
 			new osg::DrawArrays( indicesArray[i].primitiveSet, pos , indicesArray[i].count ) );
 		pos += indicesArray[i].count;
 	}
-	*/
+	
 
 	// Add the Geometry (Drawable) to a Geode and
 	// return the Geode.
@@ -193,5 +251,5 @@ void Tree::draw()
 	if (pOSGGeode != NULL)
 		pEOOwner->removeChild( (osg::Group *)pOSGGeode);
 	pOSGGeode = geode;
-}
+}*/
 }
