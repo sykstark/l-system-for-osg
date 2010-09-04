@@ -1,6 +1,6 @@
-#ifndef QT_APP
+/*#ifndef QT_APP
 #include "precompiled.h"
-#endif
+#endif*/
 
 #include <iostream>
 #include <fstream>
