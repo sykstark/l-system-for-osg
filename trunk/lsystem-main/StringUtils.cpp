@@ -1,6 +1,7 @@
-#ifndef QT_APP
+/*#ifdef _MSC_VER
 #include "precompiled.h"
-#endif
+#endif*/
+
 #include "StringUtils.h"
 #include <iostream>
 #include <istream>
