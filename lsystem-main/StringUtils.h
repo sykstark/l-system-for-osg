@@ -21,22 +21,22 @@ private:
 	unsigned int _pos, _length;
 	bool _eof;
 public:
-	ParsableString( char * string ): pStr(string), _pos(0), _eof(false) 
+    ParseableString( char * string ): pStr(string), _pos(0), _eof(false)
 	{
 		_length = strlen( string );
-	};
+    }
 
-	bool eof() inline
+    inline bool eof()
 	{
 		return _eof;
 	}
 
-	bool reset() inline
+    inline void reset()
 	{
 		_pos = 0;
 		_eof = false;
 	}
-	char next(double * pParams, int & paramsCnt) inline
+  /*  inline char next(double * pParams, int & paramsCnt)
 	{
 		if( _eof ) 
 			return '\0';
@@ -58,7 +58,7 @@ public:
 			_eof = true;
 
 		return pStr[_pos];
-	}
+    }*/
 };
 
 class LongString
@@ -91,6 +91,12 @@ public:
     LongString(): _length(0)
     {
         _allocated =_increment = 100000;
+        pStr = new char[_allocated];
+    }
+
+    LongString( unsigned int increment )
+    {
+        _allocated =_increment = increment;
         pStr = new char[_allocated];
     }
 
