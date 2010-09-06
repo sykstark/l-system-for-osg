@@ -2,6 +2,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <vector>
 #include "AbstractGrammar.h"
 #include "Configuration.h"
 
@@ -14,6 +15,25 @@ public:
     static std::string processLine(std::fstream * , std::stringstream & );
 };
 
+enum ParameterType
+{
+	LS_NO_PARAMETER = 1,
+	LS_BYTE,
+	LS_UBYTE,
+	LS_INT,
+	LS_UINT,
+	LS_FLOAT,
+	LS_DOUBLE
+};
+
+struct Parameter
+{
+	Parameter( void * value, ParameterType type ):value(value),type(type){}
+
+	void * value;
+	ParameterType type;
+};
+
 class ParseableString
 {
 private:
@@ -21,22 +41,22 @@ private:
 	unsigned int _pos, _length;
 	bool _eof;
 public:
-    ParseableString( char * string ): pStr(string), _pos(0), _eof(false)
+	ParseableString( char * string ): pStr(string), _pos(0), _eof(false) 
 	{
 		_length = strlen( string );
     }
 
-    inline bool eof()
+	inline bool eof()
 	{
 		return _eof;
 	}
 
-    inline void reset()
+	inline bool reset()
 	{
 		_pos = 0;
 		_eof = false;
 	}
-  /*  inline char next(double * pParams, int & paramsCnt)
+/*	char next(double * pParams, int & paramsCnt) inline
 	{
 		if( _eof ) 
 			return '\0';
@@ -58,13 +78,46 @@ public:
 			_eof = true;
 
 		return pStr[_pos];
-    }*/
+	}*/
+
+	char next( vector<Parameter> &parameters )
+	{
+		if( _eof ) 
+			return '\0';
+		
+		char symbol = pStr[_pos];
+
+		if(_pos++ >= _length)
+		{
+			_eof = true;
+			return '\0';
+		}
+
+		while(true)
+		{
+			switch(pStr[_pos++])
+			{
+			case LS_DOUBLE:
+				{
+					double * pPar = reinterpret_cast<double *>(pStr);
+					parameters.push_back( Parameter( reinterpret_cast<void *>(pPar), LS_DOUBLE ) );
+					_pos += sizeof(double);
+				}
+				break;
+			case LS_NO_PARAMETER:
+			default:
+				if(_pos >= _length)
+					_eof = true;
+				return symbol;
+			}
+		}
+	}
 };
 
 class LongString
 {
 private:
-    char * pStr;
+    unsigned char * pStr;
     unsigned int _length;
     unsigned int _allocated;
     unsigned int _increment;
@@ -73,10 +126,10 @@ private:
     {
         if(pStr)
         {
-            char * pOld = pStr;
+            unsigned char * pOld = pStr;
 
             _allocated += _increment;
-            pStr = new char[_allocated];
+            pStr = new unsigned char[_allocated];
             for( unsigned int i =0; i < _length; i++)
             {
                     pStr[i] = pOld[i];
@@ -87,11 +140,16 @@ private:
 
     }
 
+	void appendType( ParameterType type )
+	{
+		pStr[_length++] = static_cast<unsigned char>(type);
+	}
+
 public:
     LongString(): _length(0)
     {
         _allocated =_increment = 100000;
-        pStr = new char[_allocated];
+        pStr = new unsigned char[_allocated];
     }
 
     LongString( unsigned int increment )
@@ -103,7 +161,7 @@ public:
     LongString( const LongString& c ):_length(c.length()),
         _allocated(c.getAllocated()), _increment( c.getIncrement())
     {
-        pStr = new char[_allocated];
+        pStr = new unsigned char[_allocated];
         memcpy( pStr, c.getString(), c.length() );
     }
 
@@ -112,7 +170,7 @@ public:
         _length = c.length();
         _allocated = c.getAllocated();
         _increment = c.getIncrement();
-        pStr = new char[_allocated];
+        pStr = new unsigned char[_allocated];
         memcpy( pStr, c.getString(), c.length() );
 
         return *this;
@@ -133,38 +191,35 @@ public:
                 resize( );
         }
 
-        for(unsigned int i=0 ; i < length; i++)
-        {
-                pStr[_length + i ] = str[i];
-        }
+		memcpy( pStr, str, length);
 
         _length += length;
     }
 
-    void appendChar( const char ch )
+    void appendChar( const char ch, bool parametric )
     {
-        if(_allocated < _length + 1)
+		if(_allocated < _length + (parametric)?1:2)
         {
                 resize( );
         }
         pStr[_length++] = ch;
+
+		if(!parametric)
+		{
+			appendType( LS_NO_PARAMETER );			
+		}
     }
 
-	void appendDouble( const double i )
+	void appendDouble( double * par )
 	{
-		if(_allocated < _length + 20)
+		if(_allocated < _length + sizeof(double) + 2)
 		{
 			resize( );
 		}
-        int cnt = sprintf( pStr + _length, "%.1f", i );
-		if( cnt > 0 )
-		{
-			_length += cnt;
-		}
-		else
-		{
-			//chyba
-		}
+		appendType( LS_DOUBLE );
+		memcpy( pStr + _length, par, sizeof(double) );
+		length += sizeof(double);
+		appendType( LS_DOUBLE );
 	}
 
 	char& operator[](unsigned int i) const
