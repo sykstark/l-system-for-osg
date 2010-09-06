@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <cstring>
+#include "StringUtils.h"
 
 namespace AP_LSystem {
 class StaticString
@@ -14,6 +15,13 @@ public:
 		this->str = new char[length];
 		memcpy( (void *) this->str, str, length);
 		// strcpy( this->str, str);
+    }
+
+    StaticString( LongString str)
+    {
+        this->length = str.length();
+        this->str = new char[length];
+        memcpy( (void *) this->str, str.getString(), length);
     }
 
     StaticString( char ch ):length(1)
