@@ -14,13 +14,13 @@ public:
 		this->str = new char[length];
 		memcpy( (void *) this->str, str, length);
 		// strcpy( this->str, str);
-    };
+    }
 
     StaticString( char ch ):length(1)
     {
         this->str = new char[1];
         this->str[0] = ch;
-    };
+    }
 
     StaticString( std::string str )
 	{
