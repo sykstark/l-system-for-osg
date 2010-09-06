@@ -92,14 +92,14 @@ public:
     {
         _allocated =_increment = 100000;
         pStr = new char[_allocated];
-    };
+    }
 
     LongString( const LongString& c ):_length(c.length()),
         _allocated(c.getAllocated()), _increment( c.getIncrement())
     {
         pStr = new char[_allocated];
         memcpy( pStr, c.getString(), c.length() );
-    };
+    }
 
     LongString& operator=( const LongString & c )
     {
@@ -110,7 +110,7 @@ public:
         memcpy( pStr, c.getString(), c.length() );
 
         return *this;
-    };
+    }
 
     ~LongString( )
     {
@@ -118,7 +118,7 @@ public:
         {
             delete[] pStr;
         }
-    };
+    }
 
     void appendStr( const char * str, unsigned int length )
     {
@@ -203,9 +203,9 @@ public:
 		return pStr;
 	}
 
-    unsigned int getAllocated() const { return _allocated; };
-    unsigned int getIncrement() const { return _increment; };
-    char * getString() const { return pStr; };
+    unsigned int getAllocated() const { return _allocated; }
+    unsigned int getIncrement() const { return _increment; }
+    char * getString() const { return pStr; }
 
 	// zkusit vytvorit appendChar()
 };
