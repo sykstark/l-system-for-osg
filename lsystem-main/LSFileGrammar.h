@@ -15,9 +15,7 @@ private:
     vector<string> _subGrammarsFilenames;
     map<string, string> _subGrammarsWords;
 
-    void processRuleParameters(string *, string::iterator &, Rule &);
-    void processRuleCondition(string *, string::iterator &, Rule &);
-    void processRuleProbabilityFactor(string *, string::iterator &, Rule &);
+    bool getEndOfStatic(string *, string::iterator &, string::iterator &);
 
 public:
 	LSFileGrammar( std::string * );
