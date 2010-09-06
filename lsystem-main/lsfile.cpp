@@ -24,7 +24,7 @@ void LSFile::open(std::string * filename)
     }
 
     std::stringstream line;
-    std::string id, s_line, temp, grammarID;
+    std::string id, grammarID;
 
 
     id = StringUtils::processLine( file, line );
@@ -40,7 +40,21 @@ void LSFile::open(std::string * filename)
             {
                 string prop; // property
                 line >> prop;
+                if( prop == "" )
+                {
+                    throw ParsingException("Bad format of #set");
+                }
                 Configuration::get()->setProperty(grammarID, prop);  // property setting
+            }
+            else if(id=="#define")
+            {
+                std::string definition, value;
+                line >> definition >> value;
+                if( (definition == "" ) || (value == ""))
+                {
+                    throw ParsingException("Bad format of #define");
+                }
+                defines.insert(make_pair<std::string, std::string>(definition, value));
             }
             else if(id=="#axiom")
             {
@@ -88,6 +102,8 @@ void LSFile::open(std::string * filename)
             // dodelat prazdny radek jen s komentarem
 
         }
+
+        processDefines();
     }
     else
     {
@@ -96,4 +112,25 @@ void LSFile::open(std::string * filename)
     }
     file->close();
     delete file;
+}
+
+// nahradit vsechny vyskyty maker hodnotami
+void LSFile::processDefines()
+{
+    unsigned int i;
+    vector<string>::iterator rule;
+    std::map<std::string,std::string>::iterator def;
+    for(rule = rules.begin();rule != rules.end(); rule++)
+    {
+        for(def = defines.begin(); def != defines.end(); def++)
+        {
+            i=0;
+            while((i = rule->find(def->first,i))&&(i != std::string::npos))
+            {
+                rule->replace(i,def->first.length(),def->second);
+                i += def->first.length();
+
+            }
+        }
+    }
 }
