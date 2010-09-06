@@ -1,6 +1,7 @@
-#ifndef QT_APP
+//#ifdef _MSC_VER
 #include "precompiled.h"
-#endif
+//#endif
+
 #include "LSFileGrammar.h"
 #include "StringUtils.h"
 #include "lsfile.h"
