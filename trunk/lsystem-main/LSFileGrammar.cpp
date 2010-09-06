@@ -7,6 +7,7 @@
 #include "lsystemexception.h"
 
 #include "fparser/fparser.hh"
+#include "boost/lexical_cast.hpp"
 
 using namespace AP_LSystem;
 
@@ -72,11 +73,11 @@ void LSFileGrammar::addRule(std::string * rule)
 
 	// parametric rule
 	// example: (x,y)
-    processRuleParameters(rule, it, r);
+    r.processParameters(rule, it);
 
     // condition of rule
     // example: :x<y
-    processRuleCondition(rule, it, r);
+    r.processCondition(rule, it);
 
     // transcryption sign
     // example: ->
@@ -93,9 +94,19 @@ void LSFileGrammar::addRule(std::string * rule)
 	unsigned int closingPar; // position of ) for determination if the content inside ( ) has to be parsed
 	unsigned int i;
 	char c;
-	string str;
 
     start = it;
+
+    LongString staticStr = LongString(100);
+    while( getEndOfStatic(rule, it, end) )
+    {
+        staticStr.appendStr(string(it,end), end-it);
+
+        double x;
+        if( toDouble( x ) )
+
+    }
+
     while( ( pos = rule->find_first_of( "(:", it - rule->begin( ) ) ) != std::string::npos )
 	{
 		end = rule->begin() + pos;
@@ -178,7 +189,7 @@ void LSFileGrammar::addRule(std::string * rule)
     }
     r.staticStrings.push_back( pSS );
 
-    processRuleProbabilityFactor(rule, it, r);
+    r.processProbabilityFactor(rule, it);
 
 //    cout << "static:" << str << endl;
 
@@ -208,11 +219,11 @@ void LSFileGrammar::addHomomorphism(std::string * hom)
 
     // parametric rule
     // example: (x,y)
-    processRuleParameters(hom, it, r);
+    r.processParameters(hom, it);
 
     // condition of rule
     // example: :x<y
-    processRuleCondition(hom, it, r);
+    r.processCondition(hom, it);
 
     // transcryption sign
     // example: ->
@@ -231,7 +242,7 @@ void LSFileGrammar::addHomomorphism(std::string * hom)
 
     // probability factor
     // example: :max(1,y)
-    processRuleProbabilityFactor(hom, it, r);
+    r.processProbabilityFactor(hom, it);
 
     // insert new rule into map with rules
     this->_homomorphisms.insert(make_pair< char, Rule >(nonTerminal, r ));
@@ -316,107 +327,22 @@ bool LSFileGrammar::nextIteration( )
     return true;
 }
 
-
-void LSFileGrammar::processRuleParameters(string * rule, string::iterator & it, Rule & r)
+bool LSFileGrammar::getEndOfStatic(string * rule, string::iterator & begin, string::iterator & end)
 {
-    // parametric rule
-    // example: (x,y)
-
-    unsigned int pos;
-
-    if( *it == '(' )
+    unsigned int pos = rule->find_first_of( "(:", begin - rule->begin( ) );
+    if ( pos != std::string::npos )
     {
-        it++;
+        end = rule->begin() + pos;
 
-        pos = rule->find( ')', it - rule->begin() );
-        if ( pos == std::string::npos )
+        if( *end == ':' )
         {
-            throw ParsingException("Missing ending bracket!");
+            begin = end;
+            return false;
         }
-        else
-        {
-            r.variables = string( it, rule->begin() + pos);
-        }
-
-        it = rule->begin() + pos + 1;
+        return true;
     }
-}
+    return false;
 
-void LSFileGrammar::processRuleCondition(string * rule, string::iterator & it, Rule & r)
-{
-    unsigned int pos;
-
-    if( *it++ != ':' )
-    {
-        if( (*it - 1 != '-') || (*it != '>') )
-        {
-            throw ParsingException("Symbol \':\' or \'->\' was expected!");
-        }
-        else
-        {
-            r.condition = NULL;
-            return;
-        }
-    }
-
-    if( *it != '*' )
-    {
-        pos = rule->find( "->", it - rule->begin() );
-
-        if ( pos == std::string::npos )
-        {
-            throw ParsingException("Symbol \'->\' wasn\'t found!");
-        }
-        else
-        {
-            FunctionParser * cond = r.condition;
-            if(!cond)
-            {
-                cond = new FunctionParser();
-            }
-
-            if ( cond->Parse( string( it, rule->begin() + pos ), r.variables, false ) != -1 )
-            {
-                throw ParsingException("Parsing of condition expression error!");
-            }
-
-            it = rule->begin() + pos;
-        }
-    }
-    else
-    {
-        it++;
-        r.condition = NULL;
-    }
-}
-
-void LSFileGrammar::processRuleProbabilityFactor(string * rule, string::iterator & it, Rule & r)
-{
-    // 3 possibilities of empty probability factor
-    //      - there is nothing after successor
-    //      - there is something else then ':' which indicates probability factor
-    //      - there is ':' followed by '*' which indicates no probability factor
-    if((it == rule->end()) || (*it++ != ':'))
-    {
-        r.probabilityFactor = NULL;
-        return;
-    }
-    else if(*it == '*')
-    {
-        r.probabilityFactor = NULL;
-        return;
-    }
-
-    FunctionParser * pf = r.probabilityFactor;
-    if(!pf)
-    {
-        pf = new FunctionParser();
-    }
-
-    if ( pf->Parse( string( it, rule->end() ), r.variables, false ) != -1 )
-    {
-        throw ParsingException("Parsing of probability factor error!");
-    }
 }
 
 char * LSFileGrammar::translate()
