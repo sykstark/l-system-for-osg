@@ -11,10 +11,13 @@ class LSFileGrammar : public AbstractGrammar
 private:
     LongString * _word;
     multimap<char, Rule> _rules;
-    map<string, string> _homomorphisms;
+    multimap<char, Rule> _homomorphisms;
     vector<string> _subGrammarsFilenames;
     map<string, string> _subGrammarsWords;
-    //std::string _axiom;
+
+    void processRuleParameters(string *, string::iterator &, Rule &);
+    void processRuleCondition(string *, string::iterator &, Rule &);
+    void processRuleProbabilityFactor(string *, string::iterator &, Rule &);
 
 public:
 	LSFileGrammar( std::string * );
@@ -30,6 +33,6 @@ public:
     virtual bool nextIteration();
 	virtual char* translate();
 
-	unsigned int wordLength() { return _word->length(); };
+    unsigned int wordLength() { return _word->length(); }
 };
 }
