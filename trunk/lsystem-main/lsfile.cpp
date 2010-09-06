@@ -1,7 +1,3 @@
-#ifndef QT_APP
-#include "precompiled.h"
-#endif
-
 #include <fstream>
 
 #include "lsfile.h"
