@@ -58,13 +58,13 @@ void LSFileGrammar::loadFromFile( std::string * filename )
 
 void LSFileGrammar::addRule(std::string * rule)
 {
-	Rule r;
-	bool parametric = false;
+    Rule r;
 	unsigned int pos;
+    StaticString * pSS;
 	std::string::iterator start, end, it = rule->begin();
 	
 	// process a rule
-	// example: A(x,y)->B(x+1,y-2)
+    // example: A(x,y):x<y->B(x+1,y-2):max(1,x)
 
 	// non terminal
 	// example: A
@@ -72,56 +72,17 @@ void LSFileGrammar::addRule(std::string * rule)
 
 	// parametric rule
 	// example: (x,y)
-	if( *it == '(' )
-	{
-		parametric = true;
-		it++;
-/*		do
-		{
-			variables.insert(*it++);
-		}
-		while( *it++ == ',' );
-		if( *it++ != ')' ) 
-		{
-			//throw exception
-		}*/
+    processRuleParameters(rule, it, r);
 
-		pos = rule->find( ')', it - rule->begin() );
-		if ( pos == std::string::npos )
-		{
-            throw ParsingException("missing ending bracket");
-		}
-		else
-		{
-            r.variables = string( it, rule->begin() + pos);
-		}
+    // condition of rule
+    // example: :x<y
+    processRuleCondition(rule, it, r);
 
-        it = rule->begin() + pos + 1;
-
-	}
-
-	if( *it++ != ':' )
-	{
-        throw ParsingException("\':\' was expected");
-	}
-
-	if( *it != '*' )
-	{
-		FunctionParser * cond = r.condition;
-		cond = new FunctionParser();
-
-		// pridat konstanty
-			
-	}
-	else
-	{
-		it++;
-		r.condition = NULL;
-	}
-
+    // transcryption sign
+    // example: ->
 	if( (*it++ != '-') || (*it++ != '>') )
 	{
-        throw ParsingException("\'->\' was expected");
+        throw ParsingException("Symbol \'->\' was expected!");
 	}
 
 	// look for opening bracket - end of static string
@@ -130,23 +91,27 @@ void LSFileGrammar::addRule(std::string * rule)
 	// slo by zrychlit testem na parametric - pridat rovnou cely retezec
 
 	unsigned int closingPar; // position of ) for determination if the content inside ( ) has to be parsed
-	
-	start = it;
-
 	unsigned int i;
 	char c;
 	string str;
 
-	while( ( pos = rule->find( '(', it - rule->begin( ) ) ) != std::string::npos )
+    start = it;
+    while( ( pos = rule->find_first_of( "(:", it - rule->begin( ) ) ) != std::string::npos )
 	{
 		end = rule->begin() + pos;
+
+        if( *end == ':' )
+        {
+            it = end;
+            break;
+        }
+
 		closingPar = rule->find( ')', pos );
 		
 		if( closingPar == std::string::npos )
 		{
             throw ParsingException("missing ending bracket");
 		}
-
 		
 		// set i as position od char after (
 		for( i = pos + 1; i < closingPar; i++ )
@@ -163,8 +128,8 @@ void LSFileGrammar::addRule(std::string * rule)
 		}
 
         // add static string - with (
-        str = string(start, end + 1);
-        r.staticStrings.push_back( StaticString( str.c_str(), end - start + 1 ) );
+        pSS = new StaticString( string(start, end + 1) );
+        r.staticStrings.push_back( pSS );
 
 //        cout << "static:" << str << endl;
 
@@ -191,8 +156,9 @@ void LSFileGrammar::addRule(std::string * rule)
                 break;
             }
             else
-            {
-                r.staticStrings.push_back( StaticString(*end) );
+            {                
+                pSS = new StaticString(*end);
+                r.staticStrings.push_back( pSS );
 //                cout << "static:" << *end << endl;
             }
         }
@@ -200,8 +166,19 @@ void LSFileGrammar::addRule(std::string * rule)
         start = end;
 	}
 	// insert last part of rule - after last ')'
-	str = string(start, rule->end( ));
-	r.staticStrings.push_back( StaticString( str.c_str(), rule->end( ) - start ) );
+    if( pos == std::string::npos )
+    {
+        // without probability
+        pSS = new StaticString(string(start, rule->end( )));
+    }
+    else
+    {
+        // with probability
+        pSS = new StaticString(string(start, end));
+    }
+    r.staticStrings.push_back( pSS );
+
+    processRuleProbabilityFactor(rule, it, r);
 
 //    cout << "static:" << str << endl;
 
@@ -211,15 +188,53 @@ void LSFileGrammar::addRule(std::string * rule)
 
 void LSFileGrammar::setAxiom(const std::string & axiom)
 {
-    //_axiom = axiom;
-
 	if(_word) delete _word;
 	_word = new LongString( );
     _word->appendStr( axiom.c_str(), axiom.length() );
 }
 
-void LSFileGrammar::addHomomorphism(std::string * homomorphism)
+void LSFileGrammar::addHomomorphism(std::string * hom)
 {
+    Rule r;
+    std::string::iterator end, it = hom->begin();
+    StaticString * pSS;
+
+    // process homomorphism
+    // example: A(x,y):x<y->+F(x):max(1,y)
+
+    // non terminal
+    // example: A
+    char nonTerminal = *it++;
+
+    // parametric rule
+    // example: (x,y)
+    processRuleParameters(hom, it, r);
+
+    // condition of rule
+    // example: :x<y
+    processRuleCondition(hom, it, r);
+
+    // transcryption sign
+    // example: ->
+    if( (*it++ != '-') || (*it++ != '>') )
+    {
+        throw ParsingException("Symbol \'->\' was expected!");
+    }
+
+    // homomorphism successor
+    // example: +F(x)
+    string str;
+
+    end = hom->begin() + hom->find( ':', it-hom->begin() );
+    pSS = new StaticString(string(it, end));
+    r.staticStrings.push_back( pSS );
+
+    // probability factor
+    // example: :max(1,y)
+    processRuleProbabilityFactor(hom, it, r);
+
+    // insert new rule into map with rules
+    this->_homomorphisms.insert(make_pair< char, Rule >(nonTerminal, r ));
 	
 }
 
@@ -229,7 +244,7 @@ bool LSFileGrammar::nextIteration( )
 	multimap<char, Rule>::iterator ruleIt;
 	pair<multimap<char, Rule>::iterator, multimap<char, Rule>::iterator > result;
 
-	vector<StaticString>::iterator stStrIt;
+    vector<StaticString*>::iterator stStrIt;
 	vector<FunctionParser*>::iterator dynStrIt;
 
 	double parameters[100];
@@ -257,15 +272,24 @@ bool LSFileGrammar::nextIteration( )
             { 
                 return false;
             }
+
+            // randomly select rule and take probability into account
+            if(result.first->second.probabilityFactor)
+            {
+                for( ruleIt = result.first; ruleIt != result.second; ruleIt++ )
+                {
+                  //  ruleIt->second.
+                }
+
+            }
+
 			for( ruleIt = result.first; ruleIt != result.second; ruleIt++ )
 			{
-				if( ruleIt->second.condition != NULL )
+                if( ruleIt->second.condition)
 				{
 					if( ruleIt->second.condition->Eval( pParams ) == 0 )
 						continue;
 				}
-
-
 
 				for( stStrIt= ruleIt->second.staticStrings.begin(), 
 					dynStrIt = ruleIt->second.dynamicStrings.begin();
@@ -273,7 +297,7 @@ bool LSFileGrammar::nextIteration( )
 					stStrIt++, dynStrIt++)
 				{
 					// pridani statickych a dynamickych retezcu do slova ( krome posledniho statickeho )
-					newWord->appendStr( stStrIt->str, stStrIt->length );
+                    newWord->appendStr( (*stStrIt)->str, (*stStrIt)->length );
 					newWord->appendDouble( (*dynStrIt)->Eval( pParams ) );
 
 //                    cout << stStrIt->toString() << " | " << (*dynStrIt)->Eval( pParams ) << " | ";
@@ -281,7 +305,7 @@ bool LSFileGrammar::nextIteration( )
 				}
 				// pridani posledniho statickeho retezce
 //                cout << stStrIt->toString();
-				newWord->appendStr( stStrIt->str, stStrIt->length );
+                newWord->appendStr( (*stStrIt)->str, (*stStrIt)->length );
 
 			}
 		}
@@ -290,6 +314,109 @@ bool LSFileGrammar::nextIteration( )
 	_word = newWord;
 
     return true;
+}
+
+
+void LSFileGrammar::processRuleParameters(string * rule, string::iterator & it, Rule & r)
+{
+    // parametric rule
+    // example: (x,y)
+
+    unsigned int pos;
+
+    if( *it == '(' )
+    {
+        it++;
+
+        pos = rule->find( ')', it - rule->begin() );
+        if ( pos == std::string::npos )
+        {
+            throw ParsingException("Missing ending bracket!");
+        }
+        else
+        {
+            r.variables = string( it, rule->begin() + pos);
+        }
+
+        it = rule->begin() + pos + 1;
+    }
+}
+
+void LSFileGrammar::processRuleCondition(string * rule, string::iterator & it, Rule & r)
+{
+    unsigned int pos;
+
+    if( *it++ != ':' )
+    {
+        if( (*it - 1 != '-') || (*it != '>') )
+        {
+            throw ParsingException("Symbol \':\' or \'->\' was expected!");
+        }
+        else
+        {
+            r.condition = NULL;
+            return;
+        }
+    }
+
+    if( *it != '*' )
+    {
+        pos = rule->find( "->", it - rule->begin() );
+
+        if ( pos == std::string::npos )
+        {
+            throw ParsingException("Symbol \'->\' wasn\'t found!");
+        }
+        else
+        {
+            FunctionParser * cond = r.condition;
+            if(!cond)
+            {
+                cond = new FunctionParser();
+            }
+
+            if ( cond->Parse( string( it, rule->begin() + pos ), r.variables, false ) != -1 )
+            {
+                throw ParsingException("Parsing of condition expression error!");
+            }
+
+            it = rule->begin() + pos;
+        }
+    }
+    else
+    {
+        it++;
+        r.condition = NULL;
+    }
+}
+
+void LSFileGrammar::processRuleProbabilityFactor(string * rule, string::iterator & it, Rule & r)
+{
+    // 3 possibilities of empty probability factor
+    //      - there is nothing after successor
+    //      - there is something else then ':' which indicates probability factor
+    //      - there is ':' followed by '*' which indicates no probability factor
+    if((it == rule->end()) || (*it++ != ':'))
+    {
+        r.probabilityFactor = NULL;
+        return;
+    }
+    else if(*it == '*')
+    {
+        r.probabilityFactor = NULL;
+        return;
+    }
+
+    FunctionParser * pf = r.probabilityFactor;
+    if(!pf)
+    {
+        pf = new FunctionParser();
+    }
+
+    if ( pf->Parse( string( it, rule->end() ), r.variables, false ) != -1 )
+    {
+        throw ParsingException("Parsing of probability factor error!");
+    }
 }
 
 char * LSFileGrammar::translate()
