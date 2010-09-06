@@ -58,6 +58,7 @@ void Configuration::setProperty(const std::string &grammarID, const std::string 
     stream << property;
 
     store(parse_config_file( stream, description), grammarProperties[ grammarID ] );
+    notify(grammarProperties[ grammarID ]);
 }
 
 const variable_value * Configuration::getProperty(const std::string & name)
