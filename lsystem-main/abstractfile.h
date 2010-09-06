@@ -11,8 +11,6 @@ class AbstractFile
 {
 
 public:
-    //AbstractFile(){};
-
     virtual void open( std::string * ) = 0;
     virtual std::vector<std::string>* getHomomorphisms() = 0;
     virtual std::vector<std::string> * getRules() = 0;
