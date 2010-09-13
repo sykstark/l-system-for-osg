@@ -1,4 +1,7 @@
-#pragma once
+//#pragma once
+
+#ifndef RULE_H_
+#define RULE_H_
 
 #ifndef FPARSER
 #define FPARSER
@@ -8,10 +11,14 @@
 #include "lsystemexception.h"
 #include <vector>
 #include "StaticString.h"
+#include "boost/lexical_cast.hpp"
+
 
 #include <iostream>
 
 using namespace std;
+using boost::lexical_cast;
+using boost::bad_lexical_cast;
 
 namespace AP_LSystem {
 struct Rule
@@ -174,9 +181,79 @@ struct Rule
         }
     }
 
+    bool addStaticString(string * rule, string::iterator & begin)
+    {
+        std::string::iterator end;
+        unsigned int pos;
+        double par;
+        LongString ls(512);
+        StaticString * pSS;
+        while(true)
+        {
+            pos = rule->find_first_of( "(:,)", begin - rule->begin( ) );
+            if ( pos == std::string::npos )
+            {
+                ls.appendStr(string(begin,rule->end()));
+                pSS = new StaticString(ls);
+                if(ls.length())
+                    staticStrings.push_back(pSS);
+                return false;
+            }
+            end = rule->begin() + pos;
+            std::string str(begin, end);
+
+            switch(*end)
+            {
+            case ':':
+                ls.appendStr(str);
+                pSS = new StaticString(ls);
+                staticStrings.push_back(pSS);
+                return false;
+            case ',':
+            case ')':
+                try
+                {
+                    par = lexical_cast<double>(str);
+                }
+                catch(bad_lexical_cast&)
+                {
+                    pSS = new StaticString(ls);
+                    staticStrings.push_back(pSS);
+                    // not number - must be parsed
+                    return true;
+                }
+                ls.appendDouble(par);
+                break;
+            case '(':
+                ls.appendStr(str);
+                break;
+            default:
+                throw ParsingException("Successor parsing error");
+            }
+            begin = end+1;
+        }
+    }
+
+    void addDynamicString(string * rule, string::iterator & begin)
+    {
+        unsigned int pos = rule->find_first_of( ",)", begin - rule->begin() );
+        std::string::iterator end = rule->begin() + pos;
+
+        FunctionParser * fp = new FunctionParser( );
+        // parse string inside brackets
+        if ( fp->Parse( string( begin, end ), this->variables, false ) != -1 )
+        {
+            throw ParsingException("parsing of expression error");
+        }
+        begin = end+1;
+        this->dynamicStrings.push_back( fp );
+    }
+
 protected:
     std::vector<StaticString*> getSS() const { return staticStrings; }
     std::vector<FunctionParser*> getDS() const { return dynamicStrings; }
 
 };
 }
+
+#endif

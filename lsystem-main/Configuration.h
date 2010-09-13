@@ -1,8 +1,11 @@
-#pragma once
+//#pragma once
+
+#ifndef CONFIGURATION_H_
+#define CONFIGURATION_H_
 
 #include <sstream>
 #include <map>
-//#include <boost/program_options.hpp>
+#include <boost/program_options.hpp>
 
 using namespace boost::program_options;
 
@@ -31,3 +34,5 @@ private:
     std::map<std::string, variables_map> grammarProperties;
 };
 }
+
+#endif

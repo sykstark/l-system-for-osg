@@ -1,4 +1,4 @@
-#pragma once
+//#pragma once
 
 #ifndef LSFILE_H
 #define LSFILE_H
@@ -33,7 +33,7 @@ public:
         return &rules;
     }
 
-    virtual std::string getAxiom()
+    virtual std::string & getAxiom()
     {
         return axiom;
     }

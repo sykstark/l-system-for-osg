@@ -1,4 +1,7 @@
-#pragma once
+//#pragma once
+
+#ifndef LSFILEGRAMMAR_H_
+#define LSFILEGRAMMAR_H_
 
 #include <map>
 
@@ -22,7 +25,7 @@ public:
 	~LSFileGrammar(void);
 
 	virtual void addRule(std::string *);
-    virtual void setAxiom(const std::string &);
+    virtual void setAxiom(std::string &);
     virtual void addHomomorphism( std::string *);
 
 	virtual void loadFromFile( std::string * );
@@ -34,3 +37,5 @@ public:
     unsigned int wordLength() { return _word->length(); }
 };
 }
+
+#endif
