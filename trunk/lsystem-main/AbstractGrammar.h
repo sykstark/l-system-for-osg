@@ -1,4 +1,8 @@
-#pragma once
+//#pragma once
+
+#ifndef ABSTRACTGRAMMAR_H_
+#define ABSTRACTGRAMMAR_H_
+
 #ifndef FPARSER
 #define FPARSER
 #include "fparser/fparser.hh"
@@ -22,8 +26,10 @@ public:
     virtual char* translate() = 0;
     virtual void addRule( std::string * ) = 0;
     virtual void addHomomorphism( std::string * ) = 0;
-    virtual void setAxiom( const std::string & ) = 0;
+    virtual void setAxiom( std::string & ) = 0;
     virtual void loadFromFile ( std::string * ) = 0;
     int GetIteration() const {return _iteration;}
 };
 }
+
+#endif

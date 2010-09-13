@@ -3,76 +3,12 @@
 #endif*/
 
 #include "StringUtils.h"
-#include <iostream>
-#include <istream>
-#include <string>
-#include <cstdlib>
-#include <cstdio>
-#include <ostream>
-#include <sstream>
 #include <fstream>
-#include <map>
-#include <set>
-#include <vector>
-#include <stack>
-#include <string>
-#include <exception>
-
 #include "lsystemexception.h"
 
 using namespace AP_LSystem;
 
-/*
-void StringUtils::LoadCfgFile(Configuration * cfg, const char * filename)
-{
-	fstream * configFile = new fstream(filename);
-	if(configFile)
-	{
-		std::stringstream line;
-		std::string id, s_line, temp;
-		while(getline(*configFile,s_line))
-		{
-			line << s_line;
-			while(line >> id)
-			{
-				if((id=="#configuration")&&(uncommentLine(line)))
-				{
-					if((id=="#endconfiguration")&&(uncommentLine(line)))
-					{
-						break;
-					}
-					
-					while(getline(*configFile, s_line))
-					{
-						line << s_line;	
-						if(line >> id)
-						{
-							if(id=="")
-							{
-							}
-							// dodelat prazdny radek jen s komentarem
-						}
-					}
-
-				}
-				else
-				{
-					//if(configFile) configFile.close();
-					//throw - chyba syntaxe
-				}
-			}
-			line.clear();
-		}
-		configFile->close();
-	}
-	else 
-	{
-		//throw - soubor nelze otevrit
-	}
-}
-*/
 // odkomentuje radek od dvou zpetnych lomitek
-
 void StringUtils::uncommentLine(std::string & line)
 {
     unsigned int pos = line.find( "//" );

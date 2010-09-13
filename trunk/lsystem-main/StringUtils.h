@@ -1,10 +1,19 @@
-#pragma once
+//#pragma once
+
+#ifndef STRINGUTILS_H
+#define STRINGUTILS_H
+
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
 #include <vector>
+#include "lsystemexception.h"
 #include "AbstractGrammar.h"
 #include "Configuration.h"
+
+#include "boost/lexical_cast.hpp"
+
+using boost::lexical_cast;
 
 namespace AP_LSystem {
 
@@ -51,36 +60,13 @@ public:
 		return _eof;
 	}
 
-	inline bool reset()
+    inline void reset()
 	{
 		_pos = 0;
 		_eof = false;
 	}
-/*	char next(double * pParams, int & paramsCnt) inline
-	{
-		if( _eof ) 
-			return '\0';
 
-		_pos++;
-
-		if( (_pos + 1 >= _length) || ( pStr[pos + 1] != '(' ) )
-            return false;
-		char * pPos = pStr + pos + 2; // skip nonterminal and (
-		char * pEnd = 0;
-		do
-		{
-			pParams[paramsCnt++] = strtod( pPos, &pEnd );
-			pPos = pEnd + 1;
-		}
-		while ( *pEnd == ',' );
-
-		if(_pos + 1 >= _length)
-			_eof = true;
-
-		return pStr[_pos];
-	}*/
-
-	char next( vector<Parameter> &parameters )
+    char next( std::vector<Parameter> &parameters )
 	{
 		if( _eof ) 
 			return '\0';
@@ -101,7 +87,7 @@ public:
 				{
 					double * pPar = reinterpret_cast<double *>(pStr);
 					parameters.push_back( Parameter( reinterpret_cast<void *>(pPar), LS_DOUBLE ) );
-					_pos += sizeof(double);
+                    _pos += sizeof(double)+1;
 				}
 				break;
 			case LS_NO_PARAMETER:
@@ -146,17 +132,55 @@ private:
 	}
 
 public:
-    LongString(): _length(0)
+/*    LongString(): _length(0)
     {
         _allocated =_increment = 100000;
         pStr = new unsigned char[_allocated];
-    }
+    }*/
 
-    LongString( unsigned int increment )
+    LongString( unsigned int increment = 100000 ): _length(0)
     {
         _allocated =_increment = increment;
-        pStr = new char[_allocated];
+        pStr = new unsigned char[_allocated];
     }
+
+/*    LongString( std::string & source, unsigned int pos = 0, const char delimiter='\0', unsigned int increment=100000)
+    {
+        double par;
+        std::string::iterator end, begin = source.begin() + pos;
+        while(true)
+        {
+            std::string chars = "(,)" + delimiter;
+            pos = source.find_first_of( chars, begin - source.begin( ) );
+            if ( pos == std::string::npos )
+            {
+                this->appendStr(string(begin,source.end()));
+                return;
+            }
+            end = source.begin() + pos;
+            std::string str(begin, end);
+
+            switch(*end)
+            {
+            case ',':
+            case ')':
+                par = lexical_cast<double>(str);
+                this->appendDouble(par);
+                break;
+            case '(':
+                this->appendStr(str);
+                break;
+            default:
+                if (*end == delimiter)
+                {
+                    this->appendStr(str);
+                    return;
+                }
+                throw ParsingException("String converting error");
+            }
+            begin = end+1;
+        }
+    }*/
 
     LongString( const LongString& c ):_length(c.length()),
         _allocated(c.getAllocated()), _increment( c.getIncrement())
@@ -188,12 +212,24 @@ public:
     {
         while(_allocated < length + _length)
         {
-                resize( );
+            resize( );
         }
 
 		memcpy( pStr, str, length);
 
         _length += length;
+    }
+
+    void appendStr( std::string str )
+    {
+        while(_allocated < str.length() + _length)
+        {
+            resize( );
+        }
+
+        memcpy( pStr, str.c_str(), str.length());
+
+        _length += str.length();
     }
 
     void appendChar( const char ch, bool parametric )
@@ -210,19 +246,19 @@ public:
 		}
     }
 
-	void appendDouble( double * par )
+    void appendDouble( double par )
 	{
 		if(_allocated < _length + sizeof(double) + 2)
 		{
 			resize( );
 		}
 		appendType( LS_DOUBLE );
-		memcpy( pStr + _length, par, sizeof(double) );
-		length += sizeof(double);
+        memcpy( pStr + _length, &par, sizeof(double) );
+        _length += sizeof(double);
 		appendType( LS_DOUBLE );
 	}
 
-	char& operator[](unsigned int i) const
+    unsigned char& operator[](unsigned int i) const
 	{
 		// mozna dodat kontrolu
 		return pStr[i];
@@ -236,21 +272,26 @@ public:
 	//mozna nekdy bool
     bool getParamaters( unsigned int & pos, double * pParams, int & paramsCnt )
 	{
-		if( (pos + 1 >= _length) || ( pStr[pos + 1] != '(' ) )
+        if(pos + 1 >= _length)
             return false;
-		char * pPos = pStr + pos + 2; // skip nonterminal and (
-		char * pEnd = 0;
-		do
-		{
-			pParams[paramsCnt++] = strtod( pPos, &pEnd );
-			pPos = pEnd + 1;
-		}
-		while ( *pEnd == ',' );
 
-        // set position on ')'
-        pos = pPos - pStr - 1;
+        paramsCnt = 0;
 
-        return true;
+        unsigned char * pPos = pStr + pos + 1;
+        while(true)
+        {
+            switch(*pPos)
+            {
+            case LS_NO_PARAMETER:
+                return false;
+            case LS_DOUBLE:
+                memcpy(pParams + paramsCnt, ++pPos, sizeof(double));
+                pPos += sizeof(double)+2;
+                break;
+            default:
+                return true;
+            }
+        }
 	}
 
 	char * c_str( )
@@ -261,13 +302,15 @@ public:
 		}
 		pStr[_length] = '\0';
 
-		return pStr;
+        return reinterpret_cast<char *>(pStr);
 	}
 
     unsigned int getAllocated() const { return _allocated; }
     unsigned int getIncrement() const { return _increment; }
-    char * getString() const { return pStr; }
+    unsigned char * getString() const { return pStr; }
 
 	// zkusit vytvorit appendChar()
 };
 }
+
+#endif

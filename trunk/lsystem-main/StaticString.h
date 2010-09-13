@@ -1,4 +1,8 @@
-#pragma once
+//#pragma once
+
+#ifndef STATICSTRING_H_
+#define STATICSTRING_H_
+
 #include <string>
 #include <cstring>
 #include "StringUtils.h"
@@ -17,7 +21,7 @@ public:
 		// strcpy( this->str, str);
     }
 
-    StaticString( LongString str)
+    StaticString( LongString & str)
     {
         this->length = str.length();
         this->str = new char[length];
@@ -69,3 +73,5 @@ public:
 	//StaticString( const string str ){};
 };
 }
+
+#endif

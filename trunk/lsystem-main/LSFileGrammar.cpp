@@ -1,14 +1,14 @@
-//#ifdef _MSC_VER
+#ifdef _MSC_VER
 #include "precompiled.h"
-//#endif
+#endif
 
 #include "LSFileGrammar.h"
 #include "StringUtils.h"
 #include "lsfile.h"
 #include "lsystemexception.h"
+#include "boost/lexical_cast.hpp"
 
 #include "fparser/fparser.hh"
-#include "boost/lexical_cast.hpp"
 
 using namespace AP_LSystem;
 
@@ -61,9 +61,7 @@ void LSFileGrammar::loadFromFile( std::string * filename )
 void LSFileGrammar::addRule(std::string * rule)
 {
     Rule r;
-	unsigned int pos;
-    StaticString * pSS;
-	std::string::iterator start, end, it = rule->begin();
+    std::string::iterator it = rule->begin();
 	
 	// process a rule
     // example: A(x,y):x<y->B(x+1,y-2):max(1,x)
@@ -92,22 +90,11 @@ void LSFileGrammar::addRule(std::string * rule)
 
 	// slo by zrychlit testem na parametric - pridat rovnou cely retezec
 
-	unsigned int closingPar; // position of ) for determination if the content inside ( ) has to be parsed
-	unsigned int i;
-	char c;
-
-    start = it;
-
-    LongString staticStr = LongString(100);
-    while( getEndOfStatic(rule, it, end) )
+    while( r.addStaticString(rule, it) )
     {
-        staticStr.appendStr(string(it,end), end-it);
-
-        double x;
-        if( toDouble( x ) )
-
+        r.addDynamicString(rule, it);
     }
-
+/*
     while( ( pos = rule->find_first_of( "(:", it - rule->begin( ) ) ) != std::string::npos )
 	{
 		end = rule->begin() + pos;
@@ -176,7 +163,7 @@ void LSFileGrammar::addRule(std::string * rule)
         }
 
         start = end;
-	}
+    }
 	// insert last part of rule - after last ')'
     if( pos == std::string::npos )
     {
@@ -188,7 +175,7 @@ void LSFileGrammar::addRule(std::string * rule)
         // with probability
         pSS = new StaticString(string(start, end));
     }
-    r.staticStrings.push_back( pSS );
+    r.staticStrings.push_back( pSS );*/
 
     r.processProbabilityFactor(rule, it);
 
@@ -198,11 +185,39 @@ void LSFileGrammar::addRule(std::string * rule)
 	this->_rules.insert(make_pair< char, Rule >(nonTerminal, r ));
 }
 
-void LSFileGrammar::setAxiom(const std::string & axiom)
+void LSFileGrammar::setAxiom(std::string & axiom)
 {
 	if(_word) delete _word;
 	_word = new LongString( );
-    _word->appendStr( axiom.c_str(), axiom.length() );
+    std::string::iterator begin=axiom.begin(),end;
+    unsigned int pos;
+    double par;
+    while(true)
+    {
+        pos = axiom.find_first_of( "(,)", begin - axiom.begin( ) );
+        if ( pos == std::string::npos )
+        {
+            _word->appendStr(string(begin,axiom.end()));
+            return;
+        }
+        end = axiom.begin() + pos;
+        std::string str(begin, end);
+
+        switch(*end)
+        {
+        case ',':
+        case ')':
+            par = lexical_cast<double>(str);
+            _word->appendDouble(par);
+            break;
+        case '(':
+            _word->appendStr(str);
+            break;
+        default:
+            throw ParsingException("Axiom parsing error");
+        }
+        begin = end+1;
+    }
 }
 
 void LSFileGrammar::addHomomorphism(std::string * hom)
@@ -273,7 +288,7 @@ bool LSFileGrammar::nextIteration( )
 		
 		if( result.first == result.second )
 		{
-			newWord->appendChar( (*_word)[i] );
+            newWord->appendChar( (*_word)[i], false );
 //            cout << (*_word)[i] << " | ";
 		}
 		else
@@ -310,7 +325,7 @@ bool LSFileGrammar::nextIteration( )
 				{
 					// pridani statickych a dynamickych retezcu do slova ( krome posledniho statickeho )
                     newWord->appendStr( (*stStrIt)->str, (*stStrIt)->length );
-					newWord->appendDouble( (*dynStrIt)->Eval( pParams ) );
+                    newWord->appendDouble( (*dynStrIt)->Eval( pParams ) );
 
 //                    cout << stStrIt->toString() << " | " << (*dynStrIt)->Eval( pParams ) << " | ";
 
