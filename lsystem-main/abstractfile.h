@@ -1,4 +1,4 @@
-#pragma once
+//#pragma once
 
 #ifndef ABSTRACTFILE_H
 #define ABSTRACTFILE_H
@@ -14,7 +14,7 @@ public:
     virtual void open( std::string * ) = 0;
     virtual std::vector<std::string>* getHomomorphisms() = 0;
     virtual std::vector<std::string> * getRules() = 0;
-    virtual std::string getAxiom() = 0;
+    virtual std::string & getAxiom() = 0;
 };
 }
 
