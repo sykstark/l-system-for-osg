@@ -2,6 +2,7 @@
 #include "precompiled.h"
 #endif
 
+#include "windows.h"
 #include "LSFileGrammar.h"
 #include "StringUtils.h"
 #include "lsfile.h"
@@ -94,88 +95,6 @@ void LSFileGrammar::addRule(std::string * rule)
     {
         r.addDynamicString(rule, it);
     }
-/*
-    while( ( pos = rule->find_first_of( "(:", it - rule->begin( ) ) ) != std::string::npos )
-	{
-		end = rule->begin() + pos;
-
-        if( *end == ':' )
-        {
-            it = end;
-            break;
-        }
-
-		closingPar = rule->find( ')', pos );
-		
-		if( closingPar == std::string::npos )
-		{
-            throw ParsingException("missing ending bracket");
-		}
-		
-		// set i as position od char after (
-		for( i = pos + 1; i < closingPar; i++ )
-		{
-			c = rule->at(i); 
-			if( !( isdigit(c) || (c == '.') || (c == ' ') || (c == '-') || (c == '+') ) )
-				break;
-		}
-
-		if( i == closingPar )
-		{
-			it = rule->begin( ) + closingPar + 1; 
-			continue;
-		}
-
-        // add static string - with (
-        pSS = new StaticString( string(start, end + 1) );
-        r.staticStrings.push_back( pSS );
-
-//        cout << "static:" << str << endl;
-
-        //end++;
-		// look for end bracket or another function
-        while(true)
-		{
-            it = ++end;
-			pos  = rule->find_first_of( ",)", it - rule->begin() );
-			end = rule->begin() + pos;
-			
-			FunctionParser * fp = new FunctionParser( );
-			// parse string inside brackets
-			if ( fp->Parse( string( it, end ), r.variables, false ) != -1 )
-			{
-                throw ParsingException("parsing of expression error");
-			}
-            r.dynamicStrings.push_back( fp );
-
-//            cout << "parser:" << string( it, end ) << endl;
-
-            if( rule->at(pos) == ')' )
-            {
-                break;
-            }
-            else
-            {                
-                pSS = new StaticString(*end);
-                r.staticStrings.push_back( pSS );
-//                cout << "static:" << *end << endl;
-            }
-        }
-
-        start = end;
-    }
-	// insert last part of rule - after last ')'
-    if( pos == std::string::npos )
-    {
-        // without probability
-        pSS = new StaticString(string(start, rule->end( )));
-    }
-    else
-    {
-        // with probability
-        pSS = new StaticString(string(start, end));
-    }
-    r.staticStrings.push_back( pSS );*/
 
     r.processProbabilityFactor(rule, it);
 
@@ -188,36 +107,10 @@ void LSFileGrammar::addRule(std::string * rule)
 void LSFileGrammar::setAxiom(std::string & axiom)
 {
 	if(_word) delete _word;
-	_word = new LongString( );
-    std::string::iterator begin=axiom.begin(),end;
-    unsigned int pos;
-    double par;
-    while(true)
-    {
-        pos = axiom.find_first_of( "(,)", begin - axiom.begin( ) );
-        if ( pos == std::string::npos )
-        {
-            _word->appendStr(string(begin,axiom.end()));
-            return;
-        }
-        end = axiom.begin() + pos;
-        std::string str(begin, end);
+    _word = new LongString( );
+    _word->convertFromString( &axiom );
 
-        switch(*end)
-        {
-        case ',':
-        case ')':
-            par = lexical_cast<double>(str);
-            _word->appendDouble(par);
-            break;
-        case '(':
-            _word->appendStr(str);
-            break;
-        default:
-            throw ParsingException("Axiom parsing error");
-        }
-        begin = end+1;
-    }
+    cout << _word->toString() << endl;
 }
 
 void LSFileGrammar::addHomomorphism(std::string * hom)
@@ -285,6 +178,13 @@ bool LSFileGrammar::nextIteration( )
 		// mozna dodat kontrolu estli jde o pismeno
 		result = _rules.equal_range( (*_word)[i]);
 
+        std::string debug = "TTTTTTTTTEEEEEEEEESSSSSSSSSSSTTTTTTTTT";
+        wchar_t *p=new wchar_t[debug.size()];
+        for(string::size_type k=0; k<debug.size(); ++k) p[k]=debug[k];
+
+        OutputDebugStringA("TTTTTTTTEEEEEEEEEEEEESSSSSSSSSSSSSTTTTTTTTTTT");
+
+        cout << newWord->toString() << endl;
 		
 		if( result.first == result.second )
 		{

@@ -3,14 +3,8 @@
 #ifndef ABSTRACTGRAMMAR_H_
 #define ABSTRACTGRAMMAR_H_
 
-#ifndef FPARSER
-#define FPARSER
 #include "fparser/fparser.hh"
-#endif
-
 #include "StringUtils.h"
-
-using namespace std;
 
 namespace AP_LSystem {
 class AbstractGrammar
