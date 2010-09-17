@@ -3,18 +3,13 @@
 #ifndef RULE_H_
 #define RULE_H_
 
-#ifndef FPARSER
-#define FPARSER
-#include "fparser/fparser.hh"
-#endif
-
-#include "lsystemexception.h"
-#include <vector>
-#include "StaticString.h"
-#include "boost/lexical_cast.hpp"
-
-
 #include <iostream>
+#include <vector>
+#include "fparser/fparser.hh"
+#include "boost/lexical_cast.hpp"
+#include "lsystemexception.h"
+#include "StaticString.h"
+#include "longstring.h"
 
 using namespace std;
 using boost::lexical_cast;
@@ -183,7 +178,30 @@ struct Rule
 
     bool addStaticString(string * rule, string::iterator & begin)
     {
-        std::string::iterator end;
+        StaticString * pSS;
+        LongString * ls = new LongString( 128 );
+        unsigned int pos = begin - rule->begin();
+        try
+        {            
+            ls->convertFromString( rule, pos);
+        }
+        catch(bad_lexical_cast&)
+        {
+            cout << "static string - ex:" << ls->toString() << endl;
+            begin = rule->begin() + pos + 1;
+            pSS = new StaticString(ls);
+            staticStrings.push_back(pSS);
+            // not number - must be parsed
+            return true;
+        }
+        cout << "static string:" << ls->toString() << endl;
+
+        begin = rule->begin() + pos + 1;
+        pSS = new StaticString(ls);
+        staticStrings.push_back(pSS);
+        return false;
+
+        /*std::string::iterator end;
         unsigned int pos;
         double par;
         LongString ls(512);
@@ -195,8 +213,8 @@ struct Rule
             {
                 ls.appendStr(string(begin,rule->end()));
                 pSS = new StaticString(ls);
-                if(ls.length())
-                    staticStrings.push_back(pSS);
+                // if(ls.length())
+                staticStrings.push_back(pSS);
                 return false;
             }
             end = rule->begin() + pos;
@@ -232,6 +250,7 @@ struct Rule
             }
             begin = end+1;
         }
+        */
     }
 
     void addDynamicString(string * rule, string::iterator & begin)
@@ -240,12 +259,14 @@ struct Rule
         std::string::iterator end = rule->begin() + pos;
 
         FunctionParser * fp = new FunctionParser( );
+
+        cout << string( begin, end ) << endl;
         // parse string inside brackets
         if ( fp->Parse( string( begin, end ), this->variables, false ) != -1 )
         {
             throw ParsingException("parsing of expression error");
         }
-        begin = end+1;
+        begin = end + 1;
         this->dynamicStrings.push_back( fp );
     }
 

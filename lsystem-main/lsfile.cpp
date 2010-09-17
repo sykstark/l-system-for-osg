@@ -4,6 +4,7 @@
 #include "StringUtils.h"
 #include "lsystemexception.h"
 
+using namespace std;
 using namespace AP_LSystem;
 
 LSFile::LSFile()

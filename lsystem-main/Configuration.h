@@ -26,9 +26,6 @@ private:
 	static Configuration* config;
 	~Configuration();
 
-    //std::map<std::string, double> globalProperties;
-    //std::map<std::string, std::map< std::string, double > > grammarProperties;
-
     options_description description;
     variables_map globalProperties;
     std::map<std::string, variables_map> grammarProperties;
