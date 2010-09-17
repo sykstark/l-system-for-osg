@@ -3,6 +3,7 @@
 #include <fstream>
 #include "LSFileGrammar.h"
 #include "lsystemexception.h"
+#include <exception>
 #include <boost/program_options.hpp>
 #include <iterator>
 

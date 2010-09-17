@@ -10,6 +10,7 @@ QT       -= gui
 
 TARGET = lsystem-qt-2
 CONFIG   += console
+CONFIG   += exceptions
 CONFIG   -= app_bundle
 
 TEMPLATE = app
@@ -32,7 +33,8 @@ SOURCES += main.cpp \
     ../Garden/StringUtils.cpp \
     ../Garden/LSFileGrammar.cpp \
     ../Garden/lsfile.cpp \
-    ../Garden/Configuration.cpp
+    ../Garden/Configuration.cpp \
+    ../Garden/longstring.cpp
 
 HEADERS += \
     ../Garden/StaticString.h \
@@ -43,7 +45,8 @@ HEADERS += \
     ../Garden/Configuration.h \
     ../Garden/AbstractGrammar.h \
     ../Garden/abstractfile.h \
-    ../Garden/StringUtils.h
+    ../Garden/StringUtils.h \
+    ../Garden/longstring.h
 
 INCLUDEPATH += ../Garden/ \
     ../Garden/fparser \
