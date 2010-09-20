@@ -1,51 +1,63 @@
 #pragma once
 
+#ifndef ABSTRACTTURTLE_H_
+#define ABSTRACTTURTLE_H_
+
+namespace AP_LSystem {
 class AbstractTurtle
 {
+private:
+	TurtleProperties
 public:
-
-	AbstractTurtle(void)
-	{
-	}
-
-	~AbstractTurtle(void)
-	{
-	}
-
+//****************************************************************
+//**						OTHER								**
+//****************************************************************
+	virtual bool resetValues()=0;
+	virtual TurtleProperties getProperties();
+	virtual bool setProperties( TurtleProperties &);
 //****************************************************************
 //**						ROTATION							**
 //****************************************************************
-	bool turnLeft()									= 0;
-	bool turnLeft(double angle)						= 0;
-	bool turnRight()								= 0;
-	bool turnRight(double angle)					= 0;
-	bool pitchDown()								= 0;
-	bool pitchDown(double angle)					= 0;
-	bool pitchUp()									= 0;
-	bool pitchUp(double angle)						= 0;
-	bool rollLeft()									= 0;
-	bool rollLeft(double angle)						= 0;
-	bool rollRight()								= 0;
-	bool rollRight(double angle)					= 0;
+	virtual bool turnLeft()									= 0;
+	virtual bool turnLeft(double)							= 0;
+	virtual bool turnRight()								= 0;
+	virtual bool turnRight(double)							= 0;
+	virtual bool pitchDown()								= 0;
+	virtual bool pitchDown(double)							= 0;
+	virtual bool pitchUp()									= 0;
+	virtual bool pitchUp(double)							= 0;
+	virtual bool rollLeft()									= 0;
+	virtual bool rollLeft(double)							= 0;
+	virtual bool rollRight()								= 0;
+	virtual bool rollRight(double)							= 0;
 
-	bool turnArround()								= 0;
-	bool rollArround()								= 0;
-	bool rollUntilHorizontal()						= 0;
-	bool randomTurnPitchRoll()						= 0;
-	bool randomTurnPitchRoll(unsigned int angle)	= 0;
-	bool gravityCorrection(double ratio)			= 0;
+	virtual bool turnArround()								= 0;
+	virtual bool rollArround()								= 0;
+	virtual bool rollUntilHorizontal()						= 0;
+	virtual bool randomTurnPitchRoll()						= 0;
+	virtual bool randomTurnPitchRoll(unsigned int angle)	= 0;
+	virtual bool gravityCorrection(double ratio)			= 0;
 
 //****************************************************************
 //**						MOVEMENT							**
 //****************************************************************
 
-	virtual bool resetValues()=0;
-
-	bool fullForwardDrawMove();
-	bool halfForwardDrawMove();
-	virtual bool forwardDrawMove(double length)=0;
-
-	bool fullForwardMove();
-	bool forwardMove(double length);
+	virtual bool drawForward()								= 0;
+	virtual bool drawForward(double length)					= 0;
+	virtual bool moveForward()								= 0;
+	virtual bool moveForward(double length)					= 0;
 	
 };
+
+struct TurtleProperties
+{
+	double length;
+	double angle;
+	double thickness;
+	unsigned int detailH;
+	unsigned int detailL;
+	unsigned int detailU;
+};
+}
+
+#endif
