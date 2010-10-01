@@ -106,6 +106,14 @@ void LongString::appendStr( const char * str, unsigned int length )
     _length += length;
 }
 
+void LongString::appendStr( StaticString & str)
+{
+    while(_allocated < str.length() + _length)
+    {
+        resize( );
+    }
+}
+
 void LongString::appendStr( std::string str )
 {
     while(_allocated < str.length() + _length)
@@ -172,12 +180,15 @@ bool LongString::getParamaters( unsigned int & pos, double * pParams, int & para
             return false;
         case LS_DOUBLE:
             memcpy(pParams + paramsCnt, ++pPos, sizeof(double));
-            pPos += sizeof(double)+2;
+            paramsCnt++;
+            pPos += sizeof(double)+1;
             break;
         default:
             return true;
         }
     }
+
+    pos = pPos - pStr;
 }
 
 char * LongString::c_str( )

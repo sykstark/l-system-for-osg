@@ -1,12 +1,14 @@
 #ifndef LONGSTRING_H_
 #define LONGSTRING_H_
 
-#include "StringUtils.h"
 #include <string>
+#include "StringUtils.h"
+#include "StaticString.h"
 
 namespace AP_LSystem {
 
 static unsigned int ZERO = 0;
+class StaticString;
 
 class LongString
 {
@@ -20,13 +22,14 @@ private:
     void appendType( ParameterType type );
 
 public:
-    LongString( unsigned int = 100000);
+    LongString( unsigned int = 1048576); // 2^20 bytes - 1 MB
     LongString( const LongString& c );
     LongString& operator=( const LongString & c );
     ~LongString( );
     void convertFromString( std::string *, unsigned int & = ZERO, const char = '\0' );
     void appendStr( const char * str, unsigned int length );
     void appendStr( std::string str );
+    void appendStr( StaticString & str);
     void appendChar( const char ch, bool parametric );
     void appendDouble( double par );
     unsigned char& operator[](unsigned int i) const;
@@ -38,8 +41,6 @@ public:
     unsigned int getAllocated() const { return _allocated; }
     unsigned int getIncrement() const { return _increment; }
     unsigned char * getString() const { return pStr; }
-
-    // zkusit vytvorit appendChar()
 };
 }
 #endif // LONGSTRING_H
