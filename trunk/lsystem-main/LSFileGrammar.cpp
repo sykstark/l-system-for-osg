@@ -160,7 +160,7 @@ void LSFileGrammar::addHomomorphism(std::string * hom)
 
 bool LSFileGrammar::nextIteration( )
 {
-	LongString * newWord = new LongString();
+    LongString * newWord = new LongString( );
 	multimap<char, Rule>::iterator ruleIt;
 	pair<multimap<char, Rule>::iterator, multimap<char, Rule>::iterator > result;
 
@@ -178,13 +178,7 @@ bool LSFileGrammar::nextIteration( )
 		// mozna dodat kontrolu estli jde o pismeno
 		result = _rules.equal_range( (*_word)[i]);
 
-        std::string debug = "TTTTTTTTTEEEEEEEEESSSSSSSSSSSTTTTTTTTT";
-        wchar_t *p=new wchar_t[debug.size()];
-        for(string::size_type k=0; k<debug.size(); ++k) p[k]=debug[k];
-
-        OutputDebugStringA("TTTTTTTTEEEEEEEEEEEEESSSSSSSSSSSSSTTTTTTTTTTT");
-
-        cout << newWord->toString() << endl;
+        OutputDebugStringA(_word->toString().c_str());
 		
 		if( result.first == result.second )
 		{
@@ -207,7 +201,6 @@ bool LSFileGrammar::nextIteration( )
                 {
                   //  ruleIt->second.
                 }
-
             }
 
 			for( ruleIt = result.first; ruleIt != result.second; ruleIt++ )
@@ -225,7 +218,9 @@ bool LSFileGrammar::nextIteration( )
 				{
 					// pridani statickych a dynamickych retezcu do slova ( krome posledniho statickeho )
                     newWord->appendStr( (*stStrIt)->str, (*stStrIt)->length );
+                    OutputDebugStringA(newWord->toString().c_str());
                     newWord->appendDouble( (*dynStrIt)->Eval( pParams ) );
+                    OutputDebugStringA(newWord->toString().c_str());
 
 //                    cout << stStrIt->toString() << " | " << (*dynStrIt)->Eval( pParams ) << " | ";
 
@@ -238,6 +233,9 @@ bool LSFileGrammar::nextIteration( )
 		}
 	}
 //    cout << endl;
+    if(_word)
+        delete _word;
+
 	_word = newWord;
 
     return true;
