@@ -8,6 +8,8 @@
 // Documentation on precompiled headers:
 // http://www.cygnus-software.com/papers/precompiledheaders.html
 
+#ifdef _MSC_VER
+
 #include <vrecko/Ability.h>
 #include <vrecko/EventDispatcher.h>
 #include <vrecko/EnvironmentObject.h>
@@ -23,9 +25,7 @@
 #include <osg/ref_ptr>
 #include <osg/Image>
 #include <osg/Texture2D>
-#include <vector>
-
-#include <vreckoDB/ReaderWriter.h>
+#include <osgDB/ReadFile>
 
 #include <xercesc/parsers/XercesDOMParser.hpp>
 #include <xercesc/dom/DOM.hpp>
@@ -33,15 +33,14 @@
 #include <xercesc/sax/HandlerBase.hpp>
 #include <xercesc/util/XMLString.hpp>
 #include <xercesc/util/PlatformUtils.hpp>
-
 #include <xercesc/dom/DOMWriter.hpp>
 #include <xercesc/framework/StdOutFormatTarget.hpp>
 #include <xercesc/framework/LocalFileFormatTarget.hpp>
+#include <helpers/XercesXMLUtils.h>
 
+//#include "fparser/fparser.hh"
 
 //#include <../EditorController/ControllableAbility.h>
-
-#include <helpers/XercesXMLUtils.h>
 
 #include <tchar.h>
 #include <cstdlib>
@@ -55,9 +54,9 @@
 #include <string>
 #include <exception>
 
-#include "fparser/fparser.hh"
 //#include "Configuration.h"
 
 #define VMATH_NAMESPACE
 #include "vmath.h"
-//#include "AbstractGrammar.h"
+
+#endif // _MSC_VER

@@ -1,3 +1,5 @@
+#include "precompiled.h"
+
 #include "longstring.h"
 
 using namespace AP_LSystem;

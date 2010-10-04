@@ -1,6 +1,4 @@
-#ifdef _MSC_VER
 #include "precompiled.h"
-#endif
 
 #include "windows.h"
 #include "LSFileGrammar.h"
