@@ -32,8 +32,8 @@ public:
     void appendStr( StaticString & str);
     void appendChar( const char ch, bool parametric );
     void appendDouble( double par );
-    unsigned char& operator[](unsigned int i) const;
-    unsigned int length() const;
+    inline unsigned char& operator[](unsigned int i) const;
+    inline unsigned int length() const;
     bool getParamaters( unsigned int & pos, double * pParams, int & paramsCnt );
     char * c_str( );
     std::string toString( );

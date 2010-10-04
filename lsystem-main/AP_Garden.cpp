@@ -1,7 +1,7 @@
 #include "precompiled.h"
 
 #include "AP_Garden.h"
-#include "Tree.h"
+#include "lsobject.h"
 
 using namespace AP_LSystem;
 
@@ -10,12 +10,12 @@ char *g_pAPGardenPluginName = {"Garden"};
 
 
 char *g_pAPGardenAbilityName[] = {
-	"Tree",
+	"LSObject",
 	NULL
 };
 
 char *g_pAPGardenAbilityDesc[] = {
-	"Tree description",
+	"LSObject description",
 	""
 };
 
@@ -45,8 +45,8 @@ extern "C" AP_EXPORT Ability *Garden_getAbilityInstance(const char* pchName)
 	Ability* pAbility = NULL;
 
 	// create desired instance of the ability
-	if (!strcmp (pchName, "Tree")) {
-		pAbility = new Tree();
+	if (!strcmp (pchName, "LSObject")) {
+		pAbility = new LSObject();
 	}
 
 	// if successfully created

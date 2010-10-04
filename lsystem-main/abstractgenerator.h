@@ -5,7 +5,7 @@ class AbstractGenerator
 private:
 
 
-	void next()
+	void next(){};
 
 	
 public:

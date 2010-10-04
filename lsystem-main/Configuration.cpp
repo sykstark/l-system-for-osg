@@ -92,3 +92,15 @@ const variable_value * Configuration::getProperty(const std::string &grammarID, 
     }
 }
 
+vector<std::string> Configuration::getGrammarNames()
+{
+	std::vector<std::string> names;
+	std::map<std::string, variables_map>::iterator it;
+	for(it = grammarProperties.begin(); it != grammarProperties.end(); it++)
+	{
+		names.push_back( it->first );
+	}
+
+	return names;
+}
+
