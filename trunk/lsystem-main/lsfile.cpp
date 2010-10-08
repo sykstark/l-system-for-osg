@@ -43,6 +43,16 @@ void LSFile::open(std::string * filename)
                 }
                 Configuration::get()->setProperty(grammarID, prop);  // property setting
             }
+            else if(id=="#include")
+            {
+                string grammar; // property
+                line >> grammar;
+                if( grammar == "" )
+                {
+                    throw ParsingException("Bad format of #include");
+                }
+                grammars.push_back( grammar );
+            }
             else if(id=="#define")
             {
                 std::string definition, value;
@@ -52,6 +62,19 @@ void LSFile::open(std::string * filename)
                     throw ParsingException("Bad format of #define");
                 }
                 defines.insert(make_pair<std::string, std::string>(definition, value));
+            }
+            else if(id=="#type")
+            {
+                // ( 2L | STOCHASTIC | 1L | 0L | DETERMINISTIC )
+                if( _type )
+                {
+                    throw ParsingException("#type was already set");
+                }
+                if( line.str() == "")
+                {
+                    throw ParsingException("Bad format of #type");
+                }
+                processType( line.str( ) );
             }
             else if(id=="#axiom")
             {
@@ -130,4 +153,53 @@ void LSFile::processDefines()
             }
         }
     }
+}
+
+void LSFile::processType( std::string str )
+{
+    std::string::size_type pos, end;
+    while( true )
+    {
+        pos = str.find(' ');
+        if( pos != string::npos )
+            str.erase( pos, 1 );
+        else
+            break;
+    }
+    if(str[0] == '(')
+    {
+        str.erase( 0, 1);
+        if( str[str.length()-1] == '(' )
+            str.erase(str.length()-1, 1);
+        else
+        {
+            throw ParsingException("error in parsing of grammar type");
+        }
+    }
+
+    pos = 0;
+    string type;
+    while( true )
+    {
+        end = str.find('|', pos);
+        if (end == string::npos )
+            break;
+
+        type = str.substr( pos, pos - end);
+        if(type == "0L")
+        {
+            _type |= LS_0L;
+        }
+        else if(type == "1L")
+        {
+            _type |= LS_1L;
+        }
+        else
+        {
+            throw ParsingException("unknown grammar type");
+        }
+
+        pos = end + 1;
+    }
+
 }

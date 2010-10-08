@@ -188,7 +188,7 @@ struct Rule
         catch(bad_lexical_cast&)
         {
             cout << "static string - ex:" << ls->toString() << endl;
-            begin = rule->begin() + pos + 1;
+            begin = rule->begin() + pos/* + 1*/;
             pSS = new StaticString(ls);
             staticStrings.push_back(pSS);
             // not number - must be parsed
@@ -200,57 +200,6 @@ struct Rule
         pSS = new StaticString(ls);
         staticStrings.push_back(pSS);
         return false;
-
-        /*std::string::iterator end;
-        unsigned int pos;
-        double par;
-        LongString ls(512);
-        StaticString * pSS;
-        while(true)
-        {
-            pos = rule->find_first_of( "(:,)", begin - rule->begin( ) );
-            if ( pos == std::string::npos )
-            {
-                ls.appendStr(string(begin,rule->end()));
-                pSS = new StaticString(ls);
-                // if(ls.length())
-                staticStrings.push_back(pSS);
-                return false;
-            }
-            end = rule->begin() + pos;
-            std::string str(begin, end);
-
-            switch(*end)
-            {
-            case ':':
-                ls.appendStr(str);
-                pSS = new StaticString(ls);
-                staticStrings.push_back(pSS);
-                return false;
-            case ',':
-            case ')':
-                try
-                {
-                    par = lexical_cast<double>(str);
-                }
-                catch(bad_lexical_cast&)
-                {
-                    pSS = new StaticString(ls);
-                    staticStrings.push_back(pSS);
-                    // not number - must be parsed
-                    return true;
-                }
-                ls.appendDouble(par);
-                break;
-            case '(':
-                ls.appendStr(str);
-                break;
-            default:
-                throw ParsingException("Successor parsing error");
-            }
-            begin = end+1;
-        }
-        */
     }
 
     void addDynamicString(string * rule, string::iterator & begin)
