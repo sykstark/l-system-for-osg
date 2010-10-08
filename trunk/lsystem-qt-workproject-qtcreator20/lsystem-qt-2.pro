@@ -34,7 +34,9 @@ SOURCES += main.cpp \
     ../Garden/LSFileGrammar.cpp \
     ../Garden/lsfile.cpp \
     ../Garden/Configuration.cpp \
-    ../Garden/longstring.cpp
+    ../Garden/longstring.cpp \
+    ../Garden/log.cpp \
+    ../Garden/grammargenerator.cpp
 
 HEADERS += \
     ../Garden/StaticString.h \
@@ -46,7 +48,10 @@ HEADERS += \
     ../Garden/AbstractGrammar.h \
     ../Garden/abstractfile.h \
     ../Garden/StringUtils.h \
-    ../Garden/longstring.h
+    ../Garden/longstring.h \
+    ../Garden/log.h \
+    ../Garden/abstractgenerator.h \
+    ../Garden/grammargenerator.h
 
 INCLUDEPATH += ../Garden/ \
     ../Garden/fparser \
