@@ -1,11 +1,13 @@
 #include <QtCore/QCoreApplication>
 #include <iostream>
 #include <fstream>
-#include "LSFileGrammar.h"
+//#include "LSFileGrammar.h"
 #include "lsystemexception.h"
 #include <exception>
 #include <boost/program_options.hpp>
 #include <iterator>
+#include "log.h"
+#include "grammargenerator.h"
 
 using namespace AP_LSystem;
 using namespace boost::program_options;
@@ -62,19 +64,29 @@ int main(int argc, char *argv[])
     }*/
 
 
-    AbstractGrammar * grammar;
+    //AbstractGrammar * grammar;
+
+    AbstractGenerator * generator;
 
     try
     {
-        grammar = new LSFileGrammar( &filename );
+        /*grammar = new LSFileGrammar( &filename );
         for( int i = 0; i < 8 ; i++)
         {
             grammar->nextIteration();
+        }*/
+
+        generator = new GrammarGenerator();
+        generator->loadFromFile(filename);
+
+        for( int i = 0; i < 8 ; i++)
+        {
+            generator->nextIteration();
         }
 
-        cout << grammar->translate() << endl;
+        //cout << grammar->translate() << endl;
 
-        cout << dynamic_cast<LSFileGrammar *>(grammar)->wordLength() << endl;
+        //Log::write( dynamic_cast<LSFileGrammar *>(grammar)->wordLength() );
 
         if (Configuration::get()->getProperty( "TEST01", "texture" ) != NULL )
         {
