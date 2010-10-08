@@ -1,15 +1,19 @@
-#pragma once
+#ifndef ABSTRACTGENERATOR_H_
+#define ABSTRACTGENERATOR_H_
 
+#include <string>
+#include "longstring.h"
+#include "AbstractGrammar.h"
+
+namespace AP_LSystem {
 class AbstractGenerator
 {
-private:
+protected:
 
-
-	void next(){};
-
+    LongString * pWord;
+    AbstractGrammar * pMainGrammar;
 	
 public:
-
 	AbstractGenerator(void)
 	{
 
@@ -18,4 +22,10 @@ public:
 	~AbstractGenerator(void)
 	{
 	}
+
+    virtual void loadFromFile( std::string & str ) = 0;
+    virtual void nextIteration() = 0;
 };
+}
+
+#endif

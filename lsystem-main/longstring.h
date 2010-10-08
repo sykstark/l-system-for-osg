@@ -3,12 +3,10 @@
 
 #include <string>
 #include "StringUtils.h"
-#include "StaticString.h"
 
 namespace AP_LSystem {
 
 static unsigned int ZERO = 0;
-class StaticString;
 
 class LongString
 {
@@ -29,14 +27,23 @@ public:
     void convertFromString( std::string *, unsigned int & = ZERO, const char = '\0' );
     void appendStr( const char * str, unsigned int length );
     void appendStr( std::string str );
-    void appendStr( StaticString & str);
+//    void appendStr( StaticString & str);
     void appendChar( const char ch, bool parametric );
     void appendDouble( double par );
-    inline unsigned char& operator[](unsigned int i) const;
-    inline unsigned int length() const;
     bool getParamaters( unsigned int & pos, double * pParams, int & paramsCnt );
     char * c_str( );
     std::string toString( );
+
+    inline unsigned char& operator[](unsigned int i) const
+    {
+        // mozna dodat kontrolu
+        return pStr[i];
+    }
+
+    inline unsigned int length() const
+    {
+        return _length;
+    }
 
     unsigned int getAllocated() const { return _allocated; }
     unsigned int getIncrement() const { return _increment; }

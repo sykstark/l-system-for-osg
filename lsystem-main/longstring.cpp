@@ -1,6 +1,7 @@
 #include "precompiled.h"
 
 #include "longstring.h"
+#include "windows.h"
 
 using namespace AP_LSystem;
 
@@ -56,18 +57,21 @@ void LongString::resize()
 void LongString::convertFromString(std::string * source, unsigned int & pos, const char delimiter)
 {
     double par;
+    unsigned int i;
     std::string::iterator end, begin = source->begin() + pos;
     while(true)
     {
         std::string chars = "(,)" + delimiter;
-        pos = source->find_first_of( chars, begin - source->begin( ) );
-        if ( pos == std::string::npos )
+        i = source->find_first_of( chars, begin - source->begin( ) );
+        if ( i == std::string::npos )
         {
             this->appendStr(std::string(begin,source->end()));
             return;
         }
-        end = source->begin() + pos;
+        end = source->begin() + i;
         std::string str(begin, end);
+
+        OutputDebugStringA( str.c_str() );
 
         switch(*end)
         {
@@ -88,6 +92,7 @@ void LongString::convertFromString(std::string * source, unsigned int & pos, con
             throw ParsingException("String converting error");
         }
         begin = end+1;
+        pos = i+1;
     }
 }
 
@@ -108,13 +113,13 @@ void LongString::appendStr( const char * str, unsigned int length )
     _length += length;
 }
 
-void LongString::appendStr( StaticString & str)
+/*void LongString::appendStr( StaticString & str)
 {
     while(_allocated < str.length() + _length)
     {
         resize( );
     }
-}
+}*/
 
 void LongString::appendStr( std::string str )
 {
@@ -154,17 +159,6 @@ void LongString::appendDouble( double par )
     appendType( LS_DOUBLE );
 }
 
-unsigned char& LongString::operator[](unsigned int i) const
-{
-    // mozna dodat kontrolu
-    return pStr[i];
-}
-
-unsigned int LongString::length() const
-{
-    return _length;
-}
-
 //mozna nekdy bool
 bool LongString::getParamaters( unsigned int & pos, double * pParams, int & paramsCnt )
 {
@@ -186,11 +180,10 @@ bool LongString::getParamaters( unsigned int & pos, double * pParams, int & para
             pPos += sizeof(double)+1;
             break;
         default:
+            pos = pPos - pStr - 1;
             return true;
         }
     }
-
-    pos = pPos - pStr;
 }
 
 char * LongString::c_str( )
@@ -229,6 +222,15 @@ std::string LongString::toString( )
             str.append(1,pStr[i]);
             break;
         }
+    }
+
+    unsigned int i = 0;
+    while( true )
+    {
+        i = str.find(")(", i);
+        if ( i == std::string::npos )
+            break;
+        str.replace(i,2,",");
     }
 
     return str;
