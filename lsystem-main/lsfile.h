@@ -37,7 +37,7 @@ private:
 
 public:
     LSFile();
-    virtual void open(std::string *);
+    virtual void open(std::string &);
     virtual std::vector<std::string> * getHomomorphisms()
     {
         return &homomorhisms;

@@ -11,13 +11,13 @@ LSFile::LSFile()
 {
 }
 
-void LSFile::open(std::string * filename)
+void LSFile::open(std::string & filename)
 {
-    std::fstream * file = new std::fstream(filename->c_str());
+    std::fstream * file = new std::fstream(filename.c_str());
 
     if(!file)
     {
-        throw FileException( "file " + *filename + " cannot be opened" );
+        throw FileException( "file " + filename + " cannot be opened" );
     }
 
     std::stringstream line;

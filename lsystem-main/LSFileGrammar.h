@@ -21,14 +21,14 @@ private:
     bool getEndOfStatic(string *, string::iterator &, string::iterator &);
 
 public:
-	LSFileGrammar( std::string * );
+    LSFileGrammar( AbstractFile * );
 	~LSFileGrammar(void);
 
 	virtual void addRule(std::string *);
     virtual void setAxiom(std::string &);
     virtual void addHomomorphism( std::string *);
 
-	virtual void loadFromFile( std::string * );
+    virtual void loadFromFile( AbstractFile * );
 
 	// temporarily
     virtual bool nextIteration();
