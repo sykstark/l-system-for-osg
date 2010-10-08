@@ -3,7 +3,6 @@
 #include "windows.h"
 #include "LSFileGrammar.h"
 #include "StringUtils.h"
-#include "lsfile.h"
 #include "lsystemexception.h"
 #include "boost/lexical_cast.hpp"
 
@@ -11,43 +10,17 @@
 
 using namespace AP_LSystem;
 
-LSFileGrammar::LSFileGrammar( std::string * filename): _word(NULL)//, _axiom("")
+LSFileGrammar::LSFileGrammar( AbstractFile * file): _word(NULL)//, _axiom("")
 {
-	this->loadFromFile(filename);		
+    this->loadFromFile(file);
 }
 
 LSFileGrammar::~LSFileGrammar(void)
 {
 }
 
-void LSFileGrammar::loadFromFile( std::string * filename )
+void LSFileGrammar::loadFromFile( AbstractFile * file)
 {
-    AbstractFile * file;
-
-    if( filename->empty() )
-    {
-        return;
-    }
-
-    unsigned int pos = filename->rfind( '.' );
-    if( pos == std::string::npos )
-    {
-        return;
-    }
-
-    std::string ext = filename->substr( pos + 1, std::string::npos );
-
-    if( ext == "ls" )
-    {
-        file = new LSFile;
-    }
-    else
-    {
-        throw FileException("unknown extension: ");
-    }
-
-    file->open(filename);
-
     this->setAxiom( file->getAxiom() );
 
     vector<std::string>::iterator itRules = file->getRules()->begin();

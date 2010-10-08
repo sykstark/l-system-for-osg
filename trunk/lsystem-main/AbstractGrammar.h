@@ -5,6 +5,7 @@
 
 #include "fparser/fparser.hh"
 #include "StringUtils.h"
+#include "abstractfile.h"
 
 namespace AP_LSystem {
 class AbstractGrammar
@@ -21,7 +22,7 @@ public:
     virtual void addRule( std::string * ) = 0;
     virtual void addHomomorphism( std::string * ) = 0;
     virtual void setAxiom( std::string & ) = 0;
-    virtual void loadFromFile ( std::string * ) = 0;
+    virtual void loadFromFile ( AbstractFile * ) = 0;
     int GetIteration() const {return _iteration;}
 };
 }

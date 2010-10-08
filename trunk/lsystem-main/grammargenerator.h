@@ -1,16 +1,20 @@
-#ifndef FROMFILEGENERATOR_H_
-#define FROMFILEGENERATOR_H_
+#ifndef GRAMMARGENERATOR_H_
+#define GRAMMARGENERATOR_H_
 
 #include "abstractgenerator.h"
 
-class FromFileGenerator :
+namespace AP_LSystem {
+class GrammarGenerator :
 	public AbstractGenerator
 {
+private:
+    void createMainGrammar();
 public:
-	FromFileGenerator(void);
-	~FromFileGenerator(void);
+    GrammarGenerator(void);
+    ~GrammarGenerator(void);
 
     virtual void loadFromFile( std::string & str );
     virtual void nextIteration();
 };
+}
 #endif

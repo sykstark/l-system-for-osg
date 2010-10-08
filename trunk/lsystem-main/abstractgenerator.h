@@ -23,7 +23,7 @@ public:
 	{
 	}
 
-    virtual void loadFromFile( std::string & str ) = 0;
+    virtual void loadFromFile( std::string &) = 0;
     virtual void nextIteration() = 0;
 };
 }
