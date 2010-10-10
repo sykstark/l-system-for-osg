@@ -1,6 +1,4 @@
-/*#ifndef QT_APP
 #include "precompiled.h"
-#endif*/
 
 #include <iostream>
 #include <fstream>
@@ -14,7 +12,8 @@ Configuration::Configuration(void)
 {
     description.add_options()
             ("texture", value<std::string>())
-            ("default_angle", value<double>());
+            ("default_angle", value<double>())
+			("turtle_type", value<std::string>());
 }
 
 Configuration::~Configuration(void)
@@ -43,19 +42,22 @@ Configuration * Configuration::get()
 	return config;
 }
 
-void Configuration::setProperty(const std::string &property)
+void Configuration::setProperty(const std::string &prop)
 {
     std::stringstream stream;
-    stream << property;
+    stream << prop;
 
     store(parse_config_file( stream, description), globalProperties );
     notify(globalProperties);
 }
 
-void Configuration::setProperty(const std::string &grammarID, const std::string &property)
+void Configuration::setProperty(const std::string &grammarID, const std::string &prop)
 {
+	if( !grammarProperties.count( grammarID ) )
+		grammarIDs.push_back( grammarID );
+
     std::stringstream stream;
-    stream << property;
+    stream << prop;
 
     store(parse_config_file( stream, description), grammarProperties[ grammarID ] );
     notify(grammarProperties[ grammarID ]);
@@ -92,8 +94,8 @@ const variable_value * Configuration::getProperty(const std::string &grammarID, 
     }
 }
 
-vector<std::string> Configuration::getGrammarNames()
-{
+vector<std::string> & Configuration::getGrammarNames()
+{/*
 	std::vector<std::string> names;
 	std::map<std::string, variables_map>::iterator it;
 	for(it = grammarProperties.begin(); it != grammarProperties.end(); it++)
@@ -101,6 +103,8 @@ vector<std::string> Configuration::getGrammarNames()
 		names.push_back( it->first );
 	}
 
-	return names;
+	return names;*/
+
+	return grammarIDs;
 }
 

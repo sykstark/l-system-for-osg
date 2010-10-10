@@ -14,7 +14,7 @@ public:
 	//DefaultParser( );
 	~DefaultParser(void);
 
-	virtual void parse( LongString * );
+	virtual int parse( ParseableString * );
 };
 }
 

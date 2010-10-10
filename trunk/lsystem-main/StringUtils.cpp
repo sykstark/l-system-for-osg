@@ -45,3 +45,4 @@ std::string StringUtils::processLine(std::fstream * pFile, std::stringstream & p
 	//*pLine >> word;
 	return word;
 }	
+

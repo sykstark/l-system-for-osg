@@ -18,7 +18,6 @@ using boost::lexical_cast;
 using namespace std;
 
 namespace AP_LSystem {
-
 class StringUtils
 {
 public:	
@@ -87,8 +86,8 @@ public:
 			{
 			case LS_DOUBLE:
 				{
-					double * pPar = reinterpret_cast<double *>(pStr);
-					parameters.push_back( Parameter( reinterpret_cast<void *>(pPar), LS_DOUBLE ) );
+					//double * pPar = reinterpret_cast<double *>(pStr);
+					parameters.push_back( Parameter( static_cast<void *>(pStr), LS_DOUBLE ) );
                     _pos += sizeof(double)+1;
 				}
 				break;

@@ -12,6 +12,7 @@ namespace AP_LSystem{
 class LSFileGrammar : public AbstractGrammar
 {
 private:
+	static const unsigned int capabilities = LS_0L | LS_DETERMINISTIC;
     LongString * _word;
     multimap<char, Rule> _rules;
     multimap<char, Rule> _homomorphisms;
@@ -35,6 +36,14 @@ public:
 	virtual char* translate();
 
     unsigned int wordLength() { return _word->length(); }
+
+	static bool isCapable( unsigned int type )
+	{
+		if( ( type & capabilities ) == type )
+			return true;
+		else
+			return false;
+	}
 };
 }
 
