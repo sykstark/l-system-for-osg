@@ -12,6 +12,18 @@ using std::vector;
 using std::string;
 
 namespace AP_LSystem {
+
+enum GrammarCapabilities
+{
+    LS_0L               = 0x00000001,
+    LS_1L               = 0x00000002,
+    LS_2L               = 0x00000004,
+    LS_kL               = 0x00000080,
+    LS_DETERMINISTIC    = 0x00000100,
+    LS_STOCHASTIC       = 0x00000200,
+    LS_PARAMETRIC       = 0x00010000,
+};
+
 class Configuration
 {
 public:
@@ -20,7 +32,7 @@ public:
     void setProperty(const string &, const string &);
     const variable_value * getProperty(const string &);
     const variable_value * getProperty(const string &, const string &);
-	vector<string> getGrammarNames( );
+	vector<string> & getGrammarNames( );
 	static Configuration * get();
 	
 private:
@@ -31,6 +43,7 @@ private:
     options_description description;
     variables_map globalProperties;
     std::map<std::string, variables_map> grammarProperties;
+	std::vector<std::string> grammarIDs;
 };
 }
 

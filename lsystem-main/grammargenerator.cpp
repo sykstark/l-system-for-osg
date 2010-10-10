@@ -1,5 +1,6 @@
 #include "precompiled.h"
 #include "grammargenerator.h"
+#include "LSFileGrammar.h"
 #include "lsfile.h"
 
 using namespace AP_LSystem;
@@ -40,9 +41,10 @@ void GrammarGenerator::loadFromFile(std::string & filename)
 
     file->open(filename);
 
-    createMainGrammar( );
-
-    pMainGrammar->loadFromFile(file);
+	if( LSFileGrammar::isCapable( file->type() ) )
+		pMainGrammar = new LSFileGrammar( file );
+	else
+		throw ParsingException("non of grammars fulfil the conditions");
 }
 
 void GrammarGenerator::nextIteration()
@@ -50,7 +52,8 @@ void GrammarGenerator::nextIteration()
     pMainGrammar->nextIteration();
 }
 
-void GrammarGenerator::createMainGrammar()
+void GrammarGenerator::createMainGrammar( unsigned int type )
 {
+	
 
 }

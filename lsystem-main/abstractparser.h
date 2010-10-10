@@ -1,34 +1,33 @@
 #ifndef ABSTRACTPARSER_H_
 #define ABSTRACTPARSER_H_
 
-#include <map>
-#include <stack>
+#include <vector>
 
 #include "lsgeode.h"
 #include "longstring.h"
+#include "turtlestack.h"
 
 using std::vector;
 using std::string;
-using std::map;
-using std::stack;
 
 namespace AP_LSystem {
 class AbstractParser
 {
 private:
-	stack< AbstractTurtle * > turtles;
-	map<string, LSGeode *> geodes;
+	vector< LSGeode *> geodes;
+protected:
 	LSGeode * selectedGeode;
+	TurtleStack turtles;
 public:
 	AbstractParser( )
 	{
 		selectedGeode = NULL;
 	}
 
-	LSGeode * switchGeode( string & name )
+	void switchGeode( unsigned char i )
 	{
-		selectedGeode = geodes[name];
-		return selectedGeode;
+		selectedGeode = geodes[i];
+		turtles.replace( selectedGeode );
 	}
 
 	void createGeodes()
@@ -41,13 +40,11 @@ public:
 			pGeode = new LSGeode();
 			pGeode->setName( *it );
 			pGeode->configure();
-			geodes.insert( std::make_pair<string, LSGeode *>(*it, pGeode ) );
+			geodes.push_back( pGeode );
 		}
 	}
 
-	virtual void parse( ParseableString * ) = 0;
-	virtual void pushTurtle( );
-	virtual void popTurtle( );
+	virtual int parse( ParseableString * ) = 0;
 };
 }
 

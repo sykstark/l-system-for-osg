@@ -8,7 +8,7 @@ class GrammarGenerator :
 	public AbstractGenerator
 {
 private:
-    void createMainGrammar();
+    void createMainGrammar( unsigned int);
 public:
     GrammarGenerator(void);
     ~GrammarGenerator(void);
