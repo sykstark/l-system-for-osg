@@ -14,6 +14,8 @@ public:
 
 	virtual int preRotate() { return 0;}
 	virtual int postRotate() { return 0;}
+	virtual int preStep() { return 0;}
+	virtual int postStep() { return 0;}
 };
 }
 

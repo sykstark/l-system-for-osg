@@ -23,13 +23,13 @@ int MovingTurtle::makeRotate(osg::Quat & q)
 	return LS_OK;
 }
 
-int MovingTurtle::doStep()
+int MovingTurtle::doStep( double dist)
 {
 	int ret = LS_NOTDEFINED;
 	ret = preStep();
 
 	if( !ret )
-		ret = properties.matrix.makeTranslate( osg::Vec3d( dist, 0.0, 0.0 ) );
+		properties.matrix.makeTranslate( osg::Vec3d( dist, 0.0, 0.0 ) );
 	else
 		return ret;
 

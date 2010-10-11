@@ -16,15 +16,26 @@ protected:
 public:
 	AbstractGenerator(void)
 	{
-
+		pWord = NULL;
+		pMainGrammar = NULL;
 	}
 
 	~AbstractGenerator(void)
 	{
+		// TODO
 	}
 
-    virtual void loadFromFile( std::string &) = 0;
+    virtual void loadFromFile( std::string & ) = 0;
     virtual void nextIteration() = 0;
+	
+	virtual void saveWordToFile( std::string &)
+	{
+		// TODO
+	}
+	virtual void loadWordFromFile( std::string &)
+	{
+		// TODO
+	}
 };
 }
 
