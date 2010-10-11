@@ -8,6 +8,8 @@
 namespace AP_LSystem {
 class Log
 {
+private:
+
 public:
     //Log();
 

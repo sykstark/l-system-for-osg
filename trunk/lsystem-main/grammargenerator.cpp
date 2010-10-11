@@ -44,16 +44,10 @@ void GrammarGenerator::loadFromFile(std::string & filename)
 	if( LSFileGrammar::isCapable( file->type() ) )
 		pMainGrammar = new LSFileGrammar( file );
 	else
-		throw ParsingException("non of grammars fulfil the conditions");
+		throw ParsingException("non of grammars fulfils the conditions");
 }
 
 void GrammarGenerator::nextIteration()
 {
     pMainGrammar->nextIteration();
-}
-
-void GrammarGenerator::createMainGrammar( unsigned int type )
-{
-	
-
 }

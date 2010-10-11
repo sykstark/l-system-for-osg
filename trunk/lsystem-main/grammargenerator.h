@@ -4,11 +4,8 @@
 #include "abstractgenerator.h"
 
 namespace AP_LSystem {
-class GrammarGenerator :
-	public AbstractGenerator
+class GrammarGenerator : public AbstractGenerator
 {
-private:
-    void createMainGrammar( unsigned int);
 public:
     GrammarGenerator(void);
     ~GrammarGenerator(void);

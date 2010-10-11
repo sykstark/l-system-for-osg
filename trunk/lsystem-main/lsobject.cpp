@@ -3,7 +3,8 @@
 #include "lparser.h"
 #include "Configuration.h"
 //#include "AbstractGrammar.h"
-#include "LSFileGrammar.h"
+//#include "LSFileGrammar.h"
+#include "grammargenerator.h"
 
 XERCES_CPP_NAMESPACE_USE
 
@@ -39,8 +40,12 @@ void LSObject::postInitialize()
 	// Schedule the parent EO for regular updates
 	getWorldPtr()->getSchedulerPtr()->addEntity(this, 60);
 	
-	AP_LSystem::Configuration::get()->loadCfgFile("vreckoAP_Garden.cfg");
-	draw();
+	Configuration::get()->loadCfgFile("vreckoAP_Garden.cfg");
+
+	generator = new GrammarGenerator( );
+	generator->loadFromFile( filename );
+
+	
 }
 
 bool LSObject::loadXMLParameters(XERCES_CPP_NAMESPACE_QUALIFIER DOMNode *pParametersNode) 

@@ -11,7 +11,7 @@ private:
 	virtual int preRotate()=0;
 	virtual int postRotate()=0;
 
-	virtual int doStep( osg::Quat & );
+	virtual int doStep( double );
 	virtual int preStep()=0;
 	virtual int postStep()=0;
 
