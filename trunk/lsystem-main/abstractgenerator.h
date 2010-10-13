@@ -9,8 +9,7 @@ namespace AP_LSystem {
 class AbstractGenerator
 {
 protected:
-
-    LongString * pWord;
+    ParseableString * pWord;
     AbstractGrammar * pMainGrammar;
 	
 public:
@@ -25,8 +24,9 @@ public:
 		// TODO
 	}
 
-    virtual void loadFromFile( std::string & ) = 0;
+    virtual void loadFile( std::string & ) = 0;
     virtual void nextIteration() = 0;
+    virtual ParseableString * getWord() = 0;
 	
 	virtual void saveWordToFile( std::string &)
 	{

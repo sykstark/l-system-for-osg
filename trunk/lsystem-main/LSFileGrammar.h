@@ -31,9 +31,8 @@ public:
 
     virtual void loadFromFile( AbstractFile * );
 
-	// temporarily
     virtual bool nextIteration();
-	virtual char* translate();
+    virtual void translate(char *, unsigned int &);
 
     unsigned int wordLength() { return _word->length(); }
 

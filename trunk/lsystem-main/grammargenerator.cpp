@@ -13,7 +13,7 @@ GrammarGenerator::~GrammarGenerator(void)
 {
 }
 
-void GrammarGenerator::loadFromFile(std::string & filename)
+void GrammarGenerator::loadFile(std::string & filename)
 {
     AbstractFile * file;
 
@@ -50,4 +50,16 @@ void GrammarGenerator::loadFromFile(std::string & filename)
 void GrammarGenerator::nextIteration()
 {
     pMainGrammar->nextIteration();
+}
+
+ParseableString * GrammarGenerator::getWord()
+{
+    if(pWord)
+        delete pWord;
+
+    char * word = NULL;
+    unsigned int length;
+    pMainGrammar->translate( word, length );
+
+    return pWord = new ParseableString(word, length);
 }

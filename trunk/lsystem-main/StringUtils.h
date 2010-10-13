@@ -51,10 +51,7 @@ private:
 	unsigned int _pos, _length;
 	bool _eof;
 public:
-	ParseableString( char * string ): pStr(string), _pos(0), _eof(false) 
-	{
-		_length = strlen( string );
-    }
+    ParseableString( char * string, unsigned int length): pStr(string), _pos(0), _length(length), _eof(false) { }
 
 	inline bool eof()
 	{
@@ -91,6 +88,12 @@ public:
                     _pos += sizeof(double)+1;
 				}
 				break;
+            case LS_UBYTE:
+                {
+                    parameters.push_back( Parameter( static_cast<void *>(pStr), LS_UBYTE ) );
+                    _pos += sizeof(unsigned char)+1;
+                }
+                break;
 			case LS_NO_PARAMETER:
 			default:
 				if(_pos >= _length)

@@ -42,6 +42,16 @@ Configuration * Configuration::get()
 	return config;
 }
 
+const int Configuration::getGrammarIndex(const string & name)
+{
+    if( grammarNameMap.count(name))
+    {
+        return grammarNameMap[name];
+    }
+    else
+        return -1;
+}
+
 void Configuration::setProperty(const std::string &prop)
 {
     std::stringstream stream;
@@ -53,14 +63,18 @@ void Configuration::setProperty(const std::string &prop)
 
 void Configuration::setProperty(const std::string &grammarID, const std::string &prop)
 {
-	if( !grammarProperties.count( grammarID ) )
-		grammarIDs.push_back( grammarID );
+    if( !grammarNameMap.count( grammarID ) )
+    {
+        // bind grammar name with index in grammarProperties vector
+        grammarNameMap[grammarID] = grammarProperties.size();
+        grammarProperties.push_back( variables_map() );
+    }
 
     std::stringstream stream;
     stream << prop;
 
-    store(parse_config_file( stream, description), grammarProperties[ grammarID ] );
-    notify(grammarProperties[ grammarID ]);
+    store(parse_config_file( stream, description), grammarProperties[ grammarNameMap[grammarID] ] );
+    notify(grammarProperties[ grammarNameMap[grammarID] ]);
 }
 
 const variable_value * Configuration::getProperty(const std::string & name)
@@ -77,11 +91,11 @@ const variable_value * Configuration::getProperty(const std::string & name)
 
 const variable_value * Configuration::getProperty(const std::string &grammarID, const std::string & name)
 {
-    if(grammarProperties.count(grammarID))
+    if(grammarNameMap.count(grammarID))
     {
-        if(grammarProperties[grammarID].count(name))
+        if(grammarProperties[grammarNameMap[grammarID]].count(name))
         {
-            return &grammarProperties[grammarID][name];
+            return &grammarProperties[grammarNameMap[grammarID]][name];
         }
     }
     if(globalProperties.count(name))
@@ -94,17 +108,8 @@ const variable_value * Configuration::getProperty(const std::string &grammarID, 
     }
 }
 
-vector<std::string> & Configuration::getGrammarNames()
-{/*
-	std::vector<std::string> names;
-	std::map<std::string, variables_map>::iterator it;
-	for(it = grammarProperties.begin(); it != grammarProperties.end(); it++)
-	{
-		names.push_back( it->first );
-	}
-
-	return names;*/
-
+/*vector<std::string> & Configuration::getGrammarNames()
+{
 	return grammarIDs;
 }
-
+*/

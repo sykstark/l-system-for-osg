@@ -5,6 +5,7 @@
 #include "StringUtils.h"
 #include "lsystemexception.h"
 #include "boost/lexical_cast.hpp"
+#include "log.h"
 
 #include "fparser/fparser.hh"
 
@@ -21,6 +22,7 @@ LSFileGrammar::~LSFileGrammar(void)
 
 void LSFileGrammar::loadFromFile( AbstractFile * file)
 {
+    this->_name = file->name();
     this->setAxiom( file->getAxiom() );
 
     vector<std::string>::iterator itRules = file->getRules()->begin();
@@ -79,9 +81,13 @@ void LSFileGrammar::setAxiom(std::string & axiom)
 {
 	if(_word) delete _word;
     _word = new LongString( );
+    _word->appendChar('?', true);
+    _word->appendUByte( Configuration::get()->getGrammarIndex( this->_name ) );
     _word->convertFromString( &axiom );
+    _word->appendChar('$', false);
 
-    cout << _word->toString() << endl;
+    Log::write(_word->toString());
+    //Log::get(); // TODO
 }
 
 void LSFileGrammar::addHomomorphism(std::string * hom)
@@ -131,6 +137,8 @@ void LSFileGrammar::addHomomorphism(std::string * hom)
 
 bool LSFileGrammar::nextIteration( )
 {
+    int j=0;
+    char * pUByte = NULL;
     LongString * newWord = new LongString( );
 	multimap<char, Rule>::iterator ruleIt;
 	pair<multimap<char, Rule>::iterator, multimap<char, Rule>::iterator > result;
@@ -153,8 +161,9 @@ bool LSFileGrammar::nextIteration( )
 		
 		if( result.first == result.second )
 		{
-            newWord->appendChar( (*_word)[i], false );
-//            cout << (*_word)[i] << " | ";
+            j = i;
+            pUByte = _word->getSymbol(i);
+            newWord->appendData(pUByte,i-j);
 		}
 		else
 		{
@@ -230,7 +239,19 @@ bool LSFileGrammar::getEndOfStatic(string * rule, string::iterator & begin, stri
 
 }
 
-char * LSFileGrammar::translate()
+void LSFileGrammar::translate(char * pWord, unsigned int & length)
 {
-	return _word->c_str( );
+    // TODO homomorphism
+
+    if( _word )
+    {
+        pWord = _word->get( );
+        length = _word->length( );
+    }
+    else
+    {
+        pWord = NULL;
+        length = 0;
+    }
+
 }

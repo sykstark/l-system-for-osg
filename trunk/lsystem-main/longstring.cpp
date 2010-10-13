@@ -8,13 +8,13 @@ using namespace AP_LSystem;
 LongString::LongString( unsigned int increment): _length(0)
 {
     _allocated =_increment = increment;
-    pStr = new unsigned char[_allocated];
+    pStr = new char[_allocated];
 }
 
 LongString::LongString( const LongString& c ):_length(c.length()),
     _allocated(c.getAllocated()), _increment( c.getIncrement())
 {
-    pStr = new unsigned char[_allocated];
+    pStr = new char[_allocated];
     memcpy( pStr, c.getString(), c.length() );
 }
 
@@ -23,7 +23,7 @@ LongString& LongString::operator=( const LongString & c )
     _length = c.length();
     _allocated = c.getAllocated();
     _increment = c.getIncrement();
-    pStr = new unsigned char[_allocated];
+    pStr = new char[_allocated];
     memcpy( pStr, c.getString(), c.length() );
 
     return *this;
@@ -41,10 +41,10 @@ void LongString::resize()
 {
     if(pStr)
     {
-        unsigned char * pOld = pStr;
+        char * pOld = pStr;
 
         _allocated += _increment;
-        pStr = new unsigned char[_allocated];
+        pStr = new char[_allocated];
         for( unsigned int i =0; i < _length; i++)
         {
                 pStr[i] = pOld[i];
@@ -159,7 +159,55 @@ void LongString::appendDouble( double par )
     appendType( LS_DOUBLE );
 }
 
-//mozna nekdy bool
+void LongString::appendUByte( unsigned char par )
+{
+    if(_allocated < _length + sizeof(unsigned char) + 2)
+    {
+        resize( );
+    }
+    appendType( LS_UBYTE );
+    memcpy( pStr + _length, &par, sizeof(unsigned char) );
+    _length += sizeof(unsigned char);
+    appendType( LS_UBYTE );
+}
+
+void LongString::appendData(char * buffer, int length)
+{
+    if(_allocated < _length + length)
+    {
+        resize( );
+    }
+
+    memcpy( pStr + _length, buffer, length );
+    _length += length;
+}
+
+char * LongString::getSymbol(unsigned int & pos)
+{
+    if(pos + 1 >= _length)
+        return NULL;
+    char * pSymbol = pStr + pos;
+    char * pPos = pStr + pos + 1;
+    while(true)
+    {
+        switch(*pPos)
+        {
+        case LS_NO_PARAMETER:
+            pos = pPos - pStr + 1;
+            return pSymbol;
+        case LS_DOUBLE:
+            pPos += sizeof(double)+1;
+            break;
+        case LS_UBYTE:
+            pPos += sizeof(unsigned char)+1;
+            break;
+        default:
+            pos = pPos - pStr;
+            return pSymbol;
+        }
+    }
+}
+
 bool LongString::getParamaters( unsigned int & pos, double * pParams, int & paramsCnt )
 {
     if(pos + 1 >= _length)
@@ -167,7 +215,7 @@ bool LongString::getParamaters( unsigned int & pos, double * pParams, int & para
 
     paramsCnt = 0;
 
-    unsigned char * pPos = pStr + pos + 1;
+    char * pPos = pStr + pos + 1;
     while(true)
     {
         switch(*pPos)
@@ -179,6 +227,11 @@ bool LongString::getParamaters( unsigned int & pos, double * pParams, int & para
             paramsCnt++;
             pPos += sizeof(double)+1;
             break;
+        case LS_UBYTE:
+        /*    memcpy(pParams + paramsCnt, ++pPos, sizeof(double));
+            paramsCnt++;
+            pPos += sizeof(double)+1;
+            break;*/
         default:
             pos = pPos - pStr - 1;
             return true;
@@ -186,15 +239,9 @@ bool LongString::getParamaters( unsigned int & pos, double * pParams, int & para
     }
 }
 
-char * LongString::c_str( )
+char * LongString::get( )
 {
-    if(_allocated < _length + 1)
-    {
-        resize( );
-    }
-    pStr[_length] = '\0';
-
-    return reinterpret_cast<char *>(pStr);
+    return pStr;
 }
 
 std::string LongString::toString( )
@@ -203,6 +250,7 @@ std::string LongString::toString( )
     //str.resize(2 * _length);
     char number[50];
     double dblnum;
+    unsigned char ubytenum;
     for(unsigned int i=0; i < _length; i++)
     {
         switch(pStr[i])
@@ -213,10 +261,18 @@ std::string LongString::toString( )
         case LS_DOUBLE:
             memcpy(&dblnum, pStr + i + 1, sizeof(double));
             sprintf( number, "%.2f", dblnum );
+            i += sizeof(double)+1;
             str.append(1,'(');
             str.append( number );
             str.append(1,')');
-            i += sizeof(double)+1;
+            break;
+        case LS_UBYTE:
+            memcpy(&ubytenum, pStr + i + 1, sizeof(unsigned char));
+            sprintf( number, "%d", ubytenum );
+            i += sizeof(unsigned char)+1;
+            str.append(1,'(');
+            str.append( number );
+            str.append(1,')');
             break;
         default:
             str.append(1,pStr[i]);
