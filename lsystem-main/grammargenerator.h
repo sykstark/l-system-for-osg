@@ -10,8 +10,9 @@ public:
     GrammarGenerator(void);
     ~GrammarGenerator(void);
 
-    virtual void loadFromFile( std::string & str );
+    virtual void loadFile( std::string & str );
     virtual void nextIteration();
+    virtual ParseableString * getWord();
 };
 }
 #endif

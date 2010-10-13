@@ -12,6 +12,7 @@ class AbstractFile
 {
 protected:
     unsigned int _type;
+    std::string _name;
 public:
     AbstractFile(): _type(0){}
     virtual void open( std::string & ) = 0;
@@ -22,6 +23,11 @@ public:
     unsigned int type()
     {
         return _type;
+    }
+
+    std::string & name()
+    {
+        return _name;
     }
 };
 }

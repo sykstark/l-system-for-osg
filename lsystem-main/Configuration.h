@@ -26,24 +26,26 @@ enum GrammarCapabilities
 
 class Configuration
 {
+private:
+    Configuration();
+    static Configuration* config;
+    ~Configuration();
+
+    options_description description;
+    variables_map globalProperties;
+    std::map<std::string, int> grammarNameMap;
+    std::vector<variables_map> grammarProperties;
+    //std::vector<std::string> grammarIDs;
+
 public:
     bool loadCfgFile(string);
     void setProperty(const string &);
     void setProperty(const string &, const string &);
+    const int getGrammarIndex( const string & );
     const variable_value * getProperty(const string &);
     const variable_value * getProperty(const string &, const string &);
-	vector<string> & getGrammarNames( );
+    //vector<string> & getGrammarNames( );
 	static Configuration * get();
-	
-private:
-	Configuration();
-	static Configuration* config;
-	~Configuration();
-
-    options_description description;
-    variables_map globalProperties;
-    std::map<std::string, variables_map> grammarProperties;
-	std::vector<std::string> grammarIDs;
 };
 }
 

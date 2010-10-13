@@ -21,13 +21,13 @@ void LSFile::open(std::string & filename)
     }
 
     std::stringstream line;
-    std::string id, grammarID;
+    std::string id;
 
 
     id = StringUtils::processLine( file, line );
     if(id=="#grammar")
     {
-        line >> grammarID;
+        line >> _name;
         while( true )
         {
             id = StringUtils::processLine( file, line);
@@ -41,7 +41,7 @@ void LSFile::open(std::string & filename)
                 {
                     throw ParsingException("Bad format of #set");
                 }
-                Configuration::get()->setProperty(grammarID, prop);  // property setting
+                Configuration::get()->setProperty(_name, prop);  // property setting
             }
             else if(id=="#include")
             {
