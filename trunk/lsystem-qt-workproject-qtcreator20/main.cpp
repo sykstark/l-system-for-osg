@@ -63,30 +63,17 @@ int main(int argc, char *argv[])
              << vm["vec2"].as< double >() << "\n";
     }*/
 
-
-    //AbstractGrammar * grammar;
-
     AbstractGenerator * generator;
 
     try
     {
-        /*grammar = new LSFileGrammar( &filename );
-        for( int i = 0; i < 8 ; i++)
-        {
-            grammar->nextIteration();
-        }*/
-
         generator = new GrammarGenerator();
-        generator->loadFromFile(filename);
+        generator->loadFile(filename);
 
         for( int i = 0; i < 8 ; i++)
         {
             generator->nextIteration();
         }
-
-        //cout << grammar->translate() << endl;
-
-        //Log::write( dynamic_cast<LSFileGrammar *>(grammar)->wordLength() );
 
         if (Configuration::get()->getProperty( "TEST01", "texture" ) != NULL )
         {
