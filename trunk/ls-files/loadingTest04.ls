@@ -8,10 +8,9 @@
 #type 0L
 #set turtle_type=JOINTED_PIPE
 #axiom 
-A(10,10)
+FFF
 #endaxiom
 #rules  
-A(x,y):x+y>10->B(x+y+len,x-y)A(2*y*high,2*x)
-B(x,y):x>y->A(1+x/high,y+1+len)
+F:*->FF
 #endrules
 #endgrammar
