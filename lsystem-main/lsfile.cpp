@@ -21,8 +21,7 @@ void LSFile::open(std::string & filename)
     }
 
     std::stringstream line;
-    std::string id;
-
+    std::string id, emptyString;
 
     id = StringUtils::processLine( file, line );
     if(id=="#grammar")
@@ -70,7 +69,9 @@ void LSFile::open(std::string & filename)
                 {
                     throw ParsingException("#type was already set");
                 }
-                if( line.str() == "")
+				std::string type;
+				line >> type;
+                if( type == "")
                 {
                     throw ParsingException("Bad format of #type");
                 }
@@ -120,6 +121,13 @@ void LSFile::open(std::string & filename)
                 throw ParsingException("Unknown expression: " + id);
             }
             // dodelat prazdny radek jen s komentarem
+
+			line >> emptyString;
+			if( emptyString != "" )
+			{
+				// v radu neco zbylo navic
+				throw ParsingException("Illegal redundant operator: " + emptyString);
+			}
 
         }
 

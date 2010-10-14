@@ -196,7 +196,7 @@ struct Rule
         }
         cout << "static string:" << ls->toString() << endl;
 
-        begin = rule->begin() + pos + 1;
+//        begin = rule->begin() + pos + 1;
         pSS = new StaticString(ls);
         staticStrings.push_back(pSS);
         return false;

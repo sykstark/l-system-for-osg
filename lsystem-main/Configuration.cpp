@@ -13,6 +13,8 @@ Configuration::Configuration(void)
     description.add_options()
             ("texture", value<std::string>())
             ("default_angle", value<double>())
+			("default_length", value<double>())
+			("default_thickness", value<double>())
 			("turtle_type", value<std::string>());
 }
 
@@ -50,6 +52,11 @@ const int Configuration::getGrammarIndex(const string & name)
     }
     else
         return -1;
+}
+
+const int Configuration::getGrammarCount()
+{
+	return grammarProperties.size();
 }
 
 void Configuration::setProperty(const std::string &prop)
@@ -96,6 +103,25 @@ const variable_value * Configuration::getProperty(const std::string &grammarID, 
         if(grammarProperties[grammarNameMap[grammarID]].count(name))
         {
             return &grammarProperties[grammarNameMap[grammarID]][name];
+        }
+    }
+    if(globalProperties.count(name))
+    {
+        return &globalProperties[name];
+    }
+    else
+    {
+        return NULL;
+    }
+}
+
+const variable_value * Configuration::getProperty(const unsigned int grammarIndex, const std::string & name)
+{
+	if(grammarIndex < grammarProperties.size( ))
+    {
+		if(grammarProperties[grammarIndex].count(name))
+        {
+            return &grammarProperties[grammarIndex][name];
         }
     }
     if(globalProperties.count(name))

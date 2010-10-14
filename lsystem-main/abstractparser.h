@@ -32,14 +32,15 @@ public:
 
 	void createGeodes()
 	{
-		vector<string> names = Configuration::get()->getGrammarNames();
-		vector<string>::iterator it;
+		unsigned int count = Configuration::get()->getGrammarCount();
 		LSGeode * pGeode;
-		for( it = names.begin(); it != names.end(); it++)
+		for( unsigned int i = 0; i < count; i++)
 		{
 			pGeode = new LSGeode();
-			pGeode->setName( *it );
-			pGeode->configure();
+
+			// TODO configuration of Geode
+			//pGeode->setSOMETHING( Configuration::get()->getProperty( i, "something")->as<double>() );
+
 			geodes.push_back( pGeode );
 		}
 	}

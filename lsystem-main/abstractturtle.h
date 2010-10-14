@@ -5,7 +5,8 @@
 #include "lsgeode.h"
 
 namespace AP_LSystem {
-class LSGeode;
+//class LSGeode;
+//struct TurtleProperties;
 
 enum ParsingErrorCodes
 {
@@ -22,35 +23,7 @@ enum TurtleFlag
 	LS_FL_DEBUG				= 0x00000001,
 
 };
-/**
- *	Struct for storing properties of turtles
- */
-struct TurtleProperties
-{
-	TurtleProperties():modelFile(NULL){};
 
-	/**
-	 * Destructor of all objects in properties structure. This function is called in AbstractTurtle destructor.
-	 */
-	void clean()
-	{
-		if(modelFile)
-			delete modelFile;
-	}
-
-	osg::Matrixd matrix;	///< matrix of turtle position and orientation
-
-	double length;			///< default length of one step
-	double angle;			///< default angle of rotation
-	double thickness;		///< default thisckness of each segment
-	unsigned int detailH;	
-	unsigned int detailL;
-	unsigned int detailU;
-
-	unsigned int flags;
-
-	std::string * modelFile;	///< filename of model file - only for turtles that load models
-};
 /**
  *	Abstract class for all turtles with declarations of all necessary functions.
  */
