@@ -1,10 +1,14 @@
 #include "precompiled.h"
+
+#include <exception>
 #include "lsobject.h"
 #include "lparser.h"
 #include "Configuration.h"
 //#include "AbstractGrammar.h"
 //#include "LSFileGrammar.h"
 #include "grammargenerator.h"
+#include "log.h"
+
 
 XERCES_CPP_NAMESPACE_USE
 
@@ -43,7 +47,16 @@ void LSObject::postInitialize()
 	Configuration::get()->loadCfgFile("vreckoAP_Garden.cfg");
 
 	generator = new GrammarGenerator( );
-	generator->loadFromFile( filename );
+	ParseableString * pWord;
+	try
+	{
+		generator->loadFile( filename );
+		pWord = generator->getWord();
+	}
+	catch( std::exception & e)
+	{
+		Log::write( e.what() );
+	}
 
 	
 }

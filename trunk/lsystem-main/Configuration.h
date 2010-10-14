@@ -42,8 +42,10 @@ public:
     void setProperty(const string &);
     void setProperty(const string &, const string &);
     const int getGrammarIndex( const string & );
+	const int getGrammarCount();
     const variable_value * getProperty(const string &);
     const variable_value * getProperty(const string &, const string &);
+	const variable_value * getProperty(const unsigned int, const string &);
     //vector<string> & getGrammarNames( );
 	static Configuration * get();
 };

@@ -13,7 +13,7 @@ LSGeode::LSGeode()
 	std::string t = Configuration::get()->getProperty("turtle_type")->as<string>();
 	setTurtleType(t);
 }
-
+/*
 void LSGeode::configure()
 {
 	const string & name = this->getName();
@@ -22,7 +22,7 @@ void LSGeode::configure()
 	
 	Configuration::get()->getProperty( name, "");
 }
-
+*/
 void LSGeode::setTurtleType(std::string & type)
 {
 	if(type == "JOINTED_PIPE" )
@@ -37,5 +37,16 @@ TurtleType LSGeode::getTurtleType()
 {
 	return turtleType;
 }
+
+TurtleProperties & LSGeode::getDefaultTurtleProperties( )
+{
+	return defaultTurtleProperties;
+}
+
+void LSGeode::setDefaultTurtleProperties( TurtleProperties & props )
+{
+	defaultTurtleProperties = props;
+}
+
 
 
