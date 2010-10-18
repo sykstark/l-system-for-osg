@@ -10,7 +10,7 @@ class DefaultParser : public AbstractParser
 private:
 	
 public:
-	DefaultParser(void);
+	DefaultParser( osg::Group * owner );
 	//DefaultParser( );
 	~DefaultParser(void);
 

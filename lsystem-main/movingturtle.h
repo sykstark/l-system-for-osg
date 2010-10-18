@@ -15,7 +15,7 @@ private:
 	virtual int preStep()=0;
 	virtual int postStep()=0;
 
-	void drawDebugGeometry( );
+	virtual void drawDebugGeometry( );
 public:
 //****************************************************************
 //**						ROTATION							**

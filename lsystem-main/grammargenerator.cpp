@@ -2,6 +2,7 @@
 #include "grammargenerator.h"
 #include "LSFileGrammar.h"
 #include "lsfile.h"
+#include "log.h"
 
 using namespace AP_LSystem;
 
@@ -57,9 +58,11 @@ ParseableString * GrammarGenerator::getWord()
     if(pWord)
         delete pWord;
 
-    char * word = NULL;
-    unsigned int length;
-    pMainGrammar->translate( word, length );
+    LongString * word = NULL;
+//    unsigned int length;
+    word = pMainGrammar->translate( );
 
-    return pWord = new ParseableString(word, length);
+	//Log::write( word );
+
+    return pWord = new ParseableString( word );
 }

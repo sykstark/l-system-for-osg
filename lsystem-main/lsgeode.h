@@ -58,7 +58,7 @@ public:
 	void setDefaultTurtleProperties( TurtleProperties & );
 	TurtleProperties & getDefaultTurtleProperties( );
 
-	LSGeode();
+	LSGeode( unsigned int );
 	void configure();
 };
 }

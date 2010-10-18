@@ -5,6 +5,17 @@
 
 using namespace AP_LSystem;
 
+DefaultParser::DefaultParser( osg::Group * owner )
+{
+	pOwner = owner;
+	createGeodes();
+}
+
+DefaultParser::~DefaultParser( )
+{
+
+}
+
 int DefaultParser::parse(ParseableString * word)
 {
 	int currentGrammarIndex = 0;
@@ -13,10 +24,13 @@ int DefaultParser::parse(ParseableString * word)
 	while(!word->eof( ))
 	{
 		// FREE SYMBOLS
-		// ! " # $ % ' * , . : ; < > ? @ [ ] _ ` { } ~
+		// ! " # % ' * , . : ; < > @ [ ] _ ` { } ~
 		parameters.clear();
 		switch( word->next( parameters ) )
 		{
+		case 'F':
+			turtles.top()->moveForward( parameters );
+			break;
 		case '+':
 			turtles.top()->turnLeft( parameters );
 			break;
@@ -42,7 +56,7 @@ int DefaultParser::parse(ParseableString * word)
 			turtles.top()->rollUntilHorizontal( );
 			break;
 		case '?':
-			if (parameters[0].type != LS_BYTE)
+			if (parameters[0].type != LS_UBYTE)
 				return LS_ERR_PAR_BADTYPE;
 			switchGeode( *(static_cast<unsigned char*>(parameters[0].value)));
 			break;

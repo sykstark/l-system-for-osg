@@ -2,7 +2,8 @@
 #define ABSTRACTGENERATOR_H_
 
 #include <string>
-#include "longstring.h"
+//#include "longstring.h"
+#include "parseablestring.h"
 #include "AbstractGrammar.h"
 
 namespace AP_LSystem {

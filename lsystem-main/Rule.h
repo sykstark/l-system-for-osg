@@ -8,7 +8,7 @@
 #include "fparser/fparser.hh"
 #include "boost/lexical_cast.hpp"
 #include "lsystemexception.h"
-#include "StaticString.h"
+#include "staticstring.h"
 #include "longstring.h"
 
 using namespace std;

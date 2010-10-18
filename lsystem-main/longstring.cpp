@@ -1,7 +1,11 @@
 #include "precompiled.h"
 
 #include "longstring.h"
-#include "windows.h"
+#include "lsystemexception.h"
+//#include "windows.h"
+#include "boost/lexical_cast.hpp"
+
+using boost::lexical_cast;
 
 using namespace AP_LSystem;
 

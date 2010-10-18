@@ -1,8 +1,10 @@
 #include <fstream>
+#include <sstream>
 
 #include "lsfile.h"
-#include "StringUtils.h"
+#include "utils.h"
 #include "lsystemexception.h"
+#include "Configuration.h"
 
 using namespace std;
 using namespace AP_LSystem;

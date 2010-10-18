@@ -6,6 +6,7 @@
 #include "Configuration.h"
 //#include "AbstractGrammar.h"
 //#include "LSFileGrammar.h"
+#include "defaultparser.h"
 #include "grammargenerator.h"
 #include "log.h"
 
@@ -56,7 +57,15 @@ void LSObject::postInitialize()
 	catch( std::exception & e)
 	{
 		Log::write( e.what() );
+		return;
 	}
+
+	AbstractParser * parser = new DefaultParser( pEOOwner );
+	parser->parse( pWord );
+
+//	osg::Geode * g = dynamic_cast<osg::Geode *>(pEOOwner->getChild(0));
+//	g->addDrawable( new osg::ShapeDrawable(new osg::Cylinder(osg::Vec3(0.0f,0.0f,2.5),1.0,5.0) ) );
+//	draw();
 
 	
 }
@@ -114,7 +123,9 @@ void LSObject::draw()
 	new osg::DrawArrays( osg::PrimitiveSet::QUADS, 0, 4 ) );
 	// Add the Geometry (Drawable) to a Geode and
 	// return the Geode.
-	osg::Geode* geode = new osg::Geode();
+	//osg::Geode * geode = new osg::Geode();
+	LSGeode * geode = new LSGeode(0);
+	pEOOwner->addChild((osg::Group *)geode);
 
 	//geode->addDrawable(new ShapeDrawable(new Sphere(Vec3(), 1)));
 	
@@ -130,11 +141,14 @@ void LSObject::draw()
 		state->setTextureAttributeAndModes( 0, tex.get(), osg::StateAttribute::OFF );
 	}
 
-	AddAnother( geom.get() );	
+	//AddAnother( geom.get() );	
 	
-	geode->addDrawable( geom.get() );
+	//geode->addDrawable( geom.get() );
+	osg::Cylinder * cldr = new osg::Cylinder(osg::Vec3(1.0f,1.0f,2.0f),1.0,10.0);
+	cldr->setRotation( osg::Quat( 15.0, osg::Vec3f( 0.5, 0.25, 0.66 ) ) );
+	geode->addDrawable( new osg::ShapeDrawable( cldr) );
 
-	pEOOwner->addChild((osg::Group *)geode);
+	
 //	if (pOSGGeode != NULL)
 //		pEOOwner->removeChild((osg::Group *)pOSGGeode);
 //	pOSGGeode = geode;
