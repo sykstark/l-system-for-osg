@@ -30,28 +30,29 @@ SOURCES += main.cpp \
     ../boost_1_43_0/libs/program_options/src/cmdline.cpp \
     ../Garden/fparser/fparser.cc \
     ../Garden/fparser/fpoptimizer.cc \
-    ../Garden/StringUtils.cpp \
     ../Garden/LSFileGrammar.cpp \
     ../Garden/lsfile.cpp \
-    ../Garden/Configuration.cpp \
+    ../Garden/configuration.cpp \
     ../Garden/longstring.cpp \
     ../Garden/log.cpp \
-    ../Garden/grammargenerator.cpp
+    ../Garden/grammargenerator.cpp \
+    ../Garden/utils.cpp
 
 HEADERS += \
-    ../Garden/StaticString.h \
-    ../Garden/Rule.h \
+    ../Garden/staticstring.h \
+    ../Garden/rule.h \
     ../Garden/lsystemexception.h \
     ../Garden/LSFileGrammar.h \
     ../Garden/lsfile.h \
     ../Garden/Configuration.h \
-    ../Garden/AbstractGrammar.h \
+    ../Garden/abstractgrammar.h \
     ../Garden/abstractfile.h \
-    ../Garden/StringUtils.h \
     ../Garden/longstring.h \
     ../Garden/log.h \
     ../Garden/abstractgenerator.h \
-    ../Garden/grammargenerator.h
+    ../Garden/grammargenerator.h \
+    ../Garden/parseablestring.h \
+    ../Garden/utils.h
 
 INCLUDEPATH += ../Garden/ \
     ../Garden/fparser \
