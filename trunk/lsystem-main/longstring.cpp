@@ -1,8 +1,9 @@
 #include "precompiled.h"
 
+#include <cstdio>
 #include "longstring.h"
 #include "lsystemexception.h"
-//#include "windows.h"
+#include "log.h"
 #include "boost/lexical_cast.hpp"
 
 using boost::lexical_cast;
@@ -75,7 +76,7 @@ void LongString::convertFromString(std::string * source, unsigned int & pos, con
         end = source->begin() + i;
         std::string str(begin, end);
 
-        OutputDebugStringA( str.c_str() );
+        Log::write( str );
 
         switch(*end)
         {

@@ -1,6 +1,7 @@
 #ifndef PARSEABLESTRING_H_
 #define PARSEABLESTRING_H_
 
+#include <vector>
 #include "utils.h"
 #include "longstring.h"
 
