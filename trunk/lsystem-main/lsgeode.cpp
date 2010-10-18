@@ -8,9 +8,9 @@ using namespace AP_LSystem;
 using namespace std;
 using namespace boost::program_options;
 
-LSGeode::LSGeode()
+LSGeode::LSGeode( unsigned int index )
 {
-	std::string t = Configuration::get()->getProperty("turtle_type")->as<string>();
+	std::string t = Configuration::get()->getProperty( index , "turtle_type")->as<string>();
 	setTurtleType(t);
 }
 /*

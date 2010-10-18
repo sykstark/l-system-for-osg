@@ -5,7 +5,7 @@
 
 #include <string>
 #include <cstring>
-#include "StringUtils.h"
+#include "utils.h"
 #include "longstring.h"
 
 namespace AP_LSystem {

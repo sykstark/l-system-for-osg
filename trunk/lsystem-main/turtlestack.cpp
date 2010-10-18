@@ -41,11 +41,9 @@ void TurtleStack::replace(LSGeode * geode)
 	// create new turtle that will replace the one on the top
 	AbstractTurtle * pTurtle = createTurtle( geode->getTurtleType() );
 	// copy properties
-	pTurtle->setProperties( turtles.top()->getProperties() );
+	pTurtle->setProperties( geode->getDefaultTurtleProperties( ) );
 	// bind with geode
 	pTurtle->bindGeode( geode );
-	// remove the old one from the top
-	turtles.pop();
 	// push new one on the top of the stack
 	turtles.push( pTurtle );
 }

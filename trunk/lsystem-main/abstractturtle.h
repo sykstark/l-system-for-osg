@@ -1,7 +1,7 @@
 #ifndef ABSTRACTTURTLE_H_
 #define ABSTRACTTURTLE_H_
 
-#include "StringUtils.h"
+#include "utils.h"
 #include "lsgeode.h"
 
 namespace AP_LSystem {
@@ -51,6 +51,11 @@ public:
 	{
 		this->geode = geode;
 	}
+//****************************************************************
+//**						DEBUG								**
+//****************************************************************
+
+	virtual void drawDebugGeometry( )						= 0;
 
 //****************************************************************
 //**						ROTATION							**

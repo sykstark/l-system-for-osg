@@ -2,10 +2,9 @@
 #define LONGSTRING_H_
 
 #include <string>
-#include "StringUtils.h"
+#include "utils.h"
 
 namespace AP_LSystem {
-
 static unsigned int ZERO = 0;
 
 class LongString

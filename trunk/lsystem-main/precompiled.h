@@ -25,6 +25,7 @@
 #include <osg/ref_ptr>
 #include <osg/Image>
 #include <osg/Texture2D>
+#include <osg/ShapeDrawable>
 #include <osgDB/ReadFile>
 
 #include <xercesc/parsers/XercesDOMParser.hpp>

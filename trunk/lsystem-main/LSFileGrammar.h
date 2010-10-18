@@ -5,8 +5,9 @@
 
 #include <map>
 
+#include "Configuration.h"
 #include "AbstractGrammar.h"
-#include "Rule.h"
+#include "rule.h"
 
 namespace AP_LSystem{
 class LSFileGrammar : public AbstractGrammar
@@ -32,7 +33,7 @@ public:
     virtual void loadFromFile( AbstractFile * );
 
     virtual bool nextIteration();
-    virtual void translate(char *, unsigned int &);
+    virtual LongString * translate( );
 
     unsigned int wordLength() { return _word->length(); }
 

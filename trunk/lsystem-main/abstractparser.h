@@ -3,8 +3,10 @@
 
 #include <vector>
 
+#include "Configuration.h"
 #include "lsgeode.h"
-#include "longstring.h"
+//#include "longstring.h"
+#include "parseablestring.h"
 #include "turtlestack.h"
 
 using std::vector;
@@ -16,12 +18,15 @@ class AbstractParser
 private:
 	vector< LSGeode *> geodes;
 protected:
+	osg::Group * pOwner;
 	LSGeode * selectedGeode;
 	TurtleStack turtles;
 public:
 	AbstractParser( )
 	{
+		pOwner = NULL;
 		selectedGeode = NULL;
+//		createGeodes( );
 	}
 
 	void switchGeode( unsigned char i )
@@ -36,13 +41,26 @@ public:
 		LSGeode * pGeode;
 		for( unsigned int i = 0; i < count; i++)
 		{
-			pGeode = new LSGeode();
+			pGeode = new LSGeode( i );
 
 			// TODO configuration of Geode
 			//pGeode->setSOMETHING( Configuration::get()->getProperty( i, "something")->as<double>() );
+			if( pOwner )
+			{
+				pOwner->addChild( (osg::Group *)pGeode );
+			}
+
+			initializeTurtleProperties( pGeode->getDefaultTurtleProperties(), i );
 
 			geodes.push_back( pGeode );
 		}
+	}
+
+	void initializeTurtleProperties( TurtleProperties & prop, unsigned int index )
+	{
+		prop.length = Configuration::get()->getProperty( index, "default_length" )->as<double>();
+		prop.angle = Configuration::get()->getProperty( index, "default_angle" )->as<double>();
+		prop.thickness = Configuration::get()->getProperty( index, "default_thickness" )->as<double>();
 	}
 
 	virtual int parse( ParseableString * ) = 0;

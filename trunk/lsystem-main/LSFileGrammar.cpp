@@ -1,8 +1,8 @@
 #include "precompiled.h"
 
-#include "windows.h"
+//#include "utils.h"
 #include "LSFileGrammar.h"
-#include "StringUtils.h"
+
 #include "lsystemexception.h"
 #include "boost/lexical_cast.hpp"
 #include "log.h"
@@ -239,19 +239,9 @@ bool LSFileGrammar::getEndOfStatic(string * rule, string::iterator & begin, stri
 
 }
 
-void LSFileGrammar::translate(char * pWord, unsigned int & length)
+LongString * LSFileGrammar::translate( )
 {
     // TODO homomorphism
 
-    if( _word )
-    {
-        pWord = _word->get( );
-        length = _word->length( );
-    }
-    else
-    {
-        pWord = NULL;
-        length = 0;
-    }
-
+    return _word;
 }

@@ -1,8 +1,6 @@
-/*#ifdef _MSC_VER
 #include "precompiled.h"
-#endif*/
 
-#include "StringUtils.h"
+#include "utils.h"
 #include <fstream>
 #include "lsystemexception.h"
 
