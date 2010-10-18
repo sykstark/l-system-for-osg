@@ -43,7 +43,7 @@ class VecUtils
 public:
 	static osg::Vec3d Vec3Transform( osg::Matrixd & m, osg::Vec3d & v)
 	{
-		osg::Vec4d u = m * osg::Vec4d( v, 1.0 );
+		osg::Vec4d u = osg::Vec4d( v, 1.0 ) * m;
 		
 		return osg::Vec3d( u.x()/u.w(), u.y()/u.w(), u.z()/u.w() );
 	}
