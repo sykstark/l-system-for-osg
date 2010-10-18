@@ -1,22 +1,13 @@
-//#pragma once
-
 #ifndef UTILS_H_
 #define UTILS_H_
 
-#include <cstdio>
-#include <cstdlib>
-#include <cstring>
-#include <vector>
-//#include "lsystemexception.h"
-//#include "AbstractGrammar.h"
-//#include "Configuration.h"
-#include <osg/vec3d>
-#include <osg/matrixd>
 #include <string>
 
-//#include "boost/lexical_cast.hpp"
+#ifdef _MSC_VER
+#include <osg/vec3d>
+#include <osg/matrixd>
+#endif
 
-//using boost::lexical_cast;
 using namespace std;
 
 namespace AP_LSystem {
@@ -46,6 +37,7 @@ struct Parameter
 	ParameterType type;
 };
 
+#ifdef _MSC_VER
 class VecUtils
 {
 public:
@@ -56,5 +48,6 @@ public:
 		return osg::Vec3d( u.x()/u.w(), u.y()/u.w(), u.z()/u.w() );
 	}
 };
+#endif
 }
 #endif

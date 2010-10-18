@@ -219,6 +219,20 @@ struct Rule
         this->dynamicStrings.push_back( fp );
     }
 
+    bool evaluateCondition( double * p )
+    {
+        if( this->condition )
+        {
+            if( this->condition->Eval( p ) == 0 )
+                return false;
+            else
+                return true;
+        }
+        else
+            // no condition - always true
+            return true;
+    }
+
 protected:
     std::vector<StaticString*> getSS() const { return staticStrings; }
     std::vector<FunctionParser*> getDS() const { return dynamicStrings; }

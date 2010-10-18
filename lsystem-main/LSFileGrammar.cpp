@@ -6,6 +6,7 @@
 #include "lsystemexception.h"
 #include "boost/lexical_cast.hpp"
 #include "log.h"
+#include "randomindex.h"
 
 #include "fparser/fparser.hh"
 
@@ -179,36 +180,39 @@ bool LSFileGrammar::nextIteration( )
             {
                 for( ruleIt = result.first; ruleIt != result.second; ruleIt++ )
                 {
-                  //  ruleIt->second.
+                    if( ruleIt->second.probabilityFactor == NULL )
+                    {
+                        // error - probabil. factor is not set
+                        return false;
+                    }
+
+                    if( ruleIt->second.evaluateCondition( pParams ) )
+                    {
+
+                    }
                 }
             }
 
 			for( ruleIt = result.first; ruleIt != result.second; ruleIt++ )
 			{
-                if( ruleIt->second.condition)
-				{
-					if( ruleIt->second.condition->Eval( pParams ) == 0 )
-						continue;
-				}
-
-				for( stStrIt= ruleIt->second.staticStrings.begin(), 
-					dynStrIt = ruleIt->second.dynamicStrings.begin();
-					dynStrIt != ruleIt->second.dynamicStrings.end();
-					stStrIt++, dynStrIt++)
-				{
-					// pridani statickych a dynamickych retezcu do slova ( krome posledniho statickeho )
+                if( ruleIt->second.evaluateCondition( pParams ) )
+                {
+                    for( stStrIt= ruleIt->second.staticStrings.begin(),
+                        dynStrIt = ruleIt->second.dynamicStrings.begin();
+                        dynStrIt != ruleIt->second.dynamicStrings.end();
+                        stStrIt++, dynStrIt++)
+                    {
+                        // pridani statickych a dynamickych retezcu do slova ( krome posledniho statickeho )
+                        newWord->appendStr( (*stStrIt)->str, (*stStrIt)->length );
+                        Log::write(newWord->toString());
+                        newWord->appendDouble( (*dynStrIt)->Eval( pParams ) );
+                        Log::write(newWord->toString());
+                    }
+                    // pridani posledniho statickeho retezce
                     newWord->appendStr( (*stStrIt)->str, (*stStrIt)->length );
-                    OutputDebugStringA(newWord->toString().c_str());
-                    newWord->appendDouble( (*dynStrIt)->Eval( pParams ) );
-                    OutputDebugStringA(newWord->toString().c_str());
 
-//                    cout << stStrIt->toString() << " | " << (*dynStrIt)->Eval( pParams ) << " | ";
-
-				}
-				// pridani posledniho statickeho retezce
-//                cout << stStrIt->toString();
-                newWord->appendStr( (*stStrIt)->str, (*stStrIt)->length );
-
+                    break;
+                }
 			}
 		}
 	}
