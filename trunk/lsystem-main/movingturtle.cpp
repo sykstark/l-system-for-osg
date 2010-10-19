@@ -17,11 +17,16 @@ void MovingTurtle::drawDebugGeometry( )
 	osg::Cone * upCone = new osg::Cone(VecUtils::Vec3Transform(properties.matrix, osg::Vec3d(ratio * 3.1f,0.0f,0.0f)),ratio * 0.15f,ratio * 0.5f);
 	osg::Cylinder * leftCyl = new osg::Cylinder(VecUtils::Vec3Transform(properties.matrix, osg::Vec3d(0.0f,0.0f,ratio * 1.5f)),ratio * 0.05f,ratio * 3.0f);
 	osg::Cone * leftCone = new osg::Cone(VecUtils::Vec3Transform(properties.matrix, osg::Vec3d(0.0f,0.0f,ratio * 3.1f)),ratio * 0.15f,ratio * 0.5f);
-	headCyl->setRotation( osg::Quat( osg::PI_2, osg::Vec3f( 1.0f, 0.0f, 0.0f ) ) );
-	headCone->setRotation( osg::Quat( -osg::PI_2, osg::Vec3f( 1.0f, 0.0f, 0.0f ) ) );
-	upCyl->setRotation( osg::Quat( osg::PI_2, osg::Vec3f( 0.0f, 1.0f, 0.0f ) ) );
-	upCone->setRotation( osg::Quat( osg::PI_2, osg::Vec3f( 0.0f, 1.0f, 0.0f ) ) );
-	leftCyl->setRotation( osg::Quat( osg::PI_2, osg::Vec3f( 0.0f, 0.0f, 1.0f ) ) );
+	osg::Matrixd m = properties.matrix * osg::Matrixd::rotate( -osg::PI_2, osg::Vec3d( 1.0f, 0.0f, 0.0f ) );
+	headCyl->setRotation( m.getRotate() );
+	headCone->setRotation( m.getRotate() );
+
+	m = properties.matrix * osg::Matrixd::rotate( -osg::PI_2, osg::Vec3f( 0.0f, 1.0f, 0.0f ) );
+	upCyl->setRotation( m.getRotate() );
+	upCone->setRotation( m.getRotate() );
+
+	m = properties.matrix * osg::Matrixd::rotate( osg::PI_2, osg::Vec3f( 0.0f, 0.0f, 1.0f ) );
+	leftCyl->setRotation( m.getRotate() );
 	leftCone->setRotation( osg::Quat( -osg::PI_2, osg::Vec3f( 0.0f, 0.0f, 1.0f ) ) );
 	
 	osg::ShapeDrawable * shape = new osg::ShapeDrawable(headCyl);
@@ -51,6 +56,8 @@ int MovingTurtle::makeRotate(osg::Quat & q)
 	properties.matrix = properties.matrix * x;
 	
 	postRotate();
+
+	drawDebugGeometry( );
 
 	return LS_OK;
 }
