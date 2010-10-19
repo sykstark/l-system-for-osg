@@ -28,7 +28,7 @@ std::string StringUtils::processLine(std::fstream * pFile, std::stringstream & p
 	pLine << s_line;	
     if(!(pLine >> word))
 	{
-        throw LSystemException( "read error" );
+        return "";
 	}
 
 	return word;

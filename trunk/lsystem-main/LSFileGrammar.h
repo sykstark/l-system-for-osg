@@ -5,8 +5,8 @@
 
 #include <map>
 
-#include "Configuration.h"
-#include "AbstractGrammar.h"
+#include "configuration.h"
+#include "abstractgrammar.h"
 #include "rule.h"
 
 namespace AP_LSystem{

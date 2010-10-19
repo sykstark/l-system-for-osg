@@ -10,6 +10,7 @@
 #include "lsystemexception.h"
 #include "staticstring.h"
 #include "longstring.h"
+#include "log.h"
 
 using namespace std;
 using boost::lexical_cast;
@@ -65,12 +66,12 @@ struct Rule
     {
         if(condition)
         {
-            delete condition;
+            //delete condition;
         }
 
         if(probabilityFactor)
         {
-            delete probabilityFactor;
+            //delete probabilityFactor;
         }
     }
 
@@ -91,13 +92,12 @@ struct Rule
             return;
         }
 
-        FunctionParser * pf = this->probabilityFactor;
-        if(!pf)
+        if(!probabilityFactor)
         {
-            pf = new FunctionParser();
+            probabilityFactor = new FunctionParser();
         }
 
-        if ( pf->Parse( string( it, rule->end() ), this->variables, false ) != -1 )
+        if ( probabilityFactor->Parse( string( it, rule->end() ), this->variables, false ) != -1 )
         {
             throw ParsingException("Parsing of probability factor error!");
         }
@@ -130,13 +130,16 @@ struct Rule
             }
             else
             {
-                FunctionParser * cond = this->condition;
-                if(!cond)
+                //FunctionParser * cond = this->condition;
+                if(!this->condition)
                 {
-                    cond = new FunctionParser();
+                    this->condition = new FunctionParser();
                 }
+                std::string str( it, rule->begin() + pos );
 
-                if ( cond->Parse( string( it, rule->begin() + pos ), this->variables, false ) != -1 )
+                Log::write( "Condtition: " + str + ", variables: " + this->variables );
+
+                if ( condition->Parse(str , this->variables, false ) != -1 )
                 {
                     throw ParsingException("Parsing of condition expression error!");
                 }
