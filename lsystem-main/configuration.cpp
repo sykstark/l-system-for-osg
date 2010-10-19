@@ -2,7 +2,7 @@
 
 #include <iostream>
 #include <fstream>
-#include "Configuration.h"
+#include "configuration.h"
 
 using namespace AP_LSystem;
 
@@ -11,6 +11,7 @@ Configuration *Configuration::config = 0;
 Configuration::Configuration(void)
 {
     description.add_options()
+            ("iteration", value<unsigned int>())
             ("texture", value<std::string>())
             ("default_angle", value<double>())
 			("default_length", value<double>())

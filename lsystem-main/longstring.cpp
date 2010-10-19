@@ -198,16 +198,16 @@ char * LongString::getSymbol(unsigned int & pos)
         switch(*pPos)
         {
         case LS_NO_PARAMETER:
-            pos = pPos - pStr + 1;
+            pos = pPos - pStr;
             return pSymbol;
         case LS_DOUBLE:
-            pPos += sizeof(double)+1;
+            pPos += sizeof(double)+2;
             break;
         case LS_UBYTE:
-            pPos += sizeof(unsigned char)+1;
+            pPos += sizeof(unsigned char)+2;
             break;
         default:
-            pos = pPos - pStr;
+            pos = pPos - pStr - 1;
             return pSymbol;
         }
     }

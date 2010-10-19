@@ -4,7 +4,7 @@
 #include "lsfile.h"
 #include "utils.h"
 #include "lsystemexception.h"
-#include "Configuration.h"
+#include "configuration.h"
 
 using namespace std;
 using namespace AP_LSystem;
@@ -42,7 +42,15 @@ void LSFile::open(std::string & filename)
                 {
                     throw ParsingException("Bad format of #set");
                 }
-                Configuration::get()->setProperty(_name, prop);  // property setting
+
+                try
+                {
+                    Configuration::get()->setProperty(_name, prop);  // property setting
+                }
+                catch( std::exception & e)
+                {
+                    throw ParsingException( "Property error: " + string(e.what()) );
+                }
             }
             else if(id=="#include")
             {

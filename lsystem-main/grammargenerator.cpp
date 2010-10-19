@@ -59,7 +59,7 @@ ParseableString * GrammarGenerator::getWord()
         delete pWord;
 
     LongString * word = NULL;
-//    unsigned int length;
+
     word = pMainGrammar->translate( );
 
 	//Log::write( word );
