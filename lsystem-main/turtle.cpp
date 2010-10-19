@@ -121,7 +121,7 @@ bool Turtle::randomTurnPitchRoll(unsigned int angle)
 }
 
 
-//================ INFLUENCNG OF STATE VARIABLES =======================
+//================ INFLUENCING OF STATE VARIABLES ======================
 
 bool Turtle::multiplyLength(double multiplier)
 {
