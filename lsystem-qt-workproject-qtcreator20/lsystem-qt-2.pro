@@ -36,7 +36,13 @@ SOURCES += main.cpp \
     ../Garden/longstring.cpp \
     ../Garden/log.cpp \
     ../Garden/grammargenerator.cpp \
-    ../Garden/utils.cpp
+    ../Garden/utils.cpp \
+    ../Garden/lsystemgrammar.cpp \
+    ../Garden/d0lsystemgrammar.cpp \
+    ../Garden/abstract0lsystemgrammar.cpp \
+    ../Garden/parstoch0lsystemgrammar.cpp \
+    ../Garden/pard0lsystemgrammar.cpp \
+    ../Garden/abstractklsystemgrammar.cpp
 
 HEADERS += \
     ../Garden/staticstring.h \
@@ -44,7 +50,6 @@ HEADERS += \
     ../Garden/lsystemexception.h \
     ../Garden/LSFileGrammar.h \
     ../Garden/lsfile.h \
-    ../Garden/Configuration.h \
     ../Garden/abstractgrammar.h \
     ../Garden/abstractfile.h \
     ../Garden/longstring.h \
@@ -52,7 +57,15 @@ HEADERS += \
     ../Garden/abstractgenerator.h \
     ../Garden/grammargenerator.h \
     ../Garden/parseablestring.h \
-    ../Garden/utils.h
+    ../Garden/utils.h \
+    ../Garden/configuration.h \
+    ../Garden/randomindex.h \
+    ../Garden/lsystemgrammar.h \
+    ../Garden/d0lsystemgrammar.h \
+    ../Garden/abstract0lsystemgrammar.h \
+    ../Garden/parstoch0lsystemgrammar.h \
+    ../Garden/abstractklsystemgrammar.h \
+    ../Garden/pard0lsystemgrammar.h
 
 INCLUDEPATH += ../Garden/ \
     ../Garden/fparser \

@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
 {
 
 
-    std::string filename = "c:\\Documents and Settings\\mpa\\Dokumenty\\lsystem\\ls\\loadingTest01.ls";
+    std::string filename = "c:\\Documents and Settings\\mpa\\Dokumenty\\lsystem\\ls\\loadingTest05.ls";
     std::string cfg = "c:\\Documents and Settings\\mpa\\Dokumenty\\lsystem\\config01.cfg";
 
  /*   FunctionParser f;
@@ -75,10 +75,10 @@ int main(int argc, char *argv[])
             generator->nextIteration();
         }
 
-        if (Configuration::get()->getProperty( "TEST01", "texture" ) != NULL )
+        /*if (Configuration::get()->getProperty( "TEST01", "texture" ) != NULL )
         {
             cout << Configuration::get()->getProperty( "TEST01", "texture" )->as<string>() << endl;
-        }
+        }*/
     }
     catch( LSystemException &ex)
     {
