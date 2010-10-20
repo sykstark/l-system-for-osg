@@ -1,5 +1,3 @@
-//#pragma once
-
 #ifndef ABSTRACTGRAMMAR_H_
 #define ABSTRACTGRAMMAR_H_
 
@@ -7,6 +5,7 @@
 #include "longstring.h"
 //#include "utils.h"
 #include "abstractfile.h"
+#include "configuration.h"
 
 namespace AP_LSystem {
 class LongString;

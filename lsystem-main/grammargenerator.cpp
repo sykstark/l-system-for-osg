@@ -1,6 +1,7 @@
 #include "precompiled.h"
 #include "grammargenerator.h"
-#include "LSFileGrammar.h"
+//#include "LSFileGrammar.h"
+#include "parstoch0lsystemgrammar.h"
 #include "lsfile.h"
 #include "log.h"
 
@@ -42,8 +43,8 @@ void GrammarGenerator::loadFile(std::string & filename)
 
     file->open(filename);
 
-	if( LSFileGrammar::isCapable( file->type() ) )
-		pMainGrammar = new LSFileGrammar( file );
+    if( ParStoch0LSystemGrammar::isCapable( file->type() ) )
+        pMainGrammar = new ParStoch0LSystemGrammar( file );
 	else
 		throw ParsingException("non of grammars fulfils the conditions");
 }

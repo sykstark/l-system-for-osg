@@ -208,9 +208,9 @@ void LSFile::processType( std::string str )
         {
             _type |= LS_0L;
         }
-        else if(type == "1L")
+        else if(type == "1LL")
         {
-            _type |= LS_1L;
+            _type |= LS_1LL;
         }
         else
         {
