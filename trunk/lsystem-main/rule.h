@@ -186,7 +186,7 @@ struct Rule
         unsigned int pos = begin - rule->begin();
         try
         {            
-            ls->convertFromString( rule, pos);
+            ls->convertFromString( rule, pos, ':');
         }
         catch(bad_lexical_cast&)
         {
