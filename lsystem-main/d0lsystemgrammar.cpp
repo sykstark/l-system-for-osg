@@ -1,3 +1,5 @@
+#include "precompiled.h"
+
 #include "d0lsystemgrammar.h"
 
 using namespace AP_LSystem;

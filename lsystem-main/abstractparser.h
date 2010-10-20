@@ -29,10 +29,24 @@ public:
 //		createGeodes( );
 	}
 
-	void switchGeode( unsigned char i )
+	int switchGeode( std::vector<Parameter> & p )
 	{
-		selectedGeode = geodes[i];
-		turtles.replace( selectedGeode );
+		switch( p.size() )
+		{
+		case 0:
+			turtles.pop();
+			break;
+		case 1:
+			if (p[0].type != LS_UBYTE)
+				return LS_ERR_PAR_BADTYPE;	
+			selectedGeode = geodes[*(static_cast<unsigned char*>(p[0].value))];
+			turtles.replace( selectedGeode );
+			break;
+		default:
+			return LS_ERR_PAR_INVALIDCOUNT;
+		}
+
+		return LS_OK;		
 	}
 
 	void createGeodes()

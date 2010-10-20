@@ -79,6 +79,7 @@ public:
 
 	virtual int drawForward(std::vector<Parameter> &)		= 0;
 	virtual int moveForward(std::vector<Parameter> &)		= 0;
+	virtual int moveForwardHalf()							= 0;
 	
 };
 }

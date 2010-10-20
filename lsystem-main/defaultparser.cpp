@@ -24,12 +24,15 @@ int DefaultParser::parse(ParseableString * word)
 	while(!word->eof( ))
 	{
 		// FREE SYMBOLS
-		// ! " # % ' * , . : ; < > @ [ ] _ ` { } ~
+		// ! " # % ' * , . : ; < > @ [ ] _ ` { } ? ~
 		parameters.clear();
 		switch( word->next( parameters ) )
 		{
 		case 'F':
 			turtles.top()->moveForward( parameters );
+			break;
+		case 'Z':
+			turtles.top()->moveForwardHalf( );
 			break;
 		case '+':
 			turtles.top()->turnLeft( parameters );
@@ -55,17 +58,13 @@ int DefaultParser::parse(ParseableString * word)
 		case '=':
 			turtles.top()->rollUntilHorizontal( );
 			break;
-		case '?':
-			if (parameters[0].type != LS_UBYTE)
-				return LS_ERR_PAR_BADTYPE;
-			switchGeode( *(static_cast<unsigned char*>(parameters[0].value)));
-			break;
 		case '$':
+			switchGeode( parameters );
 			break;
-		case '(':
+		case '[':
 			turtles.push( selectedGeode );
 			break;
-		case ')':
+		case ']':
 			turtles.pop( );
 			break;
 		}	
