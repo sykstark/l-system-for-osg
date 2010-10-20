@@ -37,6 +37,7 @@ public:
 //**						MOVEMENT							**
 //****************************************************************
 	virtual int moveForward(std::vector<Parameter> &);
+	virtual int moveForwardHalf( );
 	
 };
 }

@@ -1,3 +1,5 @@
+#include "precompiled.h"
+
 #include "lsystemgrammar.h"
 #include "configuration.h"
 
@@ -23,7 +25,7 @@ void LSystemGrammar::setAxiom(std::string & axiom)
 {
     if(_word) delete _word;
     _word = new LongString( );
-    _word->appendChar('?', true);
+    _word->appendChar('$', true);
     _word->appendUByte( Configuration::get()->getGrammarIndex( this->_name ) );
     _word->convertFromString( &axiom );
     _word->appendChar('$', false);
