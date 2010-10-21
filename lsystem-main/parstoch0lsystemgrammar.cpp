@@ -18,8 +18,7 @@ bool ParStoch0LSystemGrammar::nextIteration( )
     multimap<char, Rule>::iterator ruleIt;
     pair<multimap<char, Rule>::iterator, multimap<char, Rule>::iterator > result;
 
-    vector<StaticString*>::iterator stStrIt;
-    vector<FunctionParser*>::iterator dynStrIt;
+
 
     double parameters[100];
     double * pParams = parameters; // parameters pointer
@@ -99,19 +98,7 @@ bool ParStoch0LSystemGrammar::nextIteration( )
                 }
             }
 
-            for( stStrIt= ruleIt->second.staticStrings.begin(),
-                dynStrIt = ruleIt->second.dynamicStrings.begin();
-                dynStrIt != ruleIt->second.dynamicStrings.end();
-                stStrIt++, dynStrIt++)
-            {
-                // pridani statickych a dynamickych retezcu do slova ( krome posledniho statickeho )
-                newWord->appendStr( (*stStrIt)->str, (*stStrIt)->length );
-                //Log::write(newWord->toString());
-                newWord->appendDouble( (*dynStrIt)->Eval( pParams ) );
-                //Log::write(newWord->toString());
-            }
-            // pridani posledniho statickeho retezce
-            newWord->appendStr( (*stStrIt)->str, (*stStrIt)->length );
+            generateSuccessor( newWord, ruleIt, pParams );
         }
 
         Log::write(newWord->toString());
