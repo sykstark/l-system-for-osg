@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
 {
 
 
-    std::string filename = "c:\\Documents and Settings\\mpa\\Dokumenty\\lsystem\\ls\\loadingTest05.ls";
+    std::string filename = "c:\\Documents and Settings\\mpa\\Dokumenty\\lsystem\\ls\\loadingTest06.ls";
     std::string cfg = "c:\\Documents and Settings\\mpa\\Dokumenty\\lsystem\\config01.cfg";
 
  /*   FunctionParser f;
@@ -70,7 +70,7 @@ int main(int argc, char *argv[])
         generator = new GrammarGenerator();
         generator->loadFile(filename);
 
-        for( int i = 0; i < 8 ; i++)
+        for( int i = 0; i < 3 ; i++)
         {
             generator->nextIteration();
         }
