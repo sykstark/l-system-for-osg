@@ -34,6 +34,11 @@ public:
 	virtual int tropism(std::vector<Parameter> &);
 
 //****************************************************************
+//**				    CHANGE PROPERTIES						**
+//****************************************************************
+	virtual int increaseLength(std::vector<Parameter> &);
+
+//****************************************************************
 //**						MOVEMENT							**
 //****************************************************************
 	virtual int moveForward(std::vector<Parameter> &);

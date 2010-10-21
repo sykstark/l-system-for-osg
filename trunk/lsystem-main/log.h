@@ -47,15 +47,15 @@ public:
 
     static void write( std::string str)
     {
-        OutputDebugStringA( str.c_str() );
+ //       OutputDebugStringA( str.c_str() );
         //output( str.c_str() );
     }
 
     static void write( int i )
     {
-        std::stringstream str;
+ /*       std::stringstream str;
         str << i;
-        OutputDebugStringA( str.str().c_str() );
+        OutputDebugStringA( str.str().c_str() );*/
     }
 };
 }

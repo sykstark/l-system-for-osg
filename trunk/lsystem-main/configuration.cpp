@@ -12,10 +12,12 @@ Configuration::Configuration(void)
 {
     description.add_options()
             ("iteration", value<unsigned int>())
+			("contour_detail", value<unsigned int>())
             ("texture", value<std::string>())
             ("default_angle", value<double>())
 			("default_length", value<double>())
-			("default_thickness", value<double>())
+			("default_radius", value<double>())
+			("length_increment", value<double>())
 			("turtle_type", value<std::string>());
 }
 
