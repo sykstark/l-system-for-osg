@@ -20,6 +20,8 @@ public:
     LSystemGrammar();
 
     virtual void loadFromFile( AbstractFile * );
+    virtual void generateSuccessor( LongString *, multimap<char, Rule>::iterator &, double *);
+    virtual multimap<char, Rule>::iterator & selectRule(multimap<char, Rule>::iterator &, multimap<char, Rule>::iterator &);
     unsigned int wordLength() { return _word->length(); }
     virtual LongString * translate( );
 };

@@ -64,9 +64,19 @@ void LongString::convertFromString(std::string * source, unsigned int & pos, con
     double par;
     unsigned int i;
     std::string::iterator end, begin = source->begin() + pos;
-    while(true)
+
+    std::string chars = "(,)";
+    chars.append( 1, delimiter );
+
+    // epsilon rule
+    if( (source->size() > 0) && (source->at(0)=='e') )
     {
-        std::string chars = "(,)" + delimiter;
+        pos = source->find(delimiter, 0);
+        return;
+    }
+
+    while(true)
+    {   
         i = source->find_first_of( chars, begin - source->begin( ) );
         if ( i == std::string::npos )
         {

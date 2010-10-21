@@ -40,3 +40,28 @@ LongString * LSystemGrammar::translate( )
 
     return _word;
 }
+
+void LSystemGrammar::generateSuccessor(LongString * word, multimap<char, Rule>::iterator & it, double * parameters)
+{
+    vector<StaticString*>::iterator stStrIt;
+    vector<FunctionParser*>::iterator dynStrIt;
+
+    for( stStrIt= it->second.staticStrings.begin(),
+        dynStrIt = it->second.dynamicStrings.begin();
+        dynStrIt != it->second.dynamicStrings.end();
+        stStrIt++, dynStrIt++)
+    {
+        // pridani statickych a dynamickych retezcu do slova ( krome posledniho statickeho )
+        word->appendStr( (*stStrIt)->str, (*stStrIt)->length );
+        //Log::write(newWord->toString());
+        word->appendDouble( (*dynStrIt)->Eval( parameters ) );
+        //Log::write(newWord->toString());
+    }
+    // pridani posledniho statickeho retezce
+    word->appendStr( (*stStrIt)->str, (*stStrIt)->length );
+}
+
+multimap<char, Rule>::iterator & LSystemGrammar::selectRule(multimap<char, Rule>::iterator & begin, multimap<char, Rule>::iterator &)
+{
+    return begin;
+}
