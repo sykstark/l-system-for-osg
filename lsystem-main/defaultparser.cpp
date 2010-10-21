@@ -58,6 +58,8 @@ int DefaultParser::parse(ParseableString * word)
 		case '=':
 			turtles.top()->rollUntilHorizontal( );
 			break;
+		case '\'':
+			turtles.top()->increaseLength( parameters );
 		case '$':
 			switchGeode( parameters );
 			break;

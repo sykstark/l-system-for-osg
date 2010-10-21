@@ -21,15 +21,17 @@ struct TurtleProperties
 	osg::Matrixd matrix;	///< matrix of turtle position and orientation
 
 	double length;			///< default length of one step
+	double lengthIncrement;	///< default length increment
 	double angle;			///< default angle of rotation
-	double thickness;		///< default thisckness of each segment
-	unsigned int detailH;	
-	unsigned int detailL;
-	unsigned int detailU;
+	double radius;		///< default radius of each segment
+	unsigned int curveDetail;
 
 	unsigned int flags;
 
 	std::string * modelFile;	///< filename of model file - only for turtles that load models
+
+	osg::ref_ptr<osg::Vec3dArray> contour;
+	unsigned int contourDetail;
 };
 /**
  * Turtle types

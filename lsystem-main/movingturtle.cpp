@@ -58,7 +58,7 @@ int MovingTurtle::makeRotate(osg::Quat & q)
 	
 	postRotate();
 
-	drawDebugGeometry( );
+	//drawDebugGeometry( );
 
 	return LS_OK;
 }
@@ -242,4 +242,23 @@ int MovingTurtle::turnArround( )
 int MovingTurtle::randomTurnPitchRoll(std::vector<Parameter> & p)
 {
 	return LS_NOTDEFINED;
+}
+
+int MovingTurtle::increaseLength(std::vector<Parameter> & p)
+{
+	switch( p.size() )
+	{
+	case 0:
+		this->properties.length *= properties.lengthIncrement;
+		break;
+	case 1:
+		if (p[0].type != LS_DOUBLE)
+			return LS_ERR_PAR_BADTYPE;
+		this->properties.length *= *(static_cast<double *>(p[0].value) ); 
+		break;
+	default:
+		return LS_ERR_PAR_INVALIDCOUNT;
+	}
+
+	return LS_OK;
 }

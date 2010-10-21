@@ -52,8 +52,12 @@ void LSObject::postInitialize()
 	try
 	{
 		generator->loadFile( filename );
-		generator->nextIteration();
+		for ( int i = 0; i < 2; i++ )
+		{
+			generator->nextIteration();
+		}
 		pWord = generator->getWord();
+
 	}
 	catch( std::exception & e)
 	{
