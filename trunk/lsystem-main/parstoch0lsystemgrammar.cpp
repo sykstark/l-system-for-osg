@@ -10,6 +10,45 @@ ParStoch0LSystemGrammar::ParStoch0LSystemGrammar( AbstractFile * file )
     this->loadFromFile( file );
 }
 
+multimap<char, Rule>::iterator * ParStoch0LSystemGrammar::selectRule(multimap<char, Rule>::iterator & begin,
+                                                                     multimap<char, Rule>::iterator & end,
+                                                                     double * parameters)
+{
+    multimap<char, Rule>::iterator * it;
+    // rules tha pass the condition and that are processed by random generator
+    vector< multimap<char, Rule>::iterator * > passedRules;
+
+    // randomly select rule and take probability into account
+    if(begin->second.probabilityFactor)
+    {
+        RandomIndex ri;
+        for( *it = begin; *it != end; (*it)++ )
+        {
+            if( ((*it)->second.probabilityFactor) && ((*it)->second.evaluateCondition( parameters ) ) )
+            {
+                ri.addProbability( (*it)->second.probabilityFactor->Eval( parameters ) );
+                passedRules.push_back( it );
+            }
+        }
+        // select randomly
+        return passedRules[ri.getRandomIndex()];
+    }
+    else
+    {
+        // no probability factor - select rule that fulfil the condition
+        for( *it = begin; *it != end; (*it)++ )
+        {
+            //Log::write("variables" + ruleIt->second.variables);
+            if( (*it)->second.evaluateCondition( parameters ) )
+            {
+                return it;
+            }
+        }
+    }
+
+    return NULL;
+}
+
 bool ParStoch0LSystemGrammar::nextIteration( )
 {
     int j=0;
@@ -17,8 +56,6 @@ bool ParStoch0LSystemGrammar::nextIteration( )
     LongString * newWord = new LongString( );
     multimap<char, Rule>::iterator ruleIt;
     pair<multimap<char, Rule>::iterator, multimap<char, Rule>::iterator > result;
-
-
 
     double parameters[100];
     double * pParams = parameters; // parameters pointer
@@ -64,40 +101,7 @@ bool ParStoch0LSystemGrammar::nextIteration( )
                 return false;
             }
 
-            // randomly select rule and take probability into account
-            if(result.first->second.probabilityFactor)
-            {
-                RandomIndex ri;
-                for( ruleIt = result.first; ruleIt != result.second; ruleIt++ )
-                {
-                    if( ruleIt->second.probabilityFactor == NULL )
-                    {
-                        // error - probabil. factor is not set
-                        return false;
-                    }
-
-                    if( ruleIt->second.evaluateCondition( pParams ) )
-                    {
-                        ri.addProbability( ruleIt->second.probabilityFactor->Eval( pParams ) );
-                    }
-                }
-                ruleIt = result.first;
-                unsigned int r = ri.getRandomIndex();
-                for(unsigned int k=0; k < r; ruleIt++, k++ );
-            }
-            else
-            {
-                // no probability factor - select rule that fulfil the condition
-                for( ruleIt = result.first; ruleIt != result.second; ruleIt++ )
-                {
-                    //Log::write("variables" + ruleIt->second.variables);
-                    if( ruleIt->second.evaluateCondition( pParams ) )
-                    {
-                        break;
-                    }
-                }
-            }
-
+            ruleIt = *selectRule( result.first, result.second, pParams );
             generateSuccessor( newWord, ruleIt, pParams );
         }
 
