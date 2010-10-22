@@ -1,7 +1,7 @@
 #grammar monopodialni_strom
 #set default_angle=0.7853
 #set default_length=10.0
-#set default_thickness=1.0
+#set default_radius=1.0
 #type 0L
 #set turtle_type=JOINTED_PIPE
 #axiom
