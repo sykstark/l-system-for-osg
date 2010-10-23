@@ -47,7 +47,7 @@ public:
 		return properties;
 	}
 
-	void setProperties( TurtleProperties p )	///< set Properties of turtle. Must be part of turtle initialization
+	virtual void setProperties( TurtleProperties p )	///< set Properties of turtle. Must be part of turtle initialization
 	{
 		properties = p;
 	}

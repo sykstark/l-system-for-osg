@@ -63,7 +63,7 @@ int MovingTurtle::makeRotate(osg::Quat & q)
 	return LS_OK;
 }
 
-int MovingTurtle::doStep( double dist)
+int MovingTurtle::drawStep( double dist)
 {
 	int ret = LS_NOTDEFINED;
 	ret = preStep();
@@ -83,12 +83,12 @@ int MovingTurtle::moveForward(std::vector<Parameter> & p)
 	switch( p.size() )
 	{
 	case 0:
-		this->doStep( properties.length );
+		this->drawStep( properties.length );
 		break;
 	case 1:
 		if (p[0].type != LS_DOUBLE)
 			return LS_ERR_PAR_BADTYPE;
-		this->doStep( *(static_cast<double *>(p[0].value)) );
+		this->drawStep( *(static_cast<double *>(p[0].value)) );
 		break;
 	default:
 		return LS_ERR_PAR_INVALIDCOUNT;
@@ -99,7 +99,7 @@ int MovingTurtle::moveForward(std::vector<Parameter> & p)
 
 int MovingTurtle::moveForwardHalf( )
 {
-	this->doStep( properties.length / 2.0f );
+	this->drawStep( properties.length / 2.0f );
 	
 	return LS_OK;
 }

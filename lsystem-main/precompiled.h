@@ -16,8 +16,8 @@
 #include <vrecko/Logger.h>
 #include <vrecko/Scene.h>
 
-#include <vreckoDB/PluginManager.h>
-#include <vreckoDB/ReaderWriter.h>
+//#include <osgDB/PluginManager.h>
+#include <vrecko/ReaderWriter.h>
 
 #include <osg/Geometry>
 #include <osg/Geode>

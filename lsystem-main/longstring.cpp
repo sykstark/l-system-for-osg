@@ -262,7 +262,7 @@ char * LongString::get( )
 std::string LongString::toString( )
 {
     std::string str;
-    //str.resize(2 * _length);
+/*    //str.resize(2 * _length);
     char number[50];
     double dblnum;
     unsigned char ubytenum;
@@ -303,6 +303,6 @@ std::string LongString::toString( )
             break;
         str.replace(i,2,",");
     }
-
+*/
     return str;
 }

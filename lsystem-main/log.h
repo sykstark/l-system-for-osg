@@ -47,7 +47,7 @@ public:
 
     static void write( std::string str)
     {
- //       OutputDebugStringA( str.c_str() );
+        //OutputDebugStringA( str.c_str() );
         //output( str.c_str() );
     }
 

@@ -8,15 +8,16 @@ using namespace AP_LSystem;
 ParStoch0LSystemGrammar::ParStoch0LSystemGrammar( AbstractFile * file )
 {
     this->loadFromFile( file );
+	RandomIndex::init();
 }
 
 multimap<char, Rule>::iterator * ParStoch0LSystemGrammar::selectRule(multimap<char, Rule>::iterator & begin,
                                                                      multimap<char, Rule>::iterator & end,
                                                                      double * parameters)
 {
-    multimap<char, Rule>::iterator * it;
+    multimap<char, Rule>::iterator * it = new multimap<char, Rule>::iterator;
     // rules tha pass the condition and that are processed by random generator
-    vector< multimap<char, Rule>::iterator * > passedRules;
+    vector< multimap<char, Rule>::iterator > passedRules;
 
     // randomly select rule and take probability into account
     if(begin->second.probabilityFactor)
@@ -27,11 +28,12 @@ multimap<char, Rule>::iterator * ParStoch0LSystemGrammar::selectRule(multimap<ch
             if( ((*it)->second.probabilityFactor) && ((*it)->second.evaluateCondition( parameters ) ) )
             {
                 ri.addProbability( (*it)->second.probabilityFactor->Eval( parameters ) );
-                passedRules.push_back( it );
+                passedRules.push_back( *it );
             }
         }
         // select randomly
-        return passedRules[ri.getRandomIndex()];
+		*it = passedRules[ri.getRandomIndex()];
+        return it;
     }
     else
     {
@@ -54,30 +56,12 @@ bool ParStoch0LSystemGrammar::nextIteration( )
     int j=0;
     char * pUByte = NULL;
     LongString * newWord = new LongString( );
-    multimap<char, Rule>::iterator ruleIt;
+    multimap<char, Rule>::iterator * pRuleIt;
     pair<multimap<char, Rule>::iterator, multimap<char, Rule>::iterator > result;
 
     double parameters[100];
     double * pParams = parameters; // parameters pointer
     int parCnt = 0; // parameters counter
-
-/*    for(ruleIt = _rules.begin(); ruleIt != _rules.end(); ruleIt++ )
-    {
-        stringstream s;
-
-        s << "RULE: " << ruleIt->first << ' ';
-        if(ruleIt->second.condition)
-            s << "Condition ";
-        else
-            s << "No condition ";
-
-        if(ruleIt->second.probabilityFactor)
-            s << "prob ";
-        else
-            s << "No prob ";
-        s << ' ' << (*(ruleIt->second.staticStrings.begin( )))->toString( );
-        Log::write( s.str() );
-    }*/
 
     for(unsigned int i = 0; i < _word->length(); i++ )
     {
@@ -101,8 +85,13 @@ bool ParStoch0LSystemGrammar::nextIteration( )
                 return false;
             }
 
-            ruleIt = *selectRule( result.first, result.second, pParams );
-            generateSuccessor( newWord, ruleIt, pParams );
+            pRuleIt = selectRule( result.first, result.second, pParams );
+
+			if(pRuleIt)
+			{
+				generateSuccessor( newWord, *pRuleIt, pParams );
+				delete pRuleIt;
+			}
         }
 
         Log::write(newWord->toString());

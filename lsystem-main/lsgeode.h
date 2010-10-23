@@ -18,6 +18,8 @@ struct TurtleProperties
 			delete modelFile;
 	}
 
+	osg::ref_ptr<osg::Geometry> geometry;	///< pointer for quick access to geode's geometry
+
 	osg::Matrixd matrix;	///< matrix of turtle position and orientation
 
 	double length;			///< default length of one step
@@ -32,6 +34,8 @@ struct TurtleProperties
 
 	osg::ref_ptr<osg::Vec3dArray> contour;
 	unsigned int contourDetail;
+
+	osg::ref_ptr
 };
 /**
  * Turtle types
@@ -58,6 +62,7 @@ public:
 	void setTurtleType(std::string &);
 	TurtleType getTurtleType();
 	void setDefaultTurtleProperties( TurtleProperties & );
+	void setDefaultTurtleProperties( int );
 	TurtleProperties & getDefaultTurtleProperties( );
 
 	LSGeode( unsigned int );

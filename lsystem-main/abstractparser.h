@@ -64,19 +64,8 @@ public:
 				pOwner->addChild( (osg::Group *)pGeode );
 			}
 
-			initializeTurtleProperties( pGeode->getDefaultTurtleProperties(), i );
-
 			geodes.push_back( pGeode );
 		}
-	}
-
-	void initializeTurtleProperties( TurtleProperties & prop, unsigned int index )
-	{
-		prop.length = Configuration::get()->getProperty( index, "default_length" )->as<double>();
-		prop.angle = Configuration::get()->getProperty( index, "default_angle" )->as<double>();
-		prop.radius = Configuration::get()->getProperty( index, "default_radius" )->as<double>();
-		prop.lengthIncrement = Configuration::get()->getProperty( index, "length_increment" )->as<double>();
-		prop.contourDetail = Configuration::get()->getProperty( index, "contour_detail" )->as<unsigned int>();
 	}
 
 	virtual int parse( ParseableString * ) = 0;

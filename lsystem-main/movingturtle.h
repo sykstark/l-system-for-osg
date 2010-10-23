@@ -6,14 +6,14 @@
 namespace AP_LSystem {
 class MovingTurtle : public AbstractTurtle
 {
-private:
+protected:
 	virtual int makeRotate( osg::Quat & );
 	virtual int preRotate()=0;
 	virtual int postRotate()=0;
 
-	virtual int doStep( double );
-	virtual int preStep()=0;
-	virtual int postStep()=0;
+	virtual int drawStep( double );
+	virtual int preStep(){ return 0; }
+	virtual int postStep(){ return 0; }
 
 	virtual void drawDebugGeometry( );
 public:
