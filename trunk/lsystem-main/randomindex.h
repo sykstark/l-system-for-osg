@@ -11,9 +11,14 @@ private:
     std::vector<double> probabilities;
     double sum;
 public:
+	static void init()
+	{
+		srand( time( NULL ) );
+	}
+
     RandomIndex()
     {
-        srand( time( NULL ) );
+		sum = 0;
     }
 
     void addProbability( double p )

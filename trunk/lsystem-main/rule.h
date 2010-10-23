@@ -190,7 +190,7 @@ struct Rule
         }
         catch(bad_lexical_cast&)
         {
-            cout << "static string - ex:" << ls->toString() << endl;
+			Log::write( "static string - ex:" + ls->toString());
             begin = rule->begin() + pos/* + 1*/;
             pSS = new StaticString(ls);
             staticStrings.push_back(pSS);

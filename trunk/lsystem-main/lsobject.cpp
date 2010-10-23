@@ -52,7 +52,7 @@ void LSObject::postInitialize()
 	try
 	{
 		generator->loadFile( filename );
-		for ( int i = 0; i < 2; i++ )
+		for ( int i = 0; i < 25; i++ )
 		{
 			generator->nextIteration();
 		}
