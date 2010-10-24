@@ -2,7 +2,8 @@
 
 #include "lsgeode.h"
 #include "lsystemexception.h"
-#include "Configuration.h"
+#include "configuration.h"
+#include "abstractturtle.h"
 
 using namespace AP_LSystem;
 using namespace std;
@@ -29,7 +30,7 @@ void LSGeode::setTurtleType(std::string & type)
 	if(type == "JOINTED_PIPE" )
 		turtleType = LS_TURTLE_JOINTEDPIPE;
 	else if(type == "STRAIGHT_PIPE")
-		turtleType = LS_TURTLE_JOINTEDPIPE;
+		turtleType = LS_TURTLE_STRAIGHTPIPE;
 	else
 		throw ParsingException( "unknown turtle type" );
 }
@@ -71,6 +72,9 @@ void LSGeode::setDefaultTurtleProperties( int index )
 	p.geometry->setTexCoordArray( 0, textures.get() );*/
 	// add geometry to LSGeode
 	this->addDrawable( defaultTurtleProperties.geometry.get() );
+
+	// set anti-twist vector
+	p.contourVec = LeftVec;
 
 	p.length = Configuration::get()->getProperty( index, "default_length" )->as<double>();
 	p.angle = Configuration::get()->getProperty( index, "default_angle" )->as<double>();

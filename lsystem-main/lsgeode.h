@@ -25,17 +25,23 @@ struct TurtleProperties
 	double length;			///< default length of one step
 	double lengthIncrement;	///< default length increment
 	double angle;			///< default angle of rotation
-	double radius;		///< default radius of each segment
-	unsigned int curveDetail;
+	double angleIncrement;	///< default angle increment
+	double radius;				///< default radius of each segment
+	double radiusIncrement;		///< default radius increment
+
+	unsigned int curveDetail;	///< detail of generalized pipe curves
 
 	unsigned int flags;
 
 	std::string * modelFile;	///< filename of model file - only for turtles that load models
 
-	osg::ref_ptr<osg::Vec3dArray> contour;
-	unsigned int contourDetail;
+	osg::ref_ptr<osg::Vec3dArray> contour;		///< contour vertices
+	osg::ref_ptr<osg::Vec3dArray> contourLastV;	///< used for loft turtles - predecessing contour vertices
+	osg::ref_ptr<osg::Vec3dArray> contourLastN;	///< used for loft turtles - predecessing contour normals
+	unsigned int contourDetail;					///< detail of circle contour
+	osg::Vec3d contourVec;						///< vector of first vertex of contour, used for minimalizing twist
 
-	osg::ref_ptr
+	vector<osg::ref_ptr<osg::Vec3dArray> > hemisphere;
 };
 /**
  * Turtle types
@@ -43,7 +49,7 @@ struct TurtleProperties
 enum TurtleType
 {
 	LS_TURTLE_JOINTEDPIPE,
-	LS_TURTLE_SRAIGHTPIPE,
+	LS_TURTLE_STRAIGHTPIPE,
 	LS_TURTLE_HERMITPIPE,
 	LS_TURTLE_OBJMODEL,
 };

@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <ctime>
 
+namespace AP_LSystem {
 class RandomIndex
 {
 private:
@@ -43,5 +44,5 @@ public:
     }
 
 };
-
+}
 #endif // RANDOMINDEX_H

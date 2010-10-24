@@ -8,8 +8,8 @@ class MovingTurtle : public AbstractTurtle
 {
 protected:
 	virtual int makeRotate( osg::Quat & );
-	virtual int preRotate()=0;
-	virtual int postRotate()=0;
+	virtual int preRotate() { return 0; }
+	virtual int postRotate() { return 0; }
 
 	virtual int drawStep( double );
 	virtual int preStep(){ return 0; }
@@ -37,6 +37,7 @@ public:
 //**				    CHANGE PROPERTIES						**
 //****************************************************************
 	virtual int increaseLength(std::vector<Parameter> &);
+	virtual int increaseRadius(std::vector<Parameter> &);
 
 //****************************************************************
 //**						MOVEMENT							**
