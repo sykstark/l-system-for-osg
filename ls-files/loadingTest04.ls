@@ -5,6 +5,8 @@
 #set default_angle=0.4
 #set default_length=2.0
 #set default_thickness=1.0
+#set length_increment=0.9
+#set contour_detail=4
 #type 0L
 #set turtle_type=JOINTED_PIPE
 #axiom 
