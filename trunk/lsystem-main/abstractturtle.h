@@ -61,6 +61,9 @@ public:
 //****************************************************************
 
 	virtual void drawDebugGeometry( )						= 0;
+	virtual void drawVector( osg::Vec3d & vector, osg::Vec4d & color)
+	{
+	}
 
 //****************************************************************
 //**						ROTATION							**
@@ -82,6 +85,7 @@ public:
 //**				    CHANGE PROPERTIES						**
 //****************************************************************
 	virtual int increaseLength(std::vector<Parameter> &)	= 0;
+	virtual int increaseRadius(std::vector<Parameter> &)	= 0;
 
 //****************************************************************
 //**						MOVEMENT							**

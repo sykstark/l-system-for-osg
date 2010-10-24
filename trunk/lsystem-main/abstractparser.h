@@ -3,7 +3,7 @@
 
 #include <vector>
 
-#include "Configuration.h"
+#include "configuration.h"
 #include "lsgeode.h"
 //#include "longstring.h"
 #include "parseablestring.h"

@@ -7,7 +7,6 @@ namespace AP_LSystem {
 class JointedPipe : public LoftTurtle
 {
 private:
-	void createContour();
 	void createHemisphere();
 public:
 	JointedPipe(void);

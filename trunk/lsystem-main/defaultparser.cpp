@@ -1,7 +1,7 @@
 #include "precompiled.h"
 #include "defaultparser.h"
 
-#include "Configuration.h"
+#include "configuration.h"
 
 using namespace AP_LSystem;
 
@@ -60,6 +60,10 @@ int DefaultParser::parse(ParseableString * word)
 			break;
 		case '\'':
 			turtles.top()->increaseLength( parameters );
+			break;
+		case '!':
+			turtles.top()->increaseRadius( parameters );
+			break;
 		case '$':
 			switchGeode( parameters );
 			break;

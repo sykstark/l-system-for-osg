@@ -55,7 +55,7 @@
 #include <string>
 #include <exception>
 
-//#include "Configuration.h"
+//#include "configuration.h"
 
 #define VMATH_NAMESPACE
 #include "vmath.h"

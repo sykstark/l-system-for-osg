@@ -5,7 +5,7 @@
 #include "jointedturtle.h"
 #include "contourturtle.h"
 #include "LSFileGrammar.h"
-#include "Configuration.h"
+#include "configuration.h"
 
 
 Lparser::Lparser(double thickness, double angle, double length, unsigned int detail, unsigned int turtleType):

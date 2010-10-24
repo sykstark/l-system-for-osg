@@ -3,7 +3,7 @@
 #include <exception>
 #include "lsobject.h"
 #include "lparser.h"
-#include "Configuration.h"
+#include "configuration.h"
 //#include "AbstractGrammar.h"
 //#include "LSFileGrammar.h"
 #include "defaultparser.h"
@@ -26,7 +26,6 @@ LSObject::LSObject() : Ability("LSObject")
 	length = 3.0;
 	turtleType="";
 }
-
 
 LSObject::~LSObject() 
 {
@@ -52,7 +51,7 @@ void LSObject::postInitialize()
 	try
 	{
 		generator->loadFile( filename );
-		for ( int i = 0; i < 25; i++ )
+		for ( int i = 0; i < 11; i++ )
 		{
 			generator->nextIteration();
 		}
