@@ -29,7 +29,7 @@ int DefaultParser::parse(ParseableString * word)
 		switch( word->next( parameters ) )
 		{
 		case 'F':
-			turtles.top()->moveForward( parameters );
+			turtles.top()->drawForward( parameters );
 			break;
 		case 'Z':
 			turtles.top()->moveForwardHalf( );

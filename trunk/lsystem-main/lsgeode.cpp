@@ -31,6 +31,8 @@ void LSGeode::setTurtleType(std::string & type)
 		turtleType = LS_TURTLE_JOINTEDPIPE;
 	else if(type == "STRAIGHT_PIPE")
 		turtleType = LS_TURTLE_STRAIGHTPIPE;
+	else if(type == "RECTANGLE")
+		turtleType = LS_TURTLE_RECTANGLE;
 	else
 		throw ParsingException( "unknown turtle type" );
 }
@@ -68,10 +70,30 @@ void LSGeode::setDefaultTurtleProperties( int index )
 	p.geometry->setNormalArray( normals.get() );
 	p.geometry->setNormalBinding( osg::Geometry::BIND_PER_VERTEX );
 	// create textures array
-	/*osg::ref_ptr<osg::Vec2Array> textures = new osg::Vec2Array;
-	p.geometry->setTexCoordArray( 0, textures.get() );*/
+	osg::ref_ptr<osg::Vec2dArray> textures = new osg::Vec2dArray;
+	p.geometry->setTexCoordArray( 0, textures.get() );
 	// add geometry to LSGeode
 	this->addDrawable( defaultTurtleProperties.geometry.get() );
+
+	const variable_value * diffTexFile = Configuration::get()->getProperty( index , "diffuse_texture" );
+	if( diffTexFile )
+	{
+		osg::ref_ptr<osg::Image> diffIm = osgDB::readImageFile( diffTexFile->as<std::string>() );
+
+		osg::ref_ptr<osg::Texture2D> diffTexture = new osg::Texture2D;
+		if(diffIm.get())
+		{
+			diffTexture->setImage( diffIm.get() );
+
+			osg::ref_ptr<osg::StateSet> state = this->getOrCreateStateSet();
+			state->setTextureAttributeAndModes( 0, diffTexture.get(), osg::StateAttribute::ON );
+			state->setMode(GL_BLEND,osg::StateAttribute::ON);
+			state->setRenderingHint(osg::StateSet::TRANSPARENT_BIN);
+
+			
+		}
+	}
+	/* else if TODO material & color */
 
 	// set anti-twist vector
 	p.contourVec = LeftVec;

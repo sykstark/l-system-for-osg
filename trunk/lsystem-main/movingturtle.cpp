@@ -112,7 +112,16 @@ int MovingTurtle::drawStep( double dist)
 	return postStep();
 }
 
-int MovingTurtle::moveForward(std::vector<Parameter> & p)
+int MovingTurtle::doStep( double dist)
+{
+	properties.matrix = osg::Matrixd::translate( osg::Vec3d( 0.0, dist, 0.0 ) ) * properties.matrix;
+
+	drawDebugGeometry( );
+
+	return postStep();
+}
+
+int MovingTurtle::drawForward(std::vector<Parameter> & p)
 {
 	switch( p.size() )
 	{
@@ -123,6 +132,25 @@ int MovingTurtle::moveForward(std::vector<Parameter> & p)
 		if (p[0].type != LS_DOUBLE)
 			return LS_ERR_PAR_BADTYPE;
 		this->drawStep( *(static_cast<double *>(p[0].value)) );
+		break;
+	default:
+		return LS_ERR_PAR_INVALIDCOUNT;
+	}
+
+	return LS_OK;
+}
+
+int MovingTurtle::moveForward(std::vector<Parameter> & p)
+{
+	switch( p.size() )
+	{
+	case 0:
+		this->doStep( properties.length );
+		break;
+	case 1:
+		if (p[0].type != LS_DOUBLE)
+			return LS_ERR_PAR_BADTYPE;
+		this->doStep( *(static_cast<double *>(p[0].value)) );
 		break;
 	default:
 		return LS_ERR_PAR_INVALIDCOUNT;

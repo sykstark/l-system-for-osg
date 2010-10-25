@@ -17,21 +17,12 @@ namespace AP_LSystem {
 
 LSObject::LSObject() : Ability("LSObject") 
 {
-//	pOSGGeode = NULL;
 	pEOOwner = NULL;
-	filename.clear();
-	lod = 14;
-	thickness = 1.0;
-	angle = 15.0;
-	length = 3.0;
-	turtleType="";
 }
 
 LSObject::~LSObject() 
 {
-//	pOSGGeode = NULL;
 	pEOOwner = NULL;
-	filename.clear();
 }
 
 void LSObject::preInitialize() 
@@ -44,13 +35,13 @@ void LSObject::postInitialize()
 	// Schedule the parent EO for regular updates
 	getWorldPtr()->getSchedulerPtr()->addEntity(this, 60);
 	
-	Configuration::get()->loadCfgFile("vreckoAP_Garden.cfg");
+	Configuration::get()->loadCfgFile( configFile );
 
 	generator = new GrammarGenerator( );
 	ParseableString * pWord;
 	try
 	{
-		generator->loadFile( filename );
+		generator->loadFile( grammarFile );
 		for ( int i = 0; i < 11; i++ )
 		{
 			generator->nextIteration();
@@ -76,26 +67,11 @@ void LSObject::postInitialize()
 
 bool LSObject::loadXMLParameters(XERCES_CPP_NAMESPACE_QUALIFIER DOMNode *pParametersNode) 
 {
-	if (findXMLNode(pParametersNode, "Filename")) {
-		ReaderWriter::getStringValue(this->filename, pParametersNode, "Filename");
+	if (findXMLNode(pParametersNode, "GrammarFile")) {
+		ReaderWriter::getStringValue(this->grammarFile, pParametersNode, "GrammarFile");
 	}
-	if (findXMLNode(pParametersNode, "Word")) {
-		ReaderWriter::getStringValue(this->word, pParametersNode, "Word");
-	}
-	if (findXMLNode(pParametersNode, "TurtleType")) {
-		ReaderWriter::getStringValue(this->turtleType, pParametersNode, "TurtleType");
-	}
-	if (findXMLNode(pParametersNode, "LOD")) {
-		this->lod = ReaderWriter::getIntValue(pParametersNode, "LOD");
-	}
-	if (findXMLNode(pParametersNode, "DefaultAngle")) {
-		this->angle = ReaderWriter::getDoubleValue(pParametersNode, "DefaultAngle");
-	}
-	if (findXMLNode(pParametersNode, "DefaultThickness")) {
-		this->thickness = ReaderWriter::getDoubleValue(pParametersNode, "DefaultThickness");
-	}
-	if (findXMLNode(pParametersNode, "DefaultLength")) {
-		this->length = ReaderWriter::getDoubleValue(pParametersNode, "DefaultLength");
+	if (findXMLNode(pParametersNode, "ConfigFile")) {
+		ReaderWriter::getStringValue(this->configFile, pParametersNode, "ConfigFile");
 	}
 	return true;
 }
@@ -142,7 +118,7 @@ void LSObject::draw()
 		tex->setImage( image.get() );
 
 		osg::ref_ptr<osg::StateSet> state = geode->getOrCreateStateSet();
-		state->setTextureAttributeAndModes( 0, tex.get(), osg::StateAttribute::OFF );
+		state->setTextureAttributeAndModes( 0, tex.get(), osg::StateAttribute::ON );
 	}
 
 	//AddAnother( geom.get() );	
