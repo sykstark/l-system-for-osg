@@ -2,6 +2,7 @@
 #include "turtlestack.h"
 #include "jointedpipe.h"
 #include "straightpipe.h"
+#include "rectangle.h"
 
 using namespace AP_LSystem;
 
@@ -59,6 +60,8 @@ AbstractTurtle * TurtleStack::createTurtle(AP_LSystem::TurtleType type)
 		turtle = new JointedPipe( );
 	case LS_TURTLE_STRAIGHTPIPE:
 		turtle = new StraightPipe( );
+	case LS_TURTLE_RECTANGLE:
+		turtle = new Rectangle( );
 	// TODO other types
 	}
 

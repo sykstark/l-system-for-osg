@@ -11,6 +11,7 @@ protected:
 	virtual int preRotate() { return 0; }
 	virtual int postRotate() { return 0; }
 
+	virtual int doStep( double );
 	virtual int drawStep( double );
 	virtual int preStep(){ return 0; }
 	virtual int postStep(){ return 0; }
@@ -44,6 +45,7 @@ public:
 //****************************************************************
 	virtual int moveForward(std::vector<Parameter> &);
 	virtual int moveForwardHalf( );
+	virtual int drawForward(std::vector<Parameter> & );
 	
 };
 }

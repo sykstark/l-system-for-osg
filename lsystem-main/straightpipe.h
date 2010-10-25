@@ -16,8 +16,6 @@ public:
 
 	virtual void setProperties( TurtleProperties p );
 
-	virtual int drawForward( std::vector<Parameter> & ) {return 0;}
-
 };
 }
 

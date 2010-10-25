@@ -17,7 +17,7 @@ void LSFile::open(std::string & filename)
 {
     std::fstream * file = new std::fstream(filename.c_str());
 
-    if(!file)
+	if(!file->is_open( ))
     {
         throw FileException( "file " + filename + " cannot be opened" );
     }

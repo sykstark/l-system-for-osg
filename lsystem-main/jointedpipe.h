@@ -16,8 +16,6 @@ public:
 
 	virtual void setProperties( TurtleProperties p );
 
-	virtual int drawForward( std::vector<Parameter> & ) {return 0;}
-
 	virtual int preRotate() { return 0;}
 	virtual int postRotate() { return 0;}
 	virtual int preStep();
