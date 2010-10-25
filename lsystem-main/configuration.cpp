@@ -3,6 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include "configuration.h"
+#include "lsystemexception.h"
 
 using namespace AP_LSystem;
 
@@ -10,6 +11,7 @@ Configuration *Configuration::config = 0;
 
 Configuration::Configuration(void)
 {
+    // description list of all properties
     description.add_options()
             ("iteration", value<unsigned int>())
 			("contour_detail", value<unsigned int>())
@@ -29,13 +31,14 @@ bool Configuration::loadCfgFile(std::string filename)
 {
     std::ifstream ifs(filename.c_str());
 
-    if(ifs)
+    if(ifs.is_open())
     {
         store(parse_config_file(ifs, description), globalProperties);
         return true;
     }
     else
     {
+        throw FileException("Configuration file cannot be opened!");
         return false;
     }
 }
@@ -67,22 +70,37 @@ void Configuration::setProperty(const std::string &prop)
     std::stringstream stream;
     stream << prop;
 
-    store(parse_config_file( stream, description), globalProperties );
-    notify(globalProperties);
+    // parse property to temporary variable map
+    variables_map vm;
+    store(parse_config_file( stream, description), vm );
+    notify(vm);
+
+    // property is already set
+    if(globalProperties.count(vm.begin()->first))
+    {
+        // remove previous value
+        globalProperties.erase(vm.begin()->first);
+    }
+
+    // add property with new value
+    globalProperties.insert( *vm.begin( ) );
 }
 
 void Configuration::setProperty(const std::string &grammarID, const std::string &prop)
 {
+    // was variable map for this grammar already created ?
     if( !grammarNameMap.count( grammarID ) )
     {
         // bind grammar name with index in grammarProperties vector
         grammarNameMap[grammarID] = grammarProperties.size();
+        // add variable map for new grammar
         grammarProperties.push_back( variables_map() );
     }
 
     std::stringstream stream;
     stream << prop;
 
+    // parse property to variable map of current grammar
     store(parse_config_file( stream, description), grammarProperties[ grammarNameMap[grammarID] ] );
     notify(grammarProperties[ grammarNameMap[grammarID] ]);
 }
@@ -120,13 +138,16 @@ const variable_value * Configuration::getProperty(const std::string &grammarID, 
 
 const variable_value * Configuration::getProperty(const unsigned int grammarIndex, const std::string & name)
 {
+    // index of existing grammar ?
 	if(grammarIndex < grammarProperties.size( ))
     {
+        // is property set for current grammar ?
 		if(grammarProperties[grammarIndex].count(name))
         {
             return &grammarProperties[grammarIndex][name];
         }
     }
+    // get property from global properties
     if(globalProperties.count(name))
     {
         return &globalProperties[name];
@@ -137,8 +158,3 @@ const variable_value * Configuration::getProperty(const unsigned int grammarInde
     }
 }
 
-/*vector<std::string> & Configuration::getGrammarNames()
-{
-	return grammarIDs;
-}
-*/
