@@ -27,6 +27,7 @@ enum TurtleFlag
 const osg::Vec3d HeadVec(0.0,1.0,0.0);
 const osg::Vec3d UpVec(1.0,0.0,0.0);
 const osg::Vec3d LeftVec(0.0,0.0,1.0);
+const osg::Vec3d Center(0.0,0.0,0.0);
 
 /**
  *	Abstract class for all turtles with declarations of all necessary functions.
@@ -61,8 +62,25 @@ public:
 //****************************************************************
 
 	virtual void drawDebugGeometry( )						= 0;
-	virtual void drawVector( osg::Vec3d & vector, osg::Vec4d & color)
+	virtual void drawVector( const osg::Vec3d & vector, osg::Matrixd & matrix, osg::Vec4d & color)
 	{
+		double s = properties.debugGeometryScale;
+		double l = vector.length();
+		osg::Cylinder * cylinder = new osg::Cylinder(vector * s * (l/2.0f) * matrix,s * 0.01f,s * l);
+		osg::Cone * cone = new osg::Cone(vector * s * ( l + 0.03f ) * matrix, s * 0.03f,s * 0.15f);
+
+		osg::Matrixd m = osg::Matrixd::rotate( LeftVec, vector ) * matrix;
+		cylinder->setRotation( m.getRotate() );
+		cone->setRotation( m.getRotate() );
+
+		osg::ShapeDrawable * shape;
+		shape = new osg::ShapeDrawable(cylinder);
+		shape->setColor( color );
+		geode->addDrawable( shape );
+	
+		shape = new osg::ShapeDrawable(cone);
+//		shape->setColor( color );
+		geode->addDrawable( shape );
 	}
 
 //****************************************************************
@@ -84,8 +102,9 @@ public:
 //****************************************************************
 //**				    CHANGE PROPERTIES						**
 //****************************************************************
-	virtual int increaseLength(std::vector<Parameter> &)	= 0;
-	virtual int increaseRadius(std::vector<Parameter> &)	= 0;
+	virtual int multiplyLength(std::vector<Parameter> &)	= 0;
+	virtual int multiplyRadius(std::vector<Parameter> &)	= 0;
+	virtual int multiplyAngle(std::vector<Parameter> &)		= 0;
 
 //****************************************************************
 //**						MOVEMENT							**

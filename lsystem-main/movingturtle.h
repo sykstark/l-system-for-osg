@@ -37,8 +37,9 @@ public:
 //****************************************************************
 //**				    CHANGE PROPERTIES						**
 //****************************************************************
-	virtual int increaseLength(std::vector<Parameter> &);
-	virtual int increaseRadius(std::vector<Parameter> &);
+	virtual int multiplyLength(std::vector<Parameter> &);
+	virtual int multiplyRadius(std::vector<Parameter> &);
+	virtual int multiplyAngle(std::vector<Parameter> &);
 
 //****************************************************************
 //**						MOVEMENT							**

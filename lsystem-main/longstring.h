@@ -31,6 +31,7 @@ public:
     void appendDouble( double par );
     void appendUByte( unsigned char par );
     void appendData( char *, int);
+	char * getData( unsigned int &, unsigned int &, char);
     char * getSymbol( unsigned int & pos);
     bool getParamaters( unsigned int & pos, double * pParams, int & paramsCnt );
     char * get( );

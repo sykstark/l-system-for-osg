@@ -16,7 +16,10 @@ void StringUtils::uncommentLine(std::string & line)
 
 std::string StringUtils::processLine(std::fstream * pFile, std::stringstream & pLine)
 {
-	pLine.clear( );
+    // clear stringstream 
+    pLine.str("");
+	// clear error control state
+	pLine.clear();
 
 	std::string s_line, word;
 
@@ -25,7 +28,7 @@ std::string StringUtils::processLine(std::fstream * pFile, std::stringstream & p
         throw ParsingException( "line expected" );
 	}
 	uncommentLine(s_line);
-	pLine << s_line;	
+	pLine.str( s_line );	
     if(!(pLine >> word))
 	{
         return "";

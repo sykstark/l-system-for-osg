@@ -16,10 +16,16 @@ Configuration::Configuration(void)
             ("iteration", value<unsigned int>())
 			("contour_detail", value<unsigned int>())
             ("diffuse_texture", value<std::string>())
+			("texture_s_repeating", value<unsigned int>())
             ("default_angle", value<double>())
 			("default_length", value<double>())
 			("default_radius", value<double>())
-			("length_increment", value<double>())
+			("angle_multiplier", value<double>())
+			("length_multiplier", value<double>())
+			("radius_multiplier", value<double>())
+			("debug_geometry_scale", value<double>())
+			("minimize_twist", value<unsigned int>())
+			("draw_debug_geometry", value<unsigned int>())
 			("turtle_type", value<std::string>());
 }
 

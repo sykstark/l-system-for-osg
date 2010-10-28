@@ -13,7 +13,7 @@ protected:
     multimap<char, Rule> _rules;
     multimap<char, Rule> _homomorphisms;
     vector<string> _subGrammarsFilenames;
-    map<string, string> _subGrammarsWords;
+    map<string, LongString *> _subGrammarsWords;
 
     virtual void setAxiom(std::string &);
 public:
@@ -23,6 +23,7 @@ public:
     virtual void generateSuccessor( LongString *, multimap<char, Rule>::iterator &, double *);
     virtual multimap<char, Rule>::iterator & selectRule(multimap<char, Rule>::iterator &, multimap<char, Rule>::iterator &);
     unsigned int wordLength() { return _word->length(); }
+	virtual void transcribeSubGrammars( );
     virtual LongString * translate( );
 };
 }
