@@ -56,6 +56,7 @@ void LSFile::open(std::string & filename)
             {
                 string grammar; // property
                 line >> grammar;
+                //line.str("");
                 if( grammar == "" )
                 {
                     throw ParsingException("Bad format of #include");

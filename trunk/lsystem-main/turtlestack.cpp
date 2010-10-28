@@ -58,10 +58,13 @@ AbstractTurtle * TurtleStack::createTurtle(AP_LSystem::TurtleType type)
 	{
 	case LS_TURTLE_JOINTEDPIPE:
 		turtle = new JointedPipe( );
+		break;
 	case LS_TURTLE_STRAIGHTPIPE:
 		turtle = new StraightPipe( );
+		break;
 	case LS_TURTLE_RECTANGLE:
 		turtle = new Rectangle( );
+		break;
 	// TODO other types
 	}
 

@@ -7,6 +7,13 @@ namespace AP_LSystem {
  */
 struct TurtleProperties
 {
+	enum Flags
+	{
+		DRAW_DEBUG_GEOMETRY		= 0x00000001,
+		MINIMIZE_TWIST			= 0x00000002,
+
+	};
+
 	TurtleProperties():modelFile(NULL){};
 
 	/**
@@ -22,14 +29,18 @@ struct TurtleProperties
 
 	osg::Matrixd matrix;	///< matrix of turtle position and orientation
 
-	double length;			///< default length of one step
-	double lengthIncrement;	///< default length increment
-	double angle;			///< default angle of rotation
-	double angleIncrement;	///< default angle increment
-	double radius;				///< default radius of each segment
-	double radiusIncrement;		///< default radius increment
+	double length;					///< default length of one step
+	double lengthMultiplier;		///< default length multiplier
+	double angle;					///< default angle of rotation
+	double angleMultiplier;			///< default angle multiplier
+	double radius;					///< default radius of each segment
+	double radiusMultiplier;		///< default radius multiplier
+	double texCoordT;				///< current texture coordinate in T direction
+	unsigned int texRepeatingS;		///< number of repeatings of texture arround contour - S direction
 
 	unsigned int curveDetail;	///< detail of generalized pipe curves
+
+	osg::Vec3 controlPoint;		///< coordinates of center point of each move. Used for curve generating and for texturing.
 
 	unsigned int flags;
 
@@ -42,6 +53,8 @@ struct TurtleProperties
 	osg::Vec3d contourVec;						///< vector of first vertex of contour, used for minimalizing twist
 
 	vector<osg::ref_ptr<osg::Vec3dArray> > hemisphere;
+
+	double debugGeometryScale;		///< scale of debug geometry
 };
 /**
  * Turtle types

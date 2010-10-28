@@ -78,31 +78,56 @@ void LSGeode::setDefaultTurtleProperties( int index )
 	const variable_value * diffTexFile = Configuration::get()->getProperty( index , "diffuse_texture" );
 	if( diffTexFile )
 	{
-		osg::ref_ptr<osg::Image> diffIm = osgDB::readImageFile( diffTexFile->as<std::string>() );
+		std::string file = diffTexFile->as<std::string>();
+		osg::ref_ptr<osg::Image> diffIm = osgDB::readImageFile( file );
 
 		osg::ref_ptr<osg::Texture2D> diffTexture = new osg::Texture2D;
 		if(diffIm.get())
 		{
 			diffTexture->setImage( diffIm.get() );
+			diffTexture->setWrap( osg::Texture::WRAP_S, osg::Texture::REPEAT ); // x-axis
+			diffTexture->setWrap( osg::Texture::WRAP_T, osg::Texture::REPEAT ); // y-axis
 
 			osg::ref_ptr<osg::StateSet> state = this->getOrCreateStateSet();
 			state->setTextureAttributeAndModes( 0, diffTexture.get(), osg::StateAttribute::ON );
 			state->setMode(GL_BLEND,osg::StateAttribute::ON);
-			state->setRenderingHint(osg::StateSet::TRANSPARENT_BIN);
-
-			
+			state->setRenderingHint(osg::StateSet::TRANSPARENT_BIN);			
 		}
+	}
+	// initialize starting T coordinate of texture
+	p.texCoordT = 0.0f;
+
+	const variable_value * diffMatFile = Configuration::get()->getProperty( index , "diffuse_material" );
+	if( diffMatFile )
+	{
+/*		osg::ref_ptr<osg::StateSet> state = this->getOrCreateStateSet();
+		state->setTextureAttributeAndModes( 0, diffTexture.get(), osg::StateAttribute::ON );
+		state->setMode(GL_BLEND,osg::StateAttribute::ON);
+		state->setRenderingHint(osg::StateSet::TRANSPARENT_BIN);	*/		
 	}
 	/* else if TODO material & color */
 
 	// set anti-twist vector
 	p.contourVec = LeftVec;
 
+	p.controlPoint = Center;
+
+	p.texRepeatingS = Configuration::get()->getProperty( index, "texture_s_repeating")->as<unsigned int>();
 	p.length = Configuration::get()->getProperty( index, "default_length" )->as<double>();
 	p.angle = Configuration::get()->getProperty( index, "default_angle" )->as<double>();
 	p.radius = Configuration::get()->getProperty( index, "default_radius" )->as<double>();
-	p.lengthIncrement = Configuration::get()->getProperty( index, "length_increment" )->as<double>();
+	p.lengthMultiplier = Configuration::get()->getProperty( index, "length_multiplier" )->as<double>();
+	p.angleMultiplier = Configuration::get()->getProperty( index, "angle_multiplier" )->as<double>();
+	p.radiusMultiplier = Configuration::get()->getProperty( index, "radius_multiplier" )->as<double>();
 	p.contourDetail = Configuration::get()->getProperty( index, "contour_detail" )->as<unsigned int>();
+	p.debugGeometryScale = Configuration::get()->getProperty( index, "debug_geometry_scale" )->as<double>();
+
+	// process flags
+	p.flags = 0;
+	if( Configuration::get()->getProperty(index, "minimize_twist")->as<unsigned int>() )
+		p.flags |= TurtleProperties::MINIMIZE_TWIST;
+	if( Configuration::get()->getProperty(index, "draw_debug_geometry")->as<unsigned int>() )
+		p.flags |= TurtleProperties::DRAW_DEBUG_GEOMETRY;
 }
 
 

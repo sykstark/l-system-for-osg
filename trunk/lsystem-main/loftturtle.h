@@ -12,15 +12,23 @@ protected:
 		int ret = LS_NOTDEFINED;
 
 		osg::Matrixd t;
-		t.makeTranslate( osg::Vec3d( 0.0, dist/2.0f, 0.0 ) ); 
+		// set movement as half of step
+		t.makeTranslate( HeadVec * dist/2.0f );
+		// move to the center of the step
 		properties.matrix = t * properties.matrix;
 		
+		// do whatever in the center
 		ret = insideStep();
+		// draw debug
 		drawDebugGeometry( );
 
+		// store control point - center of step
+		properties.controlPoint = osg::Vec3d( 0.0, 0.0, 0.0 ) * properties.matrix;
+
+		// move forward - second half of the step
 		properties.matrix = t * properties.matrix;
 
-		return postStep();
+		return ret;
 	}
 
 	void createCircleContour()

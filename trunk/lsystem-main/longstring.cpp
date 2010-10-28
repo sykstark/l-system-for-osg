@@ -223,6 +223,37 @@ char * LongString::getSymbol(unsigned int & pos)
     }
 }
 
+char * LongString::getData( unsigned int & pos, unsigned int & length, char delimiter )
+{
+	if(pos >= _length)
+        return NULL;
+    char * pPos, * res;
+	pPos = res = pStr + pos;
+    while( pPos-pStr < _length )
+    {
+        switch(*pPos)
+        {          
+        case LS_DOUBLE:
+            pPos += sizeof(double)+2;
+            break;
+        case LS_UBYTE:
+            pPos += sizeof(unsigned char)+2;
+            break;
+        default:
+			if(*pPos == delimiter)
+			{
+				length = pPos - res;
+				pos = pPos - pStr;
+				return res;
+			}
+            pPos++;
+        }
+    }
+	length = pPos - res;
+	pos = pPos - pStr;
+	return res; 
+}
+
 bool LongString::getParamaters( unsigned int & pos, double * pParams, int & paramsCnt )
 {
     if(pos + 1 >= _length)

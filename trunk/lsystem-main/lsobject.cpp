@@ -39,20 +39,20 @@ void LSObject::postInitialize()
 
 	generator = new GrammarGenerator( );
 	ParseableString * pWord;
-	try
+	//try
 	{
 		generator->loadFile( grammarFile );
-		for ( int i = 0; i < 11; i++ )
+		for ( int i = 0; i < 1; i++ )
 		{
 			generator->nextIteration();
 		}
 		pWord = generator->getWord();
 
 	}
-	catch( std::exception & e)
+//	catch( std::exception & e)
 	{
-		Log::write( e.what() );
-		return;
+//		Log::write( e.what() );
+//		return;
 	}
 
 	AbstractParser * parser = new DefaultParser( pEOOwner );

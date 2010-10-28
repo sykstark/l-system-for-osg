@@ -6,46 +6,14 @@ using namespace AP_LSystem;
 
 void MovingTurtle::drawDebugGeometry( )
 {
-/*	if( ! (properties.flags & LS_FL_DEBUG ) )
-		return;*/
+	if( ! (properties.flags & TurtleProperties::DRAW_DEBUG_GEOMETRY ) )
+		return;
 
-	float ratio = 0.3;
+	drawVector( HeadVec, properties.matrix, osg::Vec4d(1.0,0.0,0.0,1.0) );
+	drawVector( LeftVec, properties.matrix, osg::Vec4d(0.0,1.0,0.0,1.0) );
+	drawVector( UpVec, properties.matrix, osg::Vec4d(0.0,0.0,1.0,1.0) );
 
-	osg::Cylinder * headCyl = new osg::Cylinder(VecUtils::Vec3Transform(properties.matrix, osg::Vec3d(0.0f,ratio * 1.5f,0.0f)),ratio * 0.05f,ratio * 3.0f);
-	osg::Cone * headCone = new osg::Cone(VecUtils::Vec3Transform(properties.matrix, osg::Vec3d(0.0f,ratio * 3.1f,0.0f)),ratio * 0.15f,ratio * 0.5f);
-	osg::Cylinder * upCyl = new osg::Cylinder(VecUtils::Vec3Transform(properties.matrix, osg::Vec3d(ratio * 1.5f,0.0f,0.0f)),ratio * 0.05f,ratio * 3.0f);
-	osg::Cone * upCone = new osg::Cone(VecUtils::Vec3Transform(properties.matrix, osg::Vec3d(ratio * 3.1f,0.0f,0.0f)),ratio * 0.15f,ratio * 0.5f);
-	osg::Cylinder * leftCyl = new osg::Cylinder(VecUtils::Vec3Transform(properties.matrix, osg::Vec3d(0.0f,0.0f,ratio * 1.5f)),ratio * 0.05f,ratio * 3.0f);
-	osg::Cone * leftCone = new osg::Cone(VecUtils::Vec3Transform(properties.matrix, osg::Vec3d(0.0f,0.0f,ratio * 3.1f)),ratio * 0.15f,ratio * 0.5f);
-	
-	osg::Matrixd m = osg::Matrixd::rotate( -osg::PI_2, osg::Vec3d( 1.0f, 0.0f, 0.0f ) ) * properties.matrix;
-	headCyl->setRotation( m.getRotate() );
-	headCone->setRotation( m.getRotate() );
-
-	m = osg::Matrixd::rotate( osg::PI_2, osg::Vec3f( 0.0f, 1.0f, 0.0f ) ) * properties.matrix ;
-	upCyl->setRotation( m.getRotate() );
-	upCone->setRotation( m.getRotate() );
-
-	m = osg::Matrixd::rotate( osg::PI_2, osg::Vec3f( 0.0f, 0.0f, 1.0f ) ) * properties.matrix ;
-	leftCyl->setRotation( m.getRotate() );
-	leftCone->setRotation( m.getRotate() );
-	
-	osg::ShapeDrawable * shape = new osg::ShapeDrawable(headCyl);
-	shape->setColor( osg::Vec4f( 1.0f, 0.0f, 0.0f, 1.0f));
-	geode->addDrawable( shape );
-	geode->addDrawable( new osg::ShapeDrawable( headCone ));
-
-	shape = new osg::ShapeDrawable(upCyl);
-	shape->setColor( osg::Vec4f( 0.0f, 1.0f, 0.0f, 1.0f));
-	geode->addDrawable( shape );
-	geode->addDrawable( new osg::ShapeDrawable( upCone ));
-
-	shape = new osg::ShapeDrawable(leftCyl);
-	shape->setColor( osg::Vec4f( 0.0f, 0.0f, 1.0f, 1.0f));
-	geode->addDrawable( shape );
-	geode->addDrawable( new osg::ShapeDrawable( leftCone ));
-
-	geode->addDrawable( new osg::ShapeDrawable(new osg::Sphere(VecUtils::Vec3Transform(properties.matrix,osg::Vec3d(0.0f,0.0f,0.0f)), ratio * 0.2f ) ) );
+	//geode->addDrawable( new osg::ShapeDrawable(new osg::Sphere(VecUtils::Vec3Transform(properties.matrix,osg::Vec3d(0.0f,0.0f,0.0f)), ratio * 0.2f ) ) );
 
 	osg::Matrixd mat = properties.matrix;
 	mat(0,2) = properties.contourVec.x();
@@ -59,13 +27,13 @@ void MovingTurtle::drawDebugGeometry( )
 	mat(0,0) = h.x();
 	mat(1,0) = h.y();
 	mat(2,0) = h.z();
-	
-	osg::Vec3d x = LeftVec * mat;
-	osg::Sphere * twist = new osg::Sphere(x, ratio * 0.2f);
-	shape = new osg::ShapeDrawable(twist);
-	shape->setColor( osg::Vec4f( 0.0f, 1.0f, 1.0f, 1.0f));
-	geode->addDrawable( shape );
 
+	/*drawVector( LeftVec, mat, osg::Vec4d( 1.0,1.0,0.0,1.0 ) );
+	osg::Vec3d x = LeftVec * mat;
+	osg::Sphere * twist = new osg::Sphere(x, properties.debugGeometryScale * 0.2f);
+	osg::ShapeDrawable * shape = new osg::ShapeDrawable(twist);
+	shape->setColor( osg::Vec4f( 0.0f, 1.0f, 1.0f, 1.0f));
+	geode->addDrawable( shape );*/
 }
 
 int MovingTurtle::makeRotate(osg::Quat & q)
@@ -89,6 +57,8 @@ int MovingTurtle::makeRotate(osg::Quat & q)
 		m.makeRotate( h1, h2 );
 		properties.contourVec = properties.contourVec * m ; 
 		properties.contourVec.normalize();
+
+		
 	}	
 	postRotate();
 
@@ -305,12 +275,12 @@ int MovingTurtle::randomTurnPitchRoll(std::vector<Parameter> & p)
 	return LS_NOTDEFINED;
 }
 
-int MovingTurtle::increaseLength(std::vector<Parameter> & p)
+int MovingTurtle::multiplyLength(std::vector<Parameter> & p)
 {
 	switch( p.size() )
 	{
 	case 0:
-		this->properties.length *= properties.lengthIncrement;
+		this->properties.length *= properties.lengthMultiplier;
 		break;
 	case 1:
 		if (p[0].type != LS_DOUBLE)
@@ -324,12 +294,31 @@ int MovingTurtle::increaseLength(std::vector<Parameter> & p)
 	return LS_OK;
 }
 
-int MovingTurtle::increaseRadius(std::vector<Parameter> & p)
+int MovingTurtle::multiplyRadius(std::vector<Parameter> & p)
 {
 	switch( p.size() )
 	{
 	case 0:
-		this->properties.length *= properties.radiusIncrement;
+		this->properties.length *= properties.radiusMultiplier;
+		break;
+	case 1:
+		if (p[0].type != LS_DOUBLE)
+			return LS_ERR_PAR_BADTYPE;
+		this->properties.radius *= *(static_cast<double *>(p[0].value) ); 
+		break;
+	default:
+		return LS_ERR_PAR_INVALIDCOUNT;
+	}
+
+	return LS_OK;
+}
+
+int MovingTurtle::multiplyAngle(std::vector<Parameter> & p)
+{
+	switch( p.size() )
+	{
+	case 0:
+		this->properties.length *= properties.angleMultiplier;
 		break;
 	case 1:
 		if (p[0].type != LS_DOUBLE)

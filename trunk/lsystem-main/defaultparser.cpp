@@ -59,10 +59,10 @@ int DefaultParser::parse(ParseableString * word)
 			turtles.top()->rollUntilHorizontal( );
 			break;
 		case '\'':
-			turtles.top()->increaseLength( parameters );
+			turtles.top()->multiplyLength( parameters );
 			break;
 		case '!':
-			turtles.top()->increaseRadius( parameters );
+			turtles.top()->multiplyRadius( parameters );
 			break;
 		case '$':
 			switchGeode( parameters );
