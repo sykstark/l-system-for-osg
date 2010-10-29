@@ -112,9 +112,18 @@ void LSGeode::setDefaultTurtleProperties( int index )
 
 	p.controlPoint = Center;
 
+	// process flags
+	p.flags = 0;
+	if( Configuration::get()->getProperty(index, "minimize_twist")->as<unsigned int>() )
+		p.flags |= TurtleProperties::MINIMIZE_TWIST;
+	if( Configuration::get()->getProperty(index, "draw_debug_geometry")->as<unsigned int>() )
+		p.flags |= TurtleProperties::DRAW_DEBUG_GEOMETRY;
+	if( Configuration::get()->getProperty(index, "degrees_to_radians")->as<unsigned int>() )
+		p.flags |= TurtleProperties::DEGREES_TO_RADIANS;
+
 	p.texRepeatingS = Configuration::get()->getProperty( index, "texture_s_repeating")->as<unsigned int>();
-	p.length = Configuration::get()->getProperty( index, "default_length" )->as<double>();
 	p.angle = Configuration::get()->getProperty( index, "default_angle" )->as<double>();
+	p.length = Configuration::get()->getProperty( index, "default_length" )->as<double>();
 	p.radius = Configuration::get()->getProperty( index, "default_radius" )->as<double>();
 	p.lengthMultiplier = Configuration::get()->getProperty( index, "length_multiplier" )->as<double>();
 	p.angleMultiplier = Configuration::get()->getProperty( index, "angle_multiplier" )->as<double>();
@@ -122,12 +131,8 @@ void LSGeode::setDefaultTurtleProperties( int index )
 	p.contourDetail = Configuration::get()->getProperty( index, "contour_detail" )->as<unsigned int>();
 	p.debugGeometryScale = Configuration::get()->getProperty( index, "debug_geometry_scale" )->as<double>();
 
-	// process flags
-	p.flags = 0;
-	if( Configuration::get()->getProperty(index, "minimize_twist")->as<unsigned int>() )
-		p.flags |= TurtleProperties::MINIMIZE_TWIST;
-	if( Configuration::get()->getProperty(index, "draw_debug_geometry")->as<unsigned int>() )
-		p.flags |= TurtleProperties::DRAW_DEBUG_GEOMETRY;
+	if(p.flags & TurtleProperties::DEGREES_TO_RADIANS)
+		p.angle = osg::DegreesToRadians( p.angle );
 }
 
 

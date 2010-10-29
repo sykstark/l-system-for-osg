@@ -13,7 +13,7 @@ protected:
     multimap<char, Rule> _rules;
     multimap<char, Rule> _homomorphisms;
     vector<string> _subGrammarsFilenames;
-    map<string, LongString *> _subGrammarsWords;
+    vector< LongString *> _subGrammarsWords;
 
     virtual void setAxiom(std::string &);
 public:

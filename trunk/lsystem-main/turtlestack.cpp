@@ -44,8 +44,11 @@ void TurtleStack::replace(LSGeode * geode)
 	AbstractTurtle * pTurtle = createTurtle( geode->getTurtleType() );
 	// bind with geode
 	pTurtle->bindGeode( geode );
-	// copy properties
+	// set default properties
 	pTurtle->setProperties( geode->getDefaultTurtleProperties( ) );
+	// inherit properties
+	if( !turtles.empty() )
+		pTurtle->inheritProperties( turtles.top()->getProperties() );
 	// push new one on the top of the stack
 	turtles.push( pTurtle );
 }

@@ -54,7 +54,7 @@ multimap<char, Rule>::iterator * ParStoch0LSystemGrammar::selectRule(multimap<ch
 bool ParStoch0LSystemGrammar::nextIteration( )
 {
     int j=0;
-    char * pUByte = NULL;
+    char * buffer = NULL;
     LongString * newWord = new LongString( );
     multimap<char, Rule>::iterator * pRuleIt;
     pair<multimap<char, Rule>::iterator, multimap<char, Rule>::iterator > result;
@@ -72,15 +72,16 @@ bool ParStoch0LSystemGrammar::nextIteration( )
         if( result.first == result.second )
         {
             j = i;
-            pUByte = _word->getSymbol(i);
-            newWord->appendData(pUByte,i-j+1);
+            buffer = _word->getSymbol(i);
+            if(buffer)
+				newWord->append(buffer,i-j+1);
         }
         // found
         else
         {
             parCnt = 0;
             // ziskej paramtery z pozice za pismenem
-            if( !_word->getParamaters( i, pParams, parCnt ))
+            if( !_word->getParameters<double>( i, pParams, parCnt ))
             {
                 return false;
             }

@@ -6,6 +6,7 @@
 #include "log.h"
 #include "boost/lexical_cast.hpp"
 
+
 using boost::lexical_cast;
 
 using namespace AP_LSystem;
@@ -61,11 +62,11 @@ void LongString::resize()
 
 void LongString::convertFromString(std::string * source, unsigned int & pos, const char delimiter)
 {
-    double par;
+    double parDbl;
     unsigned int i;
     std::string::iterator end, begin = source->begin() + pos;
 
-    std::string chars = "(,)";
+	std::string chars = "(){},";
     chars.append( 1, delimiter );
 
     // epsilon rule
@@ -80,7 +81,7 @@ void LongString::convertFromString(std::string * source, unsigned int & pos, con
         i = source->find_first_of( chars, begin - source->begin( ) );
         if ( i == std::string::npos )
         {
-            this->appendStr(std::string(begin,source->end()));
+            this->append(std::string(begin,source->end()));
             return;
         }
         end = source->begin() + i;
@@ -92,16 +93,20 @@ void LongString::convertFromString(std::string * source, unsigned int & pos, con
         {
         case ',':
         case ')':
-            par = lexical_cast<double>(str);
-            this->appendDouble(par);
+            parDbl = lexical_cast<double>(str);
+            this->append<double>(parDbl);
+            break;
+		case '}':
+			this->append(lexical_cast<int>(str));
             break;
         case '(':
-            this->appendStr(str);
+		case '{':
+            this->append(str);
             break;
         default:
             if (*end == delimiter)
             {
-                this->appendStr(str);
+                this->append(str);
                 return;
             }
             throw ParsingException("String converting error");
@@ -110,6 +115,117 @@ void LongString::convertFromString(std::string * source, unsigned int & pos, con
         pos = i+1;
     }
 }
+
+
+
+void LongString::append( ParameterType type )
+{
+    pStr[_length++] = static_cast<unsigned char>(type);
+}
+
+void LongString::append( const char ch )
+{
+    if(_allocated < _length + 1)
+    {
+            resize( );
+    }
+    pStr[_length++] = ch;
+}
+
+void LongString::append(const char * buffer, int length)
+{
+    if(_allocated < _length + length)
+    {
+        resize( );
+    }
+
+    memcpy( pStr + _length, buffer, length );
+    _length += length;
+}
+
+void LongString::append( std::string str )
+{
+	this->append( str.c_str(), str.length() );
+}
+
+void LongString::append( LongString * ls )
+{
+	this->append( ls->getData(), ls->length() );
+}
+
+char * LongString::getSymbol(unsigned int & pos)
+{
+    if(pos >= _length)
+        return NULL;
+    char * pSymbol = pStr + pos;
+    char * pPos = pStr + pos + 1;
+    while(pPos-pStr < static_cast<int>(_length))
+    {
+        switch(*pPos)
+        {
+        case LS_DOUBLE:
+            pPos += sizeof(double)+2;
+            break;
+        case LS_UBYTE:
+            pPos += sizeof(unsigned char)+2;
+            break;
+		case LS_INT:
+			pPos += sizeof(int)+2;
+			break;
+        default:
+            pos = pPos - pStr - 1;
+            return pSymbol;
+        }
+    }
+	pos = pPos - pStr - 1;
+    return pSymbol;
+}
+
+char * LongString::getData( )
+{
+    return pStr;
+}
+
+char * LongString::getData( unsigned int & pos, unsigned int & length, char delimiter )
+{
+	if(pos >= _length)
+        return NULL;
+    char * pPos, * res;
+	pPos = res = pStr + pos;
+    while( pPos-pStr < static_cast<int>(_length) )
+    {
+        switch(*pPos)
+        {          
+        case LS_DOUBLE:
+            pPos += sizeof(double)+2;
+            break;
+        case LS_UBYTE:
+            pPos += sizeof(unsigned char)+2;
+            break;
+		case LS_INT:
+			pPos += sizeof(int)+2;
+			break;
+        default:
+			if(*pPos == delimiter)
+			{
+				length = pPos - res;
+				pos = pPos - pStr;
+				return res;
+			}
+            pPos++;
+        }
+    }
+	length = pPos - res;
+	pos = pPos - pStr;
+	return res; 
+}
+
+
+
+
+
+
+/*
 
 void LongString::appendType( ParameterType type )
 {
@@ -127,14 +243,6 @@ void LongString::appendStr( const char * str, unsigned int length )
 
     _length += length;
 }
-
-/*void LongString::appendStr( StaticString & str)
-{
-    while(_allocated < str.length() + _length)
-    {
-        resize( );
-    }
-}*/
 
 void LongString::appendStr( std::string str )
 {
@@ -174,6 +282,18 @@ void LongString::appendDouble( double par )
     appendType( LS_DOUBLE );
 }
 
+void LongString::appendInt( int par )
+{
+    if(_allocated < _length + sizeof(int) + 2)
+    {
+        resize( );
+    }
+    appendType( LS_INT );
+    memcpy( pStr + _length, &par, sizeof(int) );
+    _length += sizeof(int);
+    appendType( LS_INT );
+}
+
 void LongString::appendUByte( unsigned char par )
 {
     if(_allocated < _length + sizeof(unsigned char) + 2)
@@ -186,6 +306,8 @@ void LongString::appendUByte( unsigned char par )
     appendType( LS_UBYTE );
 }
 
+
+
 void LongString::appendData(char * buffer, int length)
 {
     if(_allocated < _length + length)
@@ -196,64 +318,13 @@ void LongString::appendData(char * buffer, int length)
     memcpy( pStr + _length, buffer, length );
     _length += length;
 }
+*/
 
-char * LongString::getSymbol(unsigned int & pos)
-{
-    if(pos + 1 >= _length)
-        return NULL;
-    char * pSymbol = pStr + pos;
-    char * pPos = pStr + pos + 1;
-    while(true)
-    {
-        switch(*pPos)
-        {
-        case LS_NO_PARAMETER:
-            pos = pPos - pStr;
-            return pSymbol;
-        case LS_DOUBLE:
-            pPos += sizeof(double)+2;
-            break;
-        case LS_UBYTE:
-            pPos += sizeof(unsigned char)+2;
-            break;
-        default:
-            pos = pPos - pStr - 1;
-            return pSymbol;
-        }
-    }
-}
 
-char * LongString::getData( unsigned int & pos, unsigned int & length, char delimiter )
-{
-	if(pos >= _length)
-        return NULL;
-    char * pPos, * res;
-	pPos = res = pStr + pos;
-    while( pPos-pStr < _length )
-    {
-        switch(*pPos)
-        {          
-        case LS_DOUBLE:
-            pPos += sizeof(double)+2;
-            break;
-        case LS_UBYTE:
-            pPos += sizeof(unsigned char)+2;
-            break;
-        default:
-			if(*pPos == delimiter)
-			{
-				length = pPos - res;
-				pos = pPos - pStr;
-				return res;
-			}
-            pPos++;
-        }
-    }
-	length = pPos - res;
-	pos = pPos - pStr;
-	return res; 
-}
 
+
+/*
+template< class T >
 bool LongString::getParamaters( unsigned int & pos, double * pParams, int & paramsCnt )
 {
     if(pos + 1 >= _length)
@@ -268,27 +339,46 @@ bool LongString::getParamaters( unsigned int & pos, double * pParams, int & para
         {
         case LS_NO_PARAMETER:
             return false;
-        case LS_DOUBLE:
+        case LS(double):
             memcpy(pParams + paramsCnt, ++pPos, sizeof(double));
             paramsCnt++;
             pPos += sizeof(double)+1;
             break;
-        case LS_UBYTE:
-        /*    memcpy(pParams + paramsCnt, ++pPos, sizeof(double));
-            paramsCnt++;
-            pPos += sizeof(double)+1;
-            break;*/
         default:
             pos = pPos - pStr - 1;
             return true;
         }
     }
 }
+*/
 
-char * LongString::get( )
+/*bool LongString::getParamaters( unsigned int & pos, int * pParams, int & paramsCnt )
 {
-    return pStr;
-}
+    if(pos + 1 >= _length)
+        return false;
+
+    paramsCnt = 0;
+
+    char * pPos = pStr + pos + 1;
+    while(true)
+    {
+        switch(*pPos)
+        {
+        case LS_NO_PARAMETER:
+            return false;
+        case LS_INT:
+            memcpy(pParams + paramsCnt, ++pPos, sizeof(int));
+            paramsCnt++;
+            pPos += sizeof(double)+1;
+            break;
+        default:
+            pos = pPos - pStr - 1;
+            return true;
+        }
+    }
+}*/
+
+
 
 std::string LongString::toString( )
 {

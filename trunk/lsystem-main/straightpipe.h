@@ -12,6 +12,7 @@ public:
 	StraightPipe(void){};
 	~StraightPipe(void){};
 
+	virtual int preStep( );
 	virtual int insideStep( );
 
 	virtual void setProperties( TurtleProperties p );
