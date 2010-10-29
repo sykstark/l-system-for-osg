@@ -53,6 +53,12 @@ public:
 		properties = p;
 	}
 
+	virtual void inheritProperties( TurtleProperties p ) ///> defines which properties shoul be inherited from parent to sub-grammar turtle
+	{
+		// inherit matrix
+		properties.matrix = p.matrix;
+	}
+
 	void bindGeode( LSGeode * geode )	///< bind output geode with current turtle 
 	{
 		this->geode = geode;
@@ -86,6 +92,14 @@ public:
 //****************************************************************
 //**						ROTATION							**
 //****************************************************************
+	inline double processAngle( double a )
+	{
+		if( properties.flags & TurtleProperties::DEGREES_TO_RADIANS )
+			a = osg::DegreesToRadians( a );
+
+		return a;
+	}
+
 	virtual int turnLeft(std::vector<Parameter> &)			= 0;
 	virtual int turnRight(std::vector<Parameter> &)			= 0;
 	virtual int pitchDown(std::vector<Parameter> &)			= 0;

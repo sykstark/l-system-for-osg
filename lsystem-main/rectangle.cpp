@@ -26,9 +26,9 @@ int Rectangle::drawStep(double dist)
 
 	// add texture coordinates
 	t->push_back( osg::Vec2d( 0.0f, 0.0f ) );
-	t->push_back( osg::Vec2d( 3.0f, 0.0f ) );
-	t->push_back( osg::Vec2d( 3.0f, 2.0f ) );
-	t->push_back( osg::Vec2d( 0.0f, 2.0f ) );
+	t->push_back( osg::Vec2d( 1.0f, 0.0f ) );
+	t->push_back( osg::Vec2d( 1.0f, 1.0f ) );
+	t->push_back( osg::Vec2d( 0.0f, 1.0f ) );
 
 	// add rectangle primitive
 	properties.geometry->addPrimitiveSet( 

@@ -11,6 +11,7 @@ struct TurtleProperties
 	{
 		DRAW_DEBUG_GEOMETRY		= 0x00000001,
 		MINIMIZE_TWIST			= 0x00000002,
+		DEGREES_TO_RADIANS		= 0x00000004,
 
 	};
 

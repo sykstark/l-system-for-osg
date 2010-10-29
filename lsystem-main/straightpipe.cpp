@@ -105,8 +105,13 @@ void StraightPipe::setProperties( TurtleProperties p )
 
 	// TODO kdyz neni definovana jina kontura
 	createCircleContour( );
-	
+}
+
+int StraightPipe::preStep( )
+{
 	initializePipe( );
+
+	return LS_OK;
 }
 
 void StraightPipe::initializePipe()
@@ -123,8 +128,8 @@ void StraightPipe::initializePipe()
 		// create first contour
 		for(osg::Vec3dArray::iterator it = properties.contour->begin(); it != properties.contour->end(); it++ )
 		{
-			properties.contourLastV->push_back( *it * properties.radius );
-			properties.contourLastN->push_back( *it );
+			properties.contourLastV->push_back( (*it * properties.radius) * properties.matrix );
+			properties.contourLastN->push_back( properties.matrix.getRotate() * *it );
 		}
 	}
 }

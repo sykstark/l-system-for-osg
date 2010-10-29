@@ -142,7 +142,8 @@ void LSFile::open(std::string & filename)
 
         }
 
-        processDefines();
+		// substitute all occurences of defined macros by their values
+		substitute( this->defines );
     }
     else
     {
@@ -154,24 +155,38 @@ void LSFile::open(std::string & filename)
 }
 
 // nahradit vsechny vyskyty maker hodnotami
-void LSFile::processDefines()
+void LSFile::substitute( map<std::string,std::string> & pairs )
 {
     unsigned int i;
     vector<string>::iterator rule;
-    std::map<std::string,std::string>::iterator def;
+    std::map<std::string,std::string>::iterator subst;
+
+	// substitute occurences in axiom
+	for(subst = pairs.begin(); subst != pairs.end(); subst++)
+    {
+        i=0;
+        while((i = axiom.find(subst->first,i))&&(i != std::string::npos))
+        {
+            axiom.replace(i,subst->first.length(),subst->second);
+            i += subst->first.length();
+        }
+    }
+
+	// substitute occurences in rules
     for(rule = rules.begin();rule != rules.end(); rule++)
     {
-        for(def = defines.begin(); def != defines.end(); def++)
+        for(subst = pairs.begin(); subst != pairs.end(); subst++)
         {
             i=0;
-            while((i = rule->find(def->first,i))&&(i != std::string::npos))
+            while((i = rule->find(subst->first,i))&&(i != std::string::npos))
             {
-                rule->replace(i,def->first.length(),def->second);
-                i += def->first.length();
-
+                rule->replace(i,subst->first.length(),subst->second);
+                i += subst->first.length();
             }
         }
     }
+
+	// TODO substitute occurences in homomorphisms
 }
 
 void LSFile::processType( std::string str )

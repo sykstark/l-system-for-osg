@@ -25,6 +25,7 @@ Configuration::Configuration(void)
 			("radius_multiplier", value<double>())
 			("debug_geometry_scale", value<double>())
 			("minimize_twist", value<unsigned int>())
+			("degrees_to_radians", value<unsigned int>())
 			("draw_debug_geometry", value<unsigned int>())
 			("turtle_type", value<std::string>());
 }

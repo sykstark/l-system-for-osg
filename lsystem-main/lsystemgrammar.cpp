@@ -6,6 +6,7 @@
 #include "parstoch0lsystemgrammar.h"
 
 using namespace AP_LSystem;
+
 LSystemGrammar::LSystemGrammar():_word(NULL)
 {
 
@@ -18,6 +19,8 @@ void LSystemGrammar::loadFromFile( AbstractFile * file)
     AbstractFile * subFile;
     AbstractGrammar * grammar;
 
+	// map for replacing grammar names in rules, axiom and homomorphism by their index
+	std::map< string, string > grammarSubstitute;
     // generate words of subgrammars
     vector<std::string>::iterator itGrammars = file->getGrammarFileNames()->begin();
     for(; itGrammars != file->getGrammarFileNames()->end(); itGrammars++)
@@ -49,10 +52,16 @@ void LSystemGrammar::loadFromFile( AbstractFile * file)
         else
             throw ParsingException("non of grammars fulfils the conditions");
 
-        _subGrammarsWords.insert(make_pair<std::string, LongString * >(file->name(),grammar->translate()));
-
+		// make pair which bind name of grammar with index in _subGrammarWords vector
+		grammarSubstitute.insert(make_pair<string, string >(subFile->name(),boost::lexical_cast<string>(_subGrammarsWords.size())));
+		_subGrammarsWords.push_back( grammar->translate() );
+		
         delete subFile;
     }
+
+	// replace all names in rules, homomorphism and axiom by their index
+	if(!grammarSubstitute.empty())
+		file->substitute( grammarSubstitute );
 
     // initialize word inside grammar and load an axiom into
     this->setAxiom( file->getAxiom() );
@@ -69,10 +78,10 @@ void LSystemGrammar::setAxiom(std::string & axiom)
 {
     if(_word) delete _word;
     _word = new LongString( );
-    _word->appendChar('$', true);
-    _word->appendUByte( Configuration::get()->getGrammarIndex( this->_name ) );
+    _word->append('$');
+    _word->append( static_cast<unsigned char>(Configuration::get()->getGrammarIndex( this->_name )) );
     _word->convertFromString( &axiom );
-    _word->appendChar('$', false);
+    _word->append('$');
 
     Log::write(_word->toString());
     //Log::get(); // TODO
@@ -80,17 +89,37 @@ void LSystemGrammar::setAxiom(std::string & axiom)
 
 void LSystemGrammar::transcribeSubGrammars()
 {
+	// process only if there is any subgrammar
+	if( _subGrammarsWords.empty() )
+		return;
+
 	LongString * newWord = new LongString( );
 	unsigned int len;
 	char * data = NULL;
+	int parameters[100];
+	int * pParams = parameters;
+	int parametersCnt = 0;
 
+	// look for subgrammars
 	for(unsigned int i = 0; i < _word->length(); i++ )
     {
-		data = _word->getData( i, len, '{' );
+		// subgrammars are indetified by $ sign - get all data before $
+		data = _word->getData( i, len, '#' );
+
+		// no data
 		if(data == NULL)
 			return;
-		newWord->appendData( data, len );
 
+		// append data before
+		newWord->append( data, len );
+		_word->getParameters<int>( i, pParams, parametersCnt );
+
+		if( parametersCnt != 1 )
+			return;
+
+		newWord->append( _subGrammarsWords[ pParams[0] ] );
+		
+		i++;	
 
         Log::write(newWord->toString());
     }
@@ -122,13 +151,13 @@ void LSystemGrammar::generateSuccessor(LongString * word, multimap<char, Rule>::
         stStrIt++, dynStrIt++)
     {
         // pridani statickych a dynamickych retezcu do slova ( krome posledniho statickeho )
-        word->appendStr( (*stStrIt)->str, (*stStrIt)->length );
+        word->append( (*stStrIt)->str, (*stStrIt)->length );
         //Log::write(newWord->toString());
-        word->appendDouble( (*dynStrIt)->Eval( parameters ) );
+        word->append( (*dynStrIt)->Eval( parameters ) );
         //Log::write(newWord->toString());
     }
     // pridani posledniho statickeho retezce
-    word->appendStr( (*stStrIt)->str, (*stStrIt)->length );
+    word->append( (*stStrIt)->str, (*stStrIt)->length );
 }
 
 multimap<char, Rule>::iterator & LSystemGrammar::selectRule(multimap<char, Rule>::iterator & begin, multimap<char, Rule>::iterator &)

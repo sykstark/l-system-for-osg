@@ -146,7 +146,7 @@ int MovingTurtle::turnLeft(std::vector<Parameter> & p)
 	case 1:
 		if (p[0].type != LS_DOUBLE)
 			return LS_ERR_PAR_BADTYPE;
-		this->makeRotate( osg::Quat( - *(static_cast<double *>(p[0].value)), osg::Vec3d(1.0,0.0,0.0) ) ); 
+		this->makeRotate( osg::Quat( - processAngle(*(static_cast<double *>(p[0].value))), osg::Vec3d(1.0,0.0,0.0) ) ); 
 		break;
 	default:
 		return LS_ERR_PAR_INVALIDCOUNT;
@@ -165,7 +165,7 @@ int MovingTurtle::turnRight(std::vector<Parameter> & p)
 	case 1:
 		if (p[0].type != LS_DOUBLE)
 			return LS_ERR_PAR_BADTYPE;
-		this->makeRotate( osg::Quat( *(static_cast<double *>(p[0].value)), osg::Vec3d(1.0,0.0,0.0) ) ); 
+		this->makeRotate( osg::Quat( processAngle(*(static_cast<double *>(p[0].value))), osg::Vec3d(1.0,0.0,0.0) ) ); 
 		break;
 	default:
 		return LS_ERR_PAR_INVALIDCOUNT;
@@ -184,7 +184,7 @@ int MovingTurtle::pitchDown(std::vector<Parameter> & p)
 	case 1:
 		if (p[0].type != LS_DOUBLE)
 			return LS_ERR_PAR_BADTYPE;
-		this->makeRotate( osg::Quat( *(static_cast<double *>(p[0].value)), osg::Vec3d(0.0,0.0,1.0) ) ); 
+		this->makeRotate( osg::Quat( processAngle(*(static_cast<double *>(p[0].value))), osg::Vec3d(0.0,0.0,1.0) ) ); 
 		break;
 	default:
 		return LS_ERR_PAR_INVALIDCOUNT;
@@ -203,7 +203,7 @@ int MovingTurtle::pitchUp(std::vector<Parameter> & p)
 	case 1:
 		if (p[0].type != LS_DOUBLE)
 			return LS_ERR_PAR_BADTYPE;
-		this->makeRotate( osg::Quat( - *(static_cast<double *>(p[0].value)), osg::Vec3d(0.0,0.0,1.0) ) ); 
+		this->makeRotate( osg::Quat( - processAngle(*(static_cast<double *>(p[0].value))), osg::Vec3d(0.0,0.0,1.0) ) ); 
 		break;
 	default:
 		return LS_ERR_PAR_INVALIDCOUNT;
@@ -222,7 +222,7 @@ int MovingTurtle::rollLeft(std::vector<Parameter> & p)
 	case 1:
 		if (p[0].type != LS_DOUBLE)
 			return LS_ERR_PAR_BADTYPE;
-		this->makeRotate( osg::Quat( - *(static_cast<double *>(p[0].value)), osg::Vec3d(0.0,1.0,0.0) ) ); 
+		this->makeRotate( osg::Quat( - processAngle(*(static_cast<double *>(p[0].value))), osg::Vec3d(0.0,1.0,0.0) ) ); 
 		break;
 	default:
 		return LS_ERR_PAR_INVALIDCOUNT;
@@ -241,7 +241,7 @@ int MovingTurtle::rollRight(std::vector<Parameter> & p)
 	case 1:
 		if (p[0].type != LS_DOUBLE)
 			return LS_ERR_PAR_BADTYPE;
-		this->makeRotate( osg::Quat( *(static_cast<double *>(p[0].value)), osg::Vec3d(0.0,1.0,0.0) ) ); 
+		this->makeRotate( osg::Quat( processAngle(*(static_cast<double *>(p[0].value))), osg::Vec3d(0.0,1.0,0.0) ) ); 
 		break;
 	default:
 		return LS_ERR_PAR_INVALIDCOUNT;

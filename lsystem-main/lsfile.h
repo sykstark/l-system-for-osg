@@ -15,24 +15,25 @@ namespace AP_LSystem{
 class LSFile : public AbstractFile
 {
 private:
-    std::vector<std::string> rules;
-    std::vector<std::string> homomorhisms;
+    std::vector<string> rules;
+    std::vector<string> homomorhisms;
     std::vector<string> grammars;
-    std::map<std::string, std::string> defines;
-    std::string axiom;
+    std::map<string, string> defines;
+    string axiom;
 
-    void processDefines();
-    void processType(std::string);
+    void processType(string);
 
 public:
     LSFile();
-    virtual void open(std::string &);
-    virtual std::vector<std::string> * getHomomorphisms()
+    virtual void open(string &);
+	void substitute(std::map<string, string> &);
+
+    virtual std::vector<string> * getHomomorphisms()
     {
         return &homomorhisms;
     }
 
-    virtual std::vector<std::string> * getRules()
+    virtual std::vector<string> * getRules()
     {
         return &rules;
     }
