@@ -4,10 +4,10 @@
 #set iteration=10 // hloubka rekurze
 #set default_length=1.0 
 #set default_angle=0.3 // implicitni uhel natoceni zelvy 
-#set default_radius=1.0 // tloustka vetvi    
-#set contour_detail=5 
+#set default_radius=0.2 // tloustka vetvi    
+#set contour_detail=10 
 #axiom 
-ZZZ
+FFFFF
 #endaxiom
 #rules  
 A(y):*->+FA(y+1):4

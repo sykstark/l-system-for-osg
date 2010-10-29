@@ -5,12 +5,12 @@
 #set default_radius=1.0 // tloustka vetvi    
 #set length_multiplier=0.9
 #set contour_detail=5
-#include d:\HCI\VRECKO\bin\data\ls\includeTestSub01.ls
+#include d:\HCI\VRECKO\bin\data\ls\leaf01.ls
 #include d:\HCI\VRECKO\bin\data\ls\includeTestSub02.ls
 #type 0L
 #set turtle_type=STRAIGHT_PIPE 
 #axiom 
-F{SUB1}{SUB2}
+F+#{SUB2}----#{Leaf01}
 #endaxiom
 #rules  
 A(y):*->+FA(y+1):4
