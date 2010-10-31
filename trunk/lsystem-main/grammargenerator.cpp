@@ -63,7 +63,8 @@ ParseableString * GrammarGenerator::getWord()
 
     word = pMainGrammar->translate( );
 
-	Log::write( "\nWORD: " + word->toString() );
+	//Log::write( "\nWORD: " + word->toString() );
+	Log::get();
 
     return pWord = new ParseableString( word );
 }

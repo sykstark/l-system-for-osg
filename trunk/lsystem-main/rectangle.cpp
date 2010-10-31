@@ -22,7 +22,7 @@ int Rectangle::drawStep(double dist)
 
 	// add normals - orthogonal to rectangle
 	for( int i = 0; i < 4; i++ )
-		n->push_back( UpVec );
+		n->push_back( properties.matrix.getRotate() * UpVec );
 
 	// add texture coordinates
 	t->push_back( osg::Vec2d( 0.0f, 0.0f ) );

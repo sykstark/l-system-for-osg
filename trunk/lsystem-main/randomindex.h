@@ -42,7 +42,6 @@ public:
 
         return probabilities.size( ) - 1;
     }
-
 };
 }
 #endif // RANDOMINDEX_H

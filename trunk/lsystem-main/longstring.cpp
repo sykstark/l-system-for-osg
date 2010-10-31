@@ -87,7 +87,7 @@ void LongString::convertFromString(std::string * source, unsigned int & pos, con
         end = source->begin() + i;
         std::string str(begin, end);
 
-        Log::write( str );
+        //Log::write( str );
 
         switch(*end)
         {

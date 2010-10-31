@@ -95,7 +95,7 @@ bool ParStoch0LSystemGrammar::nextIteration( )
 			}
         }
 
-        Log::write(newWord->toString());
+        //Log::write(newWord->toString());
     }
 
     if(_word)

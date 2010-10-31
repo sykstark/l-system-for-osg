@@ -1,5 +1,5 @@
-#ifndef LOG_H_
-#define LOG_H_
+#ifndef LS_LOG_H_
+#define LS_LOG_H_
 
 #include <string>
 #include <sstream>
@@ -9,11 +9,10 @@ namespace AP_LSystem {
 class Log
 {
 private:
+	static Log * logInst;
     Log(){}
-    static Log * logInst;
+    
     ~Log(){}
-
-
 
     enum Output
     {
@@ -39,23 +38,23 @@ private:
 public: 
 
     static Log * get()
-    {
-       // if(!log) log = new Log();
+	{
+		if(!logInst) logInst = new Log();
 
-        return logInst;
+		return logInst;
+	}
+
+    void write( std::string str)
+    {
+        //OutputDebugStringA( str.c_str() );	
+		output( str.c_str() );
     }
 
-    static void write( std::string str)
+    void write( int i )
     {
-        //OutputDebugStringA( str.c_str() );
-        //output( str.c_str() );
-    }
-
-    static void write( int i )
-    {
- /*       std::stringstream str;
+        std::stringstream str;
         str << i;
-        OutputDebugStringA( str.str().c_str() );*/
+        OutputDebugStringA( str.str().c_str() );
     }
 };
 }

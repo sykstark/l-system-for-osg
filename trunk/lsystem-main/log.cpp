@@ -1,7 +1,9 @@
 #include "precompiled.h"
 
 #include "log.h"
-/*
-Log::Log()
-{
-}*/
+
+using namespace AP_LSystem;
+
+Log *Log::logInst = 0;
+
+

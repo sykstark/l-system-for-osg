@@ -16,7 +16,7 @@ protected:
 	virtual int preStep(){ return 0; }
 	virtual int postStep(){ return 0; }
 
-	virtual void drawDebugGeometry( );
+	virtual void drawFrame( osg::Matrixd &, osg::Vec4d * = NULL);
 public:
 //****************************************************************
 //**						ROTATION							**

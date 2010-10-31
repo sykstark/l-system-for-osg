@@ -3,6 +3,7 @@
 
 #include "utils.h"
 #include "lsgeode.h"
+#include "randomizer.h"
 
 namespace AP_LSystem {
 //class LSGeode;
@@ -43,7 +44,7 @@ public:
 //**						OTHER								**
 //****************************************************************
 	virtual int resetValues() { return 0;}//TODO	///< reset all values in properties to default value as set in Configuration
-	TurtleProperties & getProperties()	///< get Properties reference
+	inline TurtleProperties & getProperties()	///< get Properties reference
 	{
 		return properties;
 	}
@@ -59,15 +60,21 @@ public:
 		properties.matrix = p.matrix;
 	}
 
-	void bindGeode( LSGeode * geode )	///< bind output geode with current turtle 
+	inline void bindGeode( LSGeode * geode )	///< bind output geode with current turtle 
 	{
 		this->geode = geode;
 	}
+
+	inline LSGeode * getGeode( )
+	{
+		return geode;
+	}
+
 //****************************************************************
 //**						DEBUG								**
 //****************************************************************
 
-	virtual void drawDebugGeometry( )						= 0;
+	virtual void drawFrame( osg::Matrixd &, osg::Vec4d * = NULL )				= 0;
 	virtual void drawVector( const osg::Vec3d & vector, osg::Matrixd & matrix, osg::Vec4d & color)
 	{
 		double s = properties.debugGeometryScale;
@@ -97,6 +104,8 @@ public:
 		if( properties.flags & TurtleProperties::DEGREES_TO_RADIANS )
 			a = osg::DegreesToRadians( a );
 
+		if( properties.angleVariance )
+			a *= Randomizer::get( properties.angleVariance );
 		return a;
 	}
 

@@ -30,10 +30,13 @@ struct TurtleProperties
 
 	osg::Matrixd matrix;	///< matrix of turtle position and orientation
 
+	osg::Matrixd lastFrame;
+
 	double length;					///< default length of one step
 	double lengthMultiplier;		///< default length multiplier
 	double angle;					///< default angle of rotation
 	double angleMultiplier;			///< default angle multiplier
+	unsigned int angleVariance;		///< variance of angle - in percents
 	double radius;					///< default radius of each segment
 	double radiusMultiplier;		///< default radius multiplier
 	double texCoordT;				///< current texture coordinate in T direction

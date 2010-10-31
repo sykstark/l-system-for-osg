@@ -83,7 +83,7 @@ void LSystemGrammar::setAxiom(std::string & axiom)
     _word->convertFromString( &axiom );
     _word->append('$');
 
-    Log::write(_word->toString());
+    //Log::write(_word->toString());
     //Log::get(); // TODO
 }
 
@@ -117,11 +117,9 @@ void LSystemGrammar::transcribeSubGrammars()
 		if( parametersCnt != 1 )
 			return;
 
-		newWord->append( _subGrammarsWords[ pParams[0] ] );
-		
-		i++;	
+		newWord->append( _subGrammarsWords[ pParams[0] ] );	
 
-        Log::write(newWord->toString());
+        //Log::write(newWord->toString());
     }
 
     if(_word)

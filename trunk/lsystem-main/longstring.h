@@ -54,20 +54,24 @@ public:
 	template< class T >
 	bool getParameters( unsigned int & pos, T * pParams, int & paramsCnt )
 	{
-		if(pos + 1 >= _length)
+		if(pos >= _length)
 			return false;
 
 		paramsCnt = 0;
 
 		char * pPos = pStr + pos + 1;
-		while(*pPos == getType(pParams))
+		// while pointer pPos points correctly to pStr buffer 
+		//						and 
+		//		 the parameter in buffer has the same type as parameter array pParams
+		while(((pPos - pStr) < static_cast<int>(_length) ) && (*pPos == getType(pParams)))
 		{
+			// copy parameter to parameter array
 			memcpy(pParams + paramsCnt, ++pPos, sizeof(T));
+			// increment parameter counter
 			paramsCnt++;
+			// move pointer behind the parameter in pStr buffer
 			pPos += sizeof(T)+1;
 		}
-		if( paramsCnt == 0 )
-			return false;
 		pos = pPos - pStr - 1;
 		return true;
 	}
