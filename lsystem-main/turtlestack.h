@@ -19,7 +19,7 @@ public:
 	TurtleStack(void);
 	~TurtleStack(void);
 
-	void push( LSGeode * );			///< push turtle of defined type on the stack
+	void push( );					///< push turtle of defined type on the stack
 	void pop( );					///< pop one turtle	
 	
 	/**
@@ -27,7 +27,7 @@ public:
 	 *	Turtle is binded with LSGeode to write there a geometry.
 	 *	@param TODO
 	 */
-	void replace( LSGeode * );
+	void push( LSGeode * );
 	
 	/**
 	 *	Get turtle from the top of the stack

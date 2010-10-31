@@ -19,13 +19,13 @@ private:
 	vector< LSGeode *> geodes;
 protected:
 	osg::Group * pOwner;
-	LSGeode * selectedGeode;
+//	LSGeode * selectedGeode;
 	TurtleStack turtles;
 public:
 	AbstractParser( )
 	{
 		pOwner = NULL;
-		selectedGeode = NULL;
+//		selectedGeode = NULL;
 //		createGeodes( );
 	}
 
@@ -39,8 +39,7 @@ public:
 		case 1:
 			if (p[0].type != LS_UBYTE)
 				return LS_ERR_PAR_BADTYPE;	
-			selectedGeode = geodes[*(static_cast<unsigned char*>(p[0].value))];
-			turtles.replace( selectedGeode );
+			turtles.push( geodes[*(static_cast<unsigned char*>(p[0].value))] );
 			break;
 		default:
 			return LS_ERR_PAR_INVALIDCOUNT;

@@ -26,6 +26,8 @@
 #include <osg/Image>
 #include <osg/Texture2D>
 #include <osg/ShapeDrawable>
+#include <osg/AlphaFunc>
+#include <osg/BlendFunc>
 #include <osgDB/ReadFile>
 
 #include <xercesc/parsers/XercesDOMParser.hpp>

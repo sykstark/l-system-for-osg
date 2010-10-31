@@ -68,7 +68,7 @@ int DefaultParser::parse(ParseableString * word)
 			switchGeode( parameters );
 			break;
 		case '[':
-			turtles.push( selectedGeode );
+			turtles.push( );
 			break;
 		case ']':
 			turtles.pop( );

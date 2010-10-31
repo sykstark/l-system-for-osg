@@ -80,6 +80,9 @@ void LSGeode::setDefaultTurtleProperties( int index )
 	{
 		std::string file = diffTexFile->as<std::string>();
 		osg::ref_ptr<osg::Image> diffIm = osgDB::readImageFile( file );
+//		diffIm->setInternalTextureFormat(0);
+
+//		bool i = diffIm->isImageTranslucent();
 
 		osg::ref_ptr<osg::Texture2D> diffTexture = new osg::Texture2D;
 		if(diffIm.get())
@@ -89,6 +92,13 @@ void LSGeode::setDefaultTurtleProperties( int index )
 			diffTexture->setWrap( osg::Texture::WRAP_T, osg::Texture::REPEAT ); // y-axis
 
 			osg::ref_ptr<osg::StateSet> state = this->getOrCreateStateSet();
+/*
+			state->setMode(GL_ALPHA_TEST, osg::StateAttribute::ON);
+			state->setAttributeAndModes( new osg::BlendFunc, osg::StateAttribute::ON );
+			osg::AlphaFunc* alphaFunc = new osg::AlphaFunc;
+			alphaFunc->setFunction(osg::AlphaFunc::GEQUAL,0.05f);
+			state->setAttributeAndModes( alphaFunc, osg::StateAttribute::ON );
+*/
 			state->setTextureAttributeAndModes( 0, diffTexture.get(), osg::StateAttribute::ON );
 			state->setMode(GL_BLEND,osg::StateAttribute::ON);
 			state->setRenderingHint(osg::StateSet::TRANSPARENT_BIN);			
@@ -109,6 +119,7 @@ void LSGeode::setDefaultTurtleProperties( int index )
 
 	// set anti-twist vector
 	p.contourVec = LeftVec;
+	p.lastFrame.makeIdentity();
 
 	p.controlPoint = Center;
 
@@ -130,6 +141,7 @@ void LSGeode::setDefaultTurtleProperties( int index )
 	p.radiusMultiplier = Configuration::get()->getProperty( index, "radius_multiplier" )->as<double>();
 	p.contourDetail = Configuration::get()->getProperty( index, "contour_detail" )->as<unsigned int>();
 	p.debugGeometryScale = Configuration::get()->getProperty( index, "debug_geometry_scale" )->as<double>();
+	p.angleVariance = Configuration::get()->getProperty( index, "angle_variance" )->as<unsigned int>();
 
 	if(p.flags & TurtleProperties::DEGREES_TO_RADIANS)
 		p.angle = osg::DegreesToRadians( p.angle );

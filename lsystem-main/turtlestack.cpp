@@ -20,9 +20,10 @@ AbstractTurtle * TurtleStack::top()
 	return turtles.top();
 }
 
-void TurtleStack::push( LSGeode * geode )
+void TurtleStack::push( )
 {
-	// create new turtle accroding to turtle type
+	LSGeode * geode = turtles.top()->getGeode( );
+	// create new turtle according to turtle type
 	AbstractTurtle * pTurtleToPush = createTurtle(geode->getTurtleType());
 	// copy properties
 	pTurtleToPush->setProperties( turtles.top()->getProperties() );
@@ -38,7 +39,7 @@ void TurtleStack::pop()
 	turtles.pop();
 }
 
-void TurtleStack::replace(LSGeode * geode)
+void TurtleStack::push(LSGeode * geode)
 {
 	// create new turtle that will replace the one on the top
 	AbstractTurtle * pTurtle = createTurtle( geode->getTurtleType() );

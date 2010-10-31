@@ -42,7 +42,7 @@ void LSObject::postInitialize()
 	//try
 	{
 		generator->loadFile( grammarFile );
-		for ( int i = 0; i < 1; i++ )
+		for ( int i = 0; i < 16; i++ )
 		{
 			generator->nextIteration();
 		}

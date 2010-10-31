@@ -4,18 +4,18 @@
 
 using namespace AP_LSystem;
 
-void MovingTurtle::drawDebugGeometry( )
+void MovingTurtle::drawFrame( osg::Matrixd & matrix, osg::Vec4d * color )
 {
 	if( ! (properties.flags & TurtleProperties::DRAW_DEBUG_GEOMETRY ) )
 		return;
 
-	drawVector( HeadVec, properties.matrix, osg::Vec4d(1.0,0.0,0.0,1.0) );
-	drawVector( LeftVec, properties.matrix, osg::Vec4d(0.0,1.0,0.0,1.0) );
-	drawVector( UpVec, properties.matrix, osg::Vec4d(0.0,0.0,1.0,1.0) );
+	drawVector( HeadVec, matrix, (color)?(*color):(osg::Vec4d(1.0,0.0,0.0,1.0)) );
+	drawVector( LeftVec, matrix, (color)?(*color):(osg::Vec4d(0.0,1.0,0.0,1.0)) );
+	drawVector( UpVec,   matrix, (color)?(*color):(osg::Vec4d(0.0,0.0,1.0,1.0)) );
 
 	//geode->addDrawable( new osg::ShapeDrawable(new osg::Sphere(VecUtils::Vec3Transform(properties.matrix,osg::Vec3d(0.0f,0.0f,0.0f)), ratio * 0.2f ) ) );
 
-	osg::Matrixd mat = properties.matrix;
+	/*osg::Matrixd mat = properties.matrix;
 	mat(0,2) = properties.contourVec.x();
 	mat(1,2) = properties.contourVec.y();
 	mat(2,2) = properties.contourVec.z();
@@ -27,7 +27,7 @@ void MovingTurtle::drawDebugGeometry( )
 	mat(0,0) = h.x();
 	mat(1,0) = h.y();
 	mat(2,0) = h.z();
-
+*/
 	/*drawVector( LeftVec, mat, osg::Vec4d( 1.0,1.0,0.0,1.0 ) );
 	osg::Vec3d x = LeftVec * mat;
 	osg::Sphere * twist = new osg::Sphere(x, properties.debugGeometryScale * 0.2f);
@@ -77,7 +77,7 @@ int MovingTurtle::drawStep( double dist)
 	else
 		return ret;
 
-	drawDebugGeometry( );
+	drawFrame( properties.matrix );
 
 	return postStep();
 }
@@ -86,7 +86,7 @@ int MovingTurtle::doStep( double dist)
 {
 	properties.matrix = osg::Matrixd::translate( osg::Vec3d( 0.0, dist, 0.0 ) ) * properties.matrix;
 
-	drawDebugGeometry( );
+	drawFrame( properties.matrix );
 
 	return postStep();
 }
@@ -146,7 +146,7 @@ int MovingTurtle::turnLeft(std::vector<Parameter> & p)
 	case 1:
 		if (p[0].type != LS_DOUBLE)
 			return LS_ERR_PAR_BADTYPE;
-		this->makeRotate( osg::Quat( - processAngle(*(static_cast<double *>(p[0].value))), osg::Vec3d(1.0,0.0,0.0) ) ); 
+		this->makeRotate( osg::Quat( *(static_cast<double *>(p[0].value)), osg::Vec3d(1.0,0.0,0.0) ) ); 		
 		break;
 	default:
 		return LS_ERR_PAR_INVALIDCOUNT;
@@ -179,7 +179,7 @@ int MovingTurtle::pitchDown(std::vector<Parameter> & p)
 	switch( p.size() )
 	{
 	case 0:
-		this->makeRotate( osg::Quat( properties.angle, osg::Vec3d(0.0,0.0,1.0) ) ); 
+		this->makeRotate( osg::Quat( properties.angle, LeftVec ) ); 
 		break;
 	case 1:
 		if (p[0].type != LS_DOUBLE)
@@ -198,7 +198,7 @@ int MovingTurtle::pitchUp(std::vector<Parameter> & p)
 	switch( p.size() )
 	{
 	case 0:
-		this->makeRotate( osg::Quat( - properties.angle, osg::Vec3d(0.0,0.0,1.0) ) ); 
+		this->makeRotate( osg::Quat( - properties.angle, LeftVec ) ); 
 		break;
 	case 1:
 		if (p[0].type != LS_DOUBLE)

@@ -24,7 +24,7 @@ int StraightPipe::insideStep( )
 	contMat(1,2) = properties.contourVec.y();
 	contMat(2,2) = properties.contourVec.z();
 
-	if( properties.flags & TurtleProperties::MINIMIZE_TWIST )
+	/*if( properties.flags & TurtleProperties::MINIMIZE_TWIST )
 	{
 		osg::Vec3d h = contMat * HeadVec;
 		h = h^properties.contourVec;
@@ -39,7 +39,7 @@ int StraightPipe::insideStep( )
 		drawVector( LeftVec, contMat, osg::Vec4d( 1.0,1.0,0.0,1.0 ) );
 
 		//bool val = contMat.valid();
-	}
+	}*/
 	
 
 	//double texCoordInc = properties.texCoordS + 
@@ -57,17 +57,25 @@ int StraightPipe::insideStep( )
 		osg::Vec3d vec;
 		// add vertex and normal of the current contour
 		if( properties.flags & TurtleProperties::MINIMIZE_TWIST )
-			vec = (*cont * properties.radius) * contMat;
+		{
+			vec = (*cont * properties.radius) * properties.lastFrame * osg::Matrixd::translate(properties.matrix.getTrans());
+			n->push_back( properties.lastFrame.getRotate() * *cont  ); // TODO rotate
+			contourN->push_back( properties.lastFrame.getRotate() * *cont );
+		}
 		else
+		{
 			vec = (*cont * properties.radius) * properties.matrix;
+			n->push_back( properties.matrix.getRotate() * *cont  ); // TODO rotate
+			contourN->push_back( properties.matrix.getRotate() * *cont );
+		}
 
 		v->push_back( vec );		
-		n->push_back( properties.matrix.getRotate() * *cont  ); // TODO rotate
+		
 		t->push_back(osg::Vec2d( texS, properties.texCoordT + texTInc ) );
 
 		// store for future use as previous contour
 		contourV->push_back( vec );
-		contourN->push_back( properties.matrix.getRotate() * *cont );
+		
 
 		// add vertex and normal of last contour
 		v->push_back( *lastV );
@@ -105,11 +113,13 @@ void StraightPipe::setProperties( TurtleProperties p )
 
 	// TODO kdyz neni definovana jina kontura
 	createCircleContour( );
+	initializePipe( );
+
 }
 
 int StraightPipe::preStep( )
 {
-	initializePipe( );
+	//initializePipe( );
 
 	return LS_OK;
 }

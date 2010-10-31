@@ -137,7 +137,7 @@ struct Rule
                 }
                 std::string str( it, rule->begin() + pos );
 
-                Log::write( "Condtition: " + str + ", variables: " + this->variables );
+                //Log::write( "Condtition: " + str + ", variables: " + this->variables );
 
                 if ( condition->Parse(str , this->variables, false ) != -1 )
                 {
@@ -190,14 +190,14 @@ struct Rule
         }
         catch(bad_lexical_cast&)
         {
-			Log::write( "static string - ex:" + ls->toString());
+			//Log::write( "static string - ex:" + ls->toString());
             begin = rule->begin() + pos/* + 1*/;
             pSS = new StaticString(ls);
             staticStrings.push_back(pSS);
             // not number - must be parsed
             return true;
         }
-        cout << "static string:" << ls->toString() << endl;
+        //cout << "static string:" << ls->toString() << endl;
 
 //        begin = rule->begin() + pos + 1;
         pSS = new StaticString(ls);
@@ -212,7 +212,7 @@ struct Rule
 
         FunctionParser * fp = new FunctionParser( );
 
-        cout << string( begin, end ) << endl;
+        //cout << string( begin, end ) << endl;
         // parse string inside brackets
         if ( fp->Parse( string( begin, end ), this->variables, false ) != -1 )
         {
