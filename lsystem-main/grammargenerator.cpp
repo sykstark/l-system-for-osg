@@ -1,7 +1,7 @@
 #include "precompiled.h"
 #include "grammargenerator.h"
-//#include "LSFileGrammar.h"
 #include "parstoch0lsystemgrammar.h"
+#include "par2lsystemgrammar.h"
 #include "lsfile.h"
 #include "log.h"
 
@@ -45,6 +45,8 @@ void GrammarGenerator::loadFile(std::string & filename)
 
     if( ParStoch0LSystemGrammar::isCapable( file->type() ) )
         pMainGrammar = new ParStoch0LSystemGrammar( file );
+	else if( Par2LSystemGrammar::isCapable( file->type() ) )
+        pMainGrammar = new Par2LSystemGrammar( file );
 	else
 		throw ParsingException("non of grammars fulfils the conditions");
 }
@@ -63,8 +65,7 @@ ParseableString * GrammarGenerator::getWord()
 
     word = pMainGrammar->translate( );
 
-	//Log::write( "\nWORD: " + word->toString() );
-	Log::get();
+	vrecko::logger.debugLog("Word: %s", word->toString().c_str() );
 
     return pWord = new ParseableString( word );
 }

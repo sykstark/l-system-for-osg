@@ -16,12 +16,18 @@ protected:
     vector< LongString *> _subGrammarsWords;
 
     virtual void setAxiom(std::string &);
+	virtual bool nextIteration();
+	virtual multimap<char, Rule>::iterator * selectRule(multimap<char, Rule>::iterator &, 
+														multimap<char, Rule>::iterator &, 
+														LongString *,
+														unsigned int &,
+														double *);
+	virtual void generateSuccessor( LongString *, multimap<char, Rule>::iterator &, double *);
 public:
     LSystemGrammar();
 
     virtual void loadFromFile( AbstractFile * );
-    virtual void generateSuccessor( LongString *, multimap<char, Rule>::iterator &, double *);
-    virtual multimap<char, Rule>::iterator & selectRule(multimap<char, Rule>::iterator &, multimap<char, Rule>::iterator &);
+    
     unsigned int wordLength() { return _word->length(); }
 	virtual void transcribeSubGrammars( );
     virtual LongString * translate( );

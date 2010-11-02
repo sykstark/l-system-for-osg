@@ -13,30 +13,16 @@ protected:
 
 		preStep( );
 
+
+
 		osg::Matrixd t;
 		// set movement as half of step
 		t.makeTranslate( HeadVec * dist/2.0f );
 		// move to the center of the step
 		properties.matrix = t * properties.matrix;
 
-		//properties.matrix.orthoNormalize( )
-
-		osg::Vec3d head = properties.matrix.getRotate() * HeadVec;
-		head.normalize();
-		osg::Vec3d headLast = properties.lastFrame.getRotate() * HeadVec;
-		headLast.normalize();
-		osg::Matrixd m = osg::Matrixd::rotate( headLast, head );
-		osg::Matrixd m2 = osg::Matrixd::rotate( properties.angle, LeftVec );
-		osg::Matrixd m3 = osg::Matrixd::rotate( -properties.angle, LeftVec );
-
-		properties.lastFrame = properties.lastFrame * m;
-
-		drawFrame( properties.lastFrame * osg::Matrixd::translate( properties.matrix.getTrans() ), new osg::Vec4d( 1.0, 1.0, 0.5, 1.0 ) ); 
-		//drawFrame( properties.lastFrame, new osg::Vec4d( 1.0, 1.0, 0.5, 1.0 ) ); 
-
-		osg::Vec3d levy = properties.lastFrame * LeftVec;
-		levy.normalize();
-		//drawVector( head, osg::Matrixd::identity(), osg::Vec4d( 1.0,0.5,1.0, 1.0 ));
+		// adjust matrices - process tropism, twist minimalizing
+		adjustMatrices( );
 		
 		// do whatever in the center
 		ret = insideStep();

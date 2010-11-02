@@ -13,8 +13,17 @@ ParStoch0LSystemGrammar::ParStoch0LSystemGrammar( AbstractFile * file )
 
 multimap<char, Rule>::iterator * ParStoch0LSystemGrammar::selectRule(multimap<char, Rule>::iterator & begin,
                                                                      multimap<char, Rule>::iterator & end,
+																	 LongString * word,
+																	 unsigned int & pos,
                                                                      double * parameters)
 {
+	int parCnt = 0;
+    // ziskej paramtery z pozice za pismenem
+    if( !word->getParameters<double>( pos, parameters, parCnt ))
+    {
+        return NULL;
+    }
+
     multimap<char, Rule>::iterator * it = new multimap<char, Rule>::iterator;
     // rules tha pass the condition and that are processed by random generator
     vector< multimap<char, Rule>::iterator > passedRules;
@@ -51,57 +60,4 @@ multimap<char, Rule>::iterator * ParStoch0LSystemGrammar::selectRule(multimap<ch
     return NULL;
 }
 
-bool ParStoch0LSystemGrammar::nextIteration( )
-{
-    int j=0;
-    char * buffer = NULL;
-    LongString * newWord = new LongString( );
-    multimap<char, Rule>::iterator * pRuleIt;
-    pair<multimap<char, Rule>::iterator, multimap<char, Rule>::iterator > result;
 
-    double parameters[100];
-    double * pParams = parameters; // parameters pointer
-    int parCnt = 0; // parameters counter
-
-    for(unsigned int i = 0; i < _word->length(); i++ )
-    {
-        // mozna dodat kontrolu estli jde o pismeno
-        result = _rules.equal_range( (*_word)[i]);
-
-        // not found
-        if( result.first == result.second )
-        {
-            j = i;
-            buffer = _word->getSymbol(i);
-            if(buffer)
-				newWord->append(buffer,i-j+1);
-        }
-        // found
-        else
-        {
-            parCnt = 0;
-            // ziskej paramtery z pozice za pismenem
-            if( !_word->getParameters<double>( i, pParams, parCnt ))
-            {
-                return false;
-            }
-
-            pRuleIt = selectRule( result.first, result.second, pParams );
-
-			if(pRuleIt)
-			{
-				generateSuccessor( newWord, *pRuleIt, pParams );
-				delete pRuleIt;
-			}
-        }
-
-        //Log::write(newWord->toString());
-    }
-
-    if(_word)
-        delete _word;
-
-    _word = newWord;
-
-    return true;
-}

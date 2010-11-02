@@ -4,6 +4,7 @@
 #include "configuration.h"
 #include "lsfile.h"
 #include "parstoch0lsystemgrammar.h"
+#include "par2lsystemgrammar.h"
 
 using namespace AP_LSystem;
 
@@ -49,6 +50,8 @@ void LSystemGrammar::loadFromFile( AbstractFile * file)
         // choose best for word generation
         if( ParStoch0LSystemGrammar::isCapable( subFile->type() ) )
             grammar = new ParStoch0LSystemGrammar( subFile );
+		else if( Par2LSystemGrammar::isCapable( subFile->type() ) )
+			grammar = new Par2LSystemGrammar( subFile );
         else
             throw ParsingException("non of grammars fulfils the conditions");
 
@@ -57,7 +60,7 @@ void LSystemGrammar::loadFromFile( AbstractFile * file)
 		_subGrammarsWords.push_back( grammar->translate() );
 		
         delete subFile;
-    }
+	}
 
 	// replace all names in rules, homomorphism and axiom by their index
 	if(!grammarSubstitute.empty())
@@ -112,6 +115,7 @@ void LSystemGrammar::transcribeSubGrammars()
 
 		// append data before
 		newWord->append( data, len );
+		parametersCnt = 0;
 		_word->getParameters<int>( i, pParams, parametersCnt );
 
 		if( parametersCnt != 1 )
@@ -138,6 +142,54 @@ LongString * LSystemGrammar::translate( )
     return _word;
 }
 
+bool LSystemGrammar::nextIteration( )
+{
+    int j=0;
+    char * buffer = NULL;
+    LongString * newWord = new LongString( );
+    multimap<char, Rule>::iterator * pRuleIt;
+    pair<multimap<char, Rule>::iterator, multimap<char, Rule>::iterator > result;
+
+    double parameters[100];
+    double * pParams = parameters; // parameters pointer
+    int parCnt = 0; // parameters counter
+
+    for(unsigned int i = 0; i < _word->length(); i++ )
+    {
+        // mozna dodat kontrolu estli jde o pismeno
+        result = _rules.equal_range( (*_word)[i]);
+
+        // not found
+        if( result.first == result.second )
+        {
+            j = i;
+            buffer = _word->getSymbol(i);
+            if(buffer)
+				newWord->append(buffer,i-j+1);
+        }
+        // found
+        else
+		{
+            pRuleIt = selectRule( result.first, result.second, _word, i, pParams );
+
+			if(pRuleIt)
+			{
+				generateSuccessor( newWord, *pRuleIt, pParams );
+				delete pRuleIt;
+			}
+        }
+
+        //Log::write(newWord->toString());
+    }
+
+    if(_word)
+        delete _word;
+
+    _word = newWord;
+
+    return true;
+}
+
 void LSystemGrammar::generateSuccessor(LongString * word, multimap<char, Rule>::iterator & it, double * parameters)
 {
     vector<StaticString*>::iterator stStrIt;
@@ -158,7 +210,11 @@ void LSystemGrammar::generateSuccessor(LongString * word, multimap<char, Rule>::
     word->append( (*stStrIt)->str, (*stStrIt)->length );
 }
 
-multimap<char, Rule>::iterator & LSystemGrammar::selectRule(multimap<char, Rule>::iterator & begin, multimap<char, Rule>::iterator &)
+multimap<char, Rule>::iterator * LSystemGrammar::selectRule(multimap<char, Rule>::iterator & begin, 
+															multimap<char, Rule>::iterator &,
+															LongString *,
+															unsigned int &,
+															double *)
 {
-    return begin;
+    return &begin;
 }
