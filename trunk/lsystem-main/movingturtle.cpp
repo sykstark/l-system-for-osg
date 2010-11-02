@@ -1,5 +1,6 @@
 #include "precompiled.h"
 
+#include <cmath>
 #include "movingturtle.h"
 
 using namespace AP_LSystem;
@@ -14,26 +15,49 @@ void MovingTurtle::drawFrame( osg::Matrixd & matrix, osg::Vec4d * color )
 	drawVector( UpVec,   matrix, (color)?(*color):(osg::Vec4d(0.0,0.0,1.0,1.0)) );
 
 	//geode->addDrawable( new osg::ShapeDrawable(new osg::Sphere(VecUtils::Vec3Transform(properties.matrix,osg::Vec3d(0.0f,0.0f,0.0f)), ratio * 0.2f ) ) );
+}
 
-	/*osg::Matrixd mat = properties.matrix;
-	mat(0,2) = properties.contourVec.x();
-	mat(1,2) = properties.contourVec.y();
-	mat(2,2) = properties.contourVec.z();
+void MovingTurtle::adjustMatrices( )
+{
+	// get current heading vector
+	osg::Vec3d head = properties.matrix.getRotate() * HeadVec;
+	
+	// gravitropism
+	// do gravitropism only with elasticity greater than this value - optimalization
+	if( properties.gravitropismElasticity > 0.0001 )
+	{
+		osg::Vec3d gravityAxis = head ^ (-HeadVec );									// H x T
+		double gravAngle = properties.gravitropismElasticity * gravityAxis.length();	// a = e * | H x T |
+		gravityAxis.normalize();
+		properties.matrix = osg::Matrixd::rotate(properties.matrix.getRotate()) *		// origin rotation
+							osg::Matrixd::rotate( gravAngle, gravityAxis ) *			// add rotation for gravitropism
+							osg::Matrixd::translate( properties.matrix.getTrans() );	// add origin translation
+	}
 
-	osg::Vec3d h = mat * HeadVec;
-	h = h^properties.contourVec;
-	h.normalize();
+	// tropism
+	if( properties.tropismElasticity > 0.0001 )
+	{
+		osg::Vec3d tropismAxis = head ^ properties.tropismVector;									// H x T
+		double dotProd = head * properties.tropismVector;											// H . T
+		double tropAngle = properties.tropismElasticity * 
+			( cos( properties.tropismAngle ) - ( sin( properties.tropismAngle ) * dotProd / tropismAxis.length() ) );
+		tropismAxis.normalize();
+		properties.matrix = osg::Matrixd::rotate(properties.matrix.getRotate()) *		// origin rotation
+							osg::Matrixd::rotate( tropAngle, tropismAxis ) *			// add rotation for tropism
+							osg::Matrixd::translate( properties.matrix.getTrans() );	// add origin translation
+	}
 
-	mat(0,0) = h.x();
-	mat(1,0) = h.y();
-	mat(2,0) = h.z();
-*/
-	/*drawVector( LeftVec, mat, osg::Vec4d( 1.0,1.0,0.0,1.0 ) );
-	osg::Vec3d x = LeftVec * mat;
-	osg::Sphere * twist = new osg::Sphere(x, properties.debugGeometryScale * 0.2f);
-	osg::ShapeDrawable * shape = new osg::ShapeDrawable(twist);
-	shape->setColor( osg::Vec4f( 0.0f, 1.0f, 1.0f, 1.0f));
-	geode->addDrawable( shape );*/
+	// frame for minimalizing twist
+	osg::Vec3d headLast = properties.lastFrame.getRotate() * HeadVec;
+	properties.lastFrame = properties.lastFrame * osg::Matrixd::rotate( headLast, head );
+
+	drawFrame( properties.lastFrame * osg::Matrixd::translate( properties.matrix.getTrans() ), new osg::Vec4d( 1.0, 1.0, 0.5, 1.0 ) ); 
+	//drawFrame( properties.lastFrame, new osg::Vec4d( 1.0, 1.0, 0.5, 1.0 ) ); 
+
+	osg::Vec3d levy = properties.lastFrame * LeftVec;
+	levy.normalize();
+	//drawVector( head, osg::Matrixd::identity(), osg::Vec4d( 1.0,0.5,1.0, 1.0 ));
+	
 }
 
 int MovingTurtle::makeRotate(osg::Quat & q)

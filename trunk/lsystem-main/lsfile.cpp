@@ -86,7 +86,7 @@ void LSFile::open(std::string & filename)
                 {
                     throw ParsingException("Bad format of #type");
                 }
-                processType( line.str( ) );
+                processType( type );
             }
             else if(id=="#axiom")
             {
@@ -213,13 +213,16 @@ void LSFile::processType( std::string str )
 
     pos = 0;
     string type;
-    while( true )
+	while( pos < str.length() )
     {
         end = str.find('|', pos);
-        if (end == string::npos )
-            break;
+		if (end == string::npos )
+		{
+			end = str.length();
+		}
+		
+		type = str.substr( pos, end - pos);
 
-        type = str.substr( pos, pos - end);
         if(type == "0L")
         {
             _type |= LS_0L;
@@ -228,12 +231,36 @@ void LSFile::processType( std::string str )
         {
             _type |= LS_1LL;
         }
+		else if(type == "1LR")
+        {
+			_type |= LS_1LR;
+        }
+		else if(type == "2L")
+        {
+			_type |= LS_2L;
+        }
+		else if(type == "kL")
+        {
+            _type |= LS_kL;
+        }
+		else if(type == "DETERMINISTIC")
+        {
+			_type |= LS_DETERMINISTIC;
+        }
+		else if(type == "STOCHASTIC")
+        {
+            _type |= LS_STOCHASTIC;
+        }
+		else if(type == "PARAMETRIC")
+        {
+            _type |= LS_PARAMETRIC;
+        }
         else
         {
             throw ParsingException("unknown grammar type");
         }
 
-        pos = end + 1;
+		pos = end + 1;
     }
 
 }

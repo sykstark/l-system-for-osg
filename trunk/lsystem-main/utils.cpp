@@ -4,8 +4,10 @@
 #include <fstream>
 #include <sstream>
 #include "lsystemexception.h"
+#include "boost/lexical_cast.hpp"
 
 using namespace AP_LSystem;
+using boost::lexical_cast;
 
 // odkomentuje radek od dvou zpetnych lomitek
 void StringUtils::uncommentLine(std::string & line)
@@ -37,3 +39,22 @@ std::string StringUtils::processLine(std::fstream * pFile, std::stringstream & p
 	return word;
 }	
 
+int StringUtils::processVector( std::string str, std::vector<double> & v )
+{
+	int i = 0;
+	while( true )
+    {
+		i = str.find_first_of(",)(", i);
+        if ( i == std::string::npos )
+            break;
+        str.replace(i,1," ");
+    }
+
+	std::stringstream ss;
+	ss << str;
+
+	while( ss >> str )
+		v.push_back( lexical_cast<double>(str) );
+
+	return 0;
+}

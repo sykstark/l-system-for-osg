@@ -24,11 +24,16 @@ struct Rule
     FunctionParser * probabilityFactor;
     std::vector<StaticString*> staticStrings;
 	std::vector<FunctionParser*> dynamicStrings;
+	string leftContext;
+	string rightContext;
 
-    Rule():condition(NULL),variables(""),probabilityFactor(NULL){}
+    Rule():condition(NULL),variables(""),probabilityFactor(NULL), leftContext(""), rightContext(""){}
 
     Rule(const Rule & c)
     {
+		this->variables = c.variables;
+		this->leftContext = c.leftContext;
+		this->rightContext = c.rightContext;
         this->condition = c.condition;
         this->probabilityFactor = c.probabilityFactor;
 
@@ -46,6 +51,9 @@ struct Rule
 
     Rule& operator=( const Rule & c)
     {
+		this->variables = c.variables;
+		this->leftContext = c.leftContext;
+		this->rightContext = c.rightContext;
         this->condition = c.condition;
         this->probabilityFactor = c.probabilityFactor;
 
@@ -172,7 +180,11 @@ struct Rule
             }
             else
             {
-                this->variables = string( it, rule->begin() + pos);
+				// if there is some variables, add coma sign before adding another portion
+				if( !this->variables.empty() )
+					this->variables.append( 1, ',' );
+
+				this->variables.append( it, rule->begin() + pos);
             }
 
             it = rule->begin() + pos + 1;

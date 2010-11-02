@@ -17,6 +17,7 @@ protected:
 	virtual int postStep(){ return 0; }
 
 	virtual void drawFrame( osg::Matrixd &, osg::Vec4d * = NULL);
+	virtual void adjustMatrices( );
 public:
 //****************************************************************
 //**						ROTATION							**

@@ -57,7 +57,7 @@ public:
 		if(pos >= _length)
 			return false;
 
-		paramsCnt = 0;
+		//paramsCnt = 0;
 
 		char * pPos = pStr + pos + 1;
 		// while pointer pPos points correctly to pStr buffer 
@@ -78,19 +78,13 @@ public:
 
 	char * getData( );
 	char * getData( unsigned int &, unsigned int &, char);
-	char * getSymbol( unsigned int & pos);
-	
+	char * getSymbol( unsigned int & );
 
-/*    void appendStr( const char * str, unsigned int length );
-    void appendStr( std::string str );
-//    void appendStr( StaticString & str);
-    void appendChar( const char ch, bool parametric );
-    void appendDouble( double par );
-	void appendInt( int par );
-    void appendUByte( unsigned char par );
-    void appendData( char *, int);*/
-    
- //   bool getParamaters( unsigned int & pos, double * pParams, int & paramsCnt );
+	int matchRight( char, int, const std::string * = NULL, const std::string * = NULL );
+	int matchLeft( char, int, const std::string * = NULL, const std::string * = NULL );
+	char peekSymbol( int &, bool );
+	int findMatchingRightBracket( int );
+	int findMatchingLeftBracket( int );
     
     std::string toString( );
 

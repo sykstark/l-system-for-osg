@@ -11,10 +11,11 @@ private:
 public:
     ParStoch0LSystemGrammar( AbstractFile * );
 
-    virtual bool nextIteration();
     virtual multimap<char, Rule>::iterator * selectRule(multimap<char, Rule>::iterator &,
                                                         multimap<char, Rule>::iterator &,
-                                                        double * parameters);
+														LongString *,
+														unsigned int &,
+                                                        double *);
 
     static bool isCapable( unsigned int type )
     {

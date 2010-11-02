@@ -16,6 +16,7 @@ class StringUtils
 public:	
     static void uncommentLine(std::string &);
     static std::string processLine(std::fstream * , std::stringstream & );
+	static int processVector( std::string str, std::vector<double> & v );
 };
 
 enum ParameterType

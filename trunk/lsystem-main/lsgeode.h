@@ -48,6 +48,12 @@ struct TurtleProperties
 
 	unsigned int flags;
 
+	// direction stimuli
+	double gravitropismElasticity;		///< response of stems to gravity
+	double tropismElasticity;			///< response to general tropism
+	double tropismAngle;				///< angle of general tropism
+	osg::Vec3d tropismVector;			///< direction of general tropism
+
 	std::string * modelFile;	///< filename of model file - only for turtles that load models
 
 	osg::ref_ptr<osg::Vec3dArray> contour;		///< contour vertices

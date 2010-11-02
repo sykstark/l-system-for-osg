@@ -80,9 +80,6 @@ void LSGeode::setDefaultTurtleProperties( int index )
 	{
 		std::string file = diffTexFile->as<std::string>();
 		osg::ref_ptr<osg::Image> diffIm = osgDB::readImageFile( file );
-//		diffIm->setInternalTextureFormat(0);
-
-//		bool i = diffIm->isImageTranslucent();
 
 		osg::ref_ptr<osg::Texture2D> diffTexture = new osg::Texture2D;
 		if(diffIm.get())
@@ -100,8 +97,13 @@ void LSGeode::setDefaultTurtleProperties( int index )
 			state->setAttributeAndModes( alphaFunc, osg::StateAttribute::ON );
 */
 			state->setTextureAttributeAndModes( 0, diffTexture.get(), osg::StateAttribute::ON );
-			state->setMode(GL_BLEND,osg::StateAttribute::ON);
-			state->setRenderingHint(osg::StateSet::TRANSPARENT_BIN);			
+
+			// set blending only for translucent textures
+			if ( diffIm->isImageTranslucent() )
+			{
+				state->setMode(GL_BLEND,osg::StateAttribute::ON);
+				state->setRenderingHint(osg::StateSet::TRANSPARENT_BIN);			
+			}
 		}
 	}
 	// initialize starting T coordinate of texture
@@ -117,8 +119,7 @@ void LSGeode::setDefaultTurtleProperties( int index )
 	}
 	/* else if TODO material & color */
 
-	// set anti-twist vector
-	p.contourVec = LeftVec;
+	// set anti-twist frame
 	p.lastFrame.makeIdentity();
 
 	p.controlPoint = Center;
@@ -132,19 +133,34 @@ void LSGeode::setDefaultTurtleProperties( int index )
 	if( Configuration::get()->getProperty(index, "degrees_to_radians")->as<unsigned int>() )
 		p.flags |= TurtleProperties::DEGREES_TO_RADIANS;
 
-	p.texRepeatingS = Configuration::get()->getProperty( index, "texture_s_repeating")->as<unsigned int>();
-	p.angle = Configuration::get()->getProperty( index, "default_angle" )->as<double>();
-	p.length = Configuration::get()->getProperty( index, "default_length" )->as<double>();
-	p.radius = Configuration::get()->getProperty( index, "default_radius" )->as<double>();
-	p.lengthMultiplier = Configuration::get()->getProperty( index, "length_multiplier" )->as<double>();
-	p.angleMultiplier = Configuration::get()->getProperty( index, "angle_multiplier" )->as<double>();
-	p.radiusMultiplier = Configuration::get()->getProperty( index, "radius_multiplier" )->as<double>();
-	p.contourDetail = Configuration::get()->getProperty( index, "contour_detail" )->as<unsigned int>();
-	p.debugGeometryScale = Configuration::get()->getProperty( index, "debug_geometry_scale" )->as<double>();
-	p.angleVariance = Configuration::get()->getProperty( index, "angle_variance" )->as<unsigned int>();
+	p.texRepeatingS				= Configuration::get()->getProperty( index, "texture_s_repeating")->as<unsigned int>();
+	p.angle						= Configuration::get()->getProperty( index, "default_angle" )->as<double>();
+	p.length					= Configuration::get()->getProperty( index, "default_length" )->as<double>();
+	p.radius					= Configuration::get()->getProperty( index, "default_radius" )->as<double>();
+	p.lengthMultiplier			= Configuration::get()->getProperty( index, "length_multiplier" )->as<double>();
+	p.angleMultiplier			= Configuration::get()->getProperty( index, "angle_multiplier" )->as<double>();
+	p.radiusMultiplier			= Configuration::get()->getProperty( index, "radius_multiplier" )->as<double>();
+	p.contourDetail				= Configuration::get()->getProperty( index, "contour_detail" )->as<unsigned int>();
+	p.debugGeometryScale		= Configuration::get()->getProperty( index, "debug_geometry_scale" )->as<double>();
+	p.angleVariance				= Configuration::get()->getProperty( index, "angle_variance" )->as<unsigned int>();
+	p.gravitropismElasticity	= Configuration::get()->getProperty( index, "gravitropism_elasticity" )->as<double>();
+	p.tropismElasticity			= Configuration::get()->getProperty( index, "tropism_elasticity" )->as<double>();
+	p.tropismAngle				= Configuration::get()->getProperty( index, "tropism_angle" )->as<double>();
+	
+	// process vectors
+	std::vector<double> values;
 
+	StringUtils::processVector(Configuration::get()->getProperty( index, "tropism_vector" )->as<std::string>(), values );
+	p.tropismVector = osg::Vec3d( values[0], values[1], values[2] );
+	p.tropismVector.normalize();
+	values.clear();
+
+	// convert angles from degrees to radians
 	if(p.flags & TurtleProperties::DEGREES_TO_RADIANS)
+	{
 		p.angle = osg::DegreesToRadians( p.angle );
+		p.tropismAngle = osg::DegreesToRadians( p.tropismAngle );
+	}
 }
 
 

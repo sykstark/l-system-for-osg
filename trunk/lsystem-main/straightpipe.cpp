@@ -19,12 +19,13 @@ int StraightPipe::insideStep( )
 	osg::Vec3dArray::iterator lastN;
 	osg::Vec3dArray::iterator cont;
 
+	/*
 	osg::Matrixd contMat = properties.matrix;
 	contMat(0,2) = properties.contourVec.x();
 	contMat(1,2) = properties.contourVec.y();
 	contMat(2,2) = properties.contourVec.z();
 
-	/*if( properties.flags & TurtleProperties::MINIMIZE_TWIST )
+	if( properties.flags & TurtleProperties::MINIMIZE_TWIST )
 	{
 		osg::Vec3d h = contMat * HeadVec;
 		h = h^properties.contourVec;

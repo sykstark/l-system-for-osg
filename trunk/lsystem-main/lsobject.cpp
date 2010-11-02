@@ -39,7 +39,7 @@ void LSObject::postInitialize()
 
 	generator = new GrammarGenerator( );
 	ParseableString * pWord;
-	//try
+	try
 	{
 		generator->loadFile( grammarFile );
 		for ( int i = 0; i < 16; i++ )
@@ -47,17 +47,31 @@ void LSObject::postInitialize()
 			generator->nextIteration();
 		}
 		pWord = generator->getWord();
-
+		
 	}
-//	catch( std::exception & e)
+	catch( std::exception & e)
 	{
-//		Log::write( e.what() );
-//		return;
+		logger.errorLog( "Exception: %s ", e.what() );
+		//Log::write( e.what() );
+		return;
 	}
 
 	AbstractParser * parser = new DefaultParser( pEOOwner );
 	parser->parse( pWord );
 
+/*	osg::ref_ptr<osg::Node> obj = osgDB::readNodeFile( "data/ls/podivnost.3DS" );
+	osg::Geode * g;
+	osg::ref_ptr<osg::Geode> h = new osg::Geode();
+	if(obj.get())
+	{
+		g = (osg::Geode *)obj.get();
+		osg::Geode::DrawableList dl= g->getDrawableList();
+
+		
+		pEOOwner->addChild( obj.get() );
+
+	}
+*/
 //	osg::Geode * g = dynamic_cast<osg::Geode *>(pEOOwner->getChild(0));
 //	g->addDrawable( new osg::ShapeDrawable(new osg::Cylinder(osg::Vec3(0.0f,0.0f,2.5),1.0,5.0) ) );
 //	draw();
