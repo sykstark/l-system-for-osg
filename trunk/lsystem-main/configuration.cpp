@@ -32,6 +32,7 @@ Configuration::Configuration(void)
 			("degrees_to_radians", value<unsigned int>())
 			("draw_debug_geometry", value<unsigned int>())
 			("angle_variance", value<unsigned int>())
+			("separate_geometry_for_translucent", value<unsigned int>())			
 			("turtle_type", value<std::string>());
 }
 

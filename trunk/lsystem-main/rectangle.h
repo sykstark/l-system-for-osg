@@ -1,7 +1,7 @@
 #ifndef RECTANGLE_H_
 #define RECTANGLE_H_
 
-#include "loftturtle.h"
+#include "movingturtle.h"
 
 namespace AP_LSystem {
 class Rectangle : public MovingTurtle
