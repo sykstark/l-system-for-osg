@@ -16,14 +16,6 @@ enum ParsingErrorCodes
 	LS_ERR_PAR_BADTYPE,
 	LS_ERR_PAR_INVALIDCOUNT,
 };
-/**
- *	Flags of turtle settings
- */
-enum TurtleFlag
-{
-	LS_FL_DEBUG				= 0x00000001,
-
-};
 
 const osg::Vec3d HeadVec(0.0,1.0,0.0);
 const osg::Vec3d UpVec(1.0,0.0,0.0);

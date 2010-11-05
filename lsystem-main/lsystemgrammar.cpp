@@ -113,6 +113,9 @@ void LSystemGrammar::transcribeSubGrammars()
 		if(data == NULL)
 			return;
 
+		if( i >= _word->length() )
+			break;
+
 		// append data before
 		newWord->append( data, len );
 		parametersCnt = 0;

@@ -132,6 +132,8 @@ void LSGeode::setDefaultTurtleProperties( int index )
 		p.flags |= TurtleProperties::DRAW_DEBUG_GEOMETRY;
 	if( Configuration::get()->getProperty(index, "degrees_to_radians")->as<unsigned int>() )
 		p.flags |= TurtleProperties::DEGREES_TO_RADIANS;
+	if( Configuration::get()->getProperty(index, "separate_geometry_for_translucent")->as<unsigned int>() )
+		p.flags |= TurtleProperties::SEPARATE_GEOMETRY_FOR_TRANSLUCENT;
 
 	p.texRepeatingS				= Configuration::get()->getProperty( index, "texture_s_repeating")->as<unsigned int>();
 	p.angle						= Configuration::get()->getProperty( index, "default_angle" )->as<double>();
