@@ -17,20 +17,27 @@ void Par2LSystemGrammar::addRule(std::string * rule)
     // process a rule
     // example: B(k,l,m)<A(x,y)>C(z):x<y+k->B(l+1,y-2,z+m)
 
-	// left context
-	// example: B
-	r.leftContext.append( 1, *it++ );
+	if( *it != '<' )
+	{
+		// left context
+		// example: B
+		r.leftContext.append( 1, *it++ );
 
-	// parameters of left context
-	// example: (k,l,m)
-	r.processParameters(rule, it);
+		// parameters of left context
+		// example: (k,l,m)
+		r.processParameters(rule, it);
 
-	// left context sign
-    // example: <
-    if(*it++ != '<')
-    {
-        throw ParsingException("Symbol \'<\' was expected!");
-    }
+		// left context sign
+		// example: <
+		if(*it++ != '<')
+		{
+			throw ParsingException("Symbol \'<\' was expected!");
+		}
+	}
+	else
+	{
+		it++;
+	}
 
     // nonterminal
     // example: A
@@ -44,16 +51,19 @@ void Par2LSystemGrammar::addRule(std::string * rule)
     // example: >
     if(*it++ != '>')
     {
-        throw ParsingException("Symbol \'>\' was expected!");
-    }
+		throw ParsingException("Symbol \'<\' was expected!");
+	}
 
-	// right context
-	// example: B
-	r.rightContext.append( 1, *it++ );
+	if( (*it != ':') && ( (*it != '-') || (*(it+1) != '>') ) )
+	{
+		// right context
+		// example: B
+		r.rightContext.append( 1, *it++ );
 
-	// parameters of right context
-	// example: (k,l,m)
-	r.processParameters(rule, it);
+		// parameters of right context
+		// example: (k,l,m)
+		r.processParameters(rule, it);
+	}
 
     // condition of rule
     // example: :x<y
@@ -138,20 +148,29 @@ multimap<char, Rule>::iterator * Par2LSystemGrammar::selectRule(multimap<char, R
     for( *it = begin; *it != end; (*it)++ )
     {
 		int leftContext = pos-1, rightContext = pos+1, paramCount=0;
-		// TODO ignore, consider
-		// match left context
-		_word->peekSymbol(leftContext, false);
-		leftContext = _word->matchLeft( (*it)->second.leftContext[0], leftContext, NULL, NULL );
-		// left context doesn't match
-		if( leftContext < 0 )
-			continue;
-
-		// match right context
-		_word->peekSymbol(rightContext, true);
-		rightContext = _word->matchRight( (*it)->second.rightContext[0], rightContext, NULL, NULL );
-		// right context doesn't match
-		if( rightContext < 0 )
-			continue;
+		
+		// exist left context ?
+		if((*it)->second.leftContext.length())
+		{	
+			// TODO ignore, consider
+			// match left context
+			_word->peekSymbol(leftContext, false);
+			leftContext = _word->matchLeft( (*it)->second.leftContext[0], leftContext, NULL, NULL );
+			// left context doesn't match
+			if( leftContext < 0 )
+				continue;
+		}
+		
+		// exist right context ?
+		if((*it)->second.rightContext.length())
+		{
+			// match right context
+			_word->peekSymbol(rightContext, true);
+			rightContext = _word->matchRight( (*it)->second.rightContext[0], rightContext, NULL, NULL );
+			// right context doesn't match
+			if( rightContext < 0 )
+				continue;
+		}
 
 		// get parameters of left context
 		unsigned con = leftContext;

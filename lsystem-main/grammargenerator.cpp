@@ -65,7 +65,7 @@ ParseableString * GrammarGenerator::getWord()
 
     word = pMainGrammar->translate( );
 
-	//vrecko::logger.debugLog("Word: %s", word->toString().c_str() );
+	vrecko::logger.debugLog("Word: %s", word->toString().c_str() );
 
     return pWord = new ParseableString( word );
 }
