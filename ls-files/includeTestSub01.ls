@@ -7,11 +7,8 @@
 #set default_radius=0.5 // tloustka vetvi    
 #set length_multiplier=0.9
 #set contour_detail=4 
+#include d:\HCI\VRECKO\bin\data\ls\leaf01.ls
 #axiom 
-FF
+F#{Leaf01}
 #endaxiom
-#rules  
-A(y):*->+FA(y+1):4
-A(x):x>4->-FA(x+1):x
-#endrules
 #endgrammar
