@@ -5,6 +5,7 @@
 #include "lsfile.h"
 #include "parstoch0lsystemgrammar.h"
 #include "par2lsystemgrammar.h"
+#include "queryinterpret.h"
 
 using namespace AP_LSystem;
 
@@ -150,6 +151,11 @@ bool LSystemGrammar::nextIteration( )
     int j=0;
     char * buffer = NULL;
     LongString * newWord = new LongString( );
+
+	// bind for ability to do queries
+	// TODO only if queries is on
+	QueryInterpret::get()->bindWord( newWord );
+
     multimap<char, Rule>::iterator * pRuleIt;
     pair<multimap<char, Rule>::iterator, multimap<char, Rule>::iterator > result;
 
@@ -180,6 +186,13 @@ bool LSystemGrammar::nextIteration( )
 				generateSuccessor( newWord, *pRuleIt, pParams );
 				delete pRuleIt;
 			}
+			else
+			{
+				j = i;
+				buffer = _word->getSymbol(i);
+				if(buffer)
+					newWord->append(buffer,i-j+1);
+			}
         }
 
         //Log::write(newWord->toString());
@@ -189,6 +202,8 @@ bool LSystemGrammar::nextIteration( )
         delete _word;
 
     _word = newWord;
+
+	processCutSymbol();
 
     return true;
 }
@@ -211,6 +226,43 @@ void LSystemGrammar::generateSuccessor(LongString * word, multimap<char, Rule>::
     }
     // pridani posledniho statickeho retezce
     word->append( (*stStrIt)->str, (*stStrIt)->length );
+}
+
+void LSystemGrammar::processCutSymbol( )
+{
+	LongString * newWord = new LongString( );
+	unsigned int len;
+	char * data = NULL;
+
+	// TODO predelat ten cyklus...konci uprostred
+	// TODO optimalizace - neni vzdy treba kopirovat
+	// look for cut symbol
+	for(unsigned int i = 0; i < _word->length(); i++ )
+    {
+		// get data before cut symbol 
+		data = _word->getData( i, len, '%' );
+
+		// no data
+		if(data == NULL)
+			return;
+
+		// append data
+		newWord->append( data, len );
+
+		// end of string
+		if( i >= _word->length() )
+			break;
+
+		// find end and skip symbols of rest of this branch
+		i = _word->findMatchingRightBracket( i ) - 1;
+
+        //Log::write(newWord->toString());
+    }
+
+    if(_word)
+        delete _word;
+
+    _word = newWord;
 }
 
 multimap<char, Rule>::iterator * LSystemGrammar::selectRule(multimap<char, Rule>::iterator & begin, 

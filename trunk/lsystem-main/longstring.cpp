@@ -7,6 +7,7 @@
 #include "boost/lexical_cast.hpp"
 
 using boost::lexical_cast;
+using boost::bad_lexical_cast;
 using namespace AP_LSystem;
 
 LongString::LongString( unsigned int increment): _length(0)
@@ -82,8 +83,8 @@ char LongString::peekSymbol( int & pos, bool forward )
 
 int LongString::findMatchingRightBracket( int pos )
 {
-	int count = 1; pos++;
-	while( (count) && (static_cast<unsigned>(pos) < _length) )
+	int count = 1; //pos++;
+	while( (count) && (static_cast<unsigned>(++pos) < _length) )
 	{
 		peekSymbol( pos, true );
 		switch( pStr[pos] )
@@ -94,6 +95,10 @@ int LongString::findMatchingRightBracket( int pos )
 		case ']':
 			count--;
 			break;
+		// added for case of end of string
+		// primarily for end of cut section during cut symbol processing
+		case '$':
+			return pos;
 		}
 	}
 	return pos;
@@ -209,6 +214,8 @@ void LongString::convertFromString(std::string * source, unsigned int & pos, con
         return;
     }
 
+	//TODO if carka
+	bool betweenBrackets = false;
     while(true)
     {   
         i = source->find_first_of( chars, begin - source->begin( ) );
@@ -224,16 +231,26 @@ void LongString::convertFromString(std::string * source, unsigned int & pos, con
 
         switch(*end)
         {
+		case ')':
+			betweenBrackets = false;
+			parDbl = lexical_cast<double>(str);
+            this->append<double>(parDbl);
+            break;
         case ',':
-        case ')':
+			betweenBrackets = true;
             parDbl = lexical_cast<double>(str);
             this->append<double>(parDbl);
             break;
 		case '}':
+			betweenBrackets = false;
 			this->append(lexical_cast<int>(str));
             break;
         case '(':
 		case '{':
+			// already between brackets - this ( will be part of some expression
+			if( betweenBrackets )
+				throw bad_lexical_cast();
+			betweenBrackets = true;
             this->append(str);
             break;
         default:
@@ -296,28 +313,6 @@ char * LongString::getSymbol(unsigned int & pos)
 	// ...and set pos as end of current symbol
 	pos = i - 1;
 	return pSymbol; 
-
-    /*char * pPos = pStr + pos + 1;
-    while(pPos-pStr < static_cast<int>(_length))
-    {
-        switch(*pPos)
-        {
-        case LS_DOUBLE:
-            pPos += sizeof(double)+2;
-            break;
-        case LS_UBYTE:
-            pPos += sizeof(unsigned char)+2;
-            break;
-		case LS_INT:
-			pPos += sizeof(int)+2;
-			break;
-        default:
-            pos = pPos - pStr - 1;
-            return pSymbol;
-        }
-    }
-	pos = pPos - pStr - 1;
-    return pSymbol;*/
 }
 
 char * LongString::getData( )
@@ -362,7 +357,7 @@ char * LongString::getData( unsigned int & pos, unsigned int & length, char deli
 std::string LongString::toString( )
 {
     std::string str;
-/*    //str.resize(2 * _length);
+   //str.resize(2 * _length);
     char number[50];
     double dblnum;
     unsigned char ubytenum;
@@ -403,6 +398,6 @@ std::string LongString::toString( )
             break;
         str.replace(i,2,",");
     }
-*/
+
     return str;
 }

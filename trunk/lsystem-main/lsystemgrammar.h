@@ -31,6 +31,7 @@ public:
     unsigned int wordLength() { return _word->length(); }
 	virtual void transcribeSubGrammars( );
     virtual LongString * translate( );
+	virtual void processCutSymbol( );
 };
 }
 #endif // LSYSTEMGRAMMAR_H

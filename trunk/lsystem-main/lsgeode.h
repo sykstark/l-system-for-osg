@@ -76,6 +76,7 @@ enum TurtleType
 	LS_TURTLE_HERMITPIPE,
 	LS_TURTLE_OBJMODEL,
 	LS_TURTLE_RECTANGLE,
+	LS_TURTLE_QUERY,
 };
 
 /**
@@ -90,6 +91,7 @@ private:
 	TurtleProperties defaultTurtleProperties;
 public:
 	void setTurtleType(std::string &);
+	void setTurtleType(TurtleType type);
 	TurtleType getTurtleType();
 	void setDefaultTurtleProperties( TurtleProperties & );
 	void setDefaultTurtleProperties( int );

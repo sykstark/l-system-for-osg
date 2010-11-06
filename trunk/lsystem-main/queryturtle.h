@@ -12,16 +12,6 @@ private:
 public:
 	QueryTurtle(void){};
 	~QueryTurtle(void){};
-
-	virtual int drawStep( double );
-
-	osg::Vec3d getPosition();
-	osg::Vec3d getHeading();
-	osg::Vec3d getLeft();
-	osg::Vec3d getUp();
-
-//	virtual void setProperties( TurtleProperties p );
-
 };
 }
 

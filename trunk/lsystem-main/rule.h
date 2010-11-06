@@ -1,5 +1,3 @@
-//#pragma once
-
 #ifndef RULE_H_
 #define RULE_H_
 
@@ -11,10 +9,13 @@
 #include "staticstring.h"
 #include "longstring.h"
 #include "log.h"
+#include "query.h"
 
 using namespace std;
 using boost::lexical_cast;
 using boost::bad_lexical_cast;
+
+
 
 namespace AP_LSystem {
 struct Rule
@@ -83,6 +84,31 @@ struct Rule
         }
     }
 
+	void addQueryFunctions( FunctionParser * fp, string & expression )
+	{
+		bool query = false;
+		if(expression.find( "positionX" ) != std::string::npos )
+		{
+			fp->AddFunction( "positionX", Query::positionX, 0);
+			query = true;
+		}
+		if(expression.find( "positionY" ) != std::string::npos )
+		{
+			fp->AddFunction( "positionY", Query::positionY, 0);
+			query = true;
+		}
+		if(expression.find( "positionZ" ) != std::string::npos )
+		{
+			fp->AddFunction( "positionZ", Query::positionZ, 0);
+			query = true;
+		}
+			
+		if( !query )
+		{
+			// TODO optimalize expression
+		}
+	}
+
     void processProbabilityFactor(string * rule, string::iterator & it)
     {
         // 3 possibilities of empty probability factor
@@ -105,9 +131,13 @@ struct Rule
             probabilityFactor = new FunctionParser();
         }
 
-        if ( probabilityFactor->Parse( string( it, rule->end() ), this->variables, false ) != -1 )
+		string expression( it, rule->end() );
+
+		this->addQueryFunctions( probabilityFactor, expression );
+		
+        if ( probabilityFactor->Parse( expression, this->variables, false ) != -1 )
         {
-            throw ParsingException("Parsing of probability factor error!");
+            throw ParsingException("Parsing of probability factor (" + expression + ") error!");
         }
     }
 
@@ -115,20 +145,13 @@ struct Rule
     {
         unsigned int pos;
 
-        if( *it++ != ':' )
+        if( *it != ':' )
         {
-            if( (*it - 1 != '-') || (*it != '>') )
-            {
-                throw ParsingException("Symbol \':\' or \'->\' was expected!");
-            }
-            else
-            {
-                this->condition = NULL;
-                return;
-            }
+            this->condition = NULL;
+            return;
         }
 
-        if( *it != '*' )
+        if( *(++it) != '*' )
         {
             pos = rule->find( "->", it - rule->begin() );
 
@@ -138,16 +161,16 @@ struct Rule
             }
             else
             {
-                //FunctionParser * cond = this->condition;
                 if(!this->condition)
                 {
                     this->condition = new FunctionParser();
+					
                 }
-                std::string str( it, rule->begin() + pos );
 
-                //Log::write( "Condtition: " + str + ", variables: " + this->variables );
+                string expression( it, rule->begin() + pos );
+				this->addQueryFunctions( condition, expression );
 
-                if ( condition->Parse(str , this->variables, false ) != -1 )
+                if ( condition->Parse(expression , this->variables, false ) != -1 )
                 {
                     throw ParsingException("Parsing of condition expression error!");
                 }
@@ -219,16 +242,39 @@ struct Rule
 
     void addDynamicString(string * rule, string::iterator & begin)
     {
-        unsigned int pos = rule->find_first_of( ",)", begin - rule->begin() );
+		unsigned int pos = begin - rule->begin() - 1, bracket = 1;
+			
+		while( bracket )
+		{
+			pos = rule->find_first_of( "(,)", pos+1 );
+			switch(rule->at(pos))
+			{
+			case '(':
+				bracket++;
+				break;
+			case ')':
+				bracket--;
+				break;
+			case ',':
+				if(bracket == 1)
+					bracket = 0;
+				break;
+			default:
+				throw ParsingException("parsing of expression error: parentheses matching error");
+			}
+		}
+
         std::string::iterator end = rule->begin() + pos;
 
         FunctionParser * fp = new FunctionParser( );
 
-        //cout << string( begin, end ) << endl;
-        // parse string inside brackets
-        if ( fp->Parse( string( begin, end ), this->variables, false ) != -1 )
+		string expression( begin, end );
+		this->addQueryFunctions( fp, expression );
+
+		// parse string inside brackets
+        if ( fp->Parse( expression, this->variables, false ) != -1 )
         {
-            throw ParsingException("parsing of expression error");
+			throw ParsingException(string("parsing of expression error: ") + fp->ErrorMsg());
         }
         begin = end + 1;
         this->dynamicStrings.push_back( fp );

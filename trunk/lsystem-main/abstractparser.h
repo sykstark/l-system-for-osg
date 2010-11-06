@@ -5,7 +5,6 @@
 
 #include "configuration.h"
 #include "lsgeode.h"
-//#include "longstring.h"
 #include "parseablestring.h"
 #include "turtlestack.h"
 
@@ -15,18 +14,14 @@ using std::string;
 namespace AP_LSystem {
 class AbstractParser
 {
-private:
-	vector< LSGeode *> geodes;
 protected:
+	vector< LSGeode *> geodes;
 	osg::Group * pOwner;
-//	LSGeode * selectedGeode;
 	TurtleStack turtles;
 public:
 	AbstractParser( )
 	{
 		pOwner = NULL;
-//		selectedGeode = NULL;
-//		createGeodes( );
 	}
 
 	int switchGeode( std::vector<Parameter> & p )
@@ -56,8 +51,6 @@ public:
 		{
 			pGeode = new LSGeode( i );
 
-			// TODO configuration of Geode
-			//pGeode->setSOMETHING( Configuration::get()->getProperty( i, "something")->as<double>() );
 			if( pOwner )
 			{
 				pOwner->addChild( (osg::Group *)pGeode );

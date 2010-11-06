@@ -37,6 +37,11 @@ void LSGeode::setTurtleType(std::string & type)
 		throw ParsingException( "unknown turtle type" );
 }
 
+void LSGeode::setTurtleType(TurtleType type)
+{
+	turtleType = type;
+}
+
 TurtleType LSGeode::getTurtleType()
 {
 	return turtleType;

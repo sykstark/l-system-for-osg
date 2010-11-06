@@ -3,6 +3,7 @@
 #include "jointedpipe.h"
 #include "straightpipe.h"
 #include "rectangle.h"
+#include "queryturtle.h"
 
 using namespace AP_LSystem;
 
@@ -68,6 +69,9 @@ AbstractTurtle * TurtleStack::createTurtle(AP_LSystem::TurtleType type)
 		break;
 	case LS_TURTLE_RECTANGLE:
 		turtle = new Rectangle( );
+		break;
+	case LS_TURTLE_QUERY:
+		turtle = new QueryTurtle( );
 		break;
 	// TODO other types
 	}
