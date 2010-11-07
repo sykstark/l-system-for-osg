@@ -89,15 +89,18 @@ int JointedPipe::drawStep(double dist)
 	return LS_OK;
 }
 
-void JointedPipe::setProperties( TurtleProperties p )
+int JointedPipe::initialize()
 {
-	AbstractTurtle::setProperties( p );
-
 	createCircleContour( );
 	createHemisphere( );
+
+	return LS_OK;
 }
 
-
+int JointedPipe::finalize()
+{
+	return LS_OK;
+}
 
 void JointedPipe::createHemisphere()
 {

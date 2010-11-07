@@ -17,31 +17,7 @@ int StraightPipe::insideStep( )
 
 	osg::Vec3dArray::iterator lastV;
 	osg::Vec3dArray::iterator lastN;
-	osg::Vec3dArray::iterator cont;
-
-	/*
-	osg::Matrixd contMat = properties.matrix;
-	contMat(0,2) = properties.contourVec.x();
-	contMat(1,2) = properties.contourVec.y();
-	contMat(2,2) = properties.contourVec.z();
-
-	if( properties.flags & TurtleProperties::MINIMIZE_TWIST )
-	{
-		osg::Vec3d h = contMat * HeadVec;
-		h = h^properties.contourVec;
-		h.normalize();
-
-		contMat(0,0) = h.x();
-		contMat(1,0) = h.y();
-		contMat(2,0) = h.z();
-
-		drawVector( properties.contourVec, properties.matrix, osg::Vec4d( 1.0,0.0,1.0,1.0 ) );
-
-		drawVector( LeftVec, contMat, osg::Vec4d( 1.0,1.0,0.0,1.0 ) );
-
-		//bool val = contMat.valid();
-	}*/
-	
+	osg::Vec3dArray::iterator cont;	
 
 	//double texCoordInc = properties.texCoordS + 
 	double texSInc = properties.texRepeatingS / static_cast<double>(properties.contourDetail);
@@ -107,7 +83,7 @@ int StraightPipe::insideStep( )
 
 	return LS_OK;
 }
-
+/*
 void StraightPipe::setProperties( TurtleProperties p )
 {
 	AbstractTurtle::setProperties( p );
@@ -116,6 +92,21 @@ void StraightPipe::setProperties( TurtleProperties p )
 	createCircleContour( );
 	initializePipe( );
 
+}*/
+
+int StraightPipe::initialize( )
+{
+	createCircleContour( );
+	initializePipe( );
+	
+	return LS_OK;
+}
+
+int StraightPipe::finalize()
+{
+	finalizePipe();
+
+	return LS_OK;
 }
 
 int StraightPipe::preStep( )
@@ -142,5 +133,16 @@ void StraightPipe::initializePipe()
 			properties.contourLastV->push_back( (*it * properties.radius) * properties.matrix );
 			properties.contourLastN->push_back( properties.matrix.getRotate() * *it );
 		}
+	}
+}
+
+void StraightPipe::finalizePipe()
+{
+	// finalize pipe
+
+	// no drawing step before
+	if( properties.contourLastV )
+	{
+		insideStep();
 	}
 }

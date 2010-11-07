@@ -30,12 +30,15 @@ void TurtleStack::push( )
 	pTurtleToPush->setProperties( turtles.top()->getProperties() );
 	// bind with geode
 	pTurtleToPush->bindGeode( geode );
+	// initialize turtle
+	pTurtleToPush->initialize( );
 	// push new one on the top of the stack
 	turtles.push( pTurtleToPush );
 }
 
 void TurtleStack::pop()
 {
+	turtles.top()->finalize();
 	// TODO delete top
 	turtles.pop();
 }
@@ -51,6 +54,8 @@ void TurtleStack::push(LSGeode * geode)
 	// inherit properties
 	if( !turtles.empty() )
 		pTurtle->inheritProperties( turtles.top()->getProperties() );
+	// initialize turtle
+	pTurtle->initialize( );
 	// push new one on the top of the stack
 	turtles.push( pTurtle );
 }
