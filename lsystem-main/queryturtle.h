@@ -12,6 +12,15 @@ private:
 public:
 	QueryTurtle(void){};
 	~QueryTurtle(void){};
+
+	virtual int initialize( )
+	{
+		return LS_OK;
+	}
+	virtual int finalize( )
+	{
+		return LS_OK;
+	}
 };
 }
 

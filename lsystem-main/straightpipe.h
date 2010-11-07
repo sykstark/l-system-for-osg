@@ -8,6 +8,7 @@ class StraightPipe : public LoftTurtle
 {
 private:
 	void initializePipe();
+	void finalizePipe();
 public:
 	StraightPipe(void){};
 	~StraightPipe(void){};
@@ -15,7 +16,10 @@ public:
 	virtual int preStep( );
 	virtual int insideStep( );
 
-	virtual void setProperties( TurtleProperties p );
+	//virtual void setProperties( TurtleProperties p );
+
+	virtual int initialize( );
+	virtual int finalize( );
 
 };
 }

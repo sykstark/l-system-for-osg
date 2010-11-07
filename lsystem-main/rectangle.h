@@ -14,6 +14,9 @@ public:
 
 	virtual int drawStep( double );
 
+	virtual int initialize( ) {return LS_OK;}
+	virtual int finalize( ) {return LS_OK;}
+
 //	virtual void setProperties( TurtleProperties p );
 };
 }

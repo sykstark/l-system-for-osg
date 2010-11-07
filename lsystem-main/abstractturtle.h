@@ -35,6 +35,8 @@ public:
 //****************************************************************
 //**						OTHER								**
 //****************************************************************
+	virtual int initialize()	= 0;			///< initialize turtle
+	virtual int finalize()		= 0;
 	virtual int resetValues() { return 0;}//TODO	///< reset all values in properties to default value as set in Configuration
 	inline TurtleProperties & getProperties()	///< get Properties reference
 	{
