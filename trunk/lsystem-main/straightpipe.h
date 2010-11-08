@@ -9,6 +9,7 @@ class StraightPipe : public LoftTurtle
 private:
 	void initializePipe();
 	void finalizePipe();
+	void drawCap();
 public:
 	StraightPipe(void){};
 	~StraightPipe(void){};
