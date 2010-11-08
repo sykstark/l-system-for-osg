@@ -80,6 +80,8 @@ void LSGeode::setDefaultTurtleProperties( int index )
 	// add geometry to LSGeode
 	this->addDrawable( defaultTurtleProperties.geometry.get() );
 
+	osg::ref_ptr<osg::StateSet> state = this->getOrCreateStateSet();
+
 	const variable_value * diffTexFile = Configuration::get()->getProperty( index , "diffuse_texture" );
 	if( diffTexFile )
 	{
@@ -92,8 +94,7 @@ void LSGeode::setDefaultTurtleProperties( int index )
 			diffTexture->setImage( diffIm.get() );
 			diffTexture->setWrap( osg::Texture::WRAP_S, osg::Texture::REPEAT ); // x-axis
 			diffTexture->setWrap( osg::Texture::WRAP_T, osg::Texture::REPEAT ); // y-axis
-
-			osg::ref_ptr<osg::StateSet> state = this->getOrCreateStateSet();
+			
 /*
 			state->setMode(GL_ALPHA_TEST, osg::StateAttribute::ON);
 			state->setAttributeAndModes( new osg::BlendFunc, osg::StateAttribute::ON );
@@ -111,6 +112,19 @@ void LSGeode::setDefaultTurtleProperties( int index )
 			}
 		}
 	}
+
+	// version which sets the color of the wireframe.
+ /*   osg::Material* material = new osg::Material;
+    material->setColorMode(osg::Material::OFF); // switch glColor usage off
+    // turn all lighting off
+    material->setAmbient(osg::Material::FRONT_AND_BACK, osg::Vec4(1.0,1.0f,1.0f,1.0f));
+    material->setDiffuse(osg::Material::FRONT_AND_BACK, osg::Vec4(1.0,1.0f,1.0f,1.0f));
+    material->setSpecular(osg::Material::FRONT_AND_BACK, osg::Vec4(1.0,1.0f,1.0f,1.0f));
+    // except emission... in which we set the color we desire
+    material->setEmission(osg::Material::FRONT_AND_BACK, osg::Vec4(0.0,0.0f,0.0f,1.0f));
+	state->setAttributeAndModes(material,osg::StateAttribute::ON);
+	state->setMode(GL_LIGHTING,osg::StateAttribute::ON);*/
+
 	// initialize starting T coordinate of texture
 	p.texCoordT = 0.0f;
 
@@ -139,6 +153,8 @@ void LSGeode::setDefaultTurtleProperties( int index )
 		p.flags |= TurtleProperties::DEGREES_TO_RADIANS;
 	if( Configuration::get()->getProperty(index, "separate_geometry_for_translucent")->as<unsigned int>() )
 		p.flags |= TurtleProperties::SEPARATE_GEOMETRY_FOR_TRANSLUCENT;
+	if( Configuration::get()->getProperty(index, "draw_pipe_caps")->as<unsigned int>() )
+		p.flags |= TurtleProperties::DRAW_PIPE_CAPS;
 
 	p.texRepeatingS				= Configuration::get()->getProperty( index, "texture_s_repeating")->as<unsigned int>();
 	p.angle						= Configuration::get()->getProperty( index, "default_angle" )->as<double>();

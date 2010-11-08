@@ -31,6 +31,7 @@ Configuration::Configuration(void)
 			("minimize_twist", value<unsigned int>())
 			("degrees_to_radians", value<unsigned int>())
 			("draw_debug_geometry", value<unsigned int>())
+			("draw_pipe_caps", value<unsigned int>())
 			("angle_variance", value<unsigned int>())
 			("separate_geometry_for_translucent", value<unsigned int>())			
 			("turtle_type", value<std::string>());

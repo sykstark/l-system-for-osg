@@ -13,6 +13,7 @@ struct TurtleProperties
 		MINIMIZE_TWIST						= 0x00000002,
 		DEGREES_TO_RADIANS					= 0x00000004,
 		SEPARATE_GEOMETRY_FOR_TRANSLUCENT	= 0x00000008,
+		DRAW_PIPE_CAPS						= 0x00000100,
 	};
 
 	TurtleProperties():modelFile(NULL){};
