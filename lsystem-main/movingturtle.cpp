@@ -37,9 +37,9 @@ void MovingTurtle::adjustMatrices( )
 	// tropism
 	if( properties.tropismElasticity > 0.0001 )
 	{
-		osg::Vec3d tropismAxis = head ^ properties.tropismVector;									// H x T
-		double dotProd = head * properties.tropismVector;											// H . T
-		double tropAngle = properties.tropismElasticity * 
+		osg::Vec3d tropismAxis = head ^ properties.tropismVector;						// H x T
+		const double dotProd = head * properties.tropismVector;							// H . T
+		const double tropAngle = properties.tropismElasticity * 
 			( cos( properties.tropismAngle ) - ( sin( properties.tropismAngle ) * dotProd / tropismAxis.length() ) );
 		tropismAxis.normalize();
 		properties.matrix = osg::Matrixd::rotate(properties.matrix.getRotate()) *		// origin rotation
@@ -97,9 +97,9 @@ int MovingTurtle::drawStep( double dist)
 	ret = preStep();
 
 	if( !ret )
-		properties.matrix = osg::Matrixd::translate( osg::Vec3d( 0.0, dist, 0.0 ) ) * properties.matrix;
-	else
 		return ret;
+	
+	properties.matrix = osg::Matrixd::translate( osg::Vec3d( 0.0, dist, 0.0 ) ) * properties.matrix;		
 
 	drawFrame( properties.matrix );
 
@@ -108,6 +108,8 @@ int MovingTurtle::drawStep( double dist)
 
 int MovingTurtle::doStep( double dist)
 {
+	if ( dist < 0 )
+		return LS_ERR_DRAWFORWARD_NEGATIVEDISTANCE;
 	properties.matrix = osg::Matrixd::translate( osg::Vec3d( 0.0, dist, 0.0 ) ) * properties.matrix;
 
 	drawFrame( properties.matrix );

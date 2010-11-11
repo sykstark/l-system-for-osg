@@ -18,54 +18,55 @@ DefaultParser::~DefaultParser( )
 
 int DefaultParser::parse(ParseableString * word)
 {
-	int currentGrammarIndex = 0;
+	int res = 0;
 	vector<Parameter> parameters;
 
 	while(!word->eof( ))
 	{
+
 		// FREE SYMBOLS
 		// ! " # % ' * , . : ; < > @ [ ] _ ` { } ? ~
 		parameters.clear();
 		switch( word->next( parameters ) )
 		{
 		case 'F':
-			turtles.top()->drawForward( parameters );
+			res = turtles.top()->drawForward( parameters );
 			break;
 		case 'Z':
-			turtles.top()->moveForwardHalf( );
+			res = turtles.top()->moveForwardHalf( );
 			break;
 		case '+':
-			turtles.top()->turnLeft( parameters );
+			res = turtles.top()->turnLeft( parameters );
 			break;
 		case '-':
-			turtles.top()->turnRight( parameters );
+			res = turtles.top()->turnRight( parameters );
 			break;
 		case '&':
-			turtles.top()->pitchDown( parameters );
+			res = turtles.top()->pitchDown( parameters );
 			break;
 		case '^':
-			turtles.top()->pitchUp( parameters );
+			res = turtles.top()->pitchUp( parameters );
 			break;
 		case '\\':
-			turtles.top()->rollLeft( parameters );
+			res = turtles.top()->rollLeft( parameters );
 			break;
 		case '/':
-			turtles.top()->rollRight( parameters );
+			res = turtles.top()->rollRight( parameters );
 			break;
 		case '|':
-			turtles.top()->turnArround( );
+			res = turtles.top()->turnArround( );
 			break;
 		case '=':
-			turtles.top()->rollUntilHorizontal( );
+			res = turtles.top()->rollUntilHorizontal( );
 			break;
 		case '\'':
-			turtles.top()->multiplyLength( parameters );
+			res = turtles.top()->multiplyLength( parameters );
 			break;
 		case '!':
-			turtles.top()->multiplyRadius( parameters );
+			res = turtles.top()->multiplyRadius( parameters );
 			break;
 		case '$':
-			switchGeode( parameters );
+			res = switchGeode( parameters );
 			break;
 		case '[':
 			turtles.push( );
@@ -74,6 +75,9 @@ int DefaultParser::parse(ParseableString * word)
 			turtles.pop( );
 			break;
 		}	
+
+		if ( res )
+			return res;
 	}
-	return 0;
+	return LS_OK;
 }

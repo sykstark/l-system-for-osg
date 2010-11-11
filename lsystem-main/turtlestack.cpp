@@ -23,15 +23,23 @@ AbstractTurtle * TurtleStack::top()
 
 void TurtleStack::push( )
 {
+	int res = LS_OK;
 	LSGeode * geode = turtles.top()->getGeode( );
+	if ( !pTurtleToPush )
+		return LS_ERR_STACK_NULL_LSGEODE;
 	// create new turtle according to turtle type
 	AbstractTurtle * pTurtleToPush = createTurtle(geode->getTurtleType());
+	// turtle wasn't created
+	if ( !pTurtleToPush )
+		return LS_ERR_STACK_UNKNOWN_TURTLE_TYPE;
 	// copy properties
 	pTurtleToPush->setProperties( turtles.top()->getProperties() );
 	// bind with geode
 	pTurtleToPush->bindGeode( geode );
 	// initialize turtle
-	pTurtleToPush->initialize( );
+	res = pTurtleToPush->initialize( );
+	if(res)
+		return res;
 	// push new one on the top of the stack
 	turtles.push( pTurtleToPush );
 }
@@ -62,7 +70,7 @@ void TurtleStack::push(LSGeode * geode)
 
 AbstractTurtle * TurtleStack::createTurtle(AP_LSystem::TurtleType type)
 {
-	AbstractTurtle * turtle;
+	AbstractTurtle * turtle = NULL;
 
 	switch( type )
 	{
