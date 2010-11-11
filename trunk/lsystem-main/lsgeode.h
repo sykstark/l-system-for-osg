@@ -61,8 +61,7 @@ struct TurtleProperties
 	osg::ref_ptr<osg::Vec3dArray> contourLastV;	///< used for loft turtles - predecessing contour vertices
 	osg::ref_ptr<osg::Vec3dArray> contourLastN;	///< used for loft turtles - predecessing contour normals
 	unsigned int contourDetail;					///< detail of circle contour
-	osg::Vec3d contourVec;						///< vector of first vertex of contour, used for minimalizing twist
-
+	
 	vector<osg::ref_ptr<osg::Vec3dArray> > hemisphere;
 
 	double debugGeometryScale;		///< scale of debug geometry
