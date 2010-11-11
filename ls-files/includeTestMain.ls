@@ -11,7 +11,7 @@
 #type 0L
 #set turtle_type=STRAIGHT_PIPE 
 #axiom 
-F+#{Leaf01} //#{SUB2}----
+FF// +#{Leaf01} //#{SUB2}----
 #endaxiom
 #rules  
 A(y):*->+FA(y+1):4
