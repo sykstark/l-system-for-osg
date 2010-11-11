@@ -1,19 +1,37 @@
-#pragma once
+#ifndef LSYSTEMGRAMMAR_H
+#define LSYSTEMGRAMMAR_H
 
-using namespace std;
+//#include <map>
+#include "abstractgrammar.h"
+#include "rule.h"
 
-class Lsystem
+namespace AP_LSystem {
+class LSystemGrammar : public AbstractGrammar
 {
-private:
-	int angle, thickness, recursion;
-	string axiom;
-	map<char, string> rules;
+protected:
+    LongString * _word;
+    multimap<char, Rule> _rules;
+    multimap<char, Rule> _homomorphisms;
+    vector<string> _subSystemsFilenames;
+    vector< LongString *> _subSystemsWords;
 
-	string uncomment(string text);
+    virtual void setAxiom(std::string &);
+	virtual bool nextIteration();
+	virtual multimap<char, Rule>::iterator * selectRule(multimap<char, Rule>::iterator &, 
+														multimap<char, Rule>::iterator &, 
+														LongString *,
+														unsigned int &,
+														double *);
+	virtual void generateSuccessor( LongString *, multimap<char, Rule>::iterator &, double *);
 public:
-	Lsystem(void);
-	~Lsystem(void);
-	
-	void loadFromFile(string filename);
-	string generateWord();
+    LSystemGrammar();
+
+    virtual void loadFromFile( AbstractFile * );
+    
+    unsigned int wordLength() { return _word->length(); }
+    virtual void transcribeSubSystems( );
+    virtual LongString * translate( );
+	virtual void processCutSymbol( );
 };
+}
+#endif // LSYSTEMGRAMMAR_H

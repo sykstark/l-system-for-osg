@@ -2,13 +2,9 @@
 #define UTILS_H_
 
 #include <string>
+#include <vector>
 
-#ifdef _MSC_VER
-#include <osg/vec3d>
-#include <osg/matrixd>
-#endif
-
-using namespace std;
+//using namespace std;
 
 namespace AP_LSystem {
 class StringUtils
@@ -37,18 +33,6 @@ struct Parameter
 	void * value;
 	ParameterType type;
 };
-
-#ifdef _MSC_VER
-class VecUtils
-{
-public:
-	static osg::Vec3d Vec3Transform( osg::Matrixd & m, osg::Vec3d & v)
-	{
-		osg::Vec4d u = osg::Vec4d( v, 1.0 ) * m;
-		
-		return osg::Vec3d( u.x()/u.w(), u.y()/u.w(), u.z()/u.w() );
-	}
-};
-#endif
 }
+
 #endif

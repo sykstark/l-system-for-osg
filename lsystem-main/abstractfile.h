@@ -5,32 +5,78 @@
 #include <vector>
 #include <map>
 
-namespace AP_LSystem {
-/*enum GrammarCapabilities
-{
-    LS_0L               = 0x00000001,
-    LS_1L_LEFT          = 0x00000002,
-    LS_1L_RIGHT         = 0x00000004,
-    LS_2L               = 0x00000008,
-    LS_kL               = 0x00000080,
-    LS_DETERMINISTIC    = 0x00000100,
-    LS_STOCHASTIC       = 0x00000200,
-    LS_PARAMETRIC       = 0x00010000,
-};*/
+using std::string;
 
+namespace AP_LSystem {
 class AbstractFile
 {
 protected:
     unsigned int _type;
-    std::string _name;
+    string _name;
+    string axiom;
+
+    std::vector<string> rules;
+    std::vector<string> homomorhisms;
+    std::vector<string> subsytems;
 public:
     AbstractFile(): _type(0){}
     virtual void open( std::string & ) = 0;
-	virtual void substitute(std::map<std::string, std::string> &) = 0;
-    virtual std::vector<std::string>* getHomomorphisms() = 0;
-    virtual std::vector<std::string> * getRules() = 0;
-    virtual std::string & getAxiom() = 0;
-    virtual std::vector<std::string> * getGrammarFileNames() = 0;
+
+    // nahradit vsechny vyskyty maker hodnotami
+    void substitute(std::map<string, string> & pairs)
+    {
+        unsigned int i;
+        std::vector<string>::iterator rule;
+        std::map<std::string,std::string>::iterator subst;
+
+        // substitute occurences in axiom
+        for(subst = pairs.begin(); subst != pairs.end(); subst++)
+        {
+            i=0;
+            while((i = axiom.find(subst->first,i))&&(i != std::string::npos))
+            {
+                axiom.replace(i,subst->first.length(),subst->second);
+                i += subst->first.length();
+            }
+        }
+
+        // substitute occurences in rules
+        for(rule = rules.begin();rule != rules.end(); rule++)
+        {
+            for(subst = pairs.begin(); subst != pairs.end(); subst++)
+            {
+                i=0;
+                while((i = rule->find(subst->first,i))&&(i != std::string::npos))
+                {
+                    rule->replace(i,subst->first.length(),subst->second);
+                    i += subst->first.length();
+                }
+            }
+        }
+
+        // TODO substitute occurences in homomorphisms
+    }
+
+    virtual std::vector<string> * getHomomorphisms()
+    {
+        return &homomorhisms;
+    }
+
+    virtual std::vector<string> * getRules()
+    {
+        return &rules;
+    }
+
+    virtual std::vector<string> * getSubsystems()
+    {
+        return &subsytems;
+    }
+
+    virtual std::string & getAxiom()
+    {
+        return axiom;
+    }
+
     unsigned int type()
     {
         return _type;
