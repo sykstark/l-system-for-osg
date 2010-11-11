@@ -9,7 +9,9 @@
 #include "staticstring.h"
 #include "longstring.h"
 #include "log.h"
+#ifdef _MSC_VER
 #include "query.h"
+#endif
 
 using namespace std;
 using boost::lexical_cast;
@@ -86,6 +88,7 @@ struct Rule
 
 	void addQueryFunctions( FunctionParser * fp, string & expression )
 	{
+#ifdef _MSC_VER
 		bool query = false;
 		if(expression.find( "positionX" ) != std::string::npos )
 		{
@@ -107,7 +110,9 @@ struct Rule
 		{
 			// TODO optimalize expression
 		}
+#endif
 	}
+
 
     void processProbabilityFactor(string * rule, string::iterator & it)
     {

@@ -6,7 +6,7 @@
 #include "abstractturtle.h"
 
 using namespace AP_LSystem;
-using namespace std;
+
 using namespace boost::program_options;
 
 LSGeode::LSGeode( unsigned int index )

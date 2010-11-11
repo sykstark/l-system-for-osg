@@ -1,7 +1,7 @@
 #ifndef ABSTRACT0LSYSTEMGRAMMAR_H
 #define ABSTRACT0LSYSTEMGRAMMAR_H
 
-#include "lsystemgrammar.h"
+#include "lsystem.h"
 
 namespace AP_LSystem {
 class Abstract0LSystemGrammar : public LSystemGrammar

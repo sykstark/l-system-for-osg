@@ -1,7 +1,8 @@
 #pragma once
 #include "turtle.h"
 
-using namespace std;
+using std::string;
+using std::vector;
 
 class Lparser
 {

@@ -26,27 +26,6 @@ private:
 public:
     LSFile();
     virtual void open(string &);
-	void substitute(std::map<string, string> &);
-
-    virtual std::vector<string> * getHomomorphisms()
-    {
-        return &homomorhisms;
-    }
-
-    virtual std::vector<string> * getRules()
-    {
-        return &rules;
-    }
-
-    virtual std::string & getAxiom()
-    {
-        return axiom;
-    }
-
-    virtual std::vector<string> * getGrammarFileNames()
-    {
-        return &grammars;
-    }
 };
 }
 

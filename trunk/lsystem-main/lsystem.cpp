@@ -1,109 +1,276 @@
 #include "precompiled.h"
+
 #include "lsystem.h"
+#include "configuration.h"
+#include "lsfile.h"
+#include "parstoch0lsystemgrammar.h"
+#include "par2lsystemgrammar.h"
+#ifdef _MSC_VER
+#include "queryinterpret.h"
+#endif
 
-Lsystem::Lsystem(void)
+using namespace AP_LSystem;
+
+LSystemGrammar::LSystemGrammar():_word(NULL)
 {
+
 }
 
-Lsystem::~Lsystem(void)
+void LSystemGrammar::loadFromFile( AbstractFile * file)
 {
-}
+    this->_name = file->name();
 
-void Lsystem::loadFromFile(string filename)
-{
-	ifstream file(filename.c_str());
-	string line= "";
-	if(file.is_open())
-	{
-		while(line.empty()) 
-		{
-			getline(file, line);
-			line = uncomment(line);
-		}
-		istringstream strin(line);
-		strin >> recursion;
-		line.clear();
-		strin.clear();
+    AbstractFile * subFile;
+    AbstractGrammar * ls;
 
-		while(line.empty()) 
-		{
-			getline(file, line);
-			line = uncomment(line);
-		}
-		strin.str(line);
-		strin >> angle;
-		line.clear();
-		strin.clear();
+	// map for replacing grammar names in rules, axiom and homomorphism by their index
+    std::map< string, string > lsystemSubstitute;
+    // generate words of subgrammars
+    vector<std::string>::iterator itGrammars = file->getSubsystems()->begin();
+    for(; itGrammars != file->getSubsystems()->end(); itGrammars++)
+    {
+        // determine extension of file
+        unsigned int pos = itGrammars->rfind( '.' );
+        if( pos == std::string::npos )
+        {
+            return;
+        }
+        std::string ext = itGrammars->substr( pos + 1, std::string::npos );
 
-		while(line.empty()) 
-		{
-			getline(file, line);
-			line = uncomment(line);
-		}
-		strin.str(line);
-		strin >> thickness;
-		line.clear();
-		strin.clear();
+        // load file depending on extension
+        if( ext == "ls" )
+        {
+            subFile = new LSFile;
+        }
+        else
+        {
+            throw FileException("unknown extension: ");
+        }
 
-		while(line.empty()) 
-		{
-			getline(file, line);
-			line = uncomment(line);
-		}
-		axiom = line;
-		line.clear();
+        // open file
+        subFile->open(*itGrammars);
 
-		while(!file.eof())
-		{
-			while(line.empty()) 
-			{
-				getline(file, line);
-				line = uncomment(line);
-			}
-			if(line.at(0) == '@') break;
-			else 
-			{
-				rules.insert(make_pair<char,string>(line.at(0),line.substr(2)));
-				line.clear();
-			}
-		}
+        // choose best for word generation
+        if( ParStoch0LSystemGrammar::isCapable( subFile->type() ) )
+            ls = new ParStoch0LSystemGrammar( subFile );
+		else if( Par2LSystemGrammar::isCapable( subFile->type() ) )
+            ls = new Par2LSystemGrammar( subFile );
+        else
+            throw ParsingException("non of L-systems fulfils the conditions");
+
+        // make pair which bind name of lsystem with index in _subSystemsWords vector
+        lsystemSubstitute.insert(make_pair<string, string >(subFile->name(),boost::lexical_cast<string>(_subSystemsWords.size())));
+        _subSystemsWords.push_back( ls->translate() );
+		
+        delete subFile;
 	}
+
+	// replace all names in rules, homomorphism and axiom by their index
+    if(!lsystemSubstitute.empty())
+        file->substitute( lsystemSubstitute );
+
+    // initialize word inside grammar and load an axiom into
+    this->setAxiom( file->getAxiom() );
+
+    // process rule strings - convert to instances of Rule class
+    vector<std::string>::iterator itRules = file->getRules()->begin();
+    for(; itRules != file->getRules()->end(); itRules++)
+    {
+        this->addRule( &*itRules );
+    }
 }
 
-string Lsystem::uncomment(string text)
+void LSystemGrammar::setAxiom(std::string & axiom)
 {
-	size_t i=0;
-	i = text.find_first_of('#',0);
-	if(i!=string::npos) text.erase(i,text.size());
+    if(_word) delete _word;
+    _word = new LongString( );
+    _word->append('$');
+    _word->append( static_cast<unsigned char>(Configuration::get()->getGrammarIndex( this->_name )) );
+    _word->convertFromString( &axiom );
+    _word->append('$');
+}
 
-	i = text.find(" ", 0);
-	while (i!=string::npos)
-	{
-		text.erase(i);
-		i = text.find(" ", i);
-	}
-	return text;
-}	
-
-string Lsystem::generateWord()
+void LSystemGrammar::transcribeSubSystems()
 {
-	string word1, word2="";
-	word1 = axiom;
-	for(int j=0; j<recursion; j++)
-	{
-		for(unsigned int i=0; i<word1.length(); i++)
+    // process only if there is any subsystem
+    if( _subSystemsWords.empty() )
+		return;
+
+	LongString * newWord = new LongString( );
+	unsigned int len;
+	char * data = NULL;
+	int parameters[100];
+	int * pParams = parameters;
+	int parametersCnt = 0;
+
+	// look for subgrammars
+	for(unsigned int i = 0; i < _word->length(); i++ )
+    {
+		// subgrammars are indetified by $ sign - get all data before $
+		data = _word->getData( i, len, '#' );
+
+		// no data
+		if(data == NULL)
+			return;
+
+		// append data before
+		newWord->append( data, len );
+
+		if( i >= _word->length() )
+			break;
+
+		parametersCnt = 0;
+		_word->getParameters<int>( i, pParams, parametersCnt );
+
+		if( parametersCnt != 1 )
+			return;
+
+        newWord->append( _subSystemsWords[ pParams[0] ] );
+
+        //Log::write(newWord->toString());
+    }
+
+    if(_word)
+        delete _word;
+
+    _word = newWord;
+	
+}
+
+LongString * LSystemGrammar::translate( )
+{
+    // TODO homomorphism
+
+    this->transcribeSubSystems( );
+
+    return _word;
+}
+
+bool LSystemGrammar::nextIteration( )
+{
+    int j=0;
+    char * buffer = NULL;
+    LongString * newWord = new LongString( );
+
+#ifdef _MSC_VER
+	// bind for ability to do queries
+	// TODO only if queries is on
+	QueryInterpret::get()->bindWord( newWord );
+#endif
+
+    multimap<char, Rule>::iterator * pRuleIt;
+    pair<multimap<char, Rule>::iterator, multimap<char, Rule>::iterator > result;
+
+    double parameters[100];
+    double * pParams = parameters; // parameters pointer
+
+    for(unsigned int i = 0; i < _word->length(); i++ )
+    {
+        // mozna dodat kontrolu estli jde o pismeno
+        result = _rules.equal_range( (*_word)[i]);
+
+        // not found
+        if( result.first == result.second )
+        {
+            j = i;
+            buffer = _word->getSymbol(i);
+            if(buffer)
+				newWord->append(buffer,i-j+1);
+        }
+        // found
+        else
 		{
-			if(rules.count(word1.at(i)))
+            pRuleIt = selectRule( result.first, result.second, _word, i, pParams );
+
+			if(pRuleIt)
 			{
-				word2.append(rules[word1.at(i)]);
+				generateSuccessor( newWord, *pRuleIt, pParams );
+				delete pRuleIt;
 			}
 			else
 			{
-				word2.insert(word2.end(),word1.at(i));
+				j = i;
+				buffer = _word->getSymbol(i);
+				if(buffer)
+					newWord->append(buffer,i-j+1);
 			}
-		}
-		word1 = word2;
-		word2.clear();
-	}
-	return word1;
+        }
+
+        //Log::write(newWord->toString());
+    }
+
+    if(_word)
+        delete _word;
+
+    _word = newWord;
+
+	processCutSymbol();
+
+    return true;
+}
+
+void LSystemGrammar::generateSuccessor(LongString * word, multimap<char, Rule>::iterator & it, double * parameters)
+{
+    vector<StaticString*>::iterator stStrIt;
+    vector<FunctionParser*>::iterator dynStrIt;
+
+    for( stStrIt= it->second.staticStrings.begin(),
+        dynStrIt = it->second.dynamicStrings.begin();
+        dynStrIt != it->second.dynamicStrings.end();
+        stStrIt++, dynStrIt++)
+    {
+        // pridani statickych a dynamickych retezcu do slova ( krome posledniho statickeho )
+        word->append( (*stStrIt)->str, (*stStrIt)->length );
+        //Log::write(newWord->toString());
+        word->append( (*dynStrIt)->Eval( parameters ) );
+        //Log::write(newWord->toString());
+    }
+    // pridani posledniho statickeho retezce
+    word->append( (*stStrIt)->str, (*stStrIt)->length );
+}
+
+void LSystemGrammar::processCutSymbol( )
+{
+	LongString * newWord = new LongString( );
+	unsigned int len;
+	char * data = NULL;
+
+	// TODO predelat ten cyklus...konci uprostred
+	// TODO optimalizace - neni vzdy treba kopirovat
+	// look for cut symbol
+	for(unsigned int i = 0; i < _word->length(); i++ )
+    {
+		// get data before cut symbol 
+		data = _word->getData( i, len, '%' );
+
+		// no data
+		if(data == NULL)
+			return;
+
+		// append data
+		newWord->append( data, len );
+
+		// end of string
+		if( i >= _word->length() )
+			break;
+
+		// find end and skip symbols of rest of this branch
+		i = _word->findMatchingRightBracket( i ) - 1;
+
+        //Log::write(newWord->toString());
+    }
+
+    if(_word)
+        delete _word;
+
+    _word = newWord;
+}
+
+multimap<char, Rule>::iterator * LSystemGrammar::selectRule(multimap<char, Rule>::iterator & begin, 
+															multimap<char, Rule>::iterator &,
+															LongString *,
+															unsigned int &,
+															double *)
+{
+    return &begin;
 }

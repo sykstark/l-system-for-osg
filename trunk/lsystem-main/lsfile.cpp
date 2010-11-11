@@ -6,7 +6,6 @@
 #include "lsystemexception.h"
 #include "configuration.h"
 
-using namespace std;
 using namespace AP_LSystem;
 
 LSFile::LSFile()
@@ -71,7 +70,7 @@ void LSFile::open(std::string & filename)
                 {
                     throw ParsingException("Bad format of #define");
                 }
-                defines.insert(make_pair<std::string, std::string>(definition, value));
+                defines.insert(std::make_pair<std::string, std::string>(definition, value));
             }
             else if(id=="#type")
             {
@@ -154,40 +153,7 @@ void LSFile::open(std::string & filename)
     delete file;
 }
 
-// nahradit vsechny vyskyty maker hodnotami
-void LSFile::substitute( map<std::string,std::string> & pairs )
-{
-    unsigned int i;
-    vector<string>::iterator rule;
-    std::map<std::string,std::string>::iterator subst;
 
-	// substitute occurences in axiom
-	for(subst = pairs.begin(); subst != pairs.end(); subst++)
-    {
-        i=0;
-        while((i = axiom.find(subst->first,i))&&(i != std::string::npos))
-        {
-            axiom.replace(i,subst->first.length(),subst->second);
-            i += subst->first.length();
-        }
-    }
-
-	// substitute occurences in rules
-    for(rule = rules.begin();rule != rules.end(); rule++)
-    {
-        for(subst = pairs.begin(); subst != pairs.end(); subst++)
-        {
-            i=0;
-            while((i = rule->find(subst->first,i))&&(i != std::string::npos))
-            {
-                rule->replace(i,subst->first.length(),subst->second);
-                i += subst->first.length();
-            }
-        }
-    }
-
-	// TODO substitute occurences in homomorphisms
-}
 
 void LSFile::processType( std::string str )
 {
