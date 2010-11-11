@@ -6,7 +6,7 @@
 #include "rule.h"
 
 namespace AP_LSystem {
-class LSystemGrammar : public AbstractGrammar
+class LSystem : public AbstractGrammar
 {
 protected:
     LongString * _word;
@@ -24,7 +24,7 @@ protected:
 														double *);
 	virtual void generateSuccessor( LongString *, multimap<char, Rule>::iterator &, double *);
 public:
-    LSystemGrammar();
+    LSystem();
 
     virtual void loadFromFile( AbstractFile * );
     

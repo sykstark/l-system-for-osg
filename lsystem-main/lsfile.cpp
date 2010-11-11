@@ -60,7 +60,7 @@ void LSFile::open(std::string & filename)
                 {
                     throw ParsingException("Bad format of #include");
                 }
-                grammars.push_back( grammar );
+                subsytems.push_back( grammar );
             }
             else if(id=="#define")
             {
@@ -89,7 +89,7 @@ void LSFile::open(std::string & filename)
             }
             else if(id=="#axiom")
             {
-                this->axiom = StringUtils::processLine( file, line);
+                axiom = StringUtils::processLine( file, line);
 
                 if( StringUtils::processLine( file, line) != "#endaxiom")
                 {

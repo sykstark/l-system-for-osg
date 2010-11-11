@@ -64,26 +64,9 @@ int MovingTurtle::makeRotate(osg::Quat & q)
 {
 	preRotate();
 
-	
-
-	osg::Matrixd x = osg::Matrixd::rotate( q ) ;
-
-	osg::Vec3d h1 = properties.matrix.getRotate( ) * HeadVec;
-
 	// TODO test - rotating directly by quaternion
-	properties.matrix =  x * properties.matrix;
+	properties.matrix =  osg::Matrixd::rotate( q ) * properties.matrix;
 
-	osg::Vec3d h2 = properties.matrix.getRotate( ) * HeadVec;
-
-	if( h1 != h2 )
-	{
-		osg::Matrixd m;
-		m.makeRotate( h1, h2 );
-		properties.contourVec = properties.contourVec * m ; 
-		properties.contourVec.normalize();
-
-		
-	}	
 	postRotate();
 
 	//drawDebugGeometry( );

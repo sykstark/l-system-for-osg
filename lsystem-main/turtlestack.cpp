@@ -21,11 +21,11 @@ AbstractTurtle * TurtleStack::top()
 	return turtles.top();
 }
 
-void TurtleStack::push( )
+int TurtleStack::push( )
 {
 	int res = LS_OK;
 	LSGeode * geode = turtles.top()->getGeode( );
-	if ( !pTurtleToPush )
+	if ( !geode )
 		return LS_ERR_STACK_NULL_LSGEODE;
 	// create new turtle according to turtle type
 	AbstractTurtle * pTurtleToPush = createTurtle(geode->getTurtleType());
@@ -42,19 +42,17 @@ void TurtleStack::push( )
 		return res;
 	// push new one on the top of the stack
 	turtles.push( pTurtleToPush );
+	return res;
 }
 
-void TurtleStack::pop()
+int TurtleStack::push(LSGeode * geode)
 {
-	turtles.top()->finalize();
-	// TODO delete top
-	turtles.pop();
-}
-
-void TurtleStack::push(LSGeode * geode)
-{
+	int res = LS_OK;
 	// create new turtle that will replace the one on the top
 	AbstractTurtle * pTurtle = createTurtle( geode->getTurtleType() );
+
+	if( !pTurtle )
+		return LS_ERR_STACK_UNKNOWN_TURTLE_TYPE;
 	// bind with geode
 	pTurtle->bindGeode( geode );
 	// set default properties
@@ -63,9 +61,22 @@ void TurtleStack::push(LSGeode * geode)
 	if( !turtles.empty() )
 		pTurtle->inheritProperties( turtles.top()->getProperties() );
 	// initialize turtle
-	pTurtle->initialize( );
+	res = pTurtle->initialize( );
+	if(res)
+		return res;
 	// push new one on the top of the stack
 	turtles.push( pTurtle );
+	return res;
+}
+
+int TurtleStack::pop()
+{
+	int res = turtles.top()->finalize();
+	if(res)
+		return res;
+	// TODO delete top
+	turtles.pop();
+	return res;
 }
 
 AbstractTurtle * TurtleStack::createTurtle(AP_LSystem::TurtleType type)

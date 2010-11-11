@@ -4,7 +4,7 @@
 #include "lsystem.h"
 
 namespace AP_LSystem {
-class AbstractkLSystemGrammar : public LSystemGrammar
+class AbstractkLSystemGrammar : public LSystem
 {
 public:
     AbstractkLSystemGrammar();

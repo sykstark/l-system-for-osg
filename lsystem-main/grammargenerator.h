@@ -4,11 +4,11 @@
 #include "abstractgenerator.h"
 
 namespace AP_LSystem {
-class GrammarGenerator : public AbstractGenerator
+class LSystemGenerator : public AbstractGenerator
 {
 public:
-    GrammarGenerator(void);
-    ~GrammarGenerator(void);
+    LSystemGenerator(void);
+    ~LSystemGenerator(void);
 
     virtual void loadFile( std::string & str );
     virtual void nextIteration();

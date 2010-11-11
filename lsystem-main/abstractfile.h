@@ -72,7 +72,7 @@ public:
         return &subsytems;
     }
 
-    virtual std::string & getAxiom()
+    std::string & getAxiom()
     {
         return axiom;
     }
