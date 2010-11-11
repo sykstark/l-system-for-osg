@@ -15,11 +15,7 @@ namespace AP_LSystem{
 class LSFile : public AbstractFile
 {
 private:
-    std::vector<string> rules;
-    std::vector<string> homomorhisms;
-    std::vector<string> grammars;
     std::map<string, string> defines;
-    string axiom;
 
     void processType(string);
 

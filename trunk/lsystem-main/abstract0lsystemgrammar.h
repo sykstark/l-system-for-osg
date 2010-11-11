@@ -4,7 +4,7 @@
 #include "lsystem.h"
 
 namespace AP_LSystem {
-class Abstract0LSystemGrammar : public LSystemGrammar
+class Abstract0LSystemGrammar : public LSystem
 {
 protected:
     virtual void addRule(std::string *);

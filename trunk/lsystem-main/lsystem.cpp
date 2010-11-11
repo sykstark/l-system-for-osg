@@ -11,12 +11,12 @@
 
 using namespace AP_LSystem;
 
-LSystemGrammar::LSystemGrammar():_word(NULL)
+LSystem::LSystem():_word(NULL)
 {
 
 }
 
-void LSystemGrammar::loadFromFile( AbstractFile * file)
+void LSystem::loadFromFile( AbstractFile * file)
 {
     this->_name = file->name();
 
@@ -80,7 +80,7 @@ void LSystemGrammar::loadFromFile( AbstractFile * file)
     }
 }
 
-void LSystemGrammar::setAxiom(std::string & axiom)
+void LSystem::setAxiom(std::string & axiom)
 {
     if(_word) delete _word;
     _word = new LongString( );
@@ -90,7 +90,7 @@ void LSystemGrammar::setAxiom(std::string & axiom)
     _word->append('$');
 }
 
-void LSystemGrammar::transcribeSubSystems()
+void LSystem::transcribeSubSystems()
 {
     // process only if there is any subsystem
     if( _subSystemsWords.empty() )
@@ -137,7 +137,7 @@ void LSystemGrammar::transcribeSubSystems()
 	
 }
 
-LongString * LSystemGrammar::translate( )
+LongString * LSystem::translate( )
 {
     // TODO homomorphism
 
@@ -146,7 +146,7 @@ LongString * LSystemGrammar::translate( )
     return _word;
 }
 
-bool LSystemGrammar::nextIteration( )
+bool LSystem::nextIteration( )
 {
     int j=0;
     char * buffer = NULL;
@@ -209,7 +209,7 @@ bool LSystemGrammar::nextIteration( )
     return true;
 }
 
-void LSystemGrammar::generateSuccessor(LongString * word, multimap<char, Rule>::iterator & it, double * parameters)
+void LSystem::generateSuccessor(LongString * word, multimap<char, Rule>::iterator & it, double * parameters)
 {
     vector<StaticString*>::iterator stStrIt;
     vector<FunctionParser*>::iterator dynStrIt;
@@ -229,7 +229,7 @@ void LSystemGrammar::generateSuccessor(LongString * word, multimap<char, Rule>::
     word->append( (*stStrIt)->str, (*stStrIt)->length );
 }
 
-void LSystemGrammar::processCutSymbol( )
+void LSystem::processCutSymbol( )
 {
 	LongString * newWord = new LongString( );
 	unsigned int len;
@@ -266,7 +266,7 @@ void LSystemGrammar::processCutSymbol( )
     _word = newWord;
 }
 
-multimap<char, Rule>::iterator * LSystemGrammar::selectRule(multimap<char, Rule>::iterator & begin, 
+multimap<char, Rule>::iterator * LSystem::selectRule(multimap<char, Rule>::iterator & begin, 
 															multimap<char, Rule>::iterator &,
 															LongString *,
 															unsigned int &,

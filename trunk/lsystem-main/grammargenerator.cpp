@@ -7,15 +7,15 @@
 
 using namespace AP_LSystem;
 
-GrammarGenerator::GrammarGenerator(void)
+LSystemGenerator::LSystemGenerator(void)
 {
 }
 
-GrammarGenerator::~GrammarGenerator(void)
+LSystemGenerator::~LSystemGenerator(void)
 {
 }
 
-void GrammarGenerator::loadFile(std::string & filename)
+void LSystemGenerator::loadFile(std::string & filename)
 {
     AbstractFile * file;
 
@@ -51,12 +51,12 @@ void GrammarGenerator::loadFile(std::string & filename)
 		throw ParsingException("non of grammars fulfils the conditions");
 }
 
-void GrammarGenerator::nextIteration()
+void LSystemGenerator::nextIteration()
 {
     pMainGrammar->nextIteration();
 }
 
-ParseableString * GrammarGenerator::getWord()
+ParseableString * LSystemGenerator::getWord()
 {
     if(pWord)
         delete pWord;
@@ -64,7 +64,11 @@ ParseableString * GrammarGenerator::getWord()
     LongString * word = NULL;
 
     word = pMainGrammar->translate( );
+	
+	if(!word)
+		return NULL;
 
+//	BE CAREFUL - too long word can cause an exception
 //	vrecko::logger.debugLog("Word: %s", word->toString().c_str() );
 
     return pWord = new ParseableString( word );

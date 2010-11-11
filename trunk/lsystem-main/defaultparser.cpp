@@ -13,6 +13,7 @@ DefaultParser::DefaultParser( osg::Group * owner )
 
 DefaultParser::~DefaultParser( )
 {
+	// delete geodes
 
 }
 

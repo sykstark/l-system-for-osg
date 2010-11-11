@@ -4,7 +4,6 @@
 #include "polygonturtle.h"
 #include "jointedturtle.h"
 #include "contourturtle.h"
-#include "LSFileGrammar.h"
 #include "configuration.h"
 
 

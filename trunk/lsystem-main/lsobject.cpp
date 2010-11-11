@@ -37,7 +37,7 @@ void LSObject::postInitialize()
 	
 	Configuration::get()->loadCfgFile( configFile );
 
-	generator = new GrammarGenerator( );
+	generator = new LSystemGenerator( );
 	ParseableString * pWord;
 	try
 	{

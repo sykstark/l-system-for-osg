@@ -179,6 +179,23 @@ public:
 		return matrix.getTrans().z();
 	}
 
+	double headingX( )
+	{
+		if( dirty & QueryInterpret::HEADINGX )
+		{
+			// update matrix
+			update();
+
+			// set Position as CLEAR
+			dirty &= ~QueryInterpret::HEADING;
+		}
+		dirty |= QueryInterpret::HEADING;
+
+		osg::Vec3d v = matrix.getRotate() * HeadVec;
+
+		return v.x();
+	}
+
 	void bindWord( LongString * str)
 	{
 		word = str;
