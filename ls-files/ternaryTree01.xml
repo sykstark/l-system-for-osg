@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="windows-1250"?>
+<lsystem>
+  <name>ternarni strom</name>
+  <types>
+    <type>0L</type>
+  </types>
+  <constants>
+    <high>0.2</high>
+  </constants>
+  <parameters>
+    <turtleType>STRAIGHT_PIPE</turtleType>
+    <defaultAngle>30.0</defaultAngle>
+    <defaultLength>10.0</defaultLength>
+    <contourDetail>10</contourDetail>
+    <defaultRadius>1.0></defaultRadius>
+    <angleVariance>60</angleVariance>
+    <diffuseTexture>data\ls\tex\bark\bark_20091031_05_512x512_seamless.jpg</diffuseTexture>
+  </parameters>
+  <subsystems>
+    <subsystem>d:\HCI\VRECKO\bin\data\ls\leaf01.ls</subsystem>
+  </subsystems>
+  <axiom>F'(0.65)A</axiom>
+  <rules>
+    <p1>A:*->!(0.577)'(0.87)[/(90.74)B][/(-132.63)B]B</p1>
+    <p2>B:*->^(33.95)[^^#{Leaf01}][#{Leaf01}]Z[^^#{Leaf01}][#{Leaf01}]ZA</p2>
+  </rules>
+</lsystem>
