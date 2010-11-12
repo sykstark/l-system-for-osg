@@ -22,6 +22,7 @@ using boost::bad_lexical_cast;
 namespace AP_LSystem {
 struct Rule
 {
+    char strictPredecessor;
 	FunctionParser* condition;
 	std::string variables;
     FunctionParser * probabilityFactor;

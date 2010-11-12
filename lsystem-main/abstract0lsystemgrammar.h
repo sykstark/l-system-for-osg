@@ -7,8 +7,9 @@ namespace AP_LSystem {
 class Abstract0LSystemGrammar : public LSystem
 {
 protected:
-    virtual void addRule(std::string *);
-    virtual void addHomomorphism( std::string *);
+    virtual void processPredecessor( Rule &, string *, string::iterator & );
+    virtual void processRuleSuccessor( Rule &, string *, string::iterator &);
+    virtual void processHomomorphismSuccessor( Rule &, string *, string::iterator &);
 public:
     Abstract0LSystemGrammar();
 
