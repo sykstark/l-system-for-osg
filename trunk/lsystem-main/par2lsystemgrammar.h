@@ -10,8 +10,9 @@ private:
     static const unsigned int capabilities = LS_2L | LS_DETERMINISTIC | LS_PARAMETRIC;	
 public:
     Par2LSystemGrammar( AbstractFile * );
-	virtual void addRule(std::string *);
-	virtual void addHomomorphism( std::string *);
+    virtual void processPredecessor(Rule &, string *, string::iterator &);
+    virtual void processRuleSuccessor(Rule &, string *, string::iterator &);
+    virtual void processHomomorphismSuccessor(Rule &, string *, string::iterator &);
 	virtual multimap<char, Rule>::iterator * selectRule(multimap<char, Rule>::iterator &, 
 														multimap<char, Rule>::iterator &, 
 														LongString *,

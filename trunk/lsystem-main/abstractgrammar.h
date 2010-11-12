@@ -14,7 +14,7 @@ class AbstractGrammar
 {
 protected:
     std::string _name;
-    int _iteration;
+    unsigned int _iteration;
 
 public:
     AbstractGrammar(): _name(""), _iteration(0) {}
@@ -25,12 +25,8 @@ public:
     virtual void addHomomorphism( std::string * ) = 0;
     virtual void setAxiom( std::string & ) = 0;
     virtual void loadFromFile ( AbstractFile * ) = 0;
-    int GetIteration() const {return _iteration;}
+    unsigned int getIteration() const {return _iteration;}
 
-    bool generateSubGrammars()
-    {
-        return false;
-    }
 };
 }
 

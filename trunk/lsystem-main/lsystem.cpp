@@ -139,14 +139,23 @@ void LSystem::transcribeSubSystems()
 
 LongString * LSystem::translate( )
 {
-    // TODO homomorphism
-
+    // use all homomorphism rules
+    this->transcribe( _homomorphisms );
+    // insert all sub L-systems
     this->transcribeSubSystems( );
-
+    // return final word
     return _word;
 }
 
 bool LSystem::nextIteration( )
+{
+    // increment the iteration number
+    _iteration++;
+    // use rules and generate new word by transcriptions
+    return this->transcribe( _rules );
+}
+
+bool LSystem::transcribe(multimap<char, Rule> &rules)
 {
     int j=0;
     char * buffer = NULL;
@@ -167,7 +176,7 @@ bool LSystem::nextIteration( )
     for(unsigned int i = 0; i < _word->length(); i++ )
     {
         // mozna dodat kontrolu estli jde o pismeno
-        result = _rules.equal_range( (*_word)[i]);
+        result = rules.equal_range( (*_word)[i]);
 
         // not found
         if( result.first == result.second )
@@ -207,6 +216,22 @@ bool LSystem::nextIteration( )
 	processCutSymbol();
 
     return true;
+}
+
+void LSystem::addRule( std::string * rule )
+{
+    Rule r;
+    std::string::iterator it = rule->begin();
+    processPredecessor( r, rule, it );
+    processRuleSuccessor( r, rule, it );
+}
+
+void LSystem::addHomomorphism( std::string * hom )
+{
+    Rule h;
+    std::string::iterator it = hom->begin();
+    processPredecessor( h, hom, it );
+    processHomomorphismSuccessor( h, hom, it );
 }
 
 void LSystem::generateSuccessor(LongString * word, multimap<char, Rule>::iterator & it, double * parameters)

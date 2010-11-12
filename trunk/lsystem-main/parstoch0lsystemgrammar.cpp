@@ -8,6 +8,10 @@ using namespace AP_LSystem;
 ParStoch0LSystemGrammar::ParStoch0LSystemGrammar( AbstractFile * file )
 {
     this->loadFromFile( file );
+    for( unsigned iter = 0; iter < _iteration; iter++ )
+    {
+        this->nextIteration();
+    }
 	RandomIndex::init();
 }
 
