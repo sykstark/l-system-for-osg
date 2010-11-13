@@ -1,12 +1,12 @@
-#grammar Leaf01
-#set turtle_type=RECTANGLE
+#lsystem Leaf01
+#set TurtleType=RECTANGLE
 #type 0L
 
-#set default_length=0.8
-#set default_radius=0.4
-#set diffuse_texture=data\ls\tex\transp3.png
+#set DefaultLength=0.8
+#set DefaultRadius=0.4
+#set DiffuseTexture=data\ls\tex\transp3.png
 
 #axiom 
 F
 #endaxiom
-#endgrammar
+#endlsystem
