@@ -4,12 +4,10 @@
 #include "lsobject.h"
 #include "lparser.h"
 #include "configuration.h"
-//#include "AbstractGrammar.h"
-//#include "LSFileGrammar.h"
 #include "defaultparser.h"
-#include "grammargenerator.h"
+#include "lsystemgenerator.h"
 #include "log.h"
-
+#include "lsystemexception.h"
 
 XERCES_CPP_NAMESPACE_USE
 
@@ -34,18 +32,18 @@ void LSObject::postInitialize()
 {
 	// Schedule the parent EO for regular updates
 	getWorldPtr()->getSchedulerPtr()->addEntity(this, 60);
-	
-	Configuration::get()->loadCfgFile( configFile );
 
-	generator = new LSystemGenerator( );
-	ParseableString * pWord;
+	ParseableString * pWord;	
 	try
 	{
-		generator->loadFile( grammarFile );
-		for ( int i = 0; i < 16; i++ )
+		Configuration::get()->loadCfgFile( configFile );
+
+		generator = new LSystemGenerator( );
+		generator->loadFile( lsystemFile );
+/*		for ( int i = 0; i < 14; i++ )
 		{
 			generator->nextIteration();
-		}
+		}*/
 		pWord = generator->getWord();
 		
 	}
@@ -81,11 +79,20 @@ void LSObject::postInitialize()
 
 bool LSObject::loadXMLParameters(XERCES_CPP_NAMESPACE_QUALIFIER DOMNode *pParametersNode) 
 {
-	if (findXMLNode(pParametersNode, "GrammarFile")) {
-		ReaderWriter::getStringValue(this->grammarFile, pParametersNode, "GrammarFile");
+	if (findXMLNode(pParametersNode, "LSystemFile")) {
+		ReaderWriter::getStringValue(this->lsystemFile, pParametersNode, "LSystemFile");
 	}
+	else
+	{
+		//throw FileException("File with L-system is not set");
+	}
+
 	if (findXMLNode(pParametersNode, "ConfigFile")) {
 		ReaderWriter::getStringValue(this->configFile, pParametersNode, "ConfigFile");
+	}
+	else
+	{
+		//throw FileException("File with configuration is not set");
 	}
 	return true;
 }
@@ -192,7 +199,7 @@ void LSObject::AddAnother( osg::Geometry * geom)
 /*
 void LSObject::draw() 
 {
-	AbstractGrammar * grammar;
+	AbstractLSystem * lsystem;
 
 	if( filename.empty() )
 	{
@@ -209,8 +216,8 @@ void LSObject::draw()
 
 	if( ext == "ls" )
 	{
-		grammar = new LSFileGrammar( &filename );
-		grammar->nextIteration();
+		lsystem = new LSFileGrammar( &filename );
+		lsystem->nextIteration();
 	}
 
 	

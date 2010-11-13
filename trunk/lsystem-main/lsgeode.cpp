@@ -11,7 +11,7 @@ using namespace boost::program_options;
 
 LSGeode::LSGeode( unsigned int index )
 {
-	std::string t = Configuration::get()->getProperty( index , "turtle_type")->as<string>();
+	std::string t = Configuration::get()->getProperty( index , "TurtleType")->as<string>();
 	setTurtleType(t);
 	setDefaultTurtleProperties( index );
 }
@@ -82,7 +82,7 @@ void LSGeode::setDefaultTurtleProperties( int index )
 
 	osg::ref_ptr<osg::StateSet> state = this->getOrCreateStateSet();
 
-	const variable_value * diffTexFile = Configuration::get()->getProperty( index , "diffuse_texture" );
+	const variable_value * diffTexFile = Configuration::get()->getProperty( index , "DiffuseTexture" );
 	if( diffTexFile )
 	{
 		std::string file = diffTexFile->as<std::string>();
@@ -145,35 +145,37 @@ void LSGeode::setDefaultTurtleProperties( int index )
 
 	// process flags
 	p.flags = 0;
-	if( Configuration::get()->getProperty(index, "minimize_twist")->as<unsigned int>() )
+	if( Configuration::get()->getProperty(index, "MinimizeTwist")->as<unsigned int>() )
 		p.flags |= TurtleProperties::MINIMIZE_TWIST;
-	if( Configuration::get()->getProperty(index, "draw_debug_geometry")->as<unsigned int>() )
+	if( Configuration::get()->getProperty(index, "DrawDebugGeometry")->as<unsigned int>() )
 		p.flags |= TurtleProperties::DRAW_DEBUG_GEOMETRY;
-	if( Configuration::get()->getProperty(index, "degrees_to_radians")->as<unsigned int>() )
+	if( Configuration::get()->getProperty(index, "DegreesToRadians")->as<unsigned int>() )
 		p.flags |= TurtleProperties::DEGREES_TO_RADIANS;
-	if( Configuration::get()->getProperty(index, "separate_geometry_for_translucent")->as<unsigned int>() )
+	if( Configuration::get()->getProperty(index, "SeparateGeometryForTranslucent")->as<unsigned int>() )
 		p.flags |= TurtleProperties::SEPARATE_GEOMETRY_FOR_TRANSLUCENT;
-	if( Configuration::get()->getProperty(index, "draw_pipe_caps")->as<unsigned int>() )
+	if( Configuration::get()->getProperty(index, "DrawPipeCaps")->as<unsigned int>() )
+		p.flags |= TurtleProperties::DRAW_PIPE_CAPS;
+	if( Configuration::get()->getProperty(index, "UseQueries")->as<unsigned int>() )
 		p.flags |= TurtleProperties::DRAW_PIPE_CAPS;
 
-	p.texRepeatingS				= Configuration::get()->getProperty( index, "texture_s_repeating")->as<unsigned int>();
-	p.angle						= Configuration::get()->getProperty( index, "default_angle" )->as<double>();
-	p.length					= Configuration::get()->getProperty( index, "default_length" )->as<double>();
-	p.radius					= Configuration::get()->getProperty( index, "default_radius" )->as<double>();
-	p.lengthMultiplier			= Configuration::get()->getProperty( index, "length_multiplier" )->as<double>();
-	p.angleMultiplier			= Configuration::get()->getProperty( index, "angle_multiplier" )->as<double>();
-	p.radiusMultiplier			= Configuration::get()->getProperty( index, "radius_multiplier" )->as<double>();
-	p.contourDetail				= Configuration::get()->getProperty( index, "contour_detail" )->as<unsigned int>();
-	p.debugGeometryScale		= Configuration::get()->getProperty( index, "debug_geometry_scale" )->as<double>();
-	p.angleVariance				= Configuration::get()->getProperty( index, "angle_variance" )->as<unsigned int>();
-	p.gravitropismElasticity	= Configuration::get()->getProperty( index, "gravitropism_elasticity" )->as<double>();
-	p.tropismElasticity			= Configuration::get()->getProperty( index, "tropism_elasticity" )->as<double>();
-	p.tropismAngle				= Configuration::get()->getProperty( index, "tropism_angle" )->as<double>();
+	p.texRepeatingS				= Configuration::get()->getProperty( index, "TextureSRepeatings")->as<unsigned int>();
+	p.angle						= Configuration::get()->getProperty( index, "DefaultAngle" )->as<double>();
+	p.length					= Configuration::get()->getProperty( index, "DefaultLength" )->as<double>();
+	p.radius					= Configuration::get()->getProperty( index, "DefaultRadius" )->as<double>();
+	p.lengthMultiplier			= Configuration::get()->getProperty( index, "LengthMultiplier" )->as<double>();
+	p.angleMultiplier			= Configuration::get()->getProperty( index, "AngleMultiplier" )->as<double>();
+	p.radiusMultiplier			= Configuration::get()->getProperty( index, "RadiusMultiplier" )->as<double>();
+	p.contourDetail				= Configuration::get()->getProperty( index, "ContourDetail" )->as<unsigned int>();
+	p.debugGeometryScale		= Configuration::get()->getProperty( index, "DebugGeometryScale" )->as<double>();
+	p.angleVariance				= Configuration::get()->getProperty( index, "AngleVariance" )->as<unsigned int>();
+	p.gravitropismElasticity	= Configuration::get()->getProperty( index, "GravitropismElasticity" )->as<double>();
+	p.tropismElasticity			= Configuration::get()->getProperty( index, "TropismElasticity" )->as<double>();
+	p.tropismAngle				= Configuration::get()->getProperty( index, "TropismAngle" )->as<double>();
 	
 	// process vectors
 	std::vector<double> values;
 
-	StringUtils::processVector(Configuration::get()->getProperty( index, "tropism_vector" )->as<std::string>(), values );
+	StringUtils::processVector(Configuration::get()->getProperty( index, "TropismVector" )->as<std::string>(), values );
 	p.tropismVector = osg::Vec3d( values[0], values[1], values[2] );
 	p.tropismVector.normalize();
 	values.clear();

@@ -1,12 +1,11 @@
-#ifndef LSYSTEMGRAMMAR_H
-#define LSYSTEMGRAMMAR_H
+#ifndef LSYSTEM_H_
+#define LSYSTEM_H_
 
-//#include <map>
-#include "abstractgrammar.h"
+#include "abstractlsystem.h"
 #include "rule.h"
 
 namespace AP_LSystem {
-class LSystem : public AbstractGrammar
+class LSystem : public AbstractLSystem
 {
 protected:
     LongString * _word;
@@ -43,4 +42,4 @@ public:
 	virtual void processCutSymbol( );
 };
 }
-#endif // LSYSTEMGRAMMAR_H
+#endif // LSYSTEM_H_

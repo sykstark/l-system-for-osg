@@ -3,8 +3,9 @@
 #include "lsystem.h"
 #include "configuration.h"
 #include "lsfile.h"
-#include "parstoch0lsystemgrammar.h"
-#include "par2lsystemgrammar.h"
+#include "xmlfile.h"
+#include "parstoch0lsystem.h"
+#include "par2lsystem.h"
 #ifdef _MSC_VER
 #include "queryinterpret.h"
 #endif
@@ -21,40 +22,44 @@ void LSystem::loadFromFile( AbstractFile * file)
     this->_name = file->name();
 
     AbstractFile * subFile;
-    AbstractGrammar * ls;
+    AbstractLSystem * ls;
 
-	// map for replacing grammar names in rules, axiom and homomorphism by their index
+	// map for replacing l-system names in rules, axiom and homomorphism by their index
     std::map< string, string > lsystemSubstitute;
-    // generate words of subgrammars
-    vector<std::string>::iterator itGrammars = file->getSubsystems()->begin();
-    for(; itGrammars != file->getSubsystems()->end(); itGrammars++)
+    // generate words of sublsystems
+    vector<std::string>::iterator itLSystems = file->getSubsystems()->begin();
+    for(; itLSystems != file->getSubsystems()->end(); itLSystems++)
     {
         // determine extension of file
-        unsigned int pos = itGrammars->rfind( '.' );
+        unsigned int pos = itLSystems->rfind( '.' );
         if( pos == std::string::npos )
         {
             return;
         }
-        std::string ext = itGrammars->substr( pos + 1, std::string::npos );
+        std::string ext = itLSystems->substr( pos + 1, std::string::npos );
 
         // load file depending on extension
         if( ext == "ls" )
         {
             subFile = new LSFile;
         }
+		else if( ext == "xml" )
+		{
+			subFile = new XmlFile;
+		}
         else
         {
-            throw FileException("unknown extension: ");
+            throw FileException("unknown extension: " + ext);
         }
 
         // open file
-        subFile->open(*itGrammars);
+        subFile->open(*itLSystems);
 
         // choose best for word generation
-        if( ParStoch0LSystemGrammar::isCapable( subFile->type() ) )
-            ls = new ParStoch0LSystemGrammar( subFile );
-		else if( Par2LSystemGrammar::isCapable( subFile->type() ) )
-            ls = new Par2LSystemGrammar( subFile );
+        if( ParStoch0LSystem::isCapable( subFile->type() ) )
+            ls = new ParStoch0LSystem( subFile );
+		else if( Par2LSystem::isCapable( subFile->type() ) )
+            ls = new Par2LSystem( subFile );
         else
             throw ParsingException("non of L-systems fulfils the conditions");
 
@@ -69,7 +74,7 @@ void LSystem::loadFromFile( AbstractFile * file)
     if(!lsystemSubstitute.empty())
         file->substitute( lsystemSubstitute );
 
-    // initialize word inside grammar and load an axiom into
+    // initialize word inside l-system and load an axiom into
     this->setAxiom( file->getAxiom() );
 
     // process rule strings - convert to instances of Rule class
@@ -85,7 +90,7 @@ void LSystem::setAxiom(std::string & axiom)
     if(_word) delete _word;
     _word = new LongString( );
     _word->append('$');
-    _word->append( static_cast<unsigned char>(Configuration::get()->getGrammarIndex( this->_name )) );
+    _word->append( static_cast<unsigned char>(Configuration::get()->getLSystemIndex( this->_name )) );
     _word->convertFromString( &axiom );
     _word->append('$');
 }
@@ -103,10 +108,10 @@ void LSystem::transcribeSubSystems()
 	int * pParams = parameters;
 	int parametersCnt = 0;
 
-	// look for subgrammars
+	// look for subsystems
 	for(unsigned int i = 0; i < _word->length(); i++ )
     {
-		// subgrammars are indetified by $ sign - get all data before $
+		// subsystems are indetified by $ sign - get all data before $
 		data = _word->getData( i, len, '#' );
 
 		// no data

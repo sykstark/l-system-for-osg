@@ -1,8 +1,9 @@
 #include "precompiled.h"
-#include "grammargenerator.h"
-#include "parstoch0lsystemgrammar.h"
-#include "par2lsystemgrammar.h"
+#include "lsystemgenerator.h"
+#include "parstoch0lsystem.h"
+#include "par2lsystem.h"
 #include "lsfile.h"
+#include "xmlfile.h"
 #include "log.h"
 
 using namespace AP_LSystem;
@@ -21,13 +22,13 @@ void LSystemGenerator::loadFile(std::string & filename)
 
     if( filename.empty() )
     {
-        return;
+        throw FileException("Filename of L-system file is empty");
     }
 
     unsigned int pos = filename.rfind( '.' );
     if( pos == std::string::npos )
     {
-        return;
+        throw FileException("Filename of L-system file has no extension");
     }
 
     std::string ext = filename.substr( pos + 1, std::string::npos );
@@ -36,24 +37,28 @@ void LSystemGenerator::loadFile(std::string & filename)
     {
         file = new LSFile;
     }
+	else if( ext == "xml" )
+    {
+        file = new XmlFile;
+    }
     else
     {
-        throw FileException("unknown extension: ");
+        throw FileException("Filename of L-system file has unknown extension: " + ext);
     }
 
     file->open(filename);
 
-    if( ParStoch0LSystemGrammar::isCapable( file->type() ) )
-        pMainGrammar = new ParStoch0LSystemGrammar( file );
-	else if( Par2LSystemGrammar::isCapable( file->type() ) )
-        pMainGrammar = new Par2LSystemGrammar( file );
+    if( ParStoch0LSystem::isCapable( file->type() ) )
+        pMainLSystem = new ParStoch0LSystem( file );
+	else if( Par2LSystem::isCapable( file->type() ) )
+        pMainLSystem = new Par2LSystem( file );
 	else
-		throw ParsingException("non of grammars fulfils the conditions");
+		throw ParsingException("non of L-systems fulfils the conditions");
 }
 
 void LSystemGenerator::nextIteration()
 {
-    pMainGrammar->nextIteration();
+    pMainLSystem->nextIteration();
 }
 
 ParseableString * LSystemGenerator::getWord()
@@ -63,7 +68,7 @@ ParseableString * LSystemGenerator::getWord()
 
     LongString * word = NULL;
 
-    word = pMainGrammar->translate( );
+    word = pMainLSystem->translate( );
 	
 	if(!word)
 		return NULL;

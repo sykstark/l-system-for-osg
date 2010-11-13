@@ -16,7 +16,7 @@ protected:
     string axiom;
 
     std::vector<string> rules;
-    std::vector<string> homomorhisms;
+    std::vector<string> homomorphisms;
     std::vector<string> subsytems;
 public:
     AbstractFile(): _type(0){}
@@ -59,7 +59,7 @@ public:
 
     virtual std::vector<string> * getHomomorphisms()
     {
-        return &homomorhisms;
+        return &homomorphisms;
     }
 
     virtual std::vector<string> * getRules()

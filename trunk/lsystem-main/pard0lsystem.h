@@ -1,15 +1,15 @@
-#ifndef PARD0LSYSTEMGRAMMAR_H
-#define PARD0LSYSTEMGRAMMAR_H
+#ifndef PARD0LSYSTEM_H_
+#define PARD0LSYSTEM_H_
 
-#include "abstract0lsystemgrammar.h"
+#include "abstract0lsystem.h"
 
 namespace AP_LSystem {
-class ParD0LSystemGrammar : public Abstract0LSystemGrammar
+class ParD0LSystem : public Abstract0LSystem
 {
 private:
     static const unsigned int capabilities = LS_0L | LS_DETERMINISTIC | LS_PARAMETRIC;
 public:
-    ParD0LSystemGrammar();
+    ParD0LSystem();
 
     static bool isCapable( unsigned int type )
     {
@@ -20,4 +20,4 @@ public:
     }
 };
 }
-#endif // PARD0LSYSTEMGRAMMAR_H
+#endif // PARD0LSYSTEM_H_

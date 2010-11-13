@@ -25,13 +25,13 @@ void LSFile::open(std::string & filename)
     std::string id, emptyString;
 
     id = StringUtils::processLine( file, line );
-    if(id=="#grammar")
+    if(id=="#lsystem")
     {
         line >> _name;
         while( true )
         {
             id = StringUtils::processLine( file, line);
-            if(id=="#endgrammar" ) break;
+            if(id=="#endlsystem" ) break;
 
             if(id=="#set")
             {
@@ -48,19 +48,19 @@ void LSFile::open(std::string & filename)
                 }
                 catch( std::exception & e)
                 {
-                    throw ParsingException( "Property error: " + string(e.what()) );
+					throw ParsingException( "Property error in L-system \"" + _name + "\": " + string(e.what()) );
                 }
             }
             else if(id=="#include")
             {
-                string grammar; // property
-                line >> grammar;
+                string lsystem; // property
+                line >> lsystem;
                 //line.str("");
-                if( grammar == "" )
+                if( lsystem == "" )
                 {
                     throw ParsingException("Bad format of #include");
                 }
-                subsytems.push_back( grammar );
+                subsytems.push_back( lsystem );
             }
             else if(id=="#define")
             {
@@ -118,7 +118,7 @@ void LSFile::open(std::string & filename)
                     id = StringUtils::processLine( file, line);
                     if( id!="#endhomomorphisms" )
                     {
-                        this->homomorhisms.push_back( id );
+                        this->homomorphisms.push_back( id );
                     }
                     else
                     {
@@ -147,7 +147,7 @@ void LSFile::open(std::string & filename)
     else
     {
         if(file) file->close();
-        throw ParsingException("#grammar not found");
+        throw ParsingException("#lsystem not found");
     }
     file->close();
     delete file;
@@ -173,7 +173,7 @@ void LSFile::processType( std::string str )
             str.erase(str.length()-1, 1);
         else
         {
-            throw ParsingException("error in parsing of grammar type");
+            throw ParsingException("error in parsing of lsystem type");
         }
     }
 
@@ -223,7 +223,7 @@ void LSFile::processType( std::string str )
         }
         else
         {
-            throw ParsingException("unknown grammar type");
+            throw ParsingException("unknown lsystem type");
         }
 
 		pos = end + 1;

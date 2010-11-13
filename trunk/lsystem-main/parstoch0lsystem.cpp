@@ -1,11 +1,11 @@
 #include "precompiled.h"
 
-#include "parstoch0lsystemgrammar.h"
+#include "parstoch0lsystem.h"
 #include "randomindex.h"
 
 using namespace AP_LSystem;
 
-ParStoch0LSystemGrammar::ParStoch0LSystemGrammar( AbstractFile * file )
+ParStoch0LSystem::ParStoch0LSystem( AbstractFile * file )
 {
     this->loadFromFile( file );
     for( unsigned iter = 0; iter < _iteration; iter++ )
@@ -15,7 +15,7 @@ ParStoch0LSystemGrammar::ParStoch0LSystemGrammar( AbstractFile * file )
 	RandomIndex::init();
 }
 
-multimap<char, Rule>::iterator * ParStoch0LSystemGrammar::selectRule(multimap<char, Rule>::iterator & begin,
+multimap<char, Rule>::iterator * ParStoch0LSystem::selectRule(multimap<char, Rule>::iterator & begin,
                                                                      multimap<char, Rule>::iterator & end,
 																	 LongString * word,
 																	 unsigned int & pos,

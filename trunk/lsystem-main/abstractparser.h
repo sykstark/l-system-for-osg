@@ -45,7 +45,7 @@ public:
 
 	void createGeodes()
 	{
-		unsigned int count = Configuration::get()->getGrammarCount();
+		unsigned int count = Configuration::get()->getLSystemCount();
 		LSGeode * pGeode;
 		for( unsigned int i = 0; i < count; i++)
 		{

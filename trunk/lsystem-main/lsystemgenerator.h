@@ -1,5 +1,5 @@
-#ifndef GRAMMARGENERATOR_H_
-#define GRAMMARGENERATOR_H_
+#ifndef LSYSTEMGENERATOR_H_
+#define LSYSTEMGENERATOR_H_
 
 #include "abstractgenerator.h"
 

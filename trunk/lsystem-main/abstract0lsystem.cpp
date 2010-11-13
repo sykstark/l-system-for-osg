@@ -1,14 +1,14 @@
 #include "precompiled.h"
 
-#include "abstract0lsystemgrammar.h"
+#include "abstract0lsystem.h"
 
 using namespace AP_LSystem;
 
-Abstract0LSystemGrammar::Abstract0LSystemGrammar()
+Abstract0LSystem::Abstract0LSystem()
 {
 }
 
-void Abstract0LSystemGrammar::processPredecessor(Rule & r, string * rule, string::iterator & it)
+void Abstract0LSystem::processPredecessor(Rule & r, string * rule, string::iterator & it)
 {
     // process a rule
     // example: A(x,y):x<y->B(x+1,y-2):max(1,x)
@@ -33,7 +33,7 @@ void Abstract0LSystemGrammar::processPredecessor(Rule & r, string * rule, string
     }
 }
 
-void Abstract0LSystemGrammar::processRuleSuccessor(Rule & r, string * rule, string::iterator & it)
+void Abstract0LSystem::processRuleSuccessor(Rule & r, string * rule, string::iterator & it)
 {
     // look for opening bracket - end of static string
     //		each rule has to start with static string
@@ -48,7 +48,7 @@ void Abstract0LSystemGrammar::processRuleSuccessor(Rule & r, string * rule, stri
     this->_rules.insert(make_pair< char, Rule >(r.strictPredecessor, r ));
 }
 
-void Abstract0LSystemGrammar::processHomomorphismSuccessor(Rule & r, string * hom, string::iterator & it)
+void Abstract0LSystem::processHomomorphismSuccessor(Rule & r, string * hom, string::iterator & it)
 {
     // homomorphism successor
     // example: +F(x)
