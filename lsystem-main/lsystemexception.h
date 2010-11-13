@@ -1,11 +1,8 @@
-//#pragma once
-
 #ifndef ABSTRACTLSYSTEMEX_H
 #define ABSTRACTLSYSTEMEX_H
 
 #include <exception>
 #include <string>
-//#include <iostream>/*temporarily*/
 
 namespace AP_LSystem {
 
@@ -88,6 +85,32 @@ public:
     virtual void appendType()
     {
         type.append( "file i/o error: " );
+    }
+};
+
+class ConfigurationException : public LSystemException
+{
+public:
+    ConfigurationException()
+    {
+        appendType();
+    }
+
+    ConfigurationException( const char * description)
+    {
+        appendType();
+        this->message.append(description);
+    }
+
+    ConfigurationException( std::string description)
+    {
+        appendType();
+        this->message.append(description);
+    }
+
+    virtual void appendType()
+    {
+        type.append( "Configuration error: " );
     }
 };
 }

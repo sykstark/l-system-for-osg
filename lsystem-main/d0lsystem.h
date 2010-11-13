@@ -1,15 +1,15 @@
-#ifndef D0LSYSTEMGRAMMAR_H
-#define D0LSYSTEMGRAMMAR_H
+#ifndef D0LSYSTEM_H_
+#define D0LSYSTEM_H_
 
-#include "abstract0lsystemgrammar.h"
+#include "abstract0lsystem.h"
 
 namespace AP_LSystem {
-class D0LSystemgrammar : public Abstract0LSystemGrammar
+class D0LSystem : public Abstract0LSystem
 {
 private:
     static const unsigned int capabilities = LS_0L | LS_DETERMINISTIC;
 public:
-    D0LSystemgrammar();
+    D0LSystem();
 
     static bool isCapable( unsigned int type )
     {
@@ -21,4 +21,4 @@ public:
 };
 }
 
-#endif // D0LSYSTEMGRAMMAR_H
+#endif // D0LSYSTEM_H_

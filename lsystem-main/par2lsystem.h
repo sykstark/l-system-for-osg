@@ -1,15 +1,15 @@
-#ifndef PAR2LSYSTEMGRAMMAR_H
-#define PAR2LSYSTEMGRAMMAR_H
+#ifndef PAR2LSYSTEM_H_
+#define PAR2LSYSTEM_H_
 
-#include "abstractklsystemgrammar.h"
+#include "abstractklsystem.h"
 
 namespace AP_LSystem {
-class Par2LSystemGrammar : public AbstractkLSystemGrammar
+class Par2LSystem : public AbstractkLSystem
 {
 private:
     static const unsigned int capabilities = LS_2L | LS_DETERMINISTIC | LS_PARAMETRIC;	
 public:
-    Par2LSystemGrammar( AbstractFile * );
+    Par2LSystem( AbstractFile * );
     virtual void processPredecessor(Rule &, string *, string::iterator &);
     virtual void processRuleSuccessor(Rule &, string *, string::iterator &);
     virtual void processHomomorphismSuccessor(Rule &, string *, string::iterator &);
@@ -29,4 +29,4 @@ public:
 };
 }
 
-#endif // PAR2LSYSTEMGRAMMAR_H
+#endif // PAR2LSYSTEM_H_

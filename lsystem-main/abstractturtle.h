@@ -52,7 +52,7 @@ public:
 		properties = p;
 	}
 
-	virtual void inheritProperties( TurtleProperties p ) ///> defines which properties shoul be inherited from parent to sub-grammar turtle
+	virtual void inheritProperties( TurtleProperties p ) ///> defines which properties shoul be inherited from parent to sub-system turtle
 	{
 		// inherit matrix
 		properties.matrix = p.matrix;

@@ -1,15 +1,15 @@
 #include "precompiled.h"
 
-#include "par2lsystemgrammar.h"
+#include "par2lsystem.h"
 
 using namespace AP_LSystem;
 
-Par2LSystemGrammar::Par2LSystemGrammar( AbstractFile * file )
+Par2LSystem::Par2LSystem( AbstractFile * file )
 {
 	this->loadFromFile( file );
 }
 
-void Par2LSystemGrammar::processPredecessor(Rule & r, string * rule, string::iterator & it)
+void Par2LSystem::processPredecessor(Rule & r, string * rule, string::iterator & it)
 {
     // process a rule
     // example: B(k,l,m)<A(x,y)>C(z):x<y+k->B(l+1,y-2,z+m)
@@ -74,7 +74,7 @@ void Par2LSystemGrammar::processPredecessor(Rule & r, string * rule, string::ite
     }
 }
 
-void Par2LSystemGrammar::processRuleSuccessor(Rule & r, string * rule, string::iterator & it)
+void Par2LSystem::processRuleSuccessor(Rule & r, string * rule, string::iterator & it)
 {
     // look for opening bracket - end of static string
     //		each rule has to start with static string
@@ -90,7 +90,7 @@ void Par2LSystemGrammar::processRuleSuccessor(Rule & r, string * rule, string::i
     this->_rules.insert(make_pair< char, Rule >(r.strictPredecessor, r ));
 }
 
-void Par2LSystemGrammar::processHomomorphismSuccessor(Rule & r, string * hom, string::iterator & it)
+void Par2LSystem::processHomomorphismSuccessor(Rule & r, string * hom, string::iterator & it)
 {
     // homomorphism successor
     // example: +F(x)
@@ -104,7 +104,7 @@ void Par2LSystemGrammar::processHomomorphismSuccessor(Rule & r, string * hom, st
     this->_homomorphisms.insert(make_pair< char, Rule >(r.strictPredecessor, r ));
 }
 
-multimap<char, Rule>::iterator * Par2LSystemGrammar::selectRule(multimap<char, Rule>::iterator & begin,
+multimap<char, Rule>::iterator * Par2LSystem::selectRule(multimap<char, Rule>::iterator & begin,
                                                                 multimap<char, Rule>::iterator & end,
 																LongString * word,
 																unsigned int & pos,

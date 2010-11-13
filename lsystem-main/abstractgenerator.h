@@ -2,22 +2,21 @@
 #define ABSTRACTGENERATOR_H_
 
 #include <string>
-//#include "longstring.h"
 #include "parseablestring.h"
-#include "AbstractGrammar.h"
+#include "abstractlsystem.h"
 
 namespace AP_LSystem {
 class AbstractGenerator
 {
 protected:
     ParseableString * pWord;
-    AbstractGrammar * pMainGrammar;
+    AbstractLSystem * pMainLSystem;
 	
 public:
 	AbstractGenerator(void)
 	{
 		pWord = NULL;
-		pMainGrammar = NULL;
+		pMainLSystem = NULL;
 	}
 
 	~AbstractGenerator(void)

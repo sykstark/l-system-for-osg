@@ -48,7 +48,14 @@ bool Configuration::loadCfgFile(std::string filename)
 
     if(ifs.is_open())
     {
-        store(parse_config_file(ifs, description), globalProperties);
+		try
+		{
+			store(parse_config_file(ifs, description), globalProperties);
+		}
+		catch( std::exception & e )
+		{
+			throw FileException(string("Configuration file parsing error: ") + e.what());
+		}
         return true;
     }
     else
@@ -65,19 +72,19 @@ Configuration * Configuration::get()
 	return config;
 }
 
-const int Configuration::getGrammarIndex(const string & name)
+const int Configuration::getLSystemIndex(const string & name)
 {
-    if( grammarNameMap.count(name))
+    if( lsystemNameMap.count(name))
     {
-        return grammarNameMap[name];
+        return lsystemNameMap[name];
     }
     else
         return -1;
 }
 
-const int Configuration::getGrammarCount()
+const int Configuration::getLSystemCount()
 {
-	return grammarProperties.size();
+	return lsystemProperties.size();
 }
 
 void Configuration::setProperty(const std::string &prop)
@@ -101,23 +108,53 @@ void Configuration::setProperty(const std::string &prop)
     globalProperties.insert( *vm.begin( ) );
 }
 
-void Configuration::setProperty(const std::string &grammarID, const std::string &prop)
+void Configuration::setProperty(const std::string &lsystemID, const std::string &prop)
 {
-    // was variable map for this grammar already created ?
-    if( !grammarNameMap.count( grammarID ) )
+    // was variable map for this lsystem already created ?
+    if( !lsystemNameMap.count( lsystemID ) )
     {
-        // bind grammar name with index in grammarProperties vector
-        grammarNameMap[grammarID] = grammarProperties.size();
-        // add variable map for new grammar
-        grammarProperties.push_back( variables_map() );
+        // bind l-system name with index in lsystemProperties vector
+        lsystemNameMap[lsystemID] = lsystemProperties.size();
+        // add variable map for new lsystem
+        lsystemProperties.push_back( variables_map() );
     }
 
     std::stringstream stream;
     stream << prop;
 
-    // parse property to variable map of current grammar
-    store(parse_config_file( stream, description), grammarProperties[ grammarNameMap[grammarID] ] );
-    notify(grammarProperties[ grammarNameMap[grammarID] ]);
+    // parse property to variable map of current lsystem
+    store(parse_config_file( stream, description), lsystemProperties[ lsystemNameMap[lsystemID] ] );
+    notify(lsystemProperties[ lsystemNameMap[lsystemID] ]);
+}
+
+void Configuration::setProperty(const std::string &lsystemID, const std::string & prop, const std::string & value)
+{
+    // was variable map for this lsystem already created ?
+    if( !lsystemNameMap.count( lsystemID ) )
+    {
+        // bind lsystem name with index in lsystemProperties vector
+        lsystemNameMap[lsystemID] = lsystemProperties.size();
+        // add variable map for new lsystem
+        lsystemProperties.push_back( variables_map() );
+    }
+
+    std::stringstream stream;
+    stream << prop << "=" << value;
+
+    // parse property to variable map of current lsystem
+	try
+	{
+		store(parse_config_file( stream, description), lsystemProperties[ lsystemNameMap[lsystemID] ] );
+		notify(lsystemProperties[ lsystemNameMap[lsystemID] ]);
+	}
+	catch( boost::program_options::invalid_option_value & )
+	{
+		throw ConfigurationException( "Cannot set value of \"" + prop + "\": Invalid value: " + value );
+	}
+	catch( boost::program_options::unknown_option & e )
+	{
+		throw ConfigurationException( e.what() );
+	}
 }
 
 const variable_value * Configuration::getProperty(const std::string & name)
@@ -132,13 +169,13 @@ const variable_value * Configuration::getProperty(const std::string & name)
 	}
 }
 
-const variable_value * Configuration::getProperty(const std::string &grammarID, const std::string & name)
+const variable_value * Configuration::getProperty(const std::string &lsystemID, const std::string & name)
 {
-    if(grammarNameMap.count(grammarID))
+    if(lsystemNameMap.count(lsystemID))
     {
-        if(grammarProperties[grammarNameMap[grammarID]].count(name))
+        if(lsystemProperties[lsystemNameMap[lsystemID]].count(name))
         {
-            return &grammarProperties[grammarNameMap[grammarID]][name];
+            return &lsystemProperties[lsystemNameMap[lsystemID]][name];
         }
     }
     if(globalProperties.count(name))
@@ -151,15 +188,15 @@ const variable_value * Configuration::getProperty(const std::string &grammarID, 
     }
 }
 
-const variable_value * Configuration::getProperty(const unsigned int grammarIndex, const std::string & name)
+const variable_value * Configuration::getProperty(const unsigned int lsystemIndex, const std::string & name)
 {
-    // index of existing grammar ?
-	if(grammarIndex < grammarProperties.size( ))
+    // index of existing lsystem ?
+	if(lsystemIndex < lsystemProperties.size( ))
     {
-        // is property set for current grammar ?
-		if(grammarProperties[grammarIndex].count(name))
+        // is property set for current lsystem ?
+		if(lsystemProperties[lsystemIndex].count(name))
         {
-            return &grammarProperties[grammarIndex][name];
+            return &lsystemProperties[lsystemIndex][name];
         }
     }
     // get property from global properties

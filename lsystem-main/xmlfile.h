@@ -9,7 +9,14 @@ namespace AP_LSystem {
 class XmlFile : public AbstractFile
 {
 private:
+	xercesc::XercesDOMParser * m_FileParser;
     std::map<string, string> defines;
+
+	void processParameters(xercesc::DOMNode *);
+	void processRules(xercesc::DOMNode *);
+	void processHomomorphisms(xercesc::DOMNode *);
+	void processSubsystems(xercesc::DOMNode *);
+	void processConstants(xercesc::DOMNode *);
 public:
     XmlFile();
 
