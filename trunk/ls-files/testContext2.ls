@@ -12,7 +12,7 @@ X
 #endaxiom
 #rules  
 <X>->FAP(positionX(),positionY())
-<A>P(x,y):(!((x<-L/2)|(x>L/2)|(y<0)|(y>L)))->KF/(180)A
+<A>P(x,y):(!((x<-L/2)|(x>L/2)|(y<0)|(y>L)))->KFA
 <A>P(x,y):((x<-L/2)|(x>L/2)|(y<0)|(y>L))->T%
 <F>T->S
 <F>S->SF

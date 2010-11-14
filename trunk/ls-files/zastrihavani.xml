@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<LSystem>
+  <Name>ternarni strom</Name>
+  <Types>
+    <Type>2L</Type>
+  </Types>
+  <Constants>
+    <L>5</L>
+  </Constants>
+  <Parameters>
+    <Iteration>100</Iteration>
+    <TurtleType>STRAIGHT_PIPE</TurtleType>
+    <DefaultAngle>40.0</DefaultAngle>
+    <DefaultLength>1.0</DefaultLength>
+    <ContourDetail>10</ContourDetail>
+    <DefaultRadius>0.05</DefaultRadius>
+    <AngleVariance>0</AngleVariance>
+    <DiffuseTexture>data\ls\tex\bark\bark_20091031_05_512x512_seamless.jpg</DiffuseTexture>
+    <Ignore>+/-</Ignore>
+  </Parameters>
+  <Axiom>X</Axiom>
+  <Rules>
+    <P1>&lt;X>->FAP(positionZ(),positionY())</P1>
+    <P2>&lt;A>P(x,y):(!((x&lt;-L/2)|(x>L/2)|(y&lt;0)|(y>L)))->KF/(180)A</P2>
+    <P3>&lt;A>P(x,y):((x&lt;-L/2)|(x>L/2)|(y&lt;0)|(y>L))->T%</P3>
+    <P4>&lt;F>T->S</P4>
+    <P5>&lt;F>S->SF</P5>
+    <P6>&lt;S>->e</P6>
+    <P7>&lt;K>S->[+FAP(positionZ(),positionY())]</P7>
+    <P8>&lt;P(x,y)>->P(positionZ(),positionY())</P8>
+    <P9>&lt;T>->e</P9>
+  </Rules>
+</LSystem>
