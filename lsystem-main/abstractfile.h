@@ -4,6 +4,8 @@
 #include <string>
 #include <vector>
 #include <map>
+#include "configuration.h"
+#include "lsystemexception.h"
 
 using std::string;
 
@@ -18,6 +20,46 @@ protected:
     std::vector<string> rules;
     std::vector<string> homomorphisms;
     std::vector<string> subsytems;
+
+	void addType( std::string & type )
+	{
+		if(type == "0L")
+		{
+			_type |= LS_0L;
+		}
+		else if(type == "1LL")
+		{
+			_type |= LS_1LL;
+		}
+		else if(type == "1LR")
+		{
+			_type |= LS_1LR;
+		}
+		else if(type == "2L")
+		{
+			_type |= LS_2L;
+		}
+		else if(type == "kL")
+		{
+			_type |= LS_kL;
+		}
+		else if(type == "DETERMINISTIC")
+		{
+			_type |= LS_DETERMINISTIC;
+		}
+		else if(type == "STOCHASTIC")
+		{
+			_type |= LS_STOCHASTIC;
+		}
+		else if(type == "PARAMETRIC")
+		{
+			_type |= LS_PARAMETRIC;
+		}
+		else
+		{
+			throw ParsingException("unknown lsystem type");
+		}
+	}
 public:
     AbstractFile(): _type(0){}
     virtual void open( std::string & ) = 0;

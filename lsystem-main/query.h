@@ -22,7 +22,7 @@ public:
 
 	static double positionZ( const double * )
 	{
-		return QueryInterpret::get()->positionY();
+		return QueryInterpret::get()->positionZ();
 	}
 
 };

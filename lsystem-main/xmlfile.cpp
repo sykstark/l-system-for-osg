@@ -89,12 +89,19 @@ void XmlFile::open(std::string & filename)
 		{
 			throw ParsingException( "\"Axiom\" node wasn't found. Axiom is required." );
 		}
-		
+
 		// process all parameters
 		DOMNode * node = findXMLNode( elementRoot, "Parameters", false );
 		if( node )
 		{
 			processParameters(node);
+		}
+
+		// parse type
+		node = findXMLNode( elementRoot, "Types", false );
+		if( node )
+		{
+			processType(node);
 		}
 
 		// parse rules
@@ -218,5 +225,29 @@ void XmlFile::processHomomorphisms(xercesc::DOMNode * node)
 	{
 		homomorphisms.push_back( XMLString::transcode(homNode->getTextContent()) );
 		homIndex++;
+	}
+}
+
+void XmlFile::processType(xercesc::DOMNode * type)
+{
+	DOMNodeList * children = type->getChildNodes();
+    const XMLSize_t nodeCount = children->getLength();
+	string value;
+
+	for( XMLSize_t xx = 0; xx < nodeCount; ++xx )
+	{
+		DOMNode* currentNode = children->item(xx);
+		//value = XMLString::transcode( currentNode->getNodeValue() );
+		if( currentNode->getNodeType() && currentNode->getNodeType() == DOMNode::ELEMENT_NODE ) // is element 
+		{
+			// Found node which is an Element. Re-cast node as element
+			DOMElement* currentElement = dynamic_cast< xercesc::DOMElement* >( currentNode );
+
+			if( string(XMLString::transcode(currentElement->getTagName())) == "Type" )
+			{
+				value = XMLString::transcode(currentElement->getTextContent());
+				this->addType( value );
+			}
+		}
 	}
 }

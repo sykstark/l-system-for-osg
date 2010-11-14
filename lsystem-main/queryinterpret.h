@@ -120,6 +120,7 @@ private:
 		}
 		// store complete matrix of turtle
 		matrix = turtles.top()->getMatrix();
+		turtles.clear();
 		return 0;
 	}
 	//QueryInterpret( );
@@ -199,6 +200,7 @@ public:
 	void bindWord( LongString * str)
 	{
 		word = str;
+		matrix.makeIdentity();
 	}
 	
 };

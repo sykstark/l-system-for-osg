@@ -6,6 +6,8 @@
 namespace AP_LSystem {
 class AbstractkLSystem : public LSystem
 {
+protected:
+	
 public:
     AbstractkLSystem();
 };
