@@ -8,7 +8,7 @@
     <high>0.2</high>
   </Constants>
   <Parameters>
-    <Iteration>16</Iteration>
+    <Iteration>14</Iteration>
     <TurtleType>STRAIGHT_PIPE</TurtleType>
     <DefaultAngle>30.0</DefaultAngle>
     <DefaultLength>10.0</DefaultLength>

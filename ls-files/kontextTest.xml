@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<LSystem>
+  <Name>ternarni strom</Name>
+  <Types>
+    <Type>2L</Type>
+  </Types>
+  <Constants>
+    <L>5</L>
+  </Constants>
+  <Parameters>
+    <Iteration>12</Iteration>
+    <TurtleType>STRAIGHT_PIPE</TurtleType>
+    <DefaultAngle>30.0</DefaultAngle>
+    <DefaultLength>1.0</DefaultLength>
+    <ContourDetail>10</ContourDetail>
+    <DefaultRadius>0.05</DefaultRadius>
+    <AngleVariance>0</AngleVariance>
+    <DiffuseTexture>data\ls\tex\bark\bark_20091031_05_512x512_seamless.jpg</DiffuseTexture>
+    <Ignore>+/-</Ignore>
+  </Parameters>
+  <Axiom>F[+S]</Axiom>
+  <Rules>
+    <P1>&lt;F>S->SF</P1>
+  </Rules>
+</LSystem>
