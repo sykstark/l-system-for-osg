@@ -141,14 +141,14 @@ int LongString::matchRight( char ch, int pos, const std::string * ignore, const 
 		return matchRight( ch, pos + 1, ignore, consider );
 	}
 	// if there is some chars in consider, ch must be inluded, otherwise match next
-	else if( consider && (!consider->empty()) && (consider->find(ch) == std::string::npos ) )
+	else if( consider && (!consider->empty()) && (consider->find(pStr[pos]) == std::string::npos ) )
 	{
 		peekSymbol( pos, true );
 		return matchRight( ch, pos, ignore, consider );
 	}
-	else if( ignore && ( ignore->find(ch) != std::string::npos ) )
+	else if( ignore && ( ignore->find(pStr[pos]) != std::string::npos ) )
 	{
-		peekSymbol( pos, true );
+		peekSymbol( ++pos, true );
 		return matchRight( ch, pos, ignore, consider );
 	}
 	else if( pStr[pos] == ch )
@@ -208,14 +208,18 @@ void LongString::convertFromString(std::string * source, unsigned int & pos, con
     chars.append( 1, delimiter );
 
     // epsilon rule
-    if( (source->size() > 0) && (source->at(0)=='e') )
+    if( (source->size() > pos) && (source->at(pos)=='e') )
     {
         pos = source->find(delimiter, 0);
         return;
     }
 
-	//TODO if carka
-	bool betweenBrackets = false;
+	// test if we are inside brackets
+	bool betweenBrackets;
+	if( pos && (*(begin-1) == ',') )
+		betweenBrackets = true;
+	else
+		betweenBrackets = false;
     while(true)
     {   
         i = source->find_first_of( chars, begin - source->begin( ) );
@@ -275,14 +279,14 @@ void LongString::append( const char ch )
 {
     if(_allocated < _length + 1)
     {
-            resize( );
+        resize( );
     }
     pStr[_length++] = ch;
 }
 
 void LongString::append(const char * buffer, int length)
 {
-    if(_allocated < _length + length)
+    while(_allocated < _length + length)
     {
         resize( );
     }

@@ -13,6 +13,7 @@ protected:
     multimap<char, Rule> _homomorphisms;
     vector<string> _subSystemsFilenames;
     vector< LongString *> _subSystemsWords;
+	string ignore;
 
     // Loading and parsing
     virtual void setAxiom(std::string &);

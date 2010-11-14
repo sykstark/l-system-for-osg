@@ -35,6 +35,7 @@ Configuration::Configuration(void)
             ("AngleVariance", value<unsigned int>())
             ("UseQueries", value<unsigned int>())
             ("SeparateGeometryForTranslucent", value<unsigned int>())
+			("Ignore", value<std::string>())
             ("TurtleType", value<std::string>());
 }
 

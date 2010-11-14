@@ -36,7 +36,7 @@ public:
 	 */
 	AbstractTurtle * top( );
 
-
+	void clear( );
 };
 }
 

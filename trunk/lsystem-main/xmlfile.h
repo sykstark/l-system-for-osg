@@ -17,6 +17,7 @@ private:
 	void processHomomorphisms(xercesc::DOMNode *);
 	void processSubsystems(xercesc::DOMNode *);
 	void processConstants(xercesc::DOMNode *);
+	void processType(xercesc::DOMNode *);
 public:
     XmlFile();
 

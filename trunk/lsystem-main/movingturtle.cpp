@@ -76,10 +76,10 @@ int MovingTurtle::makeRotate(osg::Quat & q)
 
 int MovingTurtle::drawStep( double dist)
 {
-	int ret = LS_NOTDEFINED;
+	int ret = LS_OK;
 	ret = preStep();
 
-	if( !ret )
+	if( ret )
 		return ret;
 	
 	properties.matrix = osg::Matrixd::translate( osg::Vec3d( 0.0, dist, 0.0 ) ) * properties.matrix;		

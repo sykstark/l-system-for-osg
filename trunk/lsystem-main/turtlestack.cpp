@@ -79,6 +79,12 @@ int TurtleStack::pop()
 	return res;
 }
 
+void TurtleStack::clear()
+{
+	while(!turtles.empty())
+		turtles.pop();
+}
+
 AbstractTurtle * TurtleStack::createTurtle(AP_LSystem::TurtleType type)
 {
 	AbstractTurtle * turtle = NULL;

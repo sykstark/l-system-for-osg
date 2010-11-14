@@ -83,6 +83,19 @@ void LSystem::loadFromFile( AbstractFile * file)
     {
         this->addRule( &*itRules );
     }
+
+	const variable_value * ignoreVar = Configuration::get()->getProperty( _name, "Ignore" );
+	if( ignoreVar )
+	{
+		ignore = ignoreVar->as<std::string>();
+	}
+
+	unsigned initIteration = Configuration::get()->getProperty( _name, "Iteration" )->as<unsigned>();
+
+	for( unsigned iter = 0; iter < initIteration; iter++ )
+    {
+        this->nextIteration();
+    }
 }
 
 void LSystem::setAxiom(std::string & axiom)
@@ -156,6 +169,7 @@ bool LSystem::nextIteration( )
 {
     // increment the iteration number
     _iteration++;
+	vrecko::logger.debugLog("Processing %d. iteration...", _iteration );
     // use rules and generate new word by transcriptions
     return this->transcribe( _rules );
 }
