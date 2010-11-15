@@ -1,3 +1,5 @@
+#include "precompiled.h"
+
 #include "abstractgenerator.h"
 #include "d0lsystem.h"
 #include "parstoch0lsystem.h"

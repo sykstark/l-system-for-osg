@@ -1,3 +1,5 @@
+#include "precompiled.h"
+
 #include "rule.h"
 
 #include "boost/lexical_cast.hpp"
@@ -84,6 +86,51 @@ void Rule::addQueryFunctions( FunctionParser * fp, string & expression )
         fp->AddFunction( "positionZ", Query::positionZ, 0);
         query = true;
     }
+	if(expression.find( "headingX" ) != std::string::npos )
+	{
+		fp->AddFunction( "headingX", Query::headingX, 0);
+		query = true;
+	}
+	if(expression.find( "headingY" ) != std::string::npos )
+	{
+		fp->AddFunction( "headingY", Query::headingY, 0);
+		query = true;
+	}
+	if(expression.find( "headingZ" ) != std::string::npos )
+	{
+		fp->AddFunction( "headingZ", Query::headingZ, 0);
+		query = true;
+	}
+	if(expression.find( "upX" ) != std::string::npos )
+	{
+		fp->AddFunction( "upX", Query::upX, 0);
+		query = true;
+	}
+	if(expression.find( "upY" ) != std::string::npos )
+	{
+		fp->AddFunction( "upY", Query::upY, 0);
+		query = true;
+	}
+	if(expression.find( "upZ" ) != std::string::npos )
+	{
+		fp->AddFunction( "upZ", Query::upZ, 0);
+		query = true;
+	}
+	if(expression.find( "leftX" ) != std::string::npos )
+	{
+		fp->AddFunction( "leftX", Query::leftX, 0);
+		query = true;
+	}
+	if(expression.find( "leftY" ) != std::string::npos )
+	{
+		fp->AddFunction( "leftY", Query::leftY, 0);
+		query = true;
+	}
+	if(expression.find( "leftZ" ) != std::string::npos )
+	{
+		fp->AddFunction( "leftZ", Query::leftZ, 0);
+		query = true;
+	}
 
     if( !query )
     {

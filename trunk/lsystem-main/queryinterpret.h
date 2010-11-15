@@ -197,6 +197,142 @@ public:
 		return v.x();
 	}
 
+	double headingY( )
+	{
+		if( dirty & QueryInterpret::HEADINGY )
+		{
+			// update matrix
+			update();
+
+			// set Position as CLEAR
+			dirty &= ~QueryInterpret::HEADING;
+		}
+		dirty |= QueryInterpret::HEADING;
+
+		osg::Vec3d v = matrix.getRotate() * HeadVec;
+
+		return v.y();
+	}
+
+	double headingZ( )
+	{
+		if( dirty & QueryInterpret::HEADINGZ )
+		{
+			// update matrix
+			update();
+
+			// set Position as CLEAR
+			dirty &= ~QueryInterpret::HEADING;
+		}
+		dirty |= QueryInterpret::HEADING;
+
+		osg::Vec3d v = matrix.getRotate() * HeadVec;
+
+		return v.z();
+	}
+
+	double upX( )
+	{
+		if( dirty & QueryInterpret::UPX )
+		{
+			// update matrix
+			update();
+
+			// set Position as CLEAR
+			dirty &= ~QueryInterpret::UP;
+		}
+		dirty |= QueryInterpret::UP;
+
+		osg::Vec3d v = matrix.getRotate() * UpVec;
+
+		return v.x();
+	}
+
+	double upY( )
+	{
+		if( dirty & QueryInterpret::UPY )
+		{
+			// update matrix
+			update();
+
+			// set Position as CLEAR
+			dirty &= ~QueryInterpret::UP;
+		}
+		dirty |= QueryInterpret::UP;
+
+		osg::Vec3d v = matrix.getRotate() * UpVec;
+
+		return v.y();
+	}
+
+	double upZ( )
+	{
+		if( dirty & QueryInterpret::UPZ )
+		{
+			// update matrix
+			update();
+
+			// set Position as CLEAR
+			dirty &= ~QueryInterpret::UP;
+		}
+		dirty |= QueryInterpret::UP;
+
+		osg::Vec3d v = matrix.getRotate() * UpVec;
+
+		return v.z();
+	}
+
+	double leftX( )
+	{
+		if( dirty & QueryInterpret::LEFTX )
+		{
+			// update matrix
+			update();
+
+			// set Position as CLEAR
+			dirty &= ~QueryInterpret::LEFT;
+		}
+		dirty |= QueryInterpret::LEFT;
+
+		osg::Vec3d v = matrix.getRotate() * LeftVec;
+
+		return v.x();
+	}
+
+	double leftY( )
+	{
+		if( dirty & QueryInterpret::LEFTY )
+		{
+			// update matrix
+			update();
+
+			// set Position as CLEAR
+			dirty &= ~QueryInterpret::LEFT;
+		}
+		dirty |= QueryInterpret::LEFT;
+
+		osg::Vec3d v = matrix.getRotate() * LeftVec;
+
+		return v.y();
+	}
+
+	double leftZ( )
+	{
+		if( dirty & QueryInterpret::LEFTZ )
+		{
+			// update matrix
+			update();
+
+			// set Position as CLEAR
+			dirty &= ~QueryInterpret::LEFT;
+		}
+		dirty |= QueryInterpret::LEFT;
+
+		osg::Vec3d v = matrix.getRotate() * LeftVec;
+
+		return v.z();
+	}
+
 	void bindWord( LongString * str)
 	{
 		word = str;
