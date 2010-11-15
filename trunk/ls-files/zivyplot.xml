@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<LSystem>
+  <Name>ternarni strom</Name>
+  <Types>
+    <Type>2L</Type>
+  </Types>
+  <Constants>
+    <prune>(abs(x)>3)|(y&lt;0)|(y>5)|(abs(z)>10)</prune>
+    <a>40</a>
+    <b>40</b>
+    <c>90</c>
+    <XX>'(0.9)!(0.85)</XX>
+  </Constants>
+  <Parameters>
+    <Iteration>2</Iteration>
+    <TurtleType>STRAIGHT_PIPE</TurtleType>
+    <DefaultAngle>40.0</DefaultAngle>
+    <DefaultLength>1.0</DefaultLength>
+    <ContourDetail>10</ContourDetail>
+    <DefaultRadius>0.07</DefaultRadius>
+    <AngleVariance>0</AngleVariance>
+    <DiffuseTexture>data\ls\tex\bark\bark_20091031_05_512x512_seamless.jpg</DiffuseTexture>
+    <Ignore>+/-</Ignore>
+  </Parameters>
+  <Axiom>X</Axiom>
+  <Rules>
+    <P1>&lt;X>->FA(1)P(positionX(),positionY(),positionZ())</P1>
+    <P2>&lt;A(k)>P(x,y,z):(!(prune))->/(c)[+(a)XXFA(k+1)P(positionX(),positionY(),positionZ())]-(b)XXFA(k+1):min(1,(2*k+1)/(k*k))</P2>
+    <P3>&lt;A(k)>P(x,y,z):(!(prune))->/(c)B(k+1,k+1)-(b)XXFA(k+1):max(0,1-((2*k+1)/(k*k)))</P3>
+    <P4>&lt;A(k)>P(x,y,z):(prune)->T%</P4>
+    <P5>&lt;F>T->S</P5>
+    <P6>&lt;F>S->SF</P6>
+    <P7>&lt;S>->e</P7>
+    <P8>&lt;B(m,n)>S->[+(a)FA(a*m+b*n+c)P(positionX(),positionY(),positionZ())]</P8>
+    <P9>&lt;B(m,n)>F->B(m+1,n)</P9>
+    <P10>&lt;P(x,y,z)>->P(positionX(),positionY(),positionZ())</P10>
+    <P11>&lt;T>->e</P11>
+  </Rules>
+</LSystem>
