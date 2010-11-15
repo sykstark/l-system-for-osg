@@ -36,6 +36,8 @@ public:
 	{
 		// TODO
 	}
+
+    static AbstractLSystem * createLSystem( AbstractFile * );
 };
 }
 

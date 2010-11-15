@@ -3,6 +3,11 @@
 
 #include "abstractlsystem.h"
 #include "rule.h"
+#include "longstring.h"
+
+using std::multimap;
+using std::vector;
+using std::string;
 
 namespace AP_LSystem {
 class LSystem : public AbstractLSystem
