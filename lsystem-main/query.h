@@ -25,6 +25,50 @@ public:
 		return QueryInterpret::get()->positionZ();
 	}
 
+	static double headingX( const double * )
+	{
+		return QueryInterpret::get()->headingX();
+	}
+
+	static double headingY( const double * )
+	{
+		return QueryInterpret::get()->headingY();
+	}
+
+	static double headingZ( const double * )
+	{
+		return QueryInterpret::get()->headingZ();
+	}
+
+	static double upX( const double * )
+	{
+		return QueryInterpret::get()->upX();
+	}
+
+	static double upY( const double * )
+	{
+		return QueryInterpret::get()->upY();
+	}
+
+	static double upZ( const double * )
+	{
+		return QueryInterpret::get()->upZ();
+	}
+
+	static double leftX( const double * )
+	{
+		return QueryInterpret::get()->leftX();
+	}
+
+	static double leftY( const double * )
+	{
+		return QueryInterpret::get()->leftY();
+	}
+
+	static double leftZ( const double * )
+	{
+		return QueryInterpret::get()->leftZ();
+	}
 };
 }
 
