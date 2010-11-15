@@ -87,7 +87,7 @@ void Par2LSystem::processRuleSuccessor(Rule & r, string * rule, string::iterator
     }
 
     // insert new rule into map with rules
-    this->_rules.insert(make_pair< char, Rule >(r.strictPredecessor, r ));
+    this->_rules.insert(std::make_pair< char, Rule >(r.strictPredecessor, r ));
 }
 
 void Par2LSystem::processHomomorphismSuccessor(Rule & r, string * hom, string::iterator & it)
@@ -101,7 +101,7 @@ void Par2LSystem::processHomomorphismSuccessor(Rule & r, string * hom, string::i
     r.processProbabilityFactor(hom, it);
 
     // insert new rule into map with rules
-    this->_homomorphisms.insert(make_pair< char, Rule >(r.strictPredecessor, r ));
+    this->_homomorphisms.insert(std::make_pair< char, Rule >(r.strictPredecessor, r ));
 }
 
 multimap<char, Rule>::iterator * Par2LSystem::selectRule(multimap<char, Rule>::iterator & begin,

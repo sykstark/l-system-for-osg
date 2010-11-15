@@ -3,10 +3,11 @@
 #include "lsystem.h"
 #include "configuration.h"
 #include "lsfile.h"
-#include "xmlfile.h"
 #include "parstoch0lsystem.h"
 #include "par2lsystem.h"
+#include "abstractgenerator.h"
 #ifdef _MSC_VER
+#include "xmlfile.h"
 #include "queryinterpret.h"
 #endif
 
@@ -43,10 +44,12 @@ void LSystem::loadFromFile( AbstractFile * file)
         {
             subFile = new LSFile;
         }
+#ifdef _MSC_VER
 		else if( ext == "xml" )
 		{
 			subFile = new XmlFile;
 		}
+#endif
         else
         {
             throw FileException("unknown extension: " + ext);
@@ -55,16 +58,11 @@ void LSystem::loadFromFile( AbstractFile * file)
         // open file
         subFile->open(*itLSystems);
 
-        // choose best for word generation
-        if( ParStoch0LSystem::isCapable( subFile->type() ) )
-            ls = new ParStoch0LSystem( subFile );
-		else if( Par2LSystem::isCapable( subFile->type() ) )
-            ls = new Par2LSystem( subFile );
-        else
-            throw ParsingException("non of L-systems fulfils the conditions");
+        // choose best L-system algorithm for word generation
+        ls = AbstractGenerator::createLSystem( subFile );
 
         // make pair which bind name of lsystem with index in _subSystemsWords vector
-        lsystemSubstitute.insert(make_pair<string, string >(subFile->name(),boost::lexical_cast<string>(_subSystemsWords.size())));
+        lsystemSubstitute.insert(std::make_pair<string, string >(subFile->name(),boost::lexical_cast<string>(_subSystemsWords.size())));
         _subSystemsWords.push_back( ls->translate() );
 		
         delete subFile;
@@ -169,7 +167,7 @@ bool LSystem::nextIteration( )
 {
     // increment the iteration number
     _iteration++;
-	vrecko::logger.debugLog("Processing %d. iteration...", _iteration );
+//	vrecko::logger.debugLog("Processing %d. iteration...", _iteration );
     // use rules and generate new word by transcriptions
     return this->transcribe( _rules );
 }
@@ -187,7 +185,7 @@ bool LSystem::transcribe(multimap<char, Rule> &rules)
 #endif
 
     multimap<char, Rule>::iterator * pRuleIt;
-    pair<multimap<char, Rule>::iterator, multimap<char, Rule>::iterator > result;
+    std::pair<multimap<char, Rule>::iterator, multimap<char, Rule>::iterator > result;
 
     double parameters[100];
     double * pParams = parameters; // parameters pointer

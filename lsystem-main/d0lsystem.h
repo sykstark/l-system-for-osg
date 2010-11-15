@@ -4,12 +4,18 @@
 #include "abstract0lsystem.h"
 
 namespace AP_LSystem {
-class D0LSystem : public Abstract0LSystem
+class D0LSystem : public LSystem
 {
-private:
+protected:
     static const unsigned int capabilities = LS_0L | LS_DETERMINISTIC;
+
+    virtual void processPredecessor( Rule &, string *, string::iterator & );
+    virtual void processRuleSuccessor( Rule &, string *, string::iterator &);
+    virtual void processHomomorphismSuccessor( Rule &, string *, string::iterator &);
+
+    virtual bool transcribe(multimap<char, Rule> &);
 public:
-    D0LSystem();
+    D0LSystem( AbstractFile * );
 
     static bool isCapable( unsigned int type )
     {
