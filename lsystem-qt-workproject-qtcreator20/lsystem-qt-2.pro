@@ -30,42 +30,44 @@ SOURCES += main.cpp \
     ../boost_1_43_0/libs/program_options/src/cmdline.cpp \
     ../Garden/fparser/fparser.cc \
     ../Garden/fparser/fpoptimizer.cc \
-    ../Garden/LSFileGrammar.cpp \
     ../Garden/lsfile.cpp \
     ../Garden/configuration.cpp \
     ../Garden/longstring.cpp \
     ../Garden/log.cpp \
-    ../Garden/grammargenerator.cpp \
     ../Garden/utils.cpp \
-    ../Garden/lsystemgrammar.cpp \
-    ../Garden/d0lsystemgrammar.cpp \
-    ../Garden/abstract0lsystemgrammar.cpp \
-    ../Garden/parstoch0lsystemgrammar.cpp \
-    ../Garden/pard0lsystemgrammar.cpp \
-    ../Garden/abstractklsystemgrammar.cpp
+    ../Garden/lsystem.cpp \
+    ../Garden/parstoch0lsystem.cpp \
+    ../Garden/d0lsystem.cpp \
+    ../Garden/abstractklsystem.cpp \
+    ../Garden/abstract0lsystem.cpp \
+    ../Garden/lsystemgenerator.cpp \
+    ../Garden/pard0lsystem.cpp \
+    ../Garden/par2lsystem.cpp \
+    ../Garden/abstractgenerator.cpp \
+    ../Garden/rule.cpp
 
 HEADERS += \
     ../Garden/staticstring.h \
     ../Garden/rule.h \
     ../Garden/lsystemexception.h \
-    ../Garden/LSFileGrammar.h \
     ../Garden/lsfile.h \
-    ../Garden/abstractgrammar.h \
     ../Garden/abstractfile.h \
     ../Garden/longstring.h \
     ../Garden/log.h \
     ../Garden/abstractgenerator.h \
-    ../Garden/grammargenerator.h \
     ../Garden/parseablestring.h \
     ../Garden/utils.h \
     ../Garden/configuration.h \
     ../Garden/randomindex.h \
-    ../Garden/lsystemgrammar.h \
-    ../Garden/d0lsystemgrammar.h \
-    ../Garden/abstract0lsystemgrammar.h \
-    ../Garden/parstoch0lsystemgrammar.h \
-    ../Garden/abstractklsystemgrammar.h \
-    ../Garden/pard0lsystemgrammar.h
+    ../Garden/lsystem.h \
+    ../Garden/d0lsystem.h \
+    ../Garden/abstractlsystem.h \
+    ../Garden/abstractklsystem.h \
+    ../Garden/abstract0lsystem.h \
+    ../Garden/parstoch0lsystem.h \
+    ../Garden/lsystemgenerator.h \
+    ../Garden/par2lsystem.h \
+    ../Garden/pard0lsystem.h
 
 INCLUDEPATH += ../Garden/ \
     ../Garden/fparser \
