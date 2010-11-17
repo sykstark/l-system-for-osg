@@ -96,7 +96,18 @@ public:
             }
         }
 
-        // TODO substitute occurences in homomorphisms
+		for(rule = homomorphisms.begin();rule != homomorphisms.end(); rule++)
+        {
+            for(subst = pairs.begin(); subst != pairs.end(); subst++)
+            {
+                i=0;
+                while((i = rule->find(subst->first,i))&&(i != std::string::npos))
+                {
+                    rule->replace(i,subst->first.length(),subst->second);
+                    i += subst->first.length();
+                }
+            }
+        }
     }
 
     virtual std::vector<string> * getHomomorphisms()
