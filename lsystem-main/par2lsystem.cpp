@@ -1,12 +1,15 @@
 #include "precompiled.h"
 
 #include "par2lsystem.h"
+#include "randomindex.h"
 
 using namespace AP_LSystem;
 
 Par2LSystem::Par2LSystem( AbstractFile * file )
 {
 	this->loadFromFile( file );
+
+	RandomIndex::init();
 }
 
 void Par2LSystem::processPredecessor(Rule & r, string * rule, string::iterator & it)
@@ -86,6 +89,8 @@ void Par2LSystem::processRuleSuccessor(Rule & r, string * rule, string::iterator
         r.addDynamicString(rule, it);
     }
 
+	r.processProbabilityFactor(rule, it);
+
     // insert new rule into map with rules
     this->_rules.insert(std::make_pair< char, Rule >(r.strictPredecessor, r ));
 }
@@ -111,6 +116,10 @@ multimap<char, Rule>::iterator * Par2LSystem::selectRule(multimap<char, Rule>::i
                                                                 double * parameters)
 {
     multimap<char, Rule>::iterator * it = new multimap<char, Rule>::iterator;
+	// rules tha pass the condition and that are processed by random generator
+    vector< multimap<char, Rule>::iterator > passedRules;
+	RandomIndex ri;
+	unsigned predecessor;
     
     for( *it = begin; *it != end; (*it)++ )
     {
@@ -147,7 +156,8 @@ multimap<char, Rule>::iterator * Par2LSystem::selectRule(multimap<char, Rule>::i
 			return NULL;
 		}
 		// append parameters of nonterminal
-		if( !word->getParameters<double>( pos, parameters, paramCount ))
+		predecessor = pos;
+		if( !word->getParameters<double>( predecessor, parameters, paramCount ))
 		{
 			return NULL;
 		}
@@ -161,9 +171,31 @@ multimap<char, Rule>::iterator * Par2LSystem::selectRule(multimap<char, Rule>::i
 		//evaluate condition
         if( (*it)->second.evaluateCondition( parameters ) )
         {
-            return it;
+			if((*it)->second.probabilityFactor)
+			{
+				double eval = (*it)->second.probabilityFactor->Eval( parameters );
+				ri.addProbability( eval );
+				vrecko::logger.debugLog( "k = %f, eval = %f", parameters[0], eval );
+				passedRules.push_back( *it );
+			}
+			else
+			{
+				// set pos behind this symbol
+				pos = predecessor;
+				return it;
+			}
         }
     }
-
-    return NULL;
+	// select randomly
+	if(passedRules.empty())
+	{
+		return NULL;
+	}
+	else
+	{
+		// set pos behind this symbol
+		pos = predecessor;
+		*it = passedRules[ri.getRandomIndex()];
+		return it;
+	}
 }

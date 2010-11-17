@@ -169,6 +169,16 @@ void Rule::processProbabilityFactor(string * rule, string::iterator & it)
     {
         throw ParsingException("Parsing of probability factor (" + expression + ") error!");
     }
+	else
+	{
+/*		double p[4];
+		for(int i = 0; i < 20; i++)
+		{
+			p[0] = (double)i;
+			vrecko::logger.debugLog("Word: %f", probabilityFactor->Eval( p ) );
+			
+		}*/
+	}
 }
 
 void Rule::processCondition(string * rule, string::iterator & it)

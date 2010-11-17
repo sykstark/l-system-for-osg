@@ -82,6 +82,13 @@ void LSystem::loadFromFile( AbstractFile * file)
         this->addRule( &*itRules );
     }
 
+	// process homomoprhism strings - convert to instances of Rule class
+	itRules = file->getHomomorphisms()->begin();
+	for(; itRules != file->getHomomorphisms()->end(); itRules++)
+    {
+		this->addHomomorphism( &*itRules );
+    }
+
 	const variable_value * ignoreVar = Configuration::get()->getProperty( _name, "Ignore" );
 	if( ignoreVar )
 	{
@@ -265,7 +272,7 @@ void LSystem::generateSuccessor(LongString * word, multimap<char, Rule>::iterato
         word->append( (*stStrIt)->str, (*stStrIt)->length );
         //Log::write(newWord->toString());
         word->append( (*dynStrIt)->Eval( parameters ) );
-        //Log::write(newWord->toString());
+		vrecko::logger.debugLog( "newword = %s", word->toString() );
     }
     // pridani posledniho statickeho retezce
     word->append( (*stStrIt)->str, (*stStrIt)->length );
