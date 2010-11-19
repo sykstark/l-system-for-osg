@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN" 
+   "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd" [
+<!ENTITY % fithesis SYSTEM "http://www.fi.muni.cz/~xpavlov/fithesis.mod">
+   %fithesis; ]>
+
+<book lang="cs" xmlns:fi="http://www.fi.muni.cz/~xpavlov/fithesis">
+
+<bookinfo>
+    <title>Generování rostlin pomocí L-systémů</title>
+    <subtitle>Diplomová práce</subtitle>
+    <author>
+        <firstname>Marek</firstname>
+        <surname>Pasičnyk</surname>
+        <fi:woman>false</fi:woman>
+        <fi:faculty>fi</fi:faculty>
+        <fi:advisor>RNDr. Vít Kovalčík, Ph.D.</fi:advisor>
+    </author>
+    <pubdate>jaro 2010</pubdate>
+    <fi:thanks><para>Chtěl bych poděkovat 
+    </para></fi:thanks>
+    <abstract>
+        <para>
+        Tato práce se zabývá problematikou Lindenmayerovýchsystémů, jakožto nástroje pro generování rostlin. Rozebírá pak také metody a implementaci L-systémů a jejich grafickou implementaci. Součástí je i zásuvný modul pro generování rostlin pro systém Vrecko.
+        </para>
+    </abstract>
+    <keywordset>
+   		<keyword>AEC</keyword>
+   		<keyword>CAD</keyword>
+      <keyword>OpenGL</keyword>
+      <keyword>plovoucí podlahy</keyword>
+      <keyword>návrh interiéru</keyword>
+      <keyword>vizualizace interiéru</keyword>
+      <keyword>kladečské plány</keyword>
+      <keyword>FloorPlanner</keyword>
+    </keywordset>
+</bookinfo>
+
+<toc/>
+
+<chapter id="ch01">
+  <title>Úvod</title>
+  <para>
+  </para>
+</chapter>
+
+<chapter id="ch02">
+  <title>Lindenmayerovy systémy</title>
+  <para>
+Lindenmayerovy systémy, zkráceně L-systémy, byly vytvořeny jako matematická teorie pro generování rostlin(82 – ABOP). Původně byl kladen důraz spíše na obecnou topologii. Byly totiž vytvořeny pro simulaci vývoje větších částí rostlin nebo buněk mnhobuněčných organismů. Geometrie, ani podrobnější detaily  v této původní teorii zahrnuty nebyly. Později se objevilo několik geometrických interpretací L-systémů, díky nimž se staly L-systémy univerzálním nástrojem pro simulaci a modelování rostlin. Ve své práci používám modelování pomocí želví grafiky.
+	</para>
+  <sect1 id="sec0201">
+    <title>Vývoj rostlin pomocí procesu přepisování</title>
+   	
+		<para>
+Jádro L-systémů spočívá v použití přepisovacího systému. Jedná se o opakované nahrazování modulů předchůdců pomocí sady přepisovacích pravidel jejich následovníky, přičemž všechny moduly náleží do konečné abecedy modulů. Lze tak z jednoduchého původního objektu vytvořit opakováním přepisovacího procesu komplexní model. Modulem je myšlena libovolná atomická část modelu, jež většinou reprezentuje nějakou část simulovaného modelu. Pří použití při simulaci biologických procesů se tak může jednat například o buňky nebo růyné typy rostlinných orgánů. 
+    </para>
+    <para>
+Jedním z prvních grafických modelů, používajících přepisovací pravidla, byla Kochova křivka, případně Kochova vločka (155 ABOP). Šlo o jednoduchý bezkontextový přepisovací systém, jež obsahoval pouze jediné pravidlo, přepisující jeden grafický prvek na jiný. (OBRAZEK). Později tento model podstatně rozšířil Mandelbrot, jež přidal systémy podporující přepisování úseček o různých délkách a hlavně podporu větvených topologií.
+		</para>
+		<para>
+Nejvěší pozornost však byla ubírána ke studiu systémů založených na přepisování řetězců znaků. Velkým přínosem v tomto odvětví byly na konci padesátých let 20. století Chomského formální gramatiky, které využívaly princip přepisování pro popis syntaxe přirozeného jazyka. V roce 1968 pak biolog Aristid Lindenmayer představil odlišný typ mechanismu přepisujícího řetězce. Tento mechanismus byl posléze pojmenován jako L-systémy. Zásadní odlišností L-systémů od Chomského gramatik spočívá v použití přepisovacích pravidel. Zatímco v Chomského gramatikách jsou přepisovací pravidla aplikována postupně, v L-systémech jsou použity paralelně v jednom derivačním kroku na všechny symboly přepisovaného řetězce. Motivací pro tento přístup byla podobnost s biologickými procesy. Příkladem mohou být mnohobuněčné organismy, ve kterých se dělí buňky současně. Na rozdíl od přírodních pochodů vývoj L-systémů probíhá v diskrétních krocích.	Kvůli reprezentaci modelů jako řetězce znaků se často místo pojmu modul používá pojem symbol.		
+   	</para>
+  </sect1>
+  <sect1 id="sec0201">
+    <title>D0L-systémy</title>
+    <para>
+Deterministické bezkontextové L-systémy, zkráceně D0L-systémy,jsou nejjednodušší formou L-systémů. Původní Lindenmayerovy systémy zahrnovaly právě pouze tento typ. Takovýto typ L-systém se skládá z abecedy modulů, přepisovacích pravidel a axiomu, jež slouží jako počáteční řetězec modulů. Na obrázku ( str 5 ABOP) je znázorněna simulace vývoje mnohobuněčného vlákna buněk, jež se nachází v bakterii Anabaena catenula( 99 ABOP ). Tyto řetězce jsou tvořeny dvěma typy buněk. První typ jsou mladé, kratší buňky a druhým jsou buňky starší, delší. Každá buňka má také svou polaritu polaritu, která určuje, kterým směrem bude buňka růst.
+    </para>
+    
+  </sect1>
+  
+</chapter>
+
+<bibliography>
+   <biblioentry>
+      <abbrev>OpenGL</abbrev>
+      <authorgroup>
+         <author>
+           <firstname>Dave</firstname>
+           <surname>Shreiner</surname>
+         </author>  
+         <author>
+           <firstname>Mason</firstname>
+           <surname>Woo</surname>
+         </author>
+         <author>
+           <firstname>Jackie</firstname>
+           <surname>Neider</surname>
+         </author>
+         <author>
+           <firstname>Tom</firstname>
+           <surname>Davis</surname>
+         </author>
+      </authorgroup>
+      <title>OpenGL Průvodce programátora</title>    
+      <publisher>
+         <publishername>Computer Press, a.s.</publishername>
+      </publisher>
+      <pubdate>2006</pubdate>
+      <isbn>80-251-1275-6</isbn>
+   </biblioentry>
+   
+   <biblioentry>
+      <abbrev>mpg</abbrev>
+      <authorgroup>
+         <author>
+           <firstname>Jiří</firstname>
+           <surname>Žára</surname>
+         </author>  
+         <author>
+           <firstname>Bedřich</firstname>
+           <surname>Beneš</surname>
+         </author>
+         <author>
+           <firstname>Jiří</firstname>
+           <surname>Sochor</surname>
+         </author>
+         <author>
+           <firstname>Petr</firstname>
+           <surname>Felkel</surname>
+         </author>
+      </authorgroup>
+      <title>Moderní počítačová grafika</title>    
+      <publisher>
+         <publishername>Computer Press, a.s.</publishername>
+      </publisher>
+      <pubdate>2004</pubdate>
+   </biblioentry>
+   
+   <biblioentry>
+      <abbrev>CAD history</abbrev>
+      <authorgroup>
+         <author>
+           <firstname>Marian</firstname>
+           <surname>Bozdoc</surname>
+         </author>  
+      </authorgroup>
+      <title>iMB The History of CAD</title>    
+      <publisher>
+         <publishername>MB Solutions</publishername>
+      </publisher>
+      <pubdate>2004</pubdate>  
+      <releaseinfo>Dokument dostupný na 
+         <ulink url="http://mbinfo.mbdesign.net/CAD-History.htm"></ulink> (leden 2008)
+      </releaseinfo>
+   </biblioentry>
+   
+   <biblioentry>
+      <abbrev>CAD</abbrev>
+      <authorgroup>
+         <author>
+           <firstname>Michal</firstname>
+           <surname>Fischer</surname>
+         </author>  
+         <author>
+           <firstname>Petr</firstname>
+           <surname>Vaněk</surname>
+         </author>
+      </authorgroup>
+      <title>CAD I-V</title>    
+      <publisher>
+         <publishername>e-Architekt.cz</publishername>
+      </publisher>
+      <pubdate>2004</pubdate>   
+      <releaseinfo>Seriál dokumentů dostupný na 
+      <ulink url="http://www.e-architekt.cz/"></ulink> (leden 2008)</releaseinfo>
+   </biblioentry>
+   
+   <biblioentry>
+      <abbrev>scanline</abbrev>
+      <authorgroup>
+         <author>
+           <firstname>Robert R.</firstname>
+           <surname>Snapp</surname>
+         </author>  
+      </authorgroup>
+      <title>Scanline Fill Algorithm</title>    
+      <publisher>
+         <publishername>Department of Computer Science, University of Vermont</publishername>
+      </publisher>
+      <pubdate>2003</pubdate>   
+      <releaseinfo>Dokument dostupný na 
+         <ulink url="http://www.cs.uvm.edu/~snapp/teaching/CS274/lectures/scanlinefill.pdf"></ulink> (leden 2008)
+      </releaseinfo>
+   </biblioentry>
+   
+   <biblioentry>
+      <abbrev>adv oGL</abbrev>
+      <authorgroup>
+         <author>
+           <firstname>Tom</firstname>
+           <surname>McReynolds</surname>
+         </author>  
+         <author>
+           <firstname>David</firstname>
+           <surname>Blythe</surname>
+         </author> 
+      </authorgroup>
+      <title>Advanced Graphics Programming Techniques Using OpenGL</title>    
+      <publisher>
+         <publishername>Elsevier Inc.</publishername>
+      </publisher>
+      <pubdate>2005</pubdate>
+      <isbn>1-55860-659-9</isbn> 
+      <releaseinfo>Dokument dostupný na adrese
+         <ulink url="http://web.informatik.uni-bonn.de/II/ag-klein/global/proseminar_ss2001/course12.pdf"></ulink> (leden 2008)
+      </releaseinfo>
+   </biblioentry>
+   
+   <biblioentry>
+      <abbrev>oGL bible</abbrev>
+      <authorgroup>
+         <author>
+           <firstname>Richard S.</firstname>
+           <surname>Wright</surname>
+         </author>  
+         <author>
+           <firstname>Benjamin</firstname>
+           <surname>Lipchak</surname>
+         </author> 
+      </authorgroup>
+      <title>OpenGL Super Bible</title>    
+      <publisher>
+         <publishername>Macmillan Computer Publishing</publishername>
+      </publisher>
+      <pubdate>1996</pubdate>
+      <isbn>1-57169-073-5</isbn>
+   </biblioentry>
+   
+   <biblioentry>
+      <abbrev>nehe</abbrev>
+      <authorgroup>
+         <author>
+           <firstname>Michal</firstname>
+           <surname>Turek</surname>
+         </author>  
+      </authorgroup>
+      <title>CZ NeHe OpenGL</title>    
+      <publisher>
+         <publishername>Michal Turek</publishername>
+      </publisher>
+      <pubdate>2004</pubdate>
+      <releaseinfo>Dokument dostupný na 
+         <ulink url="http://nehe.ceske-hry.cz/download/download/cz_nehe_opengl.pdf"></ulink> (leden 2008)
+      </releaseinfo>
+   </biblioentry>
+
+</bibliography>
+
+<appendix id="appA">
+    <title>Návod k použití aplikace FloorPlanner</title>
+    <para></para>
+    <sect1 id="secA01">
+    	<title>Úvod</title>
+    	<para>
+    	<emphasis>FloorPlanner</emphasis> je aplikace pro vizualizaci a kalkulaci plovoucích podlah v interiéru. Je určena pro platformu <emphasis>Win32</emphasis>. Nabízí základní <emphasis>AEC/CAD</emphasis> funkce pro tvorbu místností, v nichž je plovoucí podlaha realizována. V příštích kapitolách tohoto návodu jsou podrobněji rozvedeny všechny funkce programu.
+    	</para>
+    </sect1>
+    <sect1 id="secA02">
+    	<title>Uživatelské prostředí</title>
+    	<para>
+    	Uživatelské prostředí aplikace FloorPlanner se dělí na dvě části. Vpravo jsou rozmístěny ovládací prvky pro tvorbu, ovládání, editaci i odstraňování objektů zobrazených v části vlevo. Práce na projektu se pak logicky dělí na dva způsoby. Prvním je kresba půdorysu místnosti na kreslicí plochu. Druhým je pak vizualizace a prezentace místnosti v trojrozměrném režimu. Přepínání mezi těmito režimy zajišťuje dvojice tlačítek v horní části pravého panelu.
+    	</para>
+    </sect1>
+    <sect1 id="secA03">
+    	<title>Dvojrozměrný režim</title>
+    	<para>
+    	Po spuštění aplikace FloorPlanner je zobrazen dvojrozměrný režim. Místnost je zobrazena formou půdorysu na pravidelné mřížce. Červeně zvýrazněné přímky označují osy soustavy. Veškeré operace, spojené s editací místnosti, lze provádět výhradně v tomto režimu. 
+    	</para>
+    	<para>
+    	Pokud není vybrána nebo aktivována žádná z funkcí, nachází se aplikace v režimu výběru. Kliknutím lze označit jednotlivé zdi, okna, nebo dveře. V pravém horním rohu jsou pak zobrazeny informace o objektu, jako jsou rozměry, nebo délka. 
+    	</para>
+    	<para>
+    	Manipulace s kreslicí plochou se provádí pomocí klávesy <keycap>Alt</keycap>. V kombinaci s levým tlačítkem myši s plochou posouvá a s pravým tlačítkem mění měřítko.
+    	</para>
+    	<para>
+    	Následuje vysvětlení funkcí jednotlivých prvků rozvinovacích panelů, kterými se lze přepnout do různých režimů. Pro provedení některých akcí je nutné nejdřív označit objekt, na nějž bude funkce aplikována.
+    	</para>
+    	<sect2 id="secA0301">
+    		<title>panel Wall editing</title>
+    		<para>
+    		Veškeré prvky pro přidávání, odebírání či editaci zdí, tedy i tvaru celé místnosti, jsou obsaženy v tomto panelu.
+    		</para>
+    		<para>
+    			<itemizedlist mark="opencircle">
+					<listitem><simpara><emphasis role="bold">Add walls</emphasis> &mdash; stisknutím tohoto tlačítka se aplikace přepne do stavu pro vkládání zdí. Kliknutím a tahem levého tlačítka lze pak na ploše vlevo vytvářet nové zdi. Se stisknutou klávesou <keycap>Shift</keycap> lze navíc vytvářet pouze svislé či vodorovné zdi. Pro propojení dvou zdí je nutné vytvořit jejich krajní body dostatečně blízko sebe. Zeď je tvořena obdélníkem se zvýrazněnou jednou hranou. Ta označuje vnitřní okraj místnosti. 
+					
+					</simpara></listitem>
+					<listitem><simpara><emphasis role="bold">Rotate wall</emphasis> &mdash; v případě vytvoření zdi se špatnou orientací je možné zeď označit a&nbsp;následně tímto tlačítkem otočit o 180°. Pokud je označená zeď spojená s jinými zdmi, je i jejich orientace přizpůsobena.
+					</simpara></listitem>
+					<listitem><simpara><emphasis role="bold">Remove wall</emphasis> &mdash; toto tlačítko slouží k odstranění označené zdi. Spolu se zdí budou odstraněny i veškeré její okna a dveře.
+					</simpara></listitem>
+					<listitem><simpara><emphasis role="bold">Clear all</emphasis> &mdash; jednoduchý příkaz pro odstranění všech objektů na kreslicí ploše.
+					</simpara></listitem>
+					<listitem><simpara>Editovatelná pole <emphasis role="bold">1.point</emphasis> a <emphasis role="bold">2.point</emphasis> &mdash; při označení zdi jsou v těchto polích uvedeny souřadnice prvního i druhého bodu zdi. Jejich editací lze se zdí manipulovat. Pokud zeď sousedí s jinou zdí, jsou souřadnice upraveny i u ní. Posunem dvou bodů blízko sebe však nelze dvě rozdělené zdi propojit.
+					</simpara></listitem>
+					
+				</itemizedlist>
+			</para>
+		</sect2>
+		<sect2 id="secA0302">
+			<title>panel Floor</title>
+			<para>
+			Panel <emphasis>Floor</emphasis> obsahuje prvky pro práci s podlahou. Kalkulace i zobrazení podlahy je podmíněna uzavřením místnosti. Zdi tedy musí tvořit jeden uzavřený polygon bez vzájemného křížení zdí.
+			</para>
+			<para>
+    			<itemizedlist mark="opencircle">
+    				<listitem><simpara><emphasis role="bold">Display floor</emphasis> &mdash; zásadním prvkem tohoto panelu je toto zaškrtávací tlačítko. Při splnění podmínky uzavřenosti místnosti je provedena kalkulace podlahy a plocha místnosti je vyplněna dílci plovoucí podlahy. V levém horním rohu jsou pak uvedeny informace o potřebném materiálu pro vykreslenou místnost. 
+					</simpara></listitem>
+					<listitem><simpara><emphasis role="bold">Refresh</emphasis> &mdash; v případě změny některého z parametrů podlahy je nutné toto tlačítko použít pro přepočítání a překreslení podlahy.
+					</simpara></listitem>
+					<listitem><simpara><emphasis role="bold">Floor angle</emphasis> &mdash; hodnota tohoto pole udává pod jakým úhlem bude podlaha v místnosti vyskládávána. Původní hodnota 0° znamená směr shora dolů. 
+					</simpara></listitem>
+					<listitem><simpara><emphasis role="bold">Get wall angle</emphasis> &mdash; směr pokládky plovoucí podlahy se většinou řídí jednou ze zdí místnosti. Tímto tlačítkem lze nastavit úhel pokládky podle právě označené zdi. Hodnota je také zkopírována do pole <emphasis>Floor angle</emphasis>.   
+					</simpara></listitem>
+					<listitem><simpara><emphasis role="bold">Shift limit</emphasis> &mdash; tato hodnota je velice důležitá pro konečnou spotřebu materiálu. Změnou lze nastavit minimální posun v procentech mezi dvěma sousedními řadami. Snížením na povolené minimum tak lze částečně ušetřit materiál. Hodnota musí být menší než 50%.
+					</simpara></listitem>
+					<listitem><simpara><emphasis role="bold">Trash limit</emphasis> &mdash; udává délku zbytku ze zkrácené lamely, který již bude považován za&nbsp;odpad. Zvětšením lze dosáhnout pravidelnějšího vzoru.
+					</simpara></listitem>
+					<listitem><simpara><emphasis role="bold">Type</emphasis> &mdash; jednotlivé typy a vzory plovoucích podlah jsou obsahem právě tohoto seznamu. Výběrem požadované podlahy je místnost vyplněna podlahovými dílci s odpovídající velikostí i texturou.  
+					</simpara></listitem>
+				</itemizedlist>
+			</para>
+		</sect2>
+		<sect2 id="secA0303">
+			<title>panel Windows/Doors editing</title>
+			<para>
+Tento panel nabízí nástroje pro vložení dveří a oken. Vytváří tedy velikostně nastavitelné otvory ve zdech. Pro výběr mezi vytvářením oken, nebo dveří slouží dvě tlačítka předvolby.
+			</para>
+			<para>
+				<itemizedlist mark="opencircle">
+					<listitem><simpara><emphasis role="bold">Add</emphasis> &mdash; tlačítko přepíná do módu přidávání oken a dveří. Je nutné, aby všechna textová pole v panelu obsahovala platná data. Okno je přidáno kliknutím na předem označenou zeď.
+					</simpara></listitem>
+					<listitem><simpara><emphasis role="bold">Remove</emphasis> &mdash; tlačítko pro odstranění označeného okna, nebo dveří.
+					</simpara></listitem>
+					<listitem><simpara><emphasis role="bold">Width, Height</emphasis> &mdash; textová pole pro nastavení výšky a šířky vkládaného okna, nebo dveří. 
+					</simpara></listitem>
+					<listitem><simpara><emphasis role="bold">From floor to object</emphasis> &mdash; toto pole je aktivní pouze u oken a nastavuje vzdálenost spodního okraje okna od podlahy.
+					</simpara></listitem>
+				</itemizedlist>
+			</para>	
+		</sect2>
+		<sect2 id="secA0304">
+			<title>panel Options</title>
+			<para>
+			V tomto panelu je několik doplňujících nastavení ovlivňujících především zobrazení v trojrozměrném režimu. Ve dvojrozměrném módu je použitelná pouze jedna položka.
+			</para>
+			<para>
+				<itemizedlist mark="opencircle">
+					<listitem><simpara><emphasis role="bold">Set position</emphasis> &mdash; toto tlačítko umožňuje nastavení pozice světla. Světlo je na ploše zobrazeno jako malý žlutý kroužek. Kliknutím na tlačítko a následně na kreslicí plochu je světlo přesunuto na pozici pod kurzorem.
+					</simpara></listitem>
+				</itemizedlist>
+			</para>
+		</sect2>
+	</sect1>
+    <sect1 id="secA04">
+    	<title>Trojrozměrný režim</title>
+    	<para>
+    	Tento režim aplikace <emphasis>FloorPlanner</emphasis> slouží především pro presentační účely. Zobrazuje místnost v trojrozměrném pohledu první osoby. Pohyb prostorem umožňuje kombinace kurzorových šipek a myši. Kurzorové šipky umožňují pohyb všemi směry ve vodorovné rovině. Pohyb myši při stisknutém levém tlačítku otáčí pohled pozorovatele. Pravé tlačítko pak slouží ke stoupání a klesání pozorovatele.
+    	
+    	Oproti dvojrozměrnému módu je zde jen několik možností voleb. Všechny se opět nacházejí v pravé části aplikace, nyní však pouze v jediném rozvinovacím poli.
+    	</para>
+    	<sect2 id="secA0401">
+    		<title>panel Options</title>
+    		<para>
+    		Panel <emphasis>Options</emphasis> skýtá několik nastavení pro změnu zobrazení trojrozměrného režimu. Některé volby mohou být velice náročné na výkon a razantně tak prodloužit výpočetní čas scény.
+    		</para>
+    		<para>
+    			<itemizedlist mark="opencircle">
+					<listitem><simpara><emphasis role="bold">Light type</emphasis> &mdash; ze seznamu lze vybrat jeden z druhů osvětlení. Na výběr je klasické bílé sluneční světlo, nažloutlé světlo žárovky a namodrale svítící zářivka.
+					</simpara></listitem>
+					<listitem><simpara><emphasis role="bold">MIP mapping</emphasis> &mdash; při zaškrtnutí bude aplikace <emphasis>FloorPlanner</emphasis> generovat <emphasis>MIP map</emphasis> textury. Částečně tak lze zrychlit běh aplikace na úkor náročnosti na paměť. Tuto volbu lze zapnout pouze se zapnutým filtrováním (viz <emphasis>Filtering</emphasis>).
+					</simpara></listitem>
+					<listitem><simpara><emphasis role="bold">High quality textures</emphasis> &mdash; odškrtnutím této položky bude velikost textur zmenšena na&nbsp;čtvrtinu. Lze tedy při minimální degradaci výsledku o něco zrychlit výpočet a&nbsp;zmenšit nároky na paměť.
+					</simpara></listitem>
+					<listitem><simpara><emphasis role="bold">Antialiasing</emphasis> &mdash; zapnutím antialiasingu lze výrazně potlačit projevy moiré a <quote>zubatých</quote> hran a docílit tak příjemného vyhlazení scény. Tento výpočet je velice časově náročný a tak je třeba volit hodnoty optimální pro právě používáný hardware.
+					</simpara></listitem>
+					<listitem><simpara><emphasis role="bold">Filtering</emphasis> &mdash; zapnutím některého typu filtrování lze při relativně nízkém snížení výkonu odstranit některé nepříjemné efekty textur. Textury však ztrácejí detaily a mohou působit poněkud rozmazaně. 
+					</simpara></listitem>
+				</itemizedlist>
+			</para>
+		</sect2>
+	</sect1>
+</appendix>
+
+<appendix id="appB">
+	<title>Přiložené CD</title>
+	<para>K této bakalářské práci je přiložen kompaktní disk s následujícím obsahem:</para>
+	<para>
+		<itemizedlist mark="opencircle">
+			<listitem><simpara>Text této bakalářské práce ve formátech XML, PDF a PS.
+			</simpara></listitem>
+			<listitem><simpara>Veškeré použité obrázky ve formátu PNG.
+			</simpara></listitem>
+			<listitem><simpara>Zdrojový kód aplikace FloorPlanner včetně souborů projektu pro Visual Studio 2005 a použitých textur.
+			</simpara></listitem>
+			<listitem><simpara>Zkompilovaná aplikace FloorPlanner včetně použitých textur.
+			</simpara></listitem>
+		</itemizedlist>
+	</para>
+</appendix>
+
+</book>
