@@ -1,0 +1,625 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN" 
+   "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd" [
+<!ENTITY % fithesis SYSTEM "http://www.fi.muni.cz/~xpavlov/fithesis.mod">
+   %fithesis; ]>
+
+<book lang="cs" xmlns:fi="http://www.fi.muni.cz/~xpavlov/fithesis">
+
+<bookinfo>
+    <title>Generování rostlin pomocí L-systémů</title>
+    <subtitle>Diplomová práce</subtitle>
+    <author>
+        <firstname>Marek</firstname>
+        <surname>Pasičnyk</surname>
+        <fi:woman>false</fi:woman>
+        <fi:faculty>fi</fi:faculty>
+        <fi:advisor>RNDr. Vít Kovalčík, Ph.D.</fi:advisor>
+    </author>
+    <pubdate>jaro 2010</pubdate>
+    <fi:thanks><para>Chtěl bych poděkovat 
+    </para></fi:thanks>
+    <abstract>
+        <para>
+        Tato práce se zabývá problematikou Lindenmayerovýchsystémů, jakožto nástroje pro generování rostlin. Rozebírá pak také metody a implementaci L-systémů a jejich grafickou implementaci. Součástí je i zásuvný modul pro generování rostlin pro systém Vrecko.
+        </para>
+    </abstract>
+    <keywordset>
+   		<keyword>AEC</keyword>
+   		<keyword>CAD</keyword>
+      <keyword>OpenGL</keyword>
+      <keyword>plovoucí podlahy</keyword>
+      <keyword>návrh interiéru</keyword>
+      <keyword>vizualizace interiéru</keyword>
+      <keyword>kladečské plány</keyword>
+      <keyword>FloorPlanner</keyword>
+    </keywordset>
+</bookinfo>
+
+<toc/>
+
+<chapter id="ch01">
+  <title>Úvod</title>
+  <para>
+  </para>
+</chapter>
+
+<chapter id="ch02">
+  <title>Lindenmayerovy systémy</title>
+  <para>
+Lindenmayerovy systémy, zkráceně L-systémy, byly vytvořeny jako matematická teorie pro generování rostlin(82ABOP). Původně byl kladen důraz spíše na obecnou topologii. Byly totiž vytvořeny pro simulaci vývoje větších částí rostlin nebo buněk mnhobuněčných organismů. Geometrie, ani podrobnější detaily  v této původní teorii zahrnuty nebyly. Později se objevilo několik geometrických interpretací L-systémů, díky nimž se staly L-systémy univerzálním nástrojem pro simulaci a modelování rostlin. Ve své práci používám modelování pomocí želví grafiky.
+	</para>
+  <sect1 id="sec0201">
+    <title>Vývoj rostlin pomocí procesu přepisování</title>
+   	
+		<para>
+Jádro L-systémů spočívá v použití přepisovacího systému. Jedná se o opakované nahrazování modulů předchůdců pomocí sady přepisovacích pravidel jejich následovníky, přičemž všechny moduly náleží do konečné abecedy modulů. Lze tak z jednoduchého původního objektu vytvořit opakováním přepisovacího procesu komplexní model. Modulem je myšlena libovolná atomická část modelu, jež většinou reprezentuje nějakou část simulovaného modelu. Pří použití při simulaci biologických procesů se tak může jednat například o buňky nebo růyné typy rostlinných orgánů. 
+    </para>
+    <para>
+Jedním z prvních grafických modelů, používajících přepisovací pravidla, byla Kochova křivka, případně Kochova vločka (155 ABOP). Šlo o jednoduchý bezkontextový přepisovací systém, jež obsahoval pouze jediné pravidlo, přepisující jeden grafický prvek na jiný. (OBRAZEK). Později tento model podstatně rozšířil Mandelbrot, jež přidal systémy podporující přepisování úseček o různých délkách a hlavně podporu větvených topologií.
+		</para>
+		<para>
+Největší pozornost však byla ubírána ke studiu systémů založených na přepisování řetězců znaků. Velkým přínosem v tomto odvětví byly na konci padesátých let 20. století Chomského formální gramatiky, které využívaly princip přepisování pro popis syntaxe přirozeného jazyka. V roce 1968 pak biolog Aristid Lindenmayer představil odlišný typ mechanismu přepisujícího řetězce. Tento mechanismus byl posléze pojmenován jako L-systémy. Zásadní odlišností L-systémů od Chomského gramatik spočívá v použití přepisovacích pravidel. Zatímco v Chomského gramatikách jsou přepisovací pravidla aplikována postupně, v L-systémech jsou použity paralelně v jednom derivačním kroku na všechny symboly přepisovaného řetězce. Motivací pro tento přístup byla podobnost s biologickými procesy. Příkladem mohou být mnohobuněčné organismy, ve kterých se dělí buňky současně. Na rozdíl od přírodních pochodů vývoj L-systémů probíhá v diskrétních krocích.	Kvůli reprezentaci modelů jako řetězce znaků se často místo pojmu modul používá pojem symbol.		
+   	</para>
+  </sect1>
+  <sect1 id="sec0202">
+    <title>D0L-systémy</title>
+    <para>
+Deterministické bezkontextové L-systémy, zkráceně D0L-systémy,jsou nejjednodušší formou L-systémů. Původní Lindenmayerovy systémy zahrnovaly právě pouze tento typ. Takovýto typ L-systém se skládá z abecedy modulů, přepisovacích pravidel a axiomu, jež slouží jako počáteční řetězec modulů. Na obrázku ( str 5 ABOP) je znázorněna simulace vývoje mnohobuněčného vlákna buněk, jež se nachází v bakterii Anabaena catenula( 99 ABOP ). Tyto řetězce jsou tvořeny dvěma typy buněk. První typ jsou mladé, kratší buňky a druhým jsou buňky starší, delší. Každá buňka má také svou polaritu polaritu, která určuje, kterým směrem bude buňka růst.
+    </para>
+    <para>
+    Formální definice D0L-systémů podle (Roz1980 Radekk) je následující:
+    <itemizedlist mark='opencircle'>
+      <listitem>
+        <para>
+Abeceda <emphasis>V</emphasis> je konečná množina <emphasis>symbolů</emphasis>.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+<emphasis>Slovo</emphasis> je posloupnost symbolů nad abecedou <emphasis>V</emphasis>. Množina všech těchto posloupností se označuje jako <emphasis>V*</emphasis>.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <emphasis>Přepisovací pravidlo</emphasis> je uspořádaná dvojice 
+          <inlineequation>
+             <alt role="tex">(a,u)</alt>
+             <graphic fileref="math020101.png"/>
+          </inlineequation>
+          zapsaná jako 
+          <inlineequation>
+             <alt role="tex">a \to u</alt>
+             <graphic fileref="math020102.png"/>
+          </inlineequation>          
+          , kde 
+          <inlineequation>
+             <alt role="tex">a</alt>
+             <graphic fileref="math020103.png"/>
+          </inlineequation>
+          je symbol náležící <emphasis>V*</emphasis> a
+          <inlineequation>
+             <alt role="tex">u</alt>
+             <graphic fileref="math020104.png"/>
+          </inlineequation>
+          je slovo náležící <emphasis>V*</emphasis>. Symbol 
+          <inlineequation>
+             <alt role="tex">a</alt>
+             <graphic fileref="math020105.png"/>
+          </inlineequation>
+          se nazývá <emphasis>předchůdce</emphasis> a slovo 
+          <inlineequation>
+            <alt role="tex">u</alt>
+            <graphic fileref="math020106.png"/>
+          </inlineequation>
+          <emphasis>následník</emphasis>.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <emphasis>D0L-systém</emphasis> je trojice
+          <inlineequation>
+             <alt role="tex">G= \langle V, \omega ,P \rangle</alt>
+             <graphic fileref="math020107.png"/>
+          </inlineequation>
+          , kde <emphasis>V</emphasis> je abeceda,
+          <inlineequation>
+             <alt role="tex">\omega \in </alt>
+             <graphic fileref="math020108.png"/>
+          </inlineequation>
+          <emphasis>V*</emphasis> je počáteční slovo, nazývané <emphasis>axiom</emphasis>, a <emphasis>P</emphasis> je množina přepisovacích pravidel takových, že pro
+          <inlineequation>
+             <alt role="tex">\forall a \in V: \exists p_{a} \in P</alt>
+             <graphic fileref="math020109.png"/>
+          </inlineequation>
+           , kde
+           <inlineequation>
+             <alt role="tex">p_{a}</alt>
+             <graphic fileref="math020110.png"/>
+          </inlineequation>
+          označuje přepisovací pravidlo, jehož předchůdce je modul
+          <inlineequation>
+             <alt role="tex">a</alt>
+             <graphic fileref="math020111.png"/>
+          </inlineequation>
+          .
+        </para>
+      </listitem>
+    </itemizedlist>
+    Dle obecných konvencí bývá přepisovací pravidlo
+    <inlineequation>
+     <alt role="tex">a \to u</alt>
+     <graphic fileref="math020112.png"/>
+    </inlineequation>
+    označováno jako odpovídající modulu a pro modul, kterému neodpovídá žádné z přepisovacích pravidel, bývá použito pravidlo identity
+    <inlineequation>
+     <alt role="tex">a \to a</alt>
+     <graphic fileref="math020113.png"/>
+    </inlineequation>
+    . Modul je možné během vývoje L-systému odstranit pomocí použití
+    <inlineequation>
+     <alt role="tex">\epsilon</alt>
+     <graphic fileref="math020114.png"/>
+    </inlineequation>
+    pravidla.
+    </para>   
+  </sect1>
+  
+  
+  <sect1 id="sec0203">
+    <title>L-systémy se závorkami</title>
+    <para>
+    Obecné D0L-systémy poskytují možnosti pouze pro vytvoření sekvence modulů. Aby však bylo možné vytvořit slova reprezentující rostliny, je nutné umožnit L-systémům vytvářet větvené topologie. Pro reprezentaci větvených topologií je potřeba zavést dva moduly. Tyto moduly byly již součástí původního Lindenmayerova konceptu(Lin 1968 Radekk). Pro označení začátku a konce větve se používají symboly pravé a levé hranaté závorky.
+    </para>
+    <para>
+    Slova, vyprodukovaná derivacemi přepisovacích pravidel závorkového L-systému, se označují jako stromy. Příklad takovéto stromové struktury vytvořené závorkovým L-systémem je na obrázku (str9 fig 3.2 handbook). Strom je dle (98) slovo w nad abecedou VE = V U {[,]}, kde V je abeceda všech modulů z nichž se skládají větve. Větev je pak libovolné slovo generované L-systémem bez závorek.
+    </para>
+  </sect1>
+  <sect1 id="sec0204">
+    <title>Parametrické L-systémy</title>
+    <para>  
+Přepisování pravidel u 0L-systémů je bezkontextové. Při produkci následníků tedy nezáleží na modulech v okolí předchůdce. Při přepisování kontextových L-systémů však musí kromě předchůdců odpovídat také jejich sousední moduly. Tímto způsobem mohou mezi sebou jednotlivé moduly komunikovat nebo posílat ostatním modulům signály. Lze tak simulovat reakci na proudění látek rostlinou nebo informovat moduly o globálních vlastnostech celého L-systému, jako je délka stonku, počet květů, stáří apod. Moduly však takto mohou komunikovat i s okolím L-systému a získávat tak informace například o množství světla, množství živin, ročním období nebo o překážce v růstu. 
+
+Mozna dat tri typy pouziti – kapitola 7.3 handbook
+    </para>
+    <para>
+Existuje mnoho implementací kontextových L-systémů. Nejpoužívanější jsou 1L-systémy a 2L-systémy. U 1L-systémů je brán zřetel buď pouze na levý nebo pouze na pravý kontext modulu předchůdce. Zápis pravidel s jednostranným kontextem tedy může být ve tvaru
+      <quote><emphasis>lk &lt; předchůdce 
+      <inlineequation>
+        <alt role="tex">\to</alt>
+        <graphic fileref="math020401.png"/>
+      </inlineequation>
+      následník
+      </emphasis></quote>
+      nebo
+      <quote><emphasis>předchůdce > pk
+      <inlineequation>
+        <alt role="tex">\to</alt>
+        <graphic fileref="math020402.png"/>
+      </inlineequation>
+      následník
+      </emphasis></quote>
+    </para>
+, kde <emphasis>lk</emphasis> je levý a <emphasis>pk</emphasis> pravý kontext. Následující L-systém ukazuje, jakým způsobem je možné propagovat signál. 
+  </sect1>
+</chapter>
+
+
+<chapter id="ch03">
+  <title>Generování rostlin</title>
+  <para>
+  </para>
+  <sect1 id="sec0301">
+    <title>Interpretace želví grafikou</title>
+    <para>
+Protože byly L-systémy navrženy jako matematický model bez geometrické interpretace, je potřeba pro modelování rostlin použít některý z přístupů, jež pro tento účel byly buď vyvinuty nebo byly převzaty. Sám Lindenmayer publikoval v roce 1974 řešení jež nahrazovalo moduly řetězců grafickými obrazci. Šlo však hlavně o topologii větvení rostlin a detaily jako délky nebo úhly natočení segmentů byly do modelu dodávány dodatečně. Během sedmdesátých a osmdesátých let vzniklo ještě mnoho jiných interpretací L-systémů, jež například ukázaly, že L-systému jsou velmi platným nástrojem pro tvorbu fraktálů. V roce 1986 přišel Przemyslaw Prusinkiewicz s myšlenkou interpretovat L-systémy jako pohyb želvy známé z programovacího jazyka LOGO(1 ABOP). Tato želva funguje jako kurzor, který přijímá různé rozkazy týkající se jeho pohybu. Na základě těchto rozkazů pak tento kurzor kreslí svým pohybem jednu spojitou čáru(???). Použití želví grafiky značně rozšiřuje geometrické možnosti L-systémů a je ideální pro tvorbu biologických struktur. 
+    </para>
+    <sect2 id="sec030101">
+      <title>Planární želví grafika</title>
+      <para>
+        Neboť původ želví grafiky spočívá v pohybu kurzoru po obrazovce, její původní koncept zahrnoval pohyb ve dvojrozměrném prostředí. Želva je definovaná jako trojice parametrů <emphasis>(x,y,α)</emphasis>, kde <emphasis>x</emphasis> a <emphasis>y</emphasis> udávají kartézké souřadnice želvy a úhel <emphasis>α</emphasis> směr, kterým želva míří, tzv. čelo. Pokud zavedeme navíc hodnotu pro délku kroku a výchozí přírůstek úhlu o který se želva bude otáčet, můžeme vytvořit jednoduchá pravidla pro pohyb želvy v rovině. Jednotlivé znaky pak reprezentují daný modul a také akci která je při načtení tohoto modulu provedena.
+      </para>
+      <para>
+        <itemizedlist mark='opencircle'>
+          <listitem>
+            <simpara><emphasis role="bold">F</emphasis> &mdash; Želva provede krok vpřed o předem definované délce na pozici <emphasis>(x',y')</emphasis>. Mezi body <emphasis>(x,y)</emphasis> a <emphasis>(x',y')</emphasis> je vykreslena úsečka.
+            </simpara>
+          </listitem>
+          <listitem>
+            <simpara><emphasis role="bold">+</emphasis> &mdash; Přikáže želvě otočit se o předem definovaný přírůstek úhlu doleva. Úhel želvy se zvětší o tuto hodnotu.
+            </simpara>
+          </listitem>
+          <listitem>
+            <simpara><emphasis role="bold">-</emphasis> &mdash; Přikáže želvě otočit se o předem definovaný přírůstek úhlu doprava. Úhel želvy se zmenší o tuto hodnotu.
+            </simpara>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+Při generování grafiky pak želva s počátečními parametry <emphasis>(x<subscript>0</subscript>,y<subscript>0</subscript>, α<subscript>0</subscript>)</emphasis> interpretuje jednotlivé znaky řetězce postupně zleva doprava.
+      </para>
+    </sect2>
+    <sect2 id="sec030102">
+      <title>Interpretace závorkových L-systémů</title>
+      <para>
+        Jak již bylo výše zmíněno, pro simulaci větvících se struktur rostlin je nutné rozšíření L-systémů o závorky. Každý podřetězec uzavřený závorkami zleva i zprava představuje v topologii rostliny jednu větev. Při použití želví grafiky je tak nutné v bodech větvení rozdělit souvislou čáru, jež želva kreslí, na minimálně dvě nové cesty. Pro tyto ůčely se užívá zásobníku. Pokud želva narazí při procházení slova na znak '[', uloží se spolu se svými parametry na zásobník a její kopie pokračuje v interpretaci řetězce za závorkou. Naopak pokud želva narazí na znak ']', je odstraněna a v interpretaci pokračuje želva z vrcholu zásobníku.  
+      </para>
+    </sect2>
+    <sect2 id="sec030103">
+      <title>Rozšíření pro interpretaci L-systémů v 3D</title>
+      <para>
+        Jednou z hlavních výhod želví grafiky je její jednoduchá rozšiřitelnost pro použítí ve třech rozměrech. Parametry želvy však musejí být rozšířeny. Pro pozici želvy se se definuje vektor P. Pro určení orientace pak tři jednotkové vektory H, L, U takové, že splňují rozvici H x L = U. Vektor H pododbně jako u rovinné želvy udává kam želva směřuje, tedy čelo. Vektor U směřuje směrem nahoru a vektor L pak směřuje vlevo od želvy.
+      </para>
+      <para>
+        Sada příkazů je v 3D také značně rozšířena. Pro změnu orientace želva interpretuje příkazy, jež želvu rotují okolo jednotlivých os. Pro tyto rotace jsou běžně používány termíny z letectví: směr, podélný sklon a příčný náklon. Kompletní sada příkazů, kterou intepretuje i zásuvný modul, jež byl vytvořen v rámci této práce, je i spolu s popisem iterpretovaných funkcí uvedena v příloze ???  
+      </para>
+    </sect2>    
+  </sect1>
+  <sect1 id="sec0302">
+    <title>Subapikální L-systémy</title>
+    <para>
+      Závorkové L-systémy umožnují vytvářet velice širokou škálu řetězců. Ne všechny však odpovídají rostlinné stavbě a pro generování rostlin se tak nehodí. Zavádějí se proto jistá omezení a pravidla, obvykle nazýváné jako vzory větvení, jež nám zaručí respektování některých přírodních vlastností. Výsledkem pak jsou L-systémy, které pravdivěji odpovídají reálným rostlinám. Jednou z těchto podmnožin jsou i subapikální L-systémy. Poprvé byly představeny Kelemenovou v roce 1987(7 apical). Myšlenkou těchto L-systémů je, že k větvení dochází pouze u vrcholů již exitujících větví. Tato vlastnost výchází ze základních výsledků při pozorování rostoucích rostlin. Nové rostlinné orgány, jako je stonek, větve, listy nebo květy mohou být vytvořeny pouze z apikálního meristému. Tato tkáň obsahuje aktivně se dělicí buňky a nachází se v oblasti vrcholů větví.
+    </para>
+    <para>
+V přírodě rozeznáváme tři typy vzorů větvení jež splňují podmínku subapikálních L-systémů. Jednoduché bazitonické a složitější mezotonické a akrotonické vzory.  
+    </para>
+    <sect2 id="sec030201">
+      <title>Bazitonický vzor větvení</title>
+      <para>
+         Jedná se o struktury v nichž je větvení u vrcholu rostliny méně vyvinuté než větve blíže základny rostliny. Bazitonické struktury lze vytvořit i za pomocí jednoduchých D0L-systémů. Klasic
+      </para>
+    </sect2>
+    <sect2 id="sec030202">
+      <title>Mezotonický a Akrotonický vzor větvení </title>
+      <para>
+
+      </para>
+    </sect2>
+  </sect1>  
+</chapter>
+
+<chapter id="ch04">
+  <title>Zásuvný modul LSystem</title>
+  <para>
+    Stěžejní části této diplomové práce je návrh a implemtace zásuvného modulu pro systém VRECKO. Tento modul umožnuje simulaci rostlin, stromů ale i jiných struktur pomocí různých typů L-systémů a jejich následnou grafickou interpretaci a zobrazení v systému Vrecko. Návrh a analýza byla provedena s velkým důrazem na modularitu a tedy možnost pozdějšího rozšíření o nové funkcionality.
+  </para>
+  <para>
+    Logicky lze zásuvný modul Lsystem rozdělit na tři části. První celek tvoří syntaktický analyzátor souborů L-systémů a generátor slov. Syntaktický analyzátor zajišťuje správné zpracování L-systémů, jejich náhrání ze souboru a načtení všech potřebných parametrů. Následně pak zpracuje načtená data, která generátor použije pro provedení jednotlivých derivačních kroků L-systémů. Slova i ostatní data jsou během derivačního procesu i poté uložena do datových struktur optimalizovaných pro daný účel. Jelikož existuje několik typů L-systémů, je implementována funckionalita, která pro přepisování vybere algoritmus, který je svými schopnostmi i časovou náročností nejvhodnější pro zpracovávaný L-systém. Tvorba L-systémů se složitější strukturou se většinou neobejde bez hiearchického rozdělení problému. Zásuvný modul proto umožňuje rozdělit model na několik úrovní a do hlavního L-systému vkládat podsystémy. V praxi to pak například u generování stromů znamená, že je možné vytvořit rozdílný L-systémy pro listy, květy a plody a následně je vložit do L-systému kostry stromu. Podrobněji se touto části funcionality zabývá kapitola ???.
+  </para>
+  <para>
+    Druhý celek se zabývá grafickou interpretací vygenerovaného řetězce. Komunikace s prvně zmiňovaným celkem je pouze na úrovni předání vygenerovaného slova, poskytnutí detailních parametrů pro nastavení interpretu a také mechanismu pro zpracování dotazů. Interpret v současné podobě používá pro generování geometrie modelů výhradně želví grafiku. Tento modul však obsahuje i interpret, jež k vytváření geometrie neslouží. Jedná se o intepret pro zpracování dotazů během generování iterací L-systémů. Je tedy optimalizován pro rychlé zjištění polohy a orientace želvy. Pro zpracování slov obsahující závorky má interpret implementován zásobník. Uživatel má také možnost zvolit si z několika typů želv, jež pak dovolují vykreslovat geometrii rozdílnými přístupy. Poslední celek plní funkci řídícího modulu a  je umístněn nad oběmi předcházejícími celky, jež spravuje. Umožňuje také nahrání a ukládání vygenerovaných slov. Odpadá tak opětovné generování při jejich dalším použití. Zároveň sprostředkovává komunikaci jak se systémem Vrecko tak mezi moduly navzájem. Jedná se především o načtení základních parametrů, které oba moduly potřebují pro svou inicializaci. 
+  </para>
+  <sect1 id="sec0401">
+    <title>Vývoj zásuvného modulu</title>
+    <para>
+      Vývoj probíhal na platformě Windows v prostředí Visual Studio 2010 v jazyce C++. Veškeré třídy náleží do jmenného prostoru AP_LSystem. Stejně jako celý systém Vrecko je i modul LSystem postaven na OpenSceneGraphu. Zejména se jedná o část zajišťující interpretaci L-systémů a generování geometrie. Mimoto byly pro vývoj použity některé z knihoven Boost. Jednak jde o knihovnu Program properties pro jednoduché a intuitivní ukládání a zpracovaní nastavení a konfiguračních souborů a dále pak o knihovnu Lexical cast, která jednoduše převádí a přetypovává řetězce znaků. O zpracování XML souborů se stará knihovna Xerces-C.
+    </para>
+  </sect1>
+  
+  <sect1 id="sec0402">
+    <title>OpenSceneGraph</title>
+    <para>
+      Základním kamenem pro modul LSystem i pro systém Vrecko je OpenSceneGraph API. Jedná se o obejktově orientované rozhraní nad OpenGL. Nízkoúrovňová funkcionalita je zde převedena na objekty v grafech scén. Zároveň jsou možnosti OpenSceneGraphu oproti klasickému OpenGL značně rozšířené a je přidáno mnoho funkcionalit, jež zjednodušují a urychlují práci programátora. 
+    </para>
+  </sect1>
+  <sect1 id="sec0403">
+    <title>Vrecko</title>
+    <para>
+      Jak již bylo zmíněno, je modul LSystem určen pro systém Vrecko. Jedná se o prostředí pro tvorbu virtuální reality vyvíjené v rámci HCI laboratoře na Fakultě informatiky Masarykovy univerzity v Brně. Slouží primárně pro vytváření scén, jež nějakým způsobem demonstrují a zkoumají možnosti interakce člověka s počítačem. Vychází z principu OpenSceneGraph a scény jsou tedy obdobně definovány jako grafy. Scény se v tomto prostředí dělí na objekty jež mají určité vlastnosti a dovednosti. Díky ním lze objekty ovládat a měnit jejich tvar i vlastnosti. Zároveň lze k tomuto systému připojit řadu různých zařízení pro interakci obsahu scény s uživatelem. 
+    </para>
+  </sect1>
+</chapter>
+<chapter id="ch05">
+  <title>Generovaní slov pro modely rostlin</title>
+  <para>
+    Tato kapitola se zabývá implementací syntaktického analyzátoru a následným generováním slov pomocí L-systémů. Při implementaci této části byl kladen velký důraz na rychlost a také na modularitu. Rychlost je zde důležitá zejména při iteračním procesu, neboť výsledné slovo může mít délku až v řádu miliónů modulů. Je tedy třeba zajistit vhodné struktury pro ukládání dat a vybrat vhodný algoritmus pro rychlý přepis pravidel. Modularita a rozšířitelnost zde s rychlostí úzce souvisí. Jednotlivé typy L-systémy totiž vyžadují rozdílné přístupy při přepisování pravidel a tak je důležité vytvořit více algoritmů jež budou různé typy jednodušších i komplexnějších L-systémů zpracovávat Zároveň je však třeba zaručit, aby jednodušší L-systémy nebyly zpracovány příliš složitými algoritmy, ale aby byly vybrány jednodušší a hlavně optimalizovanější postupy pro daný problém. Modularita je zde dýležitá i pro syntaktický analyzátor jež tak zvládne zpracovat více formátů L-systémů.
+  </para>
+  <para>
+    Celou tuto funkcionalitu a komunikaci s okolím zajišťuje třída LSystemGenerator. Tato třída je potomkem třídy AbstractGenerator jež obsahuje rozhraní pro obsluhu této třídy. Instance třídy LSystemGenerator obsahuje odkaz na hlavní L-systém třídy AbstractLSystem, který je poté použit pro generování slova. Hlavním úkolem třídy LSystemGenerator je vybrat správný syntaktický analyzátor pro nahrání souboru s L-systémem a na základě získaných parametrů vybrat a vytvořit instanci třídy dědící z AbstractLSystem, jež bude pro následný iterační proces nejvhodnější. Nahráním souborů a jejich strukturou se zabývá následující kapitola.
+  </para>
+  <sect1 id="sec0501">
+    <title>Soubory L-systémů</title>
+    <para>
+      Vstupním bodem pro každý L-systém je jeho definice uložená v jednom z podporovaných souborových formátů. Spolu s definicí může být součástí celá řada parametrů, které mohou ovlivnit jak proces přepisování pravidel tak i způsob následné geometrické intepretace. Zásuvný modul nyní podporuje dva typy souborů a lze jej rozšířit o podporu dalších formátů. Jednat se jedná o mírně pozměněný textový formát LS, jež v obdobné formě používá ve svých projektech výzkumná skupina Biologického Modelování a Vizualizace kolem prof. Przemyslawa Prusinkiewicze z University of Calgary. Tento formát byl zvolen z důvodu vedoucí úlohy této skupiny v oboru L-systémů. Druhým formátem je soubor napsaný ve značkovacím jazyce XML, jež byl zvolen pro svou jednoduchou rozšířitelnost a přehlednost.
+    </para>
+    <para>
+      Struktura je v obou případech hiearchická a a popis jejich entit je následující.  
+      <itemizedlist mark='opencircle'>
+        <listitem>
+          <simpara><emphasis role="bold">Unikátní identifikátor L-systému</emphasis> je nutné přiřadit každému L-systému. Ten se pak používá hlavně při vkládání subsytémů nebo pro získávání parametrů o daném L-systému.
+          </simpara>
+        </listitem>
+        <listitem>
+          <simpara><emphasis role="bold">Typ L-systému</emphasis> je důležitým a nutným parametrem L-systému. Určuje základní vlastnosti jako je determiničnost a bezkontextovost L-systému. Na jeho správném nastavení pak záleží při výběru správného algoritmu pro zpracování samotných pravidel a pro následný iterační proces.
+          </simpara>
+        </listitem>
+        <listitem>
+          <simpara><emphasis role="bold">Parametry</emphasis> nastavené přímo v souboru L-systému jsou specifické pro konkrétní L-systém. Pokud některé z parametrů nejsou nastaveny zde, použijí se pro generování i interpretaci slova globální parametry získané z konfiguračního souboru. Kompletní popis jednotlivých parametrů se nachází v APPENDIX
+          </simpara>
+        </listitem>
+        <listitem>
+          <simpara><emphasis role="bold">Subsystémy</emphasis> lze vkládát do každého L-systému. Lze je vložit přidáním cesty k souboru L-systému. Nikdy však není vhodné tvořit v grafu hiarchie L-systémů kružnice. Podrobněji se touto tématikou zabývá kapitola SUBSYSTEMY
+          </simpara>
+        </listitem>
+        <listitem>
+          <simpara><emphasis role="bold">Axiom</emphasis> je počáteční řetězec symbolů. Jde tedy o slovo v nulté iteraci L-systému.
+          </simpara>
+        </listitem>
+        <listitem>
+          <simpara><emphasis role="bold">Přepisovací pravidla</emphasis> jsou množina, která budou použita při iteračním procesu. Na pořadí není brán zřetel, protože se při každém iteračním kroku aplikují všechny pravidla najednou. Z tohoto důvodu je však důležité, aby byla jednotlivá pravidla jednoznačná a neexistovaly dvě pravidla pro stejný modul předchůdce. Jedinou výjímkou jsou stachistické systémy. Struktura pravidel je závislá na jejich typu a podrobněji je popsána v odpovídajících podkapitolách kapitoly TYPY.
+          </simpara>
+        </listitem>
+        <listitem>
+          <simpara><emphasis role="bold">Homomorfismy</emphasis> jsou zvláštním typem přepisovacích pravidel, jež se nezpracovávají během iteračního procesu. K přepisu těchto pravidel dochází vždy až po dokončení všech iterací.
+          </simpara>
+        </listitem>
+      </itemizedlist>
+    </para>
+    <para>
+      Formáty se implementují jako potomci třídy AbstractFile. Ta poskytuje rozhraní pro získání potřebných dat ze souboru.   
+    </para>
+    <para>
+        <programlisting><![CDATA[
+class AbstractFile
+{
+protected:
+    unsigned m_Type;
+    std::string m_Name, m_Axiom;
+    std::vector<std::string> m_Rules, m_Homomorphisms, m_Subsytems;
+    void substitute(std::map<std::string, std::string> & pairs)
+public:
+    AbstractFile();
+    virtual void open( std::string & ) = 0;
+    virtual std::vector<string> * getHomomorphisms()
+    virtual std::vector<string> * getRules();
+    virtual std::vector<string> * getSubsystems();
+    std::string & getAxiom();
+    unsigned getType();
+    std::string & getName();
+};
+  			]]></programlisting>
+    </para>
+    <para>
+      Třídy odvozené od třídy AbstractFile musí implementovat metodu <envar>open()</envar>, jež zaručí zpracování dat ze souboru a uloží je do jednotlivých atributů této třídy. Metoda <envar>substitute()</envar> slouží jako výpomocná metoda při nahrazování řetězců a může být použita pro zpracování konstant nebo subsystémů. Ostatní metody slouží jen přístupové metody k atributům. 
+    </para>
+    <sect2 id="sec050101">
+      <title>Formát LS</title>
+      <para>
+        Jedná se o jednoduchý textový formát založený na příkazech jež jsou podobné preprocesorovým příkazům jazyka C. Některé příkazy jsou párové a musí být ukončeny. Jako hodnota je brán řetězec následující po příkazu. Tento řetězec nemůže obsahovat žádné bílé znaky. Formát LS dovoluje také vkládat komentáře použitím dvojitého lomítka "//".  
+      </para>
+    </sect2>
+    
+    <sect2 id="sec050102">
+      <title>Formát XML</title>
+      <para>
+        V případě XML souboru jde o klasický XML dokument verze 1.0 s kódováním UTF-8. Veškeré použité elementy jsou párové a nejsou použity žádné atributy. Kořenovou značkou je LSystem a ta pak obsahuje všechny potřebné entity. V následujícím odstavci je příklad zápisu L-systému do XML souboru.  
+      </para>
+      <para>
+        <programlisting><![CDATA[
+<?xml version="1.0"?>
+<!-- kořenová značka -->
+<LSystem>
+  <!-- unikátní identifikátor L-systému -->
+  <Name>TernaryTree</Name>
+  <!-- typ L-systému -->
+  <Types>
+    <Type>0L</Type>
+  </Types>
+  <!-- konstanty -->
+  <Constants>
+    <LeafPitch>65.0</LeafPitch>
+  </Constants>
+  <!-- parametry -->
+  <Parameters>
+    <Iteration>14</Iteration>
+    <TurtleType>STRAIGHT_PIPE</TurtleType>
+    <DefaultAngle>30.0</DefaultAngle>
+  </Parameters>
+  <!-- subsystémy -->
+  <Subsystems>
+    <Subsystem>data\ls\leaf01.ls</Subsystem>
+  </Subsystems>
+  <!-- axiom -->
+  <Axiom>F'(0.65)A</Axiom>
+  <!-- přepisovací pravidla -->
+  <Rules>
+    <Rule>A:*->!(0.577)'(0.87)[/(90.74)B][/(-132.63)B]B</Rule>
+    <Rule>B:*->^(33.95)[^(LeafPitch)#{Leaf01}][#{Leaf01}]Z
+                       [^(LeafPitch)#{Leaf01}][#{Leaf01}]ZA</Rule>
+  </Rules>
+  <!-- homomorfismy -->
+  <Homomorphisms>
+    <Homomorphism>A:*->Z</Homomorphism>
+  </Homomorphisms>
+</LSystem>
+			]]></programlisting>
+      </para>
+      <para>
+        Některé symboly pravidel jsou bohužel zároveň řídícími symboly XML a tak je zapotřebí nahradit je odpovídajícími XML entitami.
+      </para>
+    </sect2>
+  </sect1>
+</chapter>
+
+<bibliography>
+   <biblioentry>
+      <abbrev>OpenGL</abbrev>
+      <authorgroup>
+         <author>
+           <firstname>Dave</firstname>
+           <surname>Shreiner</surname>
+         </author>  
+         <author>
+           <firstname>Mason</firstname>
+           <surname>Woo</surname>
+         </author>
+         <author>
+           <firstname>Jackie</firstname>
+           <surname>Neider</surname>
+         </author>
+         <author>
+           <firstname>Tom</firstname>
+           <surname>Davis</surname>
+         </author>
+      </authorgroup>
+      <title>OpenGL Průvodce programátora</title>    
+      <publisher>
+         <publishername>Computer Press, a.s.</publishername>
+      </publisher>
+      <pubdate>2006</pubdate>
+      <isbn>80-251-1275-6</isbn>
+   </biblioentry>
+   
+   <biblioentry>
+      <abbrev>mpg</abbrev>
+      <authorgroup>
+         <author>
+           <firstname>Jiří</firstname>
+           <surname>Žára</surname>
+         </author>  
+         <author>
+           <firstname>Bedřich</firstname>
+           <surname>Beneš</surname>
+         </author>
+         <author>
+           <firstname>Jiří</firstname>
+           <surname>Sochor</surname>
+         </author>
+         <author>
+           <firstname>Petr</firstname>
+           <surname>Felkel</surname>
+         </author>
+      </authorgroup>
+      <title>Moderní počítačová grafika</title>    
+      <publisher>
+         <publishername>Computer Press, a.s.</publishername>
+      </publisher>
+      <pubdate>2004</pubdate>
+   </biblioentry>
+   
+   <biblioentry>
+      <abbrev>CAD history</abbrev>
+      <authorgroup>
+         <author>
+           <firstname>Marian</firstname>
+           <surname>Bozdoc</surname>
+         </author>  
+      </authorgroup>
+      <title>iMB The History of CAD</title>    
+      <publisher>
+         <publishername>MB Solutions</publishername>
+      </publisher>
+      <pubdate>2004</pubdate>  
+      <releaseinfo>Dokument dostupný na 
+         <ulink url="http://mbinfo.mbdesign.net/CAD-History.htm"></ulink> (leden 2008)
+      </releaseinfo>
+   </biblioentry>
+   
+   <biblioentry>
+      <abbrev>CAD</abbrev>
+      <authorgroup>
+         <author>
+           <firstname>Michal</firstname>
+           <surname>Fischer</surname>
+         </author>  
+         <author>
+           <firstname>Petr</firstname>
+           <surname>Vaněk</surname>
+         </author>
+      </authorgroup>
+      <title>CAD I-V</title>    
+      <publisher>
+         <publishername>e-Architekt.cz</publishername>
+      </publisher>
+      <pubdate>2004</pubdate>   
+      <releaseinfo>Seriál dokumentů dostupný na 
+      <ulink url="http://www.e-architekt.cz/"></ulink> (leden 2008)</releaseinfo>
+   </biblioentry>
+   
+   <biblioentry>
+      <abbrev>scanline</abbrev>
+      <authorgroup>
+         <author>
+           <firstname>Robert R.</firstname>
+           <surname>Snapp</surname>
+         </author>  
+      </authorgroup>
+      <title>Scanline Fill Algorithm</title>    
+      <publisher>
+         <publishername>Department of Computer Science, University of Vermont</publishername>
+      </publisher>
+      <pubdate>2003</pubdate>   
+      <releaseinfo>Dokument dostupný na 
+         <ulink url="http://www.cs.uvm.edu/~snapp/teaching/CS274/lectures/scanlinefill.pdf"></ulink> (leden 2008)
+      </releaseinfo>
+   </biblioentry>
+   
+   <biblioentry>
+      <abbrev>adv oGL</abbrev>
+      <authorgroup>
+         <author>
+           <firstname>Tom</firstname>
+           <surname>McReynolds</surname>
+         </author>  
+         <author>
+           <firstname>David</firstname>
+           <surname>Blythe</surname>
+         </author> 
+      </authorgroup>
+      <title>Advanced Graphics Programming Techniques Using OpenGL</title>    
+      <publisher>
+         <publishername>Elsevier Inc.</publishername>
+      </publisher>
+      <pubdate>2005</pubdate>
+      <isbn>1-55860-659-9</isbn> 
+      <releaseinfo>Dokument dostupný na adrese
+         <ulink url="http://web.informatik.uni-bonn.de/II/ag-klein/global/proseminar_ss2001/course12.pdf"></ulink> (leden 2008)
+      </releaseinfo>
+   </biblioentry>
+   
+   <biblioentry>
+      <abbrev>oGL bible</abbrev>
+      <authorgroup>
+         <author>
+           <firstname>Richard S.</firstname>
+           <surname>Wright</surname>
+         </author>  
+         <author>
+           <firstname>Benjamin</firstname>
+           <surname>Lipchak</surname>
+         </author> 
+      </authorgroup>
+      <title>OpenGL Super Bible</title>    
+      <publisher>
+         <publishername>Macmillan Computer Publishing</publishername>
+      </publisher>
+      <pubdate>1996</pubdate>
+      <isbn>1-57169-073-5</isbn>
+   </biblioentry>
+   
+   <biblioentry>
+      <abbrev>nehe</abbrev>
+      <authorgroup>
+         <author>
+           <firstname>Michal</firstname>
+           <surname>Turek</surname>
+         </author>  
+      </authorgroup>
+      <title>CZ NeHe OpenGL</title>    
+      <publisher>
+         <publishername>Michal Turek</publishername>
+      </publisher>
+      <pubdate>2004</pubdate>
+      <releaseinfo>Dokument dostupný na 
+         <ulink url="http://nehe.ceske-hry.cz/download/download/cz_nehe_opengl.pdf"></ulink> (leden 2008)
+      </releaseinfo>
+   </biblioentry>
+
+</bibliography>
+
+<appendix id="appA">
+
+</appendix>
+
+</book>
