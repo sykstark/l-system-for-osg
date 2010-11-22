@@ -270,9 +270,7 @@ void LSystem::generateSuccessor(LongString * word, multimap<char, Rule>::iterato
     {
         // pridani statickych a dynamickych retezcu do slova ( krome posledniho statickeho )
         word->append( (*stStrIt)->str, (*stStrIt)->length );
-        //Log::write(newWord->toString());
         word->append( (*dynStrIt)->Eval( parameters ) );
-		vrecko::logger.debugLog( "newword = %s", word->toString() );
     }
     // pridani posledniho statickeho retezce
     word->append( (*stStrIt)->str, (*stStrIt)->length );

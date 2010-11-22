@@ -74,7 +74,7 @@ ParseableString * LSystemGenerator::getWord()
 		return NULL;
 
 //	BE CAREFUL - too long word can cause an exception
-	vrecko::logger.debugLog("Word: %s", word->toString().c_str() );
+//	vrecko::logger.debugLog("Word: %s", word->toString().c_str() );
 
     return pWord = new ParseableString( word );
 }

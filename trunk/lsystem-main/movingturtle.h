@@ -45,9 +45,11 @@ public:
 //****************************************************************
 //**						MOVEMENT							**
 //****************************************************************
+	virtual int drawForward(std::vector<Parameter> &);
+	virtual int drawForwardHalf( );
 	virtual int moveForward(std::vector<Parameter> &);
 	virtual int moveForwardHalf( );
-	virtual int drawForward(std::vector<Parameter> & );
+	
 	
 };
 }

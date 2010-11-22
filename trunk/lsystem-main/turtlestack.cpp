@@ -4,6 +4,7 @@
 #include "straightpipe.h"
 #include "rectangle.h"
 #include "queryturtle.h"
+#include "hermitpipe.h"
 
 using namespace AP_LSystem;
 
@@ -96,6 +97,9 @@ AbstractTurtle * TurtleStack::createTurtle(AP_LSystem::TurtleType type)
 		break;
 	case LS_TURTLE_STRAIGHTPIPE:
 		turtle = new StraightPipe( );
+		break;
+	case LS_TURTLE_HERMITPIPE:
+		turtle = new HermitPipe( );
 		break;
 	case LS_TURTLE_RECTANGLE:
 		turtle = new Rectangle( );

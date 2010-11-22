@@ -31,6 +31,8 @@ void LSGeode::setTurtleType(std::string & type)
 		turtleType = LS_TURTLE_JOINTEDPIPE;
 	else if(type == "STRAIGHT_PIPE")
 		turtleType = LS_TURTLE_STRAIGHTPIPE;
+	else if(type == "HERMIT_PIPE")
+		turtleType = LS_TURTLE_HERMITPIPE;
 	else if(type == "RECTANGLE")
 		turtleType = LS_TURTLE_RECTANGLE;
 	else

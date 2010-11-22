@@ -119,7 +119,7 @@ multimap<char, Rule>::iterator * Par2LSystem::selectRule(multimap<char, Rule>::i
 	// rules tha pass the condition and that are processed by random generator
     vector< multimap<char, Rule>::iterator > passedRules;
 	RandomIndex ri;
-	unsigned predecessor;
+	unsigned predecessor, context;
     
     for( *it = begin; *it != end; (*it)++ )
     {
@@ -129,13 +129,28 @@ multimap<char, Rule>::iterator * Par2LSystem::selectRule(multimap<char, Rule>::i
 		if((*it)->second.leftContext.length())
 		{	
 			// TODO consider
-			// match left context
 
+			// match left context
 			_word->peekSymbol(leftContext, false);
 			leftContext = _word->matchLeft( (*it)->second.leftContext[0], leftContext, &ignore, NULL );
 			// left context doesn't match
 			if( leftContext < 0 )
 				continue;
+			else
+			{
+				// convert int to unsigned int
+				context = leftContext;
+				// get parameters of left context
+				if( !word->getParameters<double>( context, parameters, paramCount ))
+					return NULL;
+			}
+		}
+
+		// append parameters of nonterminal
+		predecessor = pos;
+		if( !word->getParameters<double>( predecessor, parameters, paramCount ))
+		{
+			return NULL;
 		}
 		
 		// exist right context ?
@@ -147,26 +162,15 @@ multimap<char, Rule>::iterator * Par2LSystem::selectRule(multimap<char, Rule>::i
 			// right context doesn't match
 			if( rightContext < 0 )
 				continue;
-		}
-
-		// get parameters of left context
-		unsigned con = leftContext;
-		if( !word->getParameters<double>( con, parameters, paramCount ))
-		{
-			return NULL;
-		}
-		// append parameters of nonterminal
-		predecessor = pos;
-		if( !word->getParameters<double>( predecessor, parameters, paramCount ))
-		{
-			return NULL;
-		}
-		// append parameters of right context
-		con = rightContext;
-		if( !word->getParameters<double>( con, parameters, paramCount ))
-		{
-			return NULL;
-		}	
+			else
+			{
+				// convert int to unsigned int
+				context = rightContext;
+				// append parameters of right context
+				if( !word->getParameters<double>( context, parameters, paramCount ))
+					return NULL;
+			}
+		}		
 		
 		//evaluate condition
         if( (*it)->second.evaluateCondition( parameters ) )
@@ -175,7 +179,7 @@ multimap<char, Rule>::iterator * Par2LSystem::selectRule(multimap<char, Rule>::i
 			{
 				double eval = (*it)->second.probabilityFactor->Eval( parameters );
 				ri.addProbability( eval );
-				vrecko::logger.debugLog( "k = %f, eval = %f", parameters[0], eval );
+				//vrecko::logger.debugLog( "k = %f, eval = %f", parameters[0], eval );
 				passedRules.push_back( *it );
 			}
 			else

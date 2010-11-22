@@ -1,5 +1,3 @@
-//#pragma once
-
 #ifndef LSFILE_H
 #define LSFILE_H
 

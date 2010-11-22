@@ -34,6 +34,12 @@ int DefaultParser::parse(ParseableString * word)
 			res = turtles.top()->drawForward( parameters );
 			break;
 		case 'Z':
+			res = turtles.top()->drawForwardHalf( );
+			break;
+		case 'f':
+			res = turtles.top()->moveForward( parameters );
+			break;
+		case 'z':
 			res = turtles.top()->moveForwardHalf( );
 			break;
 		case '+':
