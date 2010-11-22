@@ -13,8 +13,6 @@ protected:
 
 		preStep( );
 
-
-
 		osg::Matrixd t;
 		// set movement as half of step
 		t.makeTranslate( HeadVec * dist/2.0f );

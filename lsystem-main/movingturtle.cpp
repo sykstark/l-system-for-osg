@@ -119,6 +119,13 @@ int MovingTurtle::drawForward(std::vector<Parameter> & p)
 	return LS_OK;
 }
 
+int MovingTurtle::drawForwardHalf( )
+{
+	this->doStep( properties.length / 2.0f );
+	
+	return LS_OK;
+}
+
 int MovingTurtle::moveForward(std::vector<Parameter> & p)
 {
 	switch( p.size() )
@@ -140,7 +147,7 @@ int MovingTurtle::moveForward(std::vector<Parameter> & p)
 
 int MovingTurtle::moveForwardHalf( )
 {
-	this->drawStep( properties.length / 2.0f );
+	this->doStep( properties.length / 2.0f );
 	
 	return LS_OK;
 }

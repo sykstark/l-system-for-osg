@@ -23,7 +23,8 @@ private:
 	inline ParameterType getType(int *) { return LS_INT; }
 
     void resize();
-    void appendType( ParameterType type );
+	void append( std::string );
+	void append( ParameterType );
 
 public:
     LongString( unsigned int = 1048576); // 2^20 bytes - 1 MB
@@ -46,8 +47,7 @@ public:
 		append( getType(par) );
 	}
 	void append( const char ch );
-	void append( std::string );
-	void append( ParameterType );
+	
 	void append( const char *, int );
 	void append( LongString * );
 
