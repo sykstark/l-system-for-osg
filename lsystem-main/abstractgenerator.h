@@ -28,14 +28,8 @@ public:
     virtual void nextIteration() = 0;
     virtual ParseableString * getWord() = 0;
 	
-	virtual void saveWordToFile( std::string &)
-	{
-		// TODO
-	}
-	virtual void loadWordFromFile( std::string &)
-	{
-		// TODO
-	}
+    virtual void saveWordToFile( std::string & );
+    virtual void loadWordFromFile( std::string & );
 
     static AbstractLSystem * createLSystem( AbstractFile * );
 };
