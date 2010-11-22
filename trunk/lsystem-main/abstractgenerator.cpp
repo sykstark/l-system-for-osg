@@ -1,9 +1,13 @@
 #include "precompiled.h"
 
+#include <fstream>
+#include <sys/stat.h>
+#include <errno.h>
 #include "abstractgenerator.h"
 #include "d0lsystem.h"
 #include "parstoch0lsystem.h"
 #include "par2lsystem.h"
+
 
 using namespace AP_LSystem;
 
@@ -20,4 +24,56 @@ AbstractLSystem * AbstractGenerator::createLSystem( AbstractFile * file )
         throw ParsingException("non of L-systems fulfils the conditions");
 
     return lsystem;
+}
+
+void AbstractGenerator::saveWordToFile( std::string & filename )
+{
+    if(!pWord)
+    {
+        if( !pMainLSystem )
+        {
+            throw LSystemException( "No L-system loaded" );
+        }
+        getWord();
+        if( !pWord )
+        {
+            throw LSystemException( "Word not translated" );
+        }
+    }
+    struct stat fileStatus;
+    int iretStat = stat(filename.c_str(), &fileStatus);
+    if( iretStat == ENOTDIR )
+        throw FileException("A component of the path is not a directory.");
+    else if( iretStat == EACCES )
+        throw FileException("Permission denied.");
+    else if( iretStat == ENAMETOOLONG )
+        throw FileException("File can not be read\n");
+
+    std::ofstream * out = new std::ofstream(filename.c_str());
+    if( !out->is_open() )
+    {
+        throw FileException( "File " + filename + " cannot be created" );
+    }
+
+    *out << (*pWord);
+
+    out->close();
+}
+
+void AbstractGenerator::loadWordFromFile( std::string & filename )
+{
+    struct stat fileStatus;
+    int iretStat = stat(filename.c_str(), &fileStatus);
+    if( iretStat == ENOTDIR )
+        throw FileException("A component of the path is not a directory.");
+    else if( iretStat == EACCES )
+        throw FileException("Permission denied.");
+    else if( iretStat == ENAMETOOLONG )
+        throw FileException("File can not be read\n");
+
+    std::fstream * out = new std::fstream(filename.c_str());
+    if( !out->is_open() )
+    {
+        throw FileException( "File " + filename + " cannot be opened" );
+    }
 }
