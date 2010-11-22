@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!-- koøenová znaèka -->
+<LSystem>
+  <!-- unikátní identifikátor L-systému -->
+  <Name>TernaryTree</Name>
+  <!-- typ L-systému -->
+  <Types>
+    <Type>0L</Type>
+  </Types>
+  <!-- konstanty -->
+  <Constants>
+    <LeafPitch>65.0</LeafPitch>
+  </Constants>
+  <!-- parametry -->
+  <Parameters>
+    <Iteration>14</Iteration>
+    <TurtleType>STRAIGHT_PIPE</TurtleType>
+    <DefaultAngle>30.0</DefaultAngle>
+  </Parameters>
+  <!-- subsystémy -->
+  <Subsystems>
+    <Subsystem>data\ls\leaf01.ls</Subsystem>
+  </Subsystems>
+  <!-- axiom -->
+  <Axiom>F'(0.65)A</Axiom>
+  <!-- pøepisovací pravidla -->
+  <Rules>
+    <Rule>A:*->!(0.577)'(0.87)[/(90.74)B][/(-132.63)B]B</Rule>
+    <Rule>B:*->^(33.95)[^(LeafPitch)#{Leaf01}][#{Leaf01}]Z[^(LeafPitch)#{Leaf01}][#{Leaf01}]ZA</Rule>
+  </Rules>
+  <!-- homomorfismy -->
+  <Homomorphisms>
+    <Homomorphism>A:*->Z</Homomorphism>
+  </Homomorphisms>
+</LSystem>

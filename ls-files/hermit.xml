@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<LSystem>
+  <Name>ternarni strom</Name>
+  <Types>
+    <Type>0L</Type>
+  </Types>
+  <Parameters>
+    <TurtleType>HERMIT_PIPE</TurtleType>
+    <DefaultAngle>30.0</DefaultAngle>
+    <DefaultLength>2.0</DefaultLength>
+    <ContourDetail>5</ContourDetail>
+    <DefaultRadius>0.5</DefaultRadius>
+    <DiffuseTexture>data\ls\tex\bark\bark_20091031_05_512x512_seamless.jpg</DiffuseTexture>
+  </Parameters>
+  <Axiom>F+(30.0)F</Axiom>
+</LSystem>

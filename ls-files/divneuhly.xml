@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<LSystem>
+  <Name>ternarni strom</Name>
+  <Types>
+    <Type>2L</Type>
+  </Types>
+  <Constants>
+    <prune>(abs(x)>3)|(y&lt;0)|(y>5)|(abs(z)>10)</prune>
+    <a>40</a>
+    <b>40</b>
+    <c>90</c>
+    <XX>'(0.9)!(0.85)</XX>
+  </Constants>
+  <Parameters>
+    <Iteration>2</Iteration>
+    <TurtleType>STRAIGHT_PIPE</TurtleType>
+    <DefaultAngle>40.0</DefaultAngle>
+    <DefaultLength>1.0</DefaultLength>
+    <ContourDetail>10</ContourDetail>
+    <DefaultRadius>0.07</DefaultRadius>
+    <AngleVariance>0</AngleVariance>
+    <DiffuseTexture>data\ls\tex\bark\bark_20091031_05_512x512_seamless.jpg</DiffuseTexture>
+    <Ignore>+/-</Ignore>
+  </Parameters>
+  <Axiom>F[+(40)F]-(40)F</Axiom>
+</LSystem>

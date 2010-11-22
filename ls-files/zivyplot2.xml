@@ -12,12 +12,12 @@
     <XX>'(0.89)!(max(0.5,1-(k/(k*1.8*(k+1)))))</XX>
   </Constants>
   <Parameters>
-    <Iteration>55</Iteration>
+    <Iteration>7</Iteration>
     <TurtleType>STRAIGHT_PIPE</TurtleType>
     <DefaultAngle>40.0</DefaultAngle>
     <DefaultLength>0.4</DefaultLength>
     <ContourDetail>11</ContourDetail>
-    <DefaultRadius>0.05</DefaultRadius>
+    <DefaultRadius>0.03</DefaultRadius>
     <AngleVariance>0</AngleVariance>
     <DiffuseTexture>data\ls\tex\bark\bark_20091031_02_512x512_seamless.jpg</DiffuseTexture>
     <Ignore>+/-</Ignore>
@@ -28,8 +28,8 @@
   <Axiom>X</Axiom>
   <Rules>
     <P1>&lt;X>->FA(1)P(positionX(),positionY(),positionZ())</P1>
-    <P2>&lt;A(k)>P(x,y,z):(!(prune))->/(_c_)[+(_a_)XXFA(k+1)P(positionX(),positionY(),positionZ())]-(_b_)XXFA(k+1):min(1,(2*k+1)/(k*k))</P2>
-    <P3>&lt;A(k)>P(x,y,z):(!(prune))->/(_c_)B(k+1,k+1)-(_b_)XXFA(k+1):max(0,1-((2*k+1)/(k*k)))</P3>
+    <P2>&lt;A(k)>P(x,y,z):(!(prune))->/(_c_)[+(_a_)XXFA(k+1)P(positionX(),positionY(),positionZ())][^XXFA(k+1)P(positionX(),positionY(),positionZ())]-(_b_)XXFA(k+1):min(1,(2*k+1)/(k*k))</P2>
+    <P3>&lt;A(k)>P(x,y,z):(!(prune))->/(_c_)B(k+1,k+1)-(_b_)XXFA(k+1):0</P3>
     <P4>&lt;A(k)>P(x,y,z):(prune)->T%</P4>
     <P5>&lt;F>T->S</P5>
     <P6>&lt;F>S->SF</P6>
