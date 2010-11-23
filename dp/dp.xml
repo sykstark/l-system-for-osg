@@ -440,6 +440,67 @@ public:
       </para>
     </sect2>
   </sect1>
+  <sect1 id="sec0502">
+    <title>Soubory L-systémů</title>
+    <para>
+      Při generování slova L-systémem dochází k vytváření velmi dlouhých řetězců s nestejnorodými daty. Moduly, ze kterých se řetězce tvoří, totiž kromě znaku pro identifikaci modulu obsahují také parametry různých datových formátů. Zpracování takovýchto dat musí být navíc dostatečně rychlé. Pro tento účel byla proto vytvořena na míru přizpůsobená třída LongString. Data jsou zde uložena ve formátu, který umožňuje rychlou manipulaci s daty, především pak připojení nového řetězce na konec stávajícího. Rychlost provedení této operace je potřeba při iteračním procesu. Ten při každém kroku zpracovává původní slovo a vytváří podle něj na základě přepisovacích pravidel nové slovo další iterace. Provádí to tak, že nahlíží na jednotlivé moduly původního slova zleva doprava a hledá shodu s některým z předchůdců v přepisovacích pravidlech. V případě nalezení pravidla je následník přidán na konec nového slova. V případě, že předchůdce mezi pravidly nalezen není, připojí se na konec kopie původního modulu. Použije se tedy pravidlo identity. Implementací se zabývá kapitola LINK  
+    </para>
+    <sect2 id="sec050201">
+      <title>Vnitřní struktura řetězce</title> 
+      <para>
+        Datová struktura LongString je v jádru tvořena bytovým polem. Toto pole se nezvětšuje při každém zvětšení řetězce, ale jen vždy po dosažení určité velikosti. Dochází tak ke znatelné úspoře času při alokaci paměti, která se provádí podstatně méně častěji. Každý modul je zde uložen jako znak identifikující daný modul a případně jeho parametry. Parametry mohou být typu int, unsigned char nebo typu double. Implementace dalších typů je možná a jednoduchá. Pro současné použití však nebyly jiné typy zapotřebí. Obrázek LINK ukazuje jakým je způsobem je struktura navržena. 
+      </para>
+      <para>
+        Jeden čvereček odpovídá jednomu bytu. Každý modul obsahuje jeden znak jenž jej identifikuje. Dále pak může obsahovat libovolný počet parametrů. Každý parametr je identifikován dvěmi byty zleva a zprava. Při použití této datové struktury tedy není nutné provádět jakékoli převody mezi typy, jejichž hodnoty jsou tak rychle dostupné. Pro ilustraci byly na obrázku použity u jednoho modulu dva různé datové typy. Současná implementace umožňuje pouze použití modulů, které mají všechny parametry shodného typu.
+      </para>
+    </sect2>
+    <sect2 id="sec050202">
+      <title>Inicializace</title>
+      <para>
+        Pro vytvoření instance slouží jediný konstruktor. Jediným parametrem je velikost řetězce. Implicitní hodnota tohoto parametru je 1 048 576 bytů. Právě tato hodnota je také použita jako minimální přírůstek alokované paměti, pokud se stávající paměť naplní. Plnění daty lze provádět buď připojováním řetězců, jež je popsáno v následující kapitole, nebo konverzí klasického zápisu řetězce typu std::string do podoby řetězce LongString. K tomu slouží metoda convertFromString(). Této možnosti lze využít při načítání pravidel získaných ze souboru. Příklad takovéhoto řetězce:
+      </para>
+      <para>
+        Identifikující znaky modulů jsou v nezměněné podobě uloženy i v řetězci LongString. Hodnoty parametrů jsou však konvertovány do odpovídajícího typu. Pro rozlišení typů se používají různé závorky. Zatímco kulaté závorky indikují typ double, složené závorky indikují typ integer. Konvertované hodnoty jsou v řetězci z obou stran obaleny jednobytovým identifikátorem. Hodnota tohoto idetifikátoru odpovídá pořadí ve výčtu ParameterType.  
+      </para>
+    </sect2>
+    <sect2 id="sec050203">
+      <title>Připojování řetězců</title>
+      <para>
+        Jak již bylo výše zmíněno, je tato struktura optimalizována pro opakované zvětšování přidáváním řetězců na její konec. Při každém připojení se provádí kontrola, zda je alokované místo dostatečné pro připojení dalších dat. Pokud ne, volá se automaticky metoda resize(), jež alokuje novou paměť a zvětší tento řetězec o délku nastavenou při vytváření instance.
+      </para>
+      <para>
+        Pro připojení dat je k dispozici několik metod. Jedná se o různé formy metody append(). Ta poskytuje díky šabloně možnost uložit libovolný, ve výčtu ParameterType definovaný, datový typ. Kromě toho je tato metoda přetížena kvůli specifickým způsobům připojení některých dat. Lze tak připojit jiný řetězec typu LongString nebo pole bytů ve správném formátu.
+      </para>
+    </sect2>
+    <sect2 id="sec050204">
+      <title>Připojování řetězců</title>
+      <para>
+        Přistupovat lze k datům jedním ze čtyř způsobů. 
+        <itemizedlist mark='opencircle'>
+          <listitem>
+            <simpara>Pomocí operátoru [] získat přímo hodnotu bytu na určit&amp;eacute; pozici řetězce. 
+            </simpara>
+          </listitem>
+          <listitem>
+            <simpara>Díky metodě getData() lze získat blok dat nebo celý řetězec bytů. Hodí se především při provádění substitucí. 
+            </simpara>
+          </listitem>
+          <listitem>
+            <simpara>Nejpoužívanější možností je metoda getSymbol(), díky níž lze získat blok dat odpovídající jednomu modulu, neboli symbolu, na dané pozici. 
+            </simpara>
+          </listitem>
+          <listitem>
+            <simpara>Pro zpracování parametrických L-systémů se používá jedna z metod šablony getParameters(), která vrací pole parametrů libovolného typu a jejich počet. Tyto parametry jsou získány z pozice za identifikujícím znakem. 
+            </simpara>
+          </listitem>
+          <listitem>
+            <simpara>Metody matchRight() a matchLeft() slouží především k ověřování kontextu. Pro svou funkci využívají metody peekSymbol() pro nahlédnutí na levý nebo pravý nejbližší znak a jelikož řetězce obsahují i závorky, jsou implementovány i pomocné metody findMatchingRightBracket() a findMatchingLeftBracket() pro nalezení odpovídajícího protějšku k nalezené závorce. Podrobněji je celá funkcionalita nalezení kontextu popsána v kapitole LINK.
+            </simpara>
+          </listitem>
+        </itemizedlist>
+      </para>
+    </sect2> 
+  </sect1>  
 </chapter>
 
 <bibliography>
