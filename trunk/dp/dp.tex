@@ -22,7 +22,7 @@
 \thesisfaculty{fi}
 \thesisadvisor{RNDr. Vít Kovalèík, Ph.D.}
 % --------------------------------------------
-\label{id309448}\usepackage{ifthen}
+\label{id306171}\usepackage{ifthen}
 % --------------------------------------------
 % Check for PDFLaTeX/LaTeX 
 % --------------------------------------------
@@ -382,7 +382,7 @@ Tato práce se zabývá problematikou Lindenmayerovýchsystémù, jako¾to nástroje pro
 AEC, CAD, OpenGL, plovoucí podlahy, návrh interiéru, vizualizace interiéru, kladeèské plány, FloorPlanner\end{ThesisKeyWords}
 
 \makeatletter
-\def\dbtolatex@contentsid{id381110}
+\def\dbtolatex@contentsid{id377833}
 \def\dbtolatex@@contentsname{\latex@@contentsname}
 \let\latex@@contentsname\contentsname
 \newif\ifdocbooktolatexcontentsname\docbooktolatexcontentsnametrue
@@ -422,7 +422,7 @@ Jádro L-systémù spoèívá v~pou¾ití pøepisovacího systému. Jedná se o~opakované na
 
 Jedním z~prvních grafických modelù, pou¾ívajících pøepisovací pravidla, byla Kochova køivka, pøípadnì Kochova vloèka (155 ABOP). ©lo o~jednoduchý bezkontextový pøepisovací systém, je¾ obsahoval pouze jediné pravidlo, pøepisující jeden grafický prvek na jiný. (OBRAZEK). Pozdìji tento model podstatnì roz¹íøil Mandelbrot, je¾ pøidal systémy podporující pøepisování úseèek o~rùzných délkách a hlavnì podporu vìtvených topologií.
 
-Nejvì¹í pozornost v¹ak byla ubírána ke studiu systémù zalo¾ených na pøepisování øetìzcù znakù. Velkým pøínosem v~tomto odvìtví byly na konci padesátých let 20. století Chomského formální gramatiky, které vyu¾ívaly princip pøepisování pro popis syntaxe pøirozeného jazyka. V~roce 1968 pak biolog Aristid Lindenmayer pøedstavil odli¹ný typ mechanismu pøepisujícího øetìzce. Tento mechanismus byl posléze pojmenován jako L-systémy. Zásadní odli¹ností L-systémù od Chomského gramatik spoèívá v~pou¾ití pøepisovacích pravidel. Zatímco v~Chomského gramatikách jsou pøepisovací pravidla aplikována postupnì, v~L-systémech jsou pou¾ity paralelnì v~jednom derivaèním kroku na v¹echny symboly pøepisovaného øetìzce. Motivací pro tento pøístup byla podobnost s~biologickými procesy. Pøíkladem mohou být mnohobunìèné organismy, ve kterých se dìlí buòky souèasnì. Na rozdíl od pøírodních pochodù vývoj L-systémù probíhá v~diskrétních krocích. Kvùli reprezentaci modelù jako øetìzce znakù se èasto místo pojmu modul pou¾ívá pojem symbol.
+Nejvìt¹í pozornost v¹ak byla ubírána ke studiu systémù zalo¾ených na pøepisování øetìzcù znakù. Velkým pøínosem v~tomto odvìtví byly na konci padesátých let 20. století Chomského formální gramatiky, které vyu¾ívaly princip pøepisování pro popis syntaxe pøirozeného jazyka. V~roce 1968 pak biolog Aristid Lindenmayer pøedstavil odli¹ný typ mechanismu pøepisujícího øetìzce. Tento mechanismus byl posléze pojmenován jako L-systémy. Zásadní odli¹ností L-systémù od Chomského gramatik spoèívá v~pou¾ití pøepisovacích pravidel. Zatímco v~Chomského gramatikách jsou pøepisovací pravidla aplikována postupnì, v~L-systémech jsou pou¾ity paralelnì v~jednom derivaèním kroku na v¹echny symboly pøepisovaného øetìzce. Motivací pro tento pøístup byla podobnost s~biologickými procesy. Pøíkladem mohou být mnohobunìèné organismy, ve kterých se dìlí buòky souèasnì. Na rozdíl od pøírodních pochodù vývoj L-systémù probíhá v~diskrétních krocích. Kvùli reprezentaci modelù jako øetìzce znakù se èasto místo pojmu modul pou¾ívá pojem symbol.
 
 % ------------------------   
 % Section 
@@ -447,19 +447,19 @@ Abeceda {\em{V}} je koneèná mno¾ina {\em{symbolù}}.
 
 %--- Item
 \item 
-{\em{D0L-systém}} je trojice \ensuremath{G= \langle V, \omega ,P \rangle} , kde {\em{V}} je abeceda, \ensuremath{\omega \in } {\em{V*}} je poèáteèní slovo, nazývané {\em{axiom}}, a {\em{P}} je mno¾ina pøepisovacích pravidel takových, ¾e pro \ensuremath{\forall a \in V: \exists p_{a} \in P} , kde \ensuremath{p_{a}} oznaèuje pøepisovací pravidlo, jeho¾ pøechùdce je modul \ensuremath{a} .
+{\em{D0L-systém}} je trojice \ensuremath{G= \langle V, \omega ,P \rangle} , kde {\em{V}} je abeceda, \ensuremath{\omega \in } {\em{V*}} je poèáteèní slovo, nazývané {\em{axiom}}, a {\em{P}} je mno¾ina pøepisovacích pravidel takových, ¾e pro \ensuremath{\forall a \in V: \exists p_{a} \in P} , kde \ensuremath{p_{a}} oznaèuje pøepisovací pravidlo, jeho¾ pøedchùdce je modul \ensuremath{a} .
 
 \end{itemize}
-\noindent  Dle obecných konvencí bývá pøepisovací pravidlo \ensuremath{a \to u} oznaèováno jako odpovídající modulu a pro modul, kterému neodpovídá ¾ádné z~pøepisovacích pravidel, bývá pu¾ito pravidlo identity \ensuremath{a \to a} . Modul je mo¾né bìhem vývoje L-systému odstranit pomocí pou¾ití \ensuremath{\epsilon} pravidla.
+\noindent  Dle obecných konvencí bývá pøepisovací pravidlo \ensuremath{a \to u} oznaèováno jako odpovídající modulu a pro modul, kterému neodpovídá ¾ádné z~pøepisovacích pravidel, bývá pou¾ito pravidlo identity \ensuremath{a \to a} . Modul je mo¾né bìhem vývoje L-systému odstranit pomocí pou¾ití \ensuremath{\epsilon} pravidla.
 
 % ------------------------   
 % Section 
-\section{Závorkové L-systémy}
+\section{L-systémy se závorkami}
 \label{sec0203}\hypertarget{sec0203}{}%
 
-Obecné D0L-systémy poskytují mo¾nosti pouze pro vytvoøení sekvence modulù. Aby v¹ak bylo mo¾né vytvoøit slova reprezentující rostliny, je nutné umo¾nit L-systémùm vytváøet vìtvené topologie. Pro reprezentaci vìtvených topologií je potøeba zavést dva specializované moduly. Tyto moduly byly ji¾ souèástí pùvodního Lindenmayerova konceptu(Lin 1968 Radekk). Pro oznaèení záèatku a konce vìtve se pou¾ívají symboly pravé a levé hranaté závorky.
+Obecné D0L-systémy poskytují mo¾nosti pouze pro vytvoøení sekvence modulù. Aby v¹ak bylo mo¾né vytvoøit slova reprezentující rostliny, je nutné umo¾nit L-systémùm vytváøet vìtvené topologie. Pro reprezentaci vìtvených topologií je potøeba zavést dva moduly. Tyto moduly byly ji¾ souèástí pùvodního Lindenmayerova konceptu(Lin 1968 Radekk). Pro oznaèení zaèátku a konce vìtve se pou¾ívají symboly pravé a levé hranaté závorky.
 
-Slova, vyprodukovaná derivacemi pøepisovacích pravidel závorkového L-systému, se oznaèují jako stromy. Pøíklad takovéto stromové struktury vytvoøené závorkovým L-systémem je na obrázku (str9 fig 3.2 handbook). Strom je dle (98) slovo w nad abecedou VE = V~U~\{[,]\}, kde V~je abeceda v¹ech modulù z~nich¾ se skládají vìtve. Vìtev je pak libobolné slovo generované bezzávorkovým L-systémem.
+Slova, vyprodukovaná derivacemi pøepisovacích pravidel závorkového L-systému, se oznaèují jako stromy. Pøíklad takovéto stromové struktury vytvoøené závorkovým L-systémem je na obrázku (str9 fig 3.2 handbook). Strom je dle (98) slovo w nad abecedou VE = V~U~\{[,]\}, kde V~je abeceda v¹ech modulù z~nich¾ se skládají vìtve. Vìtev je pak libovolné slovo generované L-systémem bez závorek.
 
 % ------------------------   
 % Section 
@@ -485,7 +485,7 @@ Proto¾e byly L-systémy navr¾eny jako matematický model bez geometrické interpret
 \subsection{Planární ¾elví grafika}
 \label{sec030101}\hypertarget{sec030101}{}%
 
-Nebo» pùvod ¾elví grafiky spoèívá v~pohybu kurzoru po obrazovce, její pùvodní koncept zahrnoval pohyb ve dvourozmìrném prostøedí. ®elva je definovaná jako trojice parametrù {\em{(x,y,$\alpha$)}}, kde {\em{x}} a {\em{y}} udávají kartézké souøadnice ¾elvy a úhel {\em{$\alpha$}} smìr, kterým ¾elva míøí, tzv. èelo. Pokud zavedeme navíc hodnotu pro délku kroku a výchozí pøírùstek úhlu o~který se ¾elva bude otáèet, mù¾eme vytvoøit jednoduchá pravidla pro pohyb ¾elvy v~rovinì. Jednotlivé znaky pak zeprezentují daný modul a také akci která je pøi naètení tohoto modulu provedena.
+Nebo» pùvod ¾elví grafiky spoèívá v~pohybu kurzoru po obrazovce, její pùvodní koncept zahrnoval pohyb ve dvojrozmìrném prostøedí. ®elva je definovaná jako trojice parametrù {\em{(x,y,$\alpha$)}}, kde {\em{x}} a {\em{y}} udávají kartézké souøadnice ¾elvy a úhel {\em{$\alpha$}} smìr, kterým ¾elva míøí, tzv. èelo. Pokud zavedeme navíc hodnotu pro délku kroku a výchozí pøírùstek úhlu o~který se ¾elva bude otáèet, mù¾eme vytvoøit jednoduchá pravidla pro pohyb ¾elvy v~rovinì. Jednotlivé znaky pak reprezentují daný modul a také akci která je pøi naètení tohoto modulu provedena.
 
 \begin{itemize}
 %--- Item
@@ -494,11 +494,11 @@ Nebo» pùvod ¾elví grafiky spoèívá v~pohybu kurzoru po obrazovce, její pùvodní ko
 
 %--- Item
 \item 
-{\bfseries{+}} --- Pøiká¾e ¾elvì otoèit se o~pøedem definovaný pøírùstek úhlu doleva. Úhel ¾elvy se o~tuto hodnotu inkrementuje.
+{\bfseries{+}} --- Pøiká¾e ¾elvì otoèit se o~pøedem definovaný pøírùstek úhlu doleva. Úhel ¾elvy se zvìt¹í o~tuto hodnotu.
 
 %--- Item
 \item 
-{\bfseries{-}} --- Pøiká¾e ¾elvì otoèit se o~pøedem definovaný pøírùstek úhlu doprava. Úhel ¾elvy se o~tuto hodnotu dekrementuje.
+{\bfseries{-}} --- Pøiká¾e ¾elvì otoèit se o~pøedem definovaný pøírùstek úhlu doprava. Úhel ¾elvy se zmen¹í o~tuto hodnotu.
 
 \end{itemize}
 \noindent 
@@ -614,10 +614,32 @@ Struktura je v~obou pøípadech hiearchická a a popis jejich entit je následující.
 \noindent 
 
 Formáty se implementují jako potomci tøídy AbstractFile. Ta poskytuje rozhraní pro získání potøebných dat ze souboru.
+
+\begin{Verbatim}[fontsize=\small]
+class AbstractFile
+{
+protected:
+    unsigned m_Type;
+    std::string m_Name, m_Axiom;
+    std::vector<std::string> m_Rules, m_Homomorphisms, m_Subsytems;
+    void substitute(std::map<std::string, std::string> & pairs)
+public:
+    AbstractFile();
+    virtual void open( std::string & ) = 0;
+    virtual std::vector<string> * getHomomorphisms()
+    virtual std::vector<string> * getRules();
+    virtual std::vector<string> * getSubsystems();
+    std::string & getAxiom();
+    unsigned getType();
+    std::string & getName();
+};
+\end{Verbatim}
+
+Tøídy odvozené od tøídy AbstractFile musí implementovat metodu {\texttt{{open()}}}, je¾ zaruèí zpracování dat ze souboru a ulo¾í je do jednotlivých atributù této tøídy. Metoda {\texttt{{substitute()}}} slou¾í jako výpomocná metoda pøi nahrazování øetìzcù a mù¾e být pou¾ita pro zpracování konstant nebo subsystémù. Ostatní metody slou¾í jen pøístupové metody k~atributùm.
 \subsection{Formát LS}
 \label{sec050101}\hypertarget{sec050101}{}%
 
-Jedná se o~jednoduchý textový formát zalo¾ený na pøíkazech je¾ jsou podobné preprocesorovým pøíkazùm jazyka C. Nìkteré pøíkazy jsou párové a musí být ukonèeny. Jako hodnota je brán øetìzec následující po pøíkazu. Tento øetìzec nemù¾e obsahovat ¾ádné bílé znaky. Formát LS dovoluje také vkládat komentáøe pou¾itím dvojtého lomítka "//".
+Jedná se o~jednoduchý textový formát zalo¾ený na pøíkazech je¾ jsou podobné preprocesorovým pøíkazùm jazyka C. Nìkteré pøíkazy jsou párové a musí být ukonèeny. Jako hodnota je brán øetìzec následující po pøíkazu. Tento øetìzec nemù¾e obsahovat ¾ádné bílé znaky. Formát LS dovoluje také vkládat komentáøe pou¾itím dvojitého lomítka "//".
 \subsection{Formát XML}
 \label{sec050102}\hypertarget{sec050102}{}%
 
@@ -652,7 +674,8 @@ V~pøípadì XML souboru jde o~klasický XML dokument verze 1.0 s~kódováním UTF-8. V
   <!-- pøepisovací pravidla -->
   <Rules>
     <Rule>A:*->!(0.577)'(0.87)[/(90.74)B][/(-132.63)B]B</Rule>
-    <Rule>B:*->^(33.95)[^(LeafPitch)#{Leaf01}][#{Leaf01}]Z[^(LeafPitch)#{Leaf01}][#{Leaf01}]ZA</Rule>
+    <Rule>B:*->^(33.95)[^(LeafPitch)#{Leaf01}][#{Leaf01}]Z
+                       [^(LeafPitch)#{Leaf01}][#{Leaf01}]ZA</Rule>
   </Rules>
   <!-- homomorfismy -->
   <Homomorphisms>
@@ -661,58 +684,111 @@ V~pøípadì XML souboru jde o~klasický XML dokument verze 1.0 s~kódováním UTF-8. V
 </LSystem>
 \end{Verbatim}
 
+Nìkteré symboly pravidel jsou bohu¾el zároveò øídícími symboly XML a tak je zapotøebí nahradit je odpovídajícími XML entitami.
+
+% ------------------------   
+% Section 
+\section{Soubory L-systémù}
+\label{sec0502}\hypertarget{sec0502}{}%
+
+Pøi generování slova L-systémem dochází k~vytváøení velmi dlouhých øetìzcù s~nestejnorodými daty. Moduly, ze kterých se øetìzce tvoøí, toti¾ kromì znaku pro identifikaci modulu obsahují také parametry rùzných datových formátù. Zpracování takovýchto dat musí být navíc dostateènì rychlé. Pro tento úèel byla proto vytvoøena na míru pøizpùsobená tøída LongString. Data jsou zde ulo¾ena ve formátu, který umo¾òuje rychlou manipulaci s~daty, pøedev¹ím pak pøipojení nového øetìzce na konec stávajícího. Rychlost provedení této operace je potøeba pøi iteraèním procesu. Ten pøi ka¾dém kroku zpracovává pùvodní slovo a vytváøí podle nìj na základì pøepisovacích pravidel nové slovo dal¹í iterace. Provádí to tak, ¾e nahlí¾í na jednotlivé moduly pùvodního slova zleva doprava a hledá shodu s~nìkterým z~pøedchùdcù v~pøepisovacích pravidlech. V~pøípadì nalezení pravidla je následník pøidán na konec nového slova. V~pøípadì, ¾e pøedchùdce mezi pravidly nalezen není, pøipojí se na konec kopie pùvodního modulu. Pou¾ije se tedy pravidlo identity. Implementací se zabývá kapitola LINK
+\subsection{Vnitøní struktura øetìzce}
+\label{sec050201}\hypertarget{sec050201}{}%
+
+Datová struktura LongString je v~jádru tvoøena bytovým polem. Toto pole se nezvìt¹uje pøi ka¾dém zvìt¹ení øetìzce, ale jen v¾dy po dosa¾ení urèité velikosti. Dochází tak ke znatelné úspoøe èasu pøi alokaci pamìti, která se provádí podstatnì ménì èastìji. Ka¾dý modul je zde ulo¾en jako znak identifikující daný modul a pøípadnì jeho parametry. Parametry mohou být typu int, unsigned char nebo typu double. Implementace dal¹ích typù je mo¾ná a jednoduchá. Pro souèasné pou¾ití v¹ak nebyly jiné typy zapotøebí. Obrázek LINK ukazuje jakým je zpùsobem je struktura navr¾ena.
+
+Jeden èvereèek odpovídá jednomu bytu. Ka¾dý modul obsahuje jeden znak jen¾ jej identifikuje. Dále pak mù¾e obsahovat libovolný poèet parametrù. Ka¾dý parametr je identifikován dvìmi byty zleva a zprava. Pøi pou¾ití této datové struktury tedy není nutné provádìt jakékoli pøevody mezi typy, jejich¾ hodnoty jsou tak rychle dostupné. Pro ilustraci byly na obrázku pou¾ity u~jednoho modulu dva rùzné datové typy. Souèasná implementace umo¾òuje pouze pou¾ití modulù, které mají v¹echny parametry shodného typu.
+\subsection{Inicializace}
+\label{sec050202}\hypertarget{sec050202}{}%
+
+Pro vytvoøení instance slou¾í jediný konstruktor. Jediným parametrem je velikost øetìzce. Implicitní hodnota tohoto parametru je 1 048 576 bytù. Právì tato hodnota je také pou¾ita jako minimální pøírùstek alokované pamìti, pokud se stávající pamì» naplní. Plnìní daty lze provádìt buï pøipojováním øetìzcù, je¾ je popsáno v~následující kapitole, nebo konverzí klasického zápisu øetìzce typu std::string do podoby øetìzce LongString. K~tomu slou¾í metoda convertFromString(). Této mo¾nosti lze vyu¾ít pøi naèítání pravidel získaných ze souboru. Pøíklad takovéhoto øetìzce:
+
+Identifikující znaky modulù jsou v~nezmìnìné podobì ulo¾eny i v~øetìzci LongString. Hodnoty parametrù jsou v¹ak konvertovány do odpovídajícího typu. Pro rozli¹ení typù se pou¾ívají rùzné závorky. Zatímco kulaté závorky indikují typ double, slo¾ené závorky indikují typ integer. Konvertované hodnoty jsou v~øetìzci z~obou stran obaleny jednobytovým identifikátorem. Hodnota tohoto idetifikátoru odpovídá poøadí ve výètu ParameterType.
+\subsection{Pøipojování øetìzcù}
+\label{sec050203}\hypertarget{sec050203}{}%
+
+Jak ji¾ bylo vý¹e zmínìno, je tato struktura optimalizována pro opakované zvìt¹ování pøidáváním øetìzcù na její konec. Pøi ka¾dém pøipojení se provádí kontrola, zda je alokované místo dostateèné pro pøipojení dal¹ích dat. Pokud ne, volá se automaticky metoda resize(), je¾ alokuje novou pamì» a zvìt¹í tento øetìzec o~délku nastavenou pøi vytváøení instance.
+
+Pro pøipojení dat je k~dispozici nìkolik metod. Jedná se o~rùzné formy metody append(). Ta poskytuje díky ¹ablonì mo¾nost ulo¾it libovolný, ve výètu ParameterType definovaný, datový typ. Kromì toho je tato metoda pøetí¾ena kvùli specifickým zpùsobùm pøipojení nìkterých dat. Lze tak pøipojit jiný øetìzec typu LongString nebo pole bytù ve správném formátu.
+\subsection{Pøipojování øetìzcù}
+\label{sec050204}\hypertarget{sec050204}{}%
+
+Pøistupovat lze k~datùm jedním ze ètyø zpùsobù. 
+\begin{itemize}
+%--- Item
+\item 
+Pomocí operátoru [] získat pøímo hodnotu bytu na urèit\&eacute; pozici øetìzce.
+
+%--- Item
+\item 
+Díky metodì getData() lze získat blok dat nebo celý øetìzec bytù. Hodí se pøedev¹ím pøi provádìní substitucí.
+
+%--- Item
+\item 
+Nejpou¾ívanìj¹í mo¾ností je metoda getSymbol(), díky ní¾ lze získat blok dat odpovídající jednomu modulu, neboli symbolu, na dané pozici.
+
+%--- Item
+\item 
+Pro zpracování parametrických L-systémù se pou¾ívá jedna z~metod ¹ablony getParameters(), která vrací pole parametrù libovolného typu a jejich poèet. Tyto parametry jsou získány z~pozice za identifikujícím znakem.
+
+%--- Item
+\item 
+Metody matchRight() a matchLeft() slou¾í pøedev¹ím k~ovìøování kontextu. Pro svou funkci vyu¾ívají metody peekSymbol() pro nahlédnutí na levý nebo pravý nejbli¾¹í znak a jeliko¾ øetìzce obsahují i závorky, jsou implementovány i pomocné metody findMatchingRightBracket() a findMatchingLeftBracket() pro nalezení odpovídajícího protìj¹ku k~nalezené závorce. Podrobnìji je celá funkcionalita nalezení kontextu popsána v~kapitole LINK.
+
+\end{itemize}
+\noindent 
 % ------------------------------------------- 
 %
 %  Bibliography - chapter
 %
 % ------------------------------------------- 
-\begin{thebibliography}{123}\hypertarget{id381893}{}
+\begin{thebibliography}{123}\hypertarget{id378752}{}
 
 % ............. biblioentry 
-\bibitem{CAD}\docbooktolatexbibaux{id382082}{CAD}
-\hypertarget{id382082}
+\bibitem{CAD}\docbooktolatexbibaux{id378940}{CAD}
+\hypertarget{id378940}
 Fischer, M. a Vanìk, P.: \emph{CAD I-V}, e-Architekt.cz, 2004, Seriál dokumentù dostupný na 
       {\textless}\url{http://www.e-architekt.cz/}{\textgreater} (leden 2008). 
 
 % ............. biblioentry 
-\bibitem{CAD history}\docbooktolatexbibaux{id382038}{CAD history}
-\hypertarget{id382038}
+\bibitem{CAD history}\docbooktolatexbibaux{id378897}{CAD history}
+\hypertarget{id378897}
 Bozdoc, M.: \emph{iMB The History of CAD}, MB Solutions, 2004, Dokument dostupný na 
          {\textless}\url{http://mbinfo.mbdesign.net/CAD-History.htm}{\textgreater} (leden 2008)
       . 
 
 % ............. biblioentry 
-\bibitem{OpenGL}\docbooktolatexbibaux{id381896}{OpenGL}
-\hypertarget{id381896}
+\bibitem{OpenGL}\docbooktolatexbibaux{id378754}{OpenGL}
+\hypertarget{id378754}
 Shreiner, D. a Woo, M. a Neider, J. a Davis, T.: \emph{OpenGL Prùvodce programátora}, Computer Press, a.s., 2006, 80-251-1275-6. 
 
 % ............. biblioentry 
-\bibitem{adv oGL}\docbooktolatexbibaux{id382179}{adv oGL}
-\hypertarget{id382179}
+\bibitem{adv oGL}\docbooktolatexbibaux{id379038}{adv oGL}
+\hypertarget{id379038}
 McReynolds, T. a Blythe, D.: \emph{Advanced Graphics Programming Techniques Using OpenGL}, Elsevier Inc., 2005, 1-55860-659-9, Dokument dostupný na adrese
          {\textless}\url{http://web.informatik.uni-bonn.de/II/ag-klein/global/proseminar_ss2001/course12.pdf}{\textgreater} (leden 2008)
       . 
 
 % ............. biblioentry 
-\bibitem{mpg}\docbooktolatexbibaux{id381969}{mpg}
-\hypertarget{id381969}
+\bibitem{mpg}\docbooktolatexbibaux{id378828}{mpg}
+\hypertarget{id378828}
 ®ára, J. a Bene¹, B. a Sochor, J. a Felkel, P.: \emph{Moderní poèítaèová grafika}, Computer Press, a.s., 2004. 
 
 % ............. biblioentry 
-\bibitem{nehe}\docbooktolatexbibaux{id382287}{nehe}
-\hypertarget{id382287}
+\bibitem{nehe}\docbooktolatexbibaux{id381395}{nehe}
+\hypertarget{id381395}
 Turek, M.: \emph{CZ NeHe OpenGL}, Michal Turek, 2004, Dokument dostupný na 
          {\textless}\url{http://nehe.ceske-hry.cz/download/download/cz_nehe_opengl.pdf}{\textgreater} (leden 2008)
       . 
 
 % ............. biblioentry 
-\bibitem{oGL bible}\docbooktolatexbibaux{id382236}{oGL bible}
-\hypertarget{id382236}
+\bibitem{oGL bible}\docbooktolatexbibaux{id381345}{oGL bible}
+\hypertarget{id381345}
 Wright, R. a Lipchak, B.: \emph{OpenGL Super Bible}, Macmillan Computer Publishing, 1996, 1-57169-073-5. 
 
 % ............. biblioentry 
-\bibitem{scanline}\docbooktolatexbibaux{id382136}{scanline}
-\hypertarget{id382136}
+\bibitem{scanline}\docbooktolatexbibaux{id378994}{scanline}
+\hypertarget{id378994}
 Snapp, R.: \emph{Scanline Fill Algorithm}, Department of Computer Science, University of Vermont, 2003, Dokument dostupný na 
          {\textless}\url{http://www.cs.uvm.edu/~snapp/teaching/CS274/lectures/scanlinefill.pdf}{\textgreater} (leden 2008)
       . 
