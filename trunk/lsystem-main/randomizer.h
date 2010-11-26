@@ -18,6 +18,11 @@ public:
 	{
 		return 1 + (((rand()%2)?(-1):(1)) * (static_cast<double>(rand() % (maxPercents*10)) / 1000.0f));
 	}
+
+    static double get( const double * max )
+    {
+        return get( static_cast<unsigned>(abs(*max)) );
+    }
 };
 }
 

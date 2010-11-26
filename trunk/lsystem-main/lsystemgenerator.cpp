@@ -53,28 +53,31 @@ void LSystemGenerator::loadFile(std::string & filename)
 
     file->open(filename);
 
-    pMainLSystem = AbstractGenerator::createLSystem( file );
+    m_MainLSystem = AbstractGenerator::createLSystem( file );
+
+    D0LSystem d = *dynamic_cast<D0LSystem *>(m_MainLSystem);
 }
 
 void LSystemGenerator::nextIteration()
 {
-    pMainLSystem->nextIteration();
+    m_MainLSystem->nextIteration();
 }
 
 ParseableString * LSystemGenerator::getWord()
 {
-    if(pWord)
-        delete pWord;
+    if(m_Word)
+        delete m_Word;
 
     LongString * word = NULL;
 
-    word = pMainLSystem->translate( );
+    word = m_MainLSystem->translate( );
 	
 	if(!word)
 		return NULL;
 
 //	BE CAREFUL - too long word can cause an exception
 //	vrecko::logger.debugLog("Word: %s", word->toString().c_str() );
+    Log::get()->write( word->toString() );
 
-    return pWord = new ParseableString( word );
+    return m_Word = new ParseableString( word );
 }

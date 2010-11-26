@@ -9,14 +9,14 @@ namespace AP_LSystem {
 class AbstractGenerator
 {
 protected:
-    ParseableString * pWord;
-    AbstractLSystem * pMainLSystem;
+    ParseableString * m_Word;
+    AbstractLSystem * m_MainLSystem;
 	
 public:
 	AbstractGenerator(void)
 	{
-		pWord = NULL;
-		pMainLSystem = NULL;
+        m_Word = NULL;
+        m_MainLSystem = NULL;
 	}
 
 	~AbstractGenerator(void)

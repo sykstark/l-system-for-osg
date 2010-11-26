@@ -27,7 +27,7 @@ void LSFile::open(std::string & filename)
     id = StringUtils::processLine( file, line );
     if(id=="#lsystem")
     {
-        line >> _name;
+        line >> m_Name;
         while( true )
         {
             id = StringUtils::processLine( file, line);
@@ -44,11 +44,11 @@ void LSFile::open(std::string & filename)
 
                 try
                 {
-                    Configuration::get()->setProperty(_name, prop);  // property setting
+                    Configuration::get()->setProperty(m_Name, prop);  // property setting
                 }
                 catch( std::exception & e)
                 {
-					throw ParsingException( "Property error in L-system \"" + _name + "\": " + string(e.what()) );
+                    throw ParsingException( "Property error in L-system \"" + m_Name + "\": " + string(e.what()) );
                 }
             }
             else if(id=="#include")
@@ -60,7 +60,7 @@ void LSFile::open(std::string & filename)
                 {
                     throw ParsingException("Bad format of #include");
                 }
-                subsytems.push_back( lsystem );
+                m_Subsytems.push_back( lsystem );
             }
             else if(id=="#define")
             {
@@ -75,7 +75,7 @@ void LSFile::open(std::string & filename)
             else if(id=="#type")
             {
                 // ( 2L | STOCHASTIC | 1L | 0L | DETERMINISTIC )
-                if( _type )
+                if( m_Type )
                 {
                     throw ParsingException("#type was already set");
                 }
@@ -89,7 +89,7 @@ void LSFile::open(std::string & filename)
             }
             else if(id=="#axiom")
             {
-                axiom = StringUtils::processLine( file, line);
+                m_Axiom = StringUtils::processLine( file, line);
 
                 if( StringUtils::processLine( file, line) != "#endaxiom")
                 {
@@ -103,7 +103,7 @@ void LSFile::open(std::string & filename)
                     id = StringUtils::processLine( file, line);
                     if( id!="#endrules" )
                     {
-                        this->rules.push_back( id );
+                        this->m_Rules.push_back( id );
                     }
                     else
                     {
@@ -118,7 +118,7 @@ void LSFile::open(std::string & filename)
                     id = StringUtils::processLine( file, line);
                     if( id!="#endhomomorphisms" )
                     {
-                        this->homomorphisms.push_back( id );
+                        this->m_Homomorphisms.push_back( id );
                     }
                     else
                     {

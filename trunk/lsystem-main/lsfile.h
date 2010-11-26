@@ -1,5 +1,5 @@
-#ifndef LSFILE_H
-#define LSFILE_H
+#ifndef LSFILE_H_
+#define LSFILE_H_
 
 #include <vector>
 #include <map>
@@ -15,11 +15,21 @@ class LSFile : public AbstractFile
 private:
     std::map<string, string> defines;
 
-    void processType(string);
+    /**
+      Process expression with type constants. Type of L-system is set according to parsed expression as
+        binary sum of parsed values.
+      \param <expression> expression string in following format (TYPE1|TYPE2|TYPE3)
+      */
+    void processType( std::string expression );
 
 public:
     LSFile();
-    virtual void open(string &);
+    /**
+      Open *.ls file and parse. All values are either set as COnfiguration properties or stored
+      to AbstractFile containers and variables.
+      \param <filename> name of file to open
+      */
+    virtual void open(string & filename);
 };
 }
 

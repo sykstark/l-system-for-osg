@@ -1,10 +1,11 @@
 #include "precompiled.h"
 
 #include "d0lsystem.h"
+#include "log.h"
 
 using namespace AP_LSystem;
 
-D0LSystem::D0LSystem( AbstractFile * file )
+D0LSystem::D0LSystem( AbstractFile * file) : LSystem( file )
 {
     this->loadFromFile( file );
 }

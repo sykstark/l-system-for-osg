@@ -16,20 +16,20 @@ LongString::LongString( unsigned int increment): _length(0)
     pStr = new char[_allocated];
 }
 
-LongString::LongString( const LongString& c ):_length(c.length()),
-    _allocated(c.getAllocated()), _increment( c.getIncrement())
+LongString::LongString( const LongString& c ):_length(c._length),
+    _allocated(c._allocated), _increment( c._increment)
 {
     pStr = new char[_allocated];
-    memcpy( pStr, c.getString(), c.length() );
+    memcpy( pStr, c.pStr, c._length );
 }
 
 LongString& LongString::operator=( const LongString & c )
 {
-    _length = c.length();
-    _allocated = c.getAllocated();
-    _increment = c.getIncrement();
+    _length = c._length;
+    _allocated = c._allocated;
+    _increment = c._increment;
     pStr = new char[_allocated];
-    memcpy( pStr, c.getString(), c.length() );
+    memcpy( pStr, c.pStr, c._length );
 
     return *this;
 }
@@ -50,10 +50,7 @@ void LongString::resize()
 
         _allocated += _increment;
         pStr = new char[_allocated];
-        for( unsigned int i =0; i < _length; i++)
-        {
-			pStr[i] = pOld[i];
-        }
+        memcpy( pStr, pOld, _length );
 
         delete[] pOld;
     }
@@ -384,6 +381,14 @@ std::string LongString::toString( )
             memcpy(&ubytenum, pStr + i + 1, sizeof(unsigned char));
             sprintf( number, "%d", ubytenum );
             i += sizeof(unsigned char)+1;
+            str.append(1,'(');
+            str.append( number );
+            str.append(1,')');
+            break;
+        case LS_INT:
+            memcpy(&ubytenum, pStr + i + 1, sizeof(int));
+            sprintf( number, "%d", ubytenum );
+            i += sizeof(int)+1;
             str.append(1,'(');
             str.append( number );
             str.append(1,')');

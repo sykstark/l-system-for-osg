@@ -6,6 +6,7 @@
 #include "parstoch0lsystem.h"
 #include "par2lsystem.h"
 #include "abstractgenerator.h"
+#include "log.h"
 #ifdef _MSC_VER
 #include "xmlfile.h"
 #include "queryinterpret.h"
@@ -13,9 +14,28 @@
 
 using namespace AP_LSystem;
 
-LSystem::LSystem():_word(NULL)
+LSystem::LSystem( AbstractFile * file ):_word(NULL), ignore("")
 {
+}
 
+LSystem::LSystem( const LSystem & c ):ignore(c.ignore)
+{
+    _word = new LongString(*(c._word));
+    _rules = c._rules;
+}
+
+LSystem & LSystem::operator =( const LSystem & c)
+{
+    ignore = c.ignore;
+    _word = new LongString(*(c._word));
+    _rules = c._rules;
+    return *this;
+}
+
+LSystem::~LSystem()
+{
+    if(_word)
+        delete _word;
 }
 
 void LSystem::loadFromFile( AbstractFile * file)

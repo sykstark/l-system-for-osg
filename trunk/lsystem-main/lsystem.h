@@ -38,7 +38,11 @@ protected:
                                                         double *);
 	virtual void generateSuccessor( LongString *, multimap<char, Rule>::iterator &, double *);
 public:
-    LSystem();
+    LSystem(AbstractFile *);
+    LSystem( const LSystem & );
+    ~LSystem();
+
+    LSystem & operator=( const LSystem & );
 
     virtual void loadFromFile( AbstractFile * );
     

@@ -20,6 +20,14 @@ protected:
     virtual void setAxiom( std::string & ) = 0;
 public:
     AbstractLSystem(): _name(""), _iteration(0) {}
+    AbstractLSystem( const AbstractLSystem & c):_name(c._name), _iteration(c._iteration) {}
+
+    AbstractLSystem & operator=(const AbstractLSystem & c )
+    {
+        _name = c._name;
+        _iteration = c._iteration;
+        return *this;
+    }
 
     virtual bool nextIteration() = 0;
     virtual LongString * translate( ) = 0;

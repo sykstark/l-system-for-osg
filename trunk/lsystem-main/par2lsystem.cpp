@@ -5,10 +5,9 @@
 
 using namespace AP_LSystem;
 
-Par2LSystem::Par2LSystem( AbstractFile * file )
+Par2LSystem::Par2LSystem( AbstractFile * file ): AbstractkLSystem( file )
 {
-	this->loadFromFile( file );
-
+    this->loadFromFile( file );
 	RandomIndex::init();
 }
 

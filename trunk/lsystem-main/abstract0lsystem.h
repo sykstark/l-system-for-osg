@@ -11,7 +11,7 @@ protected:
     virtual void processRuleSuccessor( Rule &, string *, string::iterator &);
     virtual void processHomomorphismSuccessor( Rule &, string *, string::iterator &);
 public:
-    Abstract0LSystem();
+    Abstract0LSystem( AbstractFile * );
 
 };
 }

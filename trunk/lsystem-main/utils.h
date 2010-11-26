@@ -4,8 +4,6 @@
 #include <string>
 #include <vector>
 
-//using namespace std;
-
 namespace AP_LSystem {
 class StringUtils
 {

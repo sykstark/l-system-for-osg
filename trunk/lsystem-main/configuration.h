@@ -34,8 +34,20 @@ private:
     variables_map globalProperties;
     std::map<std::string, int> lsystemNameMap;
     std::vector<variables_map> lsystemProperties;
-
 public:
+    enum Properties
+    {
+        ITERATION,
+        CONTOUR_DETAIL,
+        DIFFUSE_TEXTURE,
+        TEXTURE_S_REPEATINGS,
+        GRAVITROPISM_ELASTICITY,
+        TROPISM_ELASTICITY,
+        TROPISM_ANGLE,
+        TROPISM_VECTOR,
+        DEFAULT_ANGLE,
+    };
+
     bool loadCfgFile(string);
     void setProperty(const string &);
     void setProperty(const string &, const string &);
@@ -46,6 +58,7 @@ public:
     const variable_value * getProperty(const string &, const string &);
 	const variable_value * getProperty(const unsigned int, const string &);
 	static Configuration * get();
+    const void writeAll( std::basic_ostream<char> &, const string & );
 };
 }
 
