@@ -22,7 +22,7 @@
 \thesisfaculty{fi}
 \thesisadvisor{RNDr. Vít Kovalèík, Ph.D.}
 % --------------------------------------------
-\label{id306171}\usepackage{ifthen}
+\label{id343059}\usepackage{ifthen}
 % --------------------------------------------
 % Check for PDFLaTeX/LaTeX 
 % --------------------------------------------
@@ -382,7 +382,7 @@ Tato práce se zabývá problematikou Lindenmayerovýchsystémù, jako¾to nástroje pro
 AEC, CAD, OpenGL, plovoucí podlahy, návrh interiéru, vizualizace interiéru, kladeèské plány, FloorPlanner\end{ThesisKeyWords}
 
 \makeatletter
-\def\dbtolatex@contentsid{id377833}
+\def\dbtolatex@contentsid{id417215}
 \def\dbtolatex@@contentsname{\latex@@contentsname}
 \let\latex@@contentsname\contentsname
 \newif\ifdocbooktolatexcontentsname\docbooktolatexcontentsnametrue
@@ -695,21 +695,21 @@ Pøi generování slova L-systémem dochází k~vytváøení velmi dlouhých øetìzcù s~nes
 \subsection{Vnitøní struktura øetìzce}
 \label{sec050201}\hypertarget{sec050201}{}%
 
-Datová struktura LongString je v~jádru tvoøena bytovým polem. Toto pole se nezvìt¹uje pøi ka¾dém zvìt¹ení øetìzce, ale jen v¾dy po dosa¾ení urèité velikosti. Dochází tak ke znatelné úspoøe èasu pøi alokaci pamìti, která se provádí podstatnì ménì èastìji. Ka¾dý modul je zde ulo¾en jako znak identifikující daný modul a pøípadnì jeho parametry. Parametry mohou být typu int, unsigned char nebo typu double. Implementace dal¹ích typù je mo¾ná a jednoduchá. Pro souèasné pou¾ití v¹ak nebyly jiné typy zapotøebí. Obrázek LINK ukazuje jakým je zpùsobem je struktura navr¾ena.
+Datová struktura LongString je v~jádru tvoøena bajtovým polem. Toto pole se nezvìt¹uje pøi ka¾dém zvìt¹ení øetìzce, ale jen v¾dy po dosa¾ení urèité velikosti. Dochází tak ke znatelné úspoøe èasu pøi alokaci pamìti, která se provádí podstatnì ménì èastìji. Ka¾dý modul je zde ulo¾en jako znak identifikující daný modul a pøípadnì jeho parametry. Parametry mohou být typu int, unsigned char nebo typu double. Implementace dal¹ích typù je mo¾ná a jednoduchá. Pro souèasné pou¾ití v¹ak nebyly jiné typy zapotøebí. Obrázek LINK ukazuje jakým je zpùsobem je struktura navr¾ena.
 
-Jeden èvereèek odpovídá jednomu bytu. Ka¾dý modul obsahuje jeden znak jen¾ jej identifikuje. Dále pak mù¾e obsahovat libovolný poèet parametrù. Ka¾dý parametr je identifikován dvìmi byty zleva a zprava. Pøi pou¾ití této datové struktury tedy není nutné provádìt jakékoli pøevody mezi typy, jejich¾ hodnoty jsou tak rychle dostupné. Pro ilustraci byly na obrázku pou¾ity u~jednoho modulu dva rùzné datové typy. Souèasná implementace umo¾òuje pouze pou¾ití modulù, které mají v¹echny parametry shodného typu.
+Jedno políèko odpovídá jednomu bajtu. Ka¾dý modul obsahuje jeden znak, jen¾ jej identifikuje. Dále pak mù¾e obsahovat libovolný poèet parametrù. Ka¾dý parametr je identifikován dvìma bajty zleva a zprava. Pøi pou¾ití této datové struktury tedy není nutné provádìt jakékoli pøevody mezi typy, jejich¾ hodnoty jsou tak rychle dostupné. Pro ilustraci byly na obrázku pou¾ity u~jednoho modulu dva rùzné datové typy. Souèasná implementace umo¾òuje pouze pou¾ití modulù, které mají v¹echny parametry shodného typu.
 \subsection{Inicializace}
 \label{sec050202}\hypertarget{sec050202}{}%
 
-Pro vytvoøení instance slou¾í jediný konstruktor. Jediným parametrem je velikost øetìzce. Implicitní hodnota tohoto parametru je 1 048 576 bytù. Právì tato hodnota je také pou¾ita jako minimální pøírùstek alokované pamìti, pokud se stávající pamì» naplní. Plnìní daty lze provádìt buï pøipojováním øetìzcù, je¾ je popsáno v~následující kapitole, nebo konverzí klasického zápisu øetìzce typu std::string do podoby øetìzce LongString. K~tomu slou¾í metoda convertFromString(). Této mo¾nosti lze vyu¾ít pøi naèítání pravidel získaných ze souboru. Pøíklad takovéhoto øetìzce:
+Pro vytvoøení instance slou¾í jediný konstruktor. Jediným parametrem je velikost øetìzce. Implicitní hodnota tohoto parametru je 1 048 576 bajtù. Právì tato hodnota je také pou¾ita jako minimální pøírùstek alokované pamìti, pokud se stávající pamì» naplní. Plnìní daty lze provádìt buï pøipojováním øetìzcù, je¾ je popsáno v~následující kapitole, nebo konverzí klasického zápisu øetìzce typu std::string do podoby øetìzce LongString. K~tomu slou¾í metoda convertFromString(). Této mo¾nosti lze vyu¾ít pøi naèítání pravidel získaných ze souboru. Pøíklad takovéhoto øetìzce:
 
-Identifikující znaky modulù jsou v~nezmìnìné podobì ulo¾eny i v~øetìzci LongString. Hodnoty parametrù jsou v¹ak konvertovány do odpovídajícího typu. Pro rozli¹ení typù se pou¾ívají rùzné závorky. Zatímco kulaté závorky indikují typ double, slo¾ené závorky indikují typ integer. Konvertované hodnoty jsou v~øetìzci z~obou stran obaleny jednobytovým identifikátorem. Hodnota tohoto idetifikátoru odpovídá poøadí ve výètu ParameterType.
+Identifikující znaky modulù jsou v~nezmìnìné podobì ulo¾eny i v~øetìzci LongString. Hodnoty parametrù jsou v¹ak konvertovány do odpovídajícího typu. Pro rozli¹ení typù se pou¾ívají rùzné závorky. Zatímco kulaté závorky indikují typ double, slo¾ené závorky indikují typ integer. Konvertované hodnoty jsou v~øetìzci z~obou stran obaleny jednobajtovým identifikátorem. Hodnota tohoto idetifikátoru odpovídá poøadí ve výètu ParameterType.
 \subsection{Pøipojování øetìzcù}
 \label{sec050203}\hypertarget{sec050203}{}%
 
 Jak ji¾ bylo vý¹e zmínìno, je tato struktura optimalizována pro opakované zvìt¹ování pøidáváním øetìzcù na její konec. Pøi ka¾dém pøipojení se provádí kontrola, zda je alokované místo dostateèné pro pøipojení dal¹ích dat. Pokud ne, volá se automaticky metoda resize(), je¾ alokuje novou pamì» a zvìt¹í tento øetìzec o~délku nastavenou pøi vytváøení instance.
 
-Pro pøipojení dat je k~dispozici nìkolik metod. Jedná se o~rùzné formy metody append(). Ta poskytuje díky ¹ablonì mo¾nost ulo¾it libovolný, ve výètu ParameterType definovaný, datový typ. Kromì toho je tato metoda pøetí¾ena kvùli specifickým zpùsobùm pøipojení nìkterých dat. Lze tak pøipojit jiný øetìzec typu LongString nebo pole bytù ve správném formátu.
+Pro pøipojení dat je k~dispozici nìkolik metod. Jedná se o~rùzné formy metody append(). Ta poskytuje díky ¹ablonì mo¾nost ulo¾it libovolný, ve výètu ParameterType definovaný, datový typ. Kromì toho je tato metoda pøetí¾ena kvùli specifickým zpùsobùm pøipojení nìkterých dat. Lze tak pøipojit jiný øetìzec typu LongString nebo pole bajtù ve správném formátu.
 \subsection{Pøipojování øetìzcù}
 \label{sec050204}\hypertarget{sec050204}{}%
 
@@ -717,11 +717,11 @@ Pøistupovat lze k~datùm jedním ze ètyø zpùsobù.
 \begin{itemize}
 %--- Item
 \item 
-Pomocí operátoru [] získat pøímo hodnotu bytu na urèit\&eacute; pozici øetìzce.
+Pomocí operátoru [] získat pøímo hodnotu bajtu na urèité pozici øetìzce.
 
 %--- Item
 \item 
-Díky metodì getData() lze získat blok dat nebo celý øetìzec bytù. Hodí se pøedev¹ím pøi provádìní substitucí.
+Díky metodì getData() lze získat blok dat nebo celý øetìzec bajtù. Hodí se pøedev¹ím pøi provádìní substitucí.
 
 %--- Item
 \item 
@@ -737,58 +737,179 @@ Metody matchRight() a matchLeft() slou¾í pøedev¹ím k~ovìøování kontextu. Pro svo
 
 \end{itemize}
 \noindent 
+
+% ------------------------   
+% Section 
+\section{Implementace pøepisovacích pravidel}
+\label{sec0503}\hypertarget{sec0503}{}%
+
+Potomci tøídy AbstractFile zaji¹»ují, aby byla pravidla správnì naètena ze souboru. L-systému jsou pøedána jako klasický øetìzec znakù. Ten v¹ak není vhodný pro samotný iteraèní proces. Proto se ka¾dé pravidlo zpracovává do struktury Rule. Rùzné typy L-systémù zpracovávají pøedané øetìzce odli¹nì. Podrobnìji se tomuto vìnuje kapitola LINK. V~této èásti jsou uvedeny implementaèní podrobnosti struktury Rule do nich¾ v¹echny L-systémy svá pøepisovací pravidla pøed iteraèním procesem ukládají.
+
+Jednou ze zásadních vìcí bylo zkomponovat do pravidel nìjaký mechanismus pro vyhodnocování výrazù. V~pravidlech se toti¾ mohou výrazy vyskytovat hned na nìkolika místech. 
+\begin{itemize}
+%--- Item
+\item 
+Ka¾dý modul na stranì následníka mù¾e místo parametru obsahovat výraz, je¾ se vyhodnocuje a¾ na základì parametrù pøedchùdce
+
+U~parametrických L-systémù se mù¾e vyskytnout podmínka pøepisu, která se musí pøed ka¾dým pøepisem vyhodnotit. Pøi jejím nesplnìní je pravidlo zamítnuto.
+
+Stochastické L-systémy mívají nastaven pravdìpodobnostní faktor, na jejím¾ základì závisí pravdìpodobnost vybrání daného pravidla pro pøepis. Tento faktor se mù¾e rovnì¾ vyhodnocovat z~výrazu.
+
+\end{itemize}
+\noindent 
+
+Pro zpracování výrazù byla vybrána knihovna FunctionParser. Jedná se o~volnì dostupnou knhovnu, která poskytuje dostateènou a navíc u¾ivatelsky roz¹íritelnou funkcionalitu. Nabízí i mo¾nosti optimalizace. Pro ka¾dý výraz je tedy vytvoøena instance tøídy FunctionParser. Pro zpracování slou¾í metoda {\texttt{{Parse()}}} s~parametry zpracovávaného výrazu a øetìzce v¹ech promìnných. Vyhodnocení se provádí metodou Eval(), která po pøedání pole s~hodnotami promìnných vrací výsledek výrazu.
+
+Jako pøíklad je zde uvedeno pravidlo stochastického parametrického 2L-systému, kterým se zabývala kapitola LINK.
+
+\begin{Verbatim}[fontsize=\small]
+A(x,y) < B(z) > C(a,b,c) : (x + z~> abs(a-c)) -> B(b-1)FA(x/2,y/2) : max(0, 1-1/z*z)
+\end{Verbatim}
+
+Z~tohoto zápisu je zøejmé ¾e pro v¹echny výrazy se pou¾ívají pouze promìnné pøedchùdce a kontextù. V~tomto pøípadì se jedná o~x, y, z, a, b, c. Tyto znaky jsou ulo¾eny ve struktuøe Rule jako m\_Variables a slou¾í k~vytváøení instancí tøídy FunctionParser. Dále struktura obsahuje promìnné pro ulo¾ení znakù pøechùdce, obou kontextù a odkazy na instance pro vyhodnocení podmínky pravidla a pravdìpodobnostního faktoru.
+
+Jeliko¾ se následník skládá z~klasických øetìzcù a výrazù, je jeho zpracování slo¾itìj¹í. Jednoduché øetìzce jsou ulo¾eny do instancí tøídy StaticString. Jedná se o~zjednodu¹enou variantu tøídy LongString. Data jsou zde ulo¾ena ve stejné podobì. Rozdílem v¹ak je, ¾e tento øetìzec nelze zvìt¹it. Pro úèel krátkých nemìnných øetìzcù následníka je tedy ideální proto¾e pamì»ovì nezabírá tolik prostoru jako LongString. Øetìzce i výrazy se ukládájí do konejneru typu std::vector. Jsou zde ulo¾eny tak, aby mohly být pøi pøepisu tohoto pravidla støídavì z~kontejneru vybírány. Ukázka zpracovaného pravidla z~pøedchozího pøíkladu je na obrázku LINK
+
+Z~pøíkladu je vidìt, ¾e pokud po sobì následují dva výrazy, mù¾e být øetìzec mezi nimi prázdný. ©edì jsou znázornìny znaky, které jsou zahozeny, nebo» nejsou pro dal¹í zpracování potøebné.Pøi zpracování i následném pøepisu pravidla se v¾dy zaèíná a konèí. Velikost kontejneru s~øetìzci je tedy v¾dy o~jednu vìt¹í ne¾ kontejner s~výrazy. Je to z~toho dùvodu, ¾e èasto existují pravidla, která obsahují v~následníkovi pouze øetìzec a ¾ádný výraz.
+
+% ------------------------   
+% Section 
+\section{Zpracování L-systémù}
+\label{sec0504}\hypertarget{sec0504}{}%
+
+V¹echny tyto typy jsou implementovány jako potomci tøídy AbstractLSystem. Obrázek LINK ukazuje hiearchii tøíd L-systémù.
+
+Abstraktní tøída AbstractLSystem obsahuje nìkolik metod, slou¾ící jako rozhraní pro L-systémy. 
+\begin{itemize}
+%--- Item
+\item 
+Pro inicializaci slou¾í metoda loadFromFile(), která naète v¹echna potøebná nastavení. Jako zdroj nastavení slou¾í nìkterá z~instancí potomkù abstraktní tøídy AbstractFile.
+
+Pro provedení dal¹í iterace slou¾í metoda nextIteration(). Poèet iterací lze ovlivnit i nastavení v~konfiguraèním souboru a v~parametrech L-systému. Díky této metodì je v¹ak mo¾né interaktivnì provádìt dal¹í iterace L-systému.
+
+Metoda translate() vrátí vygenerované slovo. Slovo je v¾dy uvnitø tøídy L-systému ulo¾eno ve své nejvy¹¹í iteraci. Na slovì, které vrací tato metoda jsou provedeny navíc finální úpravy. Jedná se o~aplikaci pravidel homomorfismù a vlo¾ení slov, je¾ generují subystémy tohoto L-systému.
+
+\end{itemize}
+\noindent  Ve¹kerá funcionalita, je¾ je spoleèná pro v¹echny typy L-systémù je implementována ve spoleèném rodièi LSystem. Ve¹keré funkce se dají rozdìlit do tøí fází.
+\subsection{Výbìr nejvhodnìj¹ího L-systému}
+\label{sec050401}\hypertarget{sec050401}{}%
+
+Zásuvný modul v~souèasné podobì obsahuje tøi rùzné tøídy zpracovávající rùzné typy L-systémù. Li¹í se rychlostí a svými schopnostmi. Je tedy nutné, aby generátor vybral vhodný algoritmus. Stejnì dùle¾itý je i výbìr u~sybsystémù. Ka¾dý soubor L-systému má nastaven svùj typ. Jedná se o~výèet vlastností, které od tøídy L-systému bude po¾adovat. Samotné tøídy mají pak implementovanou statickou metodu bool isCapable(), na základì ní¾ lze rozpoznat zda daná tøída po¾adavkùm vyhovuje. Pou¾ívá k~tomu statického atributu capabilities, nebo» zde jsou schopnosti ulo¾eny jako jejich bitový souèet. Jednotlivých schopností jsou definovány ve výètu LSystemCapabilities.
+
+Vytvoøení nejvhodnìj¹í instance usnadòuje statická metoda AbstractGenerator::createLSystem(), je¾ na základì typu naèteného souboru automaticky vytvoøí a vrátí vhodnou instanci L-systému. Testování, zda daný typ L-systému vyhovuje, zde probíhá od nejrychlej¹ího typu algoritmu k~nejpomalej¹ímu. První typ, který splòuje v¹echny po¾adavky, je vybrán a pou¾it.
+\subsection{Inicializaèní fáze}
+\label{sec050402}\hypertarget{sec050402}{}%
+
+Pravidla, která jsou pøedána jako øetìzce, jsou zde v~této fázi konvertována do struktury Rule. Ke konverzi slou¾í trojice metod. Metoda setAxiom() jednodu¹e pøelo¾í øetìzec znakù na vnitøní formát slova a nastaví jej jako poèáteèní slovo typu LongString pro iteraèní proces.
+
+Nezbytnou souèástí jsou metody pro pøidání pøepisovacích pravidel a homomorfismù. Struktura i funkce jsou u~addRule() a addHomomoprhism() dosti podobné. Zpùsob zpracování je v~pøípadì pøedchùdce shodný. Li¹it se mù¾e zpracování následníka. Zpracování pravidel probíhá voláním jednotlivých funkcí struktury Rule, èím¾ se postupnì prochází øetìzec pravidla a instance struktury Rule je automaticky nastavována. Následující pseudokód ukazuje, jakým zpùsobem je zpracováno napøíklad pravidlo parametrického stochastického 0L-systému.
+
+\begin{Verbatim}[fontsize=\small]
+pøidejPøepisovacíPravidlo( øetìzec pravidlo )
+{
+      
+}
+\end{Verbatim}
+
+\subsection{Pøepisovací fáze}
+\label{sec050403}\hypertarget{sec050403}{}%
+
+Jednoznaènì nejdùle¾itìj¹í fází je samotný iteraèní proces. Probíhá v~krocích po jednotlivých iteracích. Zaèíná v¾dy s~poèáteèním slovem, axiomem, v~nìm¾ jsou pøi první iteraci v¹echny moduly nahrazeny dle pøepisovacích pravidel. Tento postup se opakuje pøi ka¾dé iteraci na novì vzniklých slovech. Celý proces pøepisu je zjednodu¹enì zobrazen v~následujícím pseudokódu.
+
+\begin{Verbatim}[fontsize=\small]
+LongString puvodniSlovo;
+LongString noveSlovo;
+for( v¹echny moduly v~puvodniSlovo )
+{
+    najdi v¹echny pravidla, které mají aktuální modul jako pøedchùdce;
+    if( existuje alespoò jedno takové)
+    {
+        if(vyber pravidlo)
+        {
+            noveSlovo.pøipoj( vygeneruj následníka modulu);
+        }
+        else
+        {
+            noveSlovo.pøipoj(pou¾ij pro daný modul pravidlo identity);
+        }
+    }
+    else
+    {
+         noveSlovo.pøipoj(pou¾ij pro daný modul pravidlo identity);
+    }
+}
+\end{Verbatim}
+
+Prvotní prohledání pravidel vybere pouze ty, které mají aktuální modul jako svého pøedchùdce. Takových pravidel mù¾e být hned nìkolik. Mohou se li¹it v~kontextu, podmínce nebo mohou být vybrány na základì pravdìpodobnosti. Výbìr jednoho pravidla z~mno¾iny provádí metoda selectRule(), v~pseudokódu oznaèená jako "vyber slovo". Právì toto je funkce v~ní¾ se jednotlivé L-systémy mohou nejvíce li¹it a kde lze implementovat rùzné typy funkcionalit pro výbìr pravidla. Detaily výbìru pravidla u~jednotlivých L-systémù rozebírá kapitola LINK. Pokud ¾ádné z~pravidel nevyhovuje, pou¾ije se pravidlo identity, které pouze zkopíruje modul do novì vznikajícího slova. Vkládání do nového slova probíhá výhradnì pøipojováním na jeho konec.
+
+% ------------------------   
+% Section 
+\section{Rozdìlení L-systémù}
+\label{sec0505}\hypertarget{sec0505}{}%
+
+Jak ji¾ bylo zmínìno v~kapitole XX o~typech vìtvených struktur, je nutné pro modelování pokroèilej¹ích botanických organismù pou¾ít slo¾itìj¹í typy L-systémù. Zároveò v¹ak není kvùli optimalizaci vhodné pou¾ít stejných L-systémù pro generování jednoduchých struktur. Navíc mají rùzné typy L-systémù rùzné formy zápisù svých pøepisovacích pravidel. V~následující kapitole jsou popsány jednotlivá specifika implementace jednotlivých typù L-systémù a také formáty zápisù pravidel, je¾ tyto systémy zpracovávají. Jsou zde rozebrány pouze vlastnosti které nebyly spoleèné a tak byly v~minulé kapitole LINK zmínìny jen okrajovì.
+\subsection{D0L-systémy}
+\label{sec050501}\hypertarget{sec050501}{}%
+
+Nejjednodu¹¹ím L-systémem je tato varianta implementovaná tøídou D0LSystem. Jak ji¾ název napovídá zpracovává tato tøída pouze deterministické bezkontextové L-systémy. Pro øadu modelù je tento typ generování dostateèný. Navíc je díky své jednoduchosti nejrychlej¹í. Zápis pravidel je ukázán na následujícím vzorovém pøíkladu.
+
+\begin{Verbatim}[fontsize=\small]
+A->A+(10)FBF
+\end{Verbatim}
+
+Tento typ tedy nepodporuje zpracování výrazù. Ka¾dý následník se tedy skládá pouze z~jednoho øetìzce typu StaticString. Iteraèní proces je v~tomto pøípadì vcelku jednoduchý. V¾dy existuje maximálnì jedno pravidlo, jeho¾ pøedchùdce odpovídá právì zpracovávanému modulu pùvodního øetìzce. Toto pravidlo je také v¾dy vybráno a jeho následník je pou¾it pøi pøepisu.
 % ------------------------------------------- 
 %
 %  Bibliography - chapter
 %
 % ------------------------------------------- 
-\begin{thebibliography}{123}\hypertarget{id378752}{}
+\begin{thebibliography}{123}\hypertarget{id418333}{}
 
 % ............. biblioentry 
-\bibitem{CAD}\docbooktolatexbibaux{id378940}{CAD}
-\hypertarget{id378940}
+\bibitem{CAD}\docbooktolatexbibaux{id421050}{CAD}
+\hypertarget{id421050}
 Fischer, M. a Vanìk, P.: \emph{CAD I-V}, e-Architekt.cz, 2004, Seriál dokumentù dostupný na 
       {\textless}\url{http://www.e-architekt.cz/}{\textgreater} (leden 2008). 
 
 % ............. biblioentry 
-\bibitem{CAD history}\docbooktolatexbibaux{id378897}{CAD history}
-\hypertarget{id378897}
+\bibitem{CAD history}\docbooktolatexbibaux{id421007}{CAD history}
+\hypertarget{id421007}
 Bozdoc, M.: \emph{iMB The History of CAD}, MB Solutions, 2004, Dokument dostupný na 
          {\textless}\url{http://mbinfo.mbdesign.net/CAD-History.htm}{\textgreater} (leden 2008)
       . 
 
 % ............. biblioentry 
-\bibitem{OpenGL}\docbooktolatexbibaux{id378754}{OpenGL}
-\hypertarget{id378754}
+\bibitem{OpenGL}\docbooktolatexbibaux{id418336}{OpenGL}
+\hypertarget{id418336}
 Shreiner, D. a Woo, M. a Neider, J. a Davis, T.: \emph{OpenGL Prùvodce programátora}, Computer Press, a.s., 2006, 80-251-1275-6. 
 
 % ............. biblioentry 
-\bibitem{adv oGL}\docbooktolatexbibaux{id379038}{adv oGL}
-\hypertarget{id379038}
+\bibitem{adv oGL}\docbooktolatexbibaux{id421147}{adv oGL}
+\hypertarget{id421147}
 McReynolds, T. a Blythe, D.: \emph{Advanced Graphics Programming Techniques Using OpenGL}, Elsevier Inc., 2005, 1-55860-659-9, Dokument dostupný na adrese
          {\textless}\url{http://web.informatik.uni-bonn.de/II/ag-klein/global/proseminar_ss2001/course12.pdf}{\textgreater} (leden 2008)
       . 
 
 % ............. biblioentry 
-\bibitem{mpg}\docbooktolatexbibaux{id378828}{mpg}
-\hypertarget{id378828}
+\bibitem{mpg}\docbooktolatexbibaux{id418409}{mpg}
+\hypertarget{id418409}
 ®ára, J. a Bene¹, B. a Sochor, J. a Felkel, P.: \emph{Moderní poèítaèová grafika}, Computer Press, a.s., 2004. 
 
 % ............. biblioentry 
-\bibitem{nehe}\docbooktolatexbibaux{id381395}{nehe}
-\hypertarget{id381395}
+\bibitem{nehe}\docbooktolatexbibaux{id421255}{nehe}
+\hypertarget{id421255}
 Turek, M.: \emph{CZ NeHe OpenGL}, Michal Turek, 2004, Dokument dostupný na 
          {\textless}\url{http://nehe.ceske-hry.cz/download/download/cz_nehe_opengl.pdf}{\textgreater} (leden 2008)
       . 
 
 % ............. biblioentry 
-\bibitem{oGL bible}\docbooktolatexbibaux{id381345}{oGL bible}
-\hypertarget{id381345}
+\bibitem{oGL bible}\docbooktolatexbibaux{id421205}{oGL bible}
+\hypertarget{id421205}
 Wright, R. a Lipchak, B.: \emph{OpenGL Super Bible}, Macmillan Computer Publishing, 1996, 1-57169-073-5. 
 
 % ............. biblioentry 
-\bibitem{scanline}\docbooktolatexbibaux{id378994}{scanline}
-\hypertarget{id378994}
+\bibitem{scanline}\docbooktolatexbibaux{id421104}{scanline}
+\hypertarget{id421104}
 Snapp, R.: \emph{Scanline Fill Algorithm}, Department of Computer Science, University of Vermont, 2003, Dokument dostupný na 
          {\textless}\url{http://www.cs.uvm.edu/~snapp/teaching/CS274/lectures/scanlinefill.pdf}{\textgreater} (leden 2008)
       . 

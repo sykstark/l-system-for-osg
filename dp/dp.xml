@@ -207,7 +207,7 @@ Existuje mnoho implementací kontextových L-systémů. Nejpoužívanější jso
 
 
 <chapter id="ch03">
-  <title>Generování rostlin</title>
+  <title>Modelování rostlinných organismů</title>
   <para>
   </para>
   <sect1 id="sec0301">
@@ -448,19 +448,19 @@ public:
     <sect2 id="sec050201">
       <title>Vnitřní struktura řetězce</title> 
       <para>
-        Datová struktura LongString je v jádru tvořena bytovým polem. Toto pole se nezvětšuje při každém zvětšení řetězce, ale jen vždy po dosažení určité velikosti. Dochází tak ke znatelné úspoře času při alokaci paměti, která se provádí podstatně méně častěji. Každý modul je zde uložen jako znak identifikující daný modul a případně jeho parametry. Parametry mohou být typu int, unsigned char nebo typu double. Implementace dalších typů je možná a jednoduchá. Pro současné použití však nebyly jiné typy zapotřebí. Obrázek LINK ukazuje jakým je způsobem je struktura navržena. 
+        Datová struktura LongString je v jádru tvořena bajtovým polem. Toto pole se nezvětšuje při každém zvětšení řetězce, ale jen vždy po dosažení určité velikosti. Dochází tak ke znatelné úspoře času při alokaci paměti, která se provádí podstatně méně častěji. Každý modul je zde uložen jako znak identifikující daný modul a případně jeho parametry. Parametry mohou být typu int, unsigned char nebo typu double. Implementace dalších typů je možná a jednoduchá. Pro současné použití však nebyly jiné typy zapotřebí. Obrázek LINK ukazuje jakým je způsobem je struktura navržena. 
       </para>
       <para>
-        Jeden čvereček odpovídá jednomu bytu. Každý modul obsahuje jeden znak jenž jej identifikuje. Dále pak může obsahovat libovolný počet parametrů. Každý parametr je identifikován dvěmi byty zleva a zprava. Při použití této datové struktury tedy není nutné provádět jakékoli převody mezi typy, jejichž hodnoty jsou tak rychle dostupné. Pro ilustraci byly na obrázku použity u jednoho modulu dva různé datové typy. Současná implementace umožňuje pouze použití modulů, které mají všechny parametry shodného typu.
+        Jedno políčko odpovídá jednomu bajtu. Každý modul obsahuje jeden znak, jenž jej identifikuje. Dále pak může obsahovat libovolný počet parametrů. Každý parametr je identifikován dvěma bajty zleva a zprava. Při použití této datové struktury tedy není nutné provádět jakékoli převody mezi typy, jejichž hodnoty jsou tak rychle dostupné. Pro ilustraci byly na obrázku použity u jednoho modulu dva různé datové typy. Současná implementace umožňuje pouze použití modulů, které mají všechny parametry shodného typu.
       </para>
     </sect2>
     <sect2 id="sec050202">
       <title>Inicializace</title>
       <para>
-        Pro vytvoření instance slouží jediný konstruktor. Jediným parametrem je velikost řetězce. Implicitní hodnota tohoto parametru je 1 048 576 bytů. Právě tato hodnota je také použita jako minimální přírůstek alokované paměti, pokud se stávající paměť naplní. Plnění daty lze provádět buď připojováním řetězců, jež je popsáno v následující kapitole, nebo konverzí klasického zápisu řetězce typu std::string do podoby řetězce LongString. K tomu slouží metoda convertFromString(). Této možnosti lze využít při načítání pravidel získaných ze souboru. Příklad takovéhoto řetězce:
+        Pro vytvoření instance slouží jediný konstruktor. Jediným parametrem je velikost řetězce. Implicitní hodnota tohoto parametru je 1 048 576 bajtů. Právě tato hodnota je také použita jako minimální přírůstek alokované paměti, pokud se stávající paměť naplní. Plnění daty lze provádět buď připojováním řetězců, jež je popsáno v následující kapitole, nebo konverzí klasického zápisu řetězce typu std::string do podoby řetězce LongString. K tomu slouží metoda convertFromString(). Této možnosti lze využít při načítání pravidel získaných ze souboru. Příklad takovéhoto řetězce:
       </para>
       <para>
-        Identifikující znaky modulů jsou v nezměněné podobě uloženy i v řetězci LongString. Hodnoty parametrů jsou však konvertovány do odpovídajícího typu. Pro rozlišení typů se používají různé závorky. Zatímco kulaté závorky indikují typ double, složené závorky indikují typ integer. Konvertované hodnoty jsou v řetězci z obou stran obaleny jednobytovým identifikátorem. Hodnota tohoto idetifikátoru odpovídá pořadí ve výčtu ParameterType.  
+        Identifikující znaky modulů jsou v nezměněné podobě uloženy i v řetězci LongString. Hodnoty parametrů jsou však konvertovány do odpovídajícího typu. Pro rozlišení typů se používají různé závorky. Zatímco kulaté závorky indikují typ double, složené závorky indikují typ integer. Konvertované hodnoty jsou v řetězci z obou stran obaleny jednobajtovým identifikátorem. Hodnota tohoto idetifikátoru odpovídá pořadí ve výčtu ParameterType.  
       </para>
     </sect2>
     <sect2 id="sec050203">
@@ -469,7 +469,7 @@ public:
         Jak již bylo výše zmíněno, je tato struktura optimalizována pro opakované zvětšování přidáváním řetězců na její konec. Při každém připojení se provádí kontrola, zda je alokované místo dostatečné pro připojení dalších dat. Pokud ne, volá se automaticky metoda resize(), jež alokuje novou paměť a zvětší tento řetězec o délku nastavenou při vytváření instance.
       </para>
       <para>
-        Pro připojení dat je k dispozici několik metod. Jedná se o různé formy metody append(). Ta poskytuje díky šabloně možnost uložit libovolný, ve výčtu ParameterType definovaný, datový typ. Kromě toho je tato metoda přetížena kvůli specifickým způsobům připojení některých dat. Lze tak připojit jiný řetězec typu LongString nebo pole bytů ve správném formátu.
+        Pro připojení dat je k dispozici několik metod. Jedná se o různé formy metody append(). Ta poskytuje díky šabloně možnost uložit libovolný, ve výčtu ParameterType definovaný, datový typ. Kromě toho je tato metoda přetížena kvůli specifickým způsobům připojení některých dat. Lze tak připojit jiný řetězec typu LongString nebo pole bajtů ve správném formátu.
       </para>
     </sect2>
     <sect2 id="sec050204">
@@ -478,11 +478,11 @@ public:
         Přistupovat lze k datům jedním ze čtyř způsobů. 
         <itemizedlist mark='opencircle'>
           <listitem>
-            <simpara>Pomocí operátoru [] získat přímo hodnotu bytu na určit&amp;eacute; pozici řetězce. 
+            <simpara>Pomocí operátoru [] získat přímo hodnotu bajtu na určité pozici řetězce. 
             </simpara>
           </listitem>
           <listitem>
-            <simpara>Díky metodě getData() lze získat blok dat nebo celý řetězec bytů. Hodí se především při provádění substitucí. 
+            <simpara>Díky metodě getData() lze získat blok dat nebo celý řetězec bajtů. Hodí se především při provádění substitucí. 
             </simpara>
           </listitem>
           <listitem>
@@ -499,8 +499,147 @@ public:
           </listitem>
         </itemizedlist>
       </para>
-    </sect2> 
-  </sect1>  
+    </sect2>
+  </sect1> 
+  <sect1 id="sec0503">
+    <title>Implementace přepisovacích pravidel</title>
+    <para>
+      Potomci třídy AbstractFile zajišťují, aby byla pravidla správně načtena ze souboru. L-systému jsou předána jako klasický řetězec znaků. Ten však není vhodný pro samotný iterační proces. Proto se každé pravidlo zpracovává do struktury Rule. Různé typy L-systémů zpracovávají předané řetězce odlišně. Podrobněji se tomuto věnuje kapitola LINK. V této části jsou uvedeny implementační podrobnosti struktury Rule do nichž všechny L-systémy svá přepisovací pravidla před iteračním procesem ukládají.  
+    </para>
+    <para>
+      Jednou ze zásadních věcí bylo zkomponovat do pravidel nějaký mechanismus pro vyhodnocování výrazů. V pravidlech se totiž mohou výrazy vyskytovat hned na několika místech.  
+      <itemizedlist mark='opencircle'>
+        <listitem>
+          <simpara>Každý modul na straně následníka může místo parametru obsahovat výraz, jež se vyhodnocuje až na základě parametrů předchůdce 
+          </simpara>
+          <simpara>U parametrických L-systémů se může vyskytnout podmínka přepisu, která se musí před každým přepisem vyhodnotit. Při jejím nesplnění je pravidlo zamítnuto. 
+          </simpara>
+          <simpara>Stochastické L-systémy mívají nastaven pravděpodobnostní faktor, na jejímž základě závisí pravděpodobnost vybrání daného pravidla pro přepis. Tento faktor se může rovněž vyhodnocovat z výrazu.
+          </simpara>
+        </listitem>
+      </itemizedlist> 
+    </para>
+    <para>
+      Pro zpracování výrazů byla vybrána knihovna FunctionParser. Jedná se o volně dostupnou knhovnu, která poskytuje dostatečnou a navíc uživatelsky rozšíritelnou  funkcionalitu. Nabízí i možnosti optimalizace. Pro každý výraz je tedy vytvořena instance třídy FunctionParser. Pro zpracování slouží metoda <envar>Parse()</envar> s parametry zpracovávaného  výrazu a řetězce všech proměnných. Vyhodnocení se provádí metodou Eval(), která po předání pole s hodnotami proměnných vrací výsledek výrazu.
+    </para>
+    <para>
+      Jako příklad je zde uvedeno pravidlo stochastického parametrického 2L-systému, kterým se zabývala kapitola LINK.  
+    </para>
+    <para>
+      <programlisting><![CDATA[
+A(x,y) < B(z) > C(a,b,c) : (x + z > abs(a-c)) -> B(b-1)FA(x/2,y/2) : max(0, 1-1/z*z)
+   ]]></programlisting>
+    </para>
+    <para>
+      Z tohoto zápisu je zřejmé že pro všechny výrazy se používají pouze proměnné předchůdce a kontextů. V tomto případě se jedná o x, y, z, a, b, c. Tyto znaky jsou uloženy ve struktuře Rule jako m_Variables a slouží k vytváření instancí třídy FunctionParser. Dále struktura obsahuje proměnné pro uložení znaků přechůdce, obou kontextů a odkazy na instance pro vyhodnocení podmínky pravidla a pravděpodobnostního faktoru.
+    </para>
+    <para>
+Jelikož se následník skládá z klasických řetězců a výrazů, je jeho zpracování složitější. Jednoduché řetězce jsou uloženy do instancí třídy StaticString. Jedná se o zjednodušenou variantu třídy LongString. Data jsou zde uložena ve stejné podobě. Rozdílem však je, že tento řetězec nelze zvětšit. Pro účel krátkých neměnných řetězců následníka je tedy ideální protože paměťově nezabírá tolik prostoru jako LongString. Řetězce i výrazy se ukládájí do konejneru typu std::vector. Jsou zde uloženy tak, aby mohly být při přepisu tohoto pravidla střídavě z kontejneru vybírány. Ukázka zpracovaného pravidla z předchozího příkladu je na obrázku LINK  
+    </para>
+    <para>
+      Z příkladu je vidět, že pokud po sobě následují dva výrazy, může být řetězec mezi nimi prázdný. Šedě jsou znázorněny znaky, které jsou zahozeny, neboť nejsou pro další zpracování potřebné.Při zpracování i následném přepisu pravidla se vždy začíná a končí. Velikost kontejneru s řetězci je tedy vždy o jednu větší než kontejner s výrazy. Je to z toho důvodu, že často existují pravidla, která obsahují v následníkovi pouze řetězec a žádný výraz.
+    </para>
+  </sect1>
+  <sect1 id="sec0504">
+    <title>Zpracování L-systémů</title>
+    <para>
+      Všechny tyto typy jsou implementovány jako potomci třídy AbstractLSystem. Obrázek LINK ukazuje hiearchii tříd L-systémů.
+    </para>
+    <para>
+      Abstraktní třída AbstractLSystem obsahuje několik metod, sloužící jako rozhraní pro L-systémy. 
+      <itemizedlist mark='opencircle'>
+        <listitem>
+          <simpara>Pro inicializaci slouží metoda loadFromFile(), která načte všechna potřebná nastavení. Jako zdroj nastavení slouží některá z instancí potomků abstraktní třídy AbstractFile. 
+          </simpara>
+          <simpara>Pro provedení další iterace slouží metoda nextIteration(). Počet iterací lze ovlivnit i nastavení v konfiguračním souboru a v parametrech L-systému. Díky této metodě je však možné interaktivně provádět další iterace L-systému. 
+          </simpara>
+          <simpara>Metoda translate() vrátí vygenerované slovo. Slovo je vždy uvnitř třídy L-systému uloženo ve své nejvyšší iteraci. Na slově, které vrací tato metoda jsou provedeny navíc finální úpravy. Jedná se o aplikaci pravidel homomorfismů a vložení slov, jež generují subystémy tohoto L-systému.
+          </simpara>
+        </listitem>
+      </itemizedlist>   
+      Veškerá funcionalita, jež je společná pro všechny typy L-systémů je implementována ve společném rodiči LSystem. Veškeré funkce se dají rozdělit do tří fází.
+    </para>
+    <sect2 id="sec050401">
+      <title>Výběr nejvhodnějšího L-systému</title>
+      <para>
+        Zásuvný modul v současné podobě obsahuje tři různé třídy zpracovávající různé typy L-systémů. Liší se rychlostí a svými schopnostmi. Je tedy nutné, aby generátor vybral vhodný algoritmus. Stejně důležitý je i výběr u sybsystémů. Každý soubor L-systému má nastaven svůj typ. Jedná se o výčet vlastností, které od třídy L-systému bude požadovat. Samotné třídy mají pak implementovanou statickou metodu bool isCapable(), na základě níž lze rozpoznat zda daná třída požadavkům vyhovuje. Používá k tomu statického atributu capabilities, neboť zde jsou schopnosti uloženy jako jejich bitový součet. Jednotlivých schopností jsou definovány ve výčtu LSystemCapabilities. 
+      </para>
+      <para>
+        Vytvoření nejvhodnější instance usnadňuje statická metoda AbstractGenerator::createLSystem(), jež na základě typu načteného souboru automaticky vytvoří a vrátí vhodnou instanci L-systému. Testování, zda daný typ L-systému vyhovuje, zde probíhá od nejrychlejšího typu algoritmu k nejpomalejšímu. První typ, který splňuje všechny požadavky, je vybrán a použit. 
+      </para>
+    </sect2>
+    <sect2 id="sec050402">
+      <title>Inicializační fáze</title>
+      <para>
+        Pravidla, která jsou předána jako řetězce, jsou zde v této fázi konvertována do struktury Rule. Ke konverzi slouží trojice metod. Metoda setAxiom() jednoduše přeloží řetězec znaků na vnitřní formát slova a nastaví jej jako počáteční slovo typu LongString pro iterační proces. 
+      </para>
+      <para>
+        Nezbytnou součástí jsou metody pro přidání přepisovacích pravidel a homomorfismů. Struktura i funkce jsou u addRule() a addHomomoprhism() dosti podobné. Způsob zpracování je v případě předchůdce shodný. Lišit se může zpracování následníka. Zpracování pravidel probíhá voláním jednotlivých funkcí struktury Rule, čímž se postupně prochází řetězec pravidla a instance struktury Rule je automaticky nastavována. Následující pseudokód ukazuje, jakým způsobem je zpracováno například pravidlo parametrického stochastického 0L-systému.
+      </para>
+      <para>
+        <programlisting><![CDATA[
+přidejPřepisovacíPravidlo( řetězec pravidlo )
+{
+      
+}
+     ]]></programlisting>
+      </para>
+    </sect2>
+    <sect2 id="sec050403">
+      <title>Přepisovací fáze</title>
+      <para>
+        Jednoznačně nejdůležitější fází je samotný iterační proces. Probíhá v krocích po jednotlivých iteracích. Začíná vždy s počátečním slovem, axiomem, v němž jsou při první iteraci všechny moduly nahrazeny dle přepisovacích pravidel. Tento postup se opakuje při každé iteraci na nově vzniklých slovech. Celý proces přepisu je zjednodušeně zobrazen v následujícím pseudokódu. 
+      </para>
+      <para>
+        <programlisting><![CDATA[
+LongString puvodniSlovo;
+LongString noveSlovo;
+for( všechny moduly v puvodniSlovo )
+{
+    najdi všechny pravidla, které mají aktuální modul jako předchůdce;
+    if( existuje alespoň jedno takové)
+    {
+        if(vyber pravidlo)
+        {
+            noveSlovo.připoj( vygeneruj následníka modulu);
+        }
+        else
+        {
+            noveSlovo.připoj(použij pro daný modul pravidlo identity);
+        }
+    }
+    else
+    {
+         noveSlovo.připoj(použij pro daný modul pravidlo identity);
+    }
+}
+     ]]></programlisting>
+      </para>
+      <para>
+        Prvotní prohledání pravidel vybere pouze ty, které mají aktuální modul jako svého předchůdce. Takových pravidel může být hned několik. Mohou se lišit v kontextu, podmínce nebo mohou být vybrány na základě pravděpodobnosti. Výběr jednoho pravidla z množiny provádí metoda selectRule(), v pseudokódu označená jako "vyber slovo". Právě toto je funkce v níž se jednotlivé L-systémy mohou nejvíce lišit a kde lze implementovat různé typy funkcionalit pro výběr pravidla. Detaily výběru pravidla u jednotlivých L-systémů rozebírá kapitola LINK. Pokud žádné z pravidel nevyhovuje, použije se pravidlo identity, které pouze zkopíruje modul do nově vznikajícího slova. Vkládání do nového slova probíhá výhradně připojováním na jeho konec.  
+      </para>
+    </sect2>
+  </sect1>
+  <sect1 id="sec0505">
+    <title>Rozdělení L-systémů</title>
+    <para>
+      Jak již bylo zmíněno v kapitole XX o typech větvených struktur, je nutné pro modelování pokročilejších botanických organismů použít složitější typy L-systémů. Zároveň však není kvůli optimalizaci vhodné použít stejných L-systémů pro generování jednoduchých struktur. Navíc mají různé typy L-systémů různé formy zápisů svých přepisovacích pravidel. V následující kapitole jsou popsány jednotlivá specifika implementace jednotlivých typů L-systémů a také formáty zápisů pravidel, jež tyto systémy zpracovávají. Jsou zde rozebrány pouze vlastnosti které nebyly společné a tak byly v minulé kapitole LINK zmíněny jen okrajově.
+    </para>
+    <sect2 id="sec050501">
+      <title>D0L-systémy</title>
+      <para>
+        Nejjednodušším L-systémem je tato varianta implementovaná třídou D0LSystem. Jak již název napovídá zpracovává tato třída pouze deterministické bezkontextové L-systémy. Pro řadu modelů je tento typ generování dostatečný. Navíc je díky své jednoduchosti nejrychlejší. Zápis pravidel je ukázán na následujícím vzorovém příkladu.
+      </para>
+      <para>
+        <programlisting><![CDATA[
+A->A+(10)FBF
+     ]]></programlisting>
+      </para>
+      <para>
+        Tento typ tedy nepodporuje zpracování výrazů. Každý následník se tedy skládá pouze z jednoho řetězce typu StaticString. Iterační proces je v tomto případě vcelku jednoduchý. Vždy existuje maximálně jedno pravidlo, jehož předchůdce odpovídá právě zpracovávanému modulu původního řetězce. Toto pravidlo je také vždy vybráno a jeho následník je použit při přepisu.
+      </para>
+    </sect2>
+  </sect1>
 </chapter>
 
 <bibliography>
