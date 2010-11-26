@@ -44,7 +44,8 @@ SOURCES += main.cpp \
     ../Garden/pard0lsystem.cpp \
     ../Garden/par2lsystem.cpp \
     ../Garden/abstractgenerator.cpp \
-    ../Garden/rule.cpp
+    ../Garden/rule.cpp \
+    ../Garden/parseablestring.cpp
 
 HEADERS += \
     ../Garden/staticstring.h \
@@ -67,7 +68,8 @@ HEADERS += \
     ../Garden/parstoch0lsystem.h \
     ../Garden/lsystemgenerator.h \
     ../Garden/par2lsystem.h \
-    ../Garden/pard0lsystem.h
+    ../Garden/pard0lsystem.h \
+    ../Garden/randomizer.h
 
 INCLUDEPATH += ../Garden/ \
     ../Garden/fparser \

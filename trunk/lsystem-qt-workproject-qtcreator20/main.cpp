@@ -23,8 +23,9 @@ int main(int argc, char *argv[])
 {
 
 
-    std::string filename = "c:\\Documents and Settings\\mpa\\Dokumenty\\lsystem\\ls\\includeTestMain.ls";
-//    std::string cfg = "c:\\Documents and Settings\\mpa\\Dokumenty\\lsystem\\lsÉconfig01.cfg";
+    std::string filename = "c:\\Documents and Settings\\mpa\\Dokumenty\\lsystem\\ls\\loadingTest12.ls";
+    std::string lsw = "test.lsw";
+//    std::string cfg = "c:\\Documents and Settings\\mpa\\Dokumenty\\lsystem\\lsconfig01.cfg";
 
  /*   FunctionParser f;
     f.Parse("x+2", "x", false);
@@ -86,7 +87,12 @@ int main(int argc, char *argv[])
     }
 */
    AbstractGenerator * generator;
-
+    LongString k,* l;
+    l = new LongString;
+    string w = "FAFAF";
+    l->convertFromString(&w);
+    k = *l;
+    delete l;
     try
     {
         generator = new LSystemGenerator();
@@ -96,6 +102,9 @@ int main(int argc, char *argv[])
         {
             generator->nextIteration();
         }
+        generator->getWord();
+
+ //       generator->saveWordToFile( lsw );
 
 
     }
