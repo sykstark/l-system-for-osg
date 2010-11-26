@@ -34,10 +34,7 @@ struct Rule
 
     bool evaluateCondition( double * p );
 
-protected:
-    std::vector<StaticString*> getSS() const { return staticStrings; }
-    std::vector<FunctionParser*> getDS() const { return dynamicStrings; }
-
+private:
     void addQueryFunctions( FunctionParser *, string & );
 };
 }

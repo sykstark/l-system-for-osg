@@ -4,8 +4,9 @@
 
 using namespace AP_LSystem;
 
-Abstract0LSystem::Abstract0LSystem()
+Abstract0LSystem::Abstract0LSystem( AbstractFile * file ): LSystem(file)
 {
+    this->loadFromFile( file );
 }
 
 void Abstract0LSystem::processPredecessor(Rule & r, string * rule, string::iterator & it)

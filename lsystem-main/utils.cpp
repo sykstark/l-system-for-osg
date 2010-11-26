@@ -41,7 +41,7 @@ std::string StringUtils::processLine(std::fstream * pFile, std::stringstream & p
 
 int StringUtils::processVector( std::string str, std::vector<double> & v )
 {
-	int i = 0;
+    unsigned i = 0;
 	while( true )
     {
 		i = str.find_first_of(",)(", i);

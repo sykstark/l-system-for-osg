@@ -9,7 +9,7 @@ class AbstractkLSystem : public LSystem
 protected:
 	
 public:
-    AbstractkLSystem();
+    AbstractkLSystem( AbstractFile * );
 };
 }
 #endif // ABSTRACTKLSYSTEM_H_

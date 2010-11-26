@@ -4,6 +4,6 @@
 
 using namespace AP_LSystem;
 
-AbstractkLSystem::AbstractkLSystem()
+AbstractkLSystem::AbstractkLSystem( AbstractFile * file ): LSystem( file )
 {
 }

@@ -43,6 +43,11 @@ Configuration::~Configuration(void)
 {
 }
 
+const void Configuration::writeAll(std::basic_ostream<char> & out, const string & lsystemID)
+{
+    out << "Iteration" <<'='<< getProperty( lsystemID, "Iteration" )->as<unsigned>();
+}
+
 bool Configuration::loadCfgFile(std::string filename)
 {
     std::ifstream ifs(filename.c_str());

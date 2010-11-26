@@ -28,14 +28,14 @@ AbstractLSystem * AbstractGenerator::createLSystem( AbstractFile * file )
 
 void AbstractGenerator::saveWordToFile( std::string & filename )
 {
-    if(!pWord)
+    if(!m_Word)
     {
-        if( !pMainLSystem )
+        if( !m_MainLSystem )
         {
             throw LSystemException( "No L-system loaded" );
         }
         getWord();
-        if( !pWord )
+        if( !m_Word )
         {
             throw LSystemException( "Word not translated" );
         }
@@ -55,7 +55,9 @@ void AbstractGenerator::saveWordToFile( std::string & filename )
         throw FileException( "File " + filename + " cannot be created" );
     }
 
-    *out << (*pWord);
+    *out << (*m_Word);
+
+//    Configuration::get()->writeAll();
 
     out->close();
 }

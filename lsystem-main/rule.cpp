@@ -6,6 +6,7 @@
 #include "lsystemexception.h"
 #include "longstring.h"
 #include "log.h"
+#include "randomizer.h"
 #ifdef _MSC_VER
 #include "query.h"
 #endif
@@ -69,8 +70,9 @@ Rule::~Rule()
 
 void Rule::addQueryFunctions( FunctionParser * fp, string & expression )
 {
-#ifdef _MSC_VER
+
     bool query = false;
+#ifdef _MSC_VER
     if(expression.find( "positionX" ) != std::string::npos )
     {
         fp->AddFunction( "positionX", Query::positionX, 0);
@@ -131,12 +133,18 @@ void Rule::addQueryFunctions( FunctionParser * fp, string & expression )
 		fp->AddFunction( "leftZ", Query::leftZ, 0);
 		query = true;
 	}
+#endif
+    if(expression.find( "rand" ) != std::string::npos )
+    {
+        fp->AddFunction( "rand", Randomizer::get, 1);
+        query = true;
+    }
 
     if( !query )
     {
-        // TODO optimalize expression
+        fp->Optimize();
     }
-#endif
+
 }
 
 void Rule::processProbabilityFactor(string * rule, string::iterator & it)

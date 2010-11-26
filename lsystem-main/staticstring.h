@@ -1,5 +1,3 @@
-//#pragma once
-
 #ifndef STATICSTRING_H_
 #define STATICSTRING_H_
 

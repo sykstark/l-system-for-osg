@@ -9,7 +9,7 @@ class ParD0LSystem : public Abstract0LSystem
 private:
     static const unsigned int capabilities = LS_0L | LS_DETERMINISTIC | LS_PARAMETRIC;
 public:
-    ParD0LSystem();
+    ParD0LSystem( AbstractFile * );
 
     static bool isCapable( unsigned int type )
     {

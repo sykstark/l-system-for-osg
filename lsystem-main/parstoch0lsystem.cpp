@@ -5,10 +5,8 @@
 
 using namespace AP_LSystem;
 
-ParStoch0LSystem::ParStoch0LSystem( AbstractFile * file )
+ParStoch0LSystem::ParStoch0LSystem( AbstractFile * file ): Abstract0LSystem( file )
 {
-    this->loadFromFile( file );
-    
 	RandomIndex::init();
 }
 
