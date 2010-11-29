@@ -457,7 +457,7 @@ public:
     <sect2 id="sec050202">
       <title>Inicializace</title>
       <para>
-        Pro vytvoření instance slouží jediný konstruktor. Jediným parametrem je velikost řetězce. Implicitní hodnota tohoto parametru je 1 048 576 bajtů. Právě tato hodnota je také použita jako minimální přírůstek alokované paměti, pokud se stávající paměť naplní. Plnění daty lze provádět buď připojováním řetězců, jež je popsáno v následující kapitole, nebo konverzí klasického zápisu řetězce typu std::string do podoby řetězce LongString. K tomu slouží metoda convertFromString(). Této možnosti lze využít při načítání pravidel získaných ze souboru. Příklad takovéhoto řetězce:
+        Pro vytvoření instance slouží jediný konstruktor. Jediným parametrem je velikost řetězce. Implicitní hodnota tohoto parametru je 1 048 576 bajtů. Právě hodnota tohoto parametru je také použita jako minimální přírůstek alokované paměti, pokud se stávající paměť naplní. Plnění daty lze provádět buď připojováním řetězců, jež je popsáno v následující kapitole, nebo konverzí klasického zápisu řetězce typu std::string do podoby řetězce LongString. K tomu slouží metoda convertFromString(). Této možnosti lze využít při načítání pravidel získaných ze souboru. Příklad takovéhoto řetězce:
       </para>
       <para>
         Identifikující znaky modulů jsou v nezměněné podobě uloženy i v řetězci LongString. Hodnoty parametrů jsou však konvertovány do odpovídajícího typu. Pro rozlišení typů se používají různé závorky. Zatímco kulaté závorky indikují typ double, složené závorky indikují typ integer. Konvertované hodnoty jsou v řetězci z obou stran obaleny jednobajtovým identifikátorem. Hodnota tohoto idetifikátoru odpovídá pořadí ve výčtu ParameterType.  
