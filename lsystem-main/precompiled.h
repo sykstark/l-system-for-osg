@@ -28,6 +28,9 @@
 #include <osg/ShapeDrawable>
 #include <osg/AlphaFunc>
 #include <osg/BlendFunc>
+#include <osg/LightModel>
+#include <osgShadow/ShadowedScene>
+#include <osgShadow/ShadowMap>
 #include <osgDB/ReadFile>
 
 #include <xercesc/parsers/XercesDOMParser.hpp>

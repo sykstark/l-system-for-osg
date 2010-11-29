@@ -15,6 +15,7 @@ public:
 	~DefaultParser(void);
 
 	virtual int parse( ParseableString * );
+	osg::Group * setShadows( osg::Group * );
 };
 }
 
