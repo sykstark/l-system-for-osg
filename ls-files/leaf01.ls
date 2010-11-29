@@ -2,9 +2,9 @@
 #set TurtleType=RECTANGLE
 #type 0L
 
-#set DefaultLength=0.4
-#set DefaultRadius=0.2
-#set DiffuseTexture=data\ls\tex\transp3.png
+#set DefaultLength=0.8
+#set DefaultRadius=0.4
+#set DiffuseTexture=data\ls\tex\transp4.png
 
 #axiom 
 F
