@@ -237,7 +237,7 @@ Protože byly L-systémy navrženy jako matematický model bez geometrické inte
         </itemizedlist>
       </para>
       <para>
-Při generování grafiky pak želva s počátečními parametry <emphasis>(x<subscript>0</subscript>,y<subscript>0</subscript>, α<subscript>0</subscript>)</emphasis> interpretuje jednotlivé znaky řetězce postupně zleva doprava.
+Při generování grafiky pak želva s počátečními parametry (x0,y0, α0) interpretuje jednotlivé znaky řetězce postupně zleva doprava.
       </para>
     </sect2>
     <sect2 id="sec030102">
@@ -637,6 +637,201 @@ A->A+(10)FBF
       </para>
       <para>
         Tento typ tedy nepodporuje zpracování výrazů. Každý následník se tedy skládá pouze z jednoho řetězce typu StaticString. Iterační proces je v tomto případě vcelku jednoduchý. Vždy existuje maximálně jedno pravidlo, jehož předchůdce odpovídá právě zpracovávanému modulu původního řetězce. Toto pravidlo je také vždy vybráno a jeho následník je použit při přepisu.
+      </para>
+    </sect2>
+    <sect2 id="sec050502">
+      <title>Parametrické stochastické bezkontextové L-systémy</title>
+      <para>
+        Tento typ L-systému umožňuje zpracovat parametrické i stochastické L-systémy, čímž značně rozšiřuje škálu možností. Díky parametrům lze vytvořit i mezotonické a akrotonické struktury. Náhodnost pak dovoluje vytvářet rostlinné organismy s rozdílnou a náhodnout strukturou, jež však mají společné rodové znaky. Jsou implementovány ve třídě ParStoch0LSystem. Tato třída zpracovává L-systémy ve tvaru, jak je popisuje kapitola LINK. Příkladem mohou být následující pravidla zapsané již v podobě, jež je tímto L-systémem zpracovatelná.
+      </para>
+      <para>
+        <programlisting><![CDATA[
+A(x,y):(x>y)->A(x-1,y)FB(y/2)F:(x*y)
+     ]]></programlisting>
+      </para>
+      <para>
+        Jednotlivé části tohoto řetězce mají následující význam.
+        <itemizedlist mark='opencircle'>
+          <listitem>
+            <simpara>A(x,y) označuje předchůdce pravidla se dvěmi parametry x a y. Tento údaj je povinný, 
+            </simpara>
+          </listitem>
+          <listitem>
+            <simpara>(x>y) je příklad podmínky. Pokud pravidlo podmínku neobsahuje, může být podmínka nahrazena symbolem *, který značí, že je podmínka splněna vždy. 
+            </simpara>
+          </listitem>
+          <listitem>
+            <simpara>Následník A(x-1,y)FB(y/2)F bude rozdělen a zpracován do struktury Rule
+            </simpara>
+          </listitem>
+          <listitem>
+            <simpara>(x*y) je pravděpodobnostní faktor. Pokud se jedná o deterministické pravidlo, lze tento výraz vynechat a ukončit pravidlo posledním znakem následníka. V takovém případě je však nutné, aby žádné z pravidel s tímto předchůdcem neobsahovalo pravděpodobnostní faktor.
+            </simpara>
+          </listitem>
+        </itemizedlist>      
+      </para>
+      <para>
+        Výběr konkrétního pravidla provádí přetížená virtuální metoda selectRule(), která na vstupu obdrží už jen pravidla se shodujícím se předchůdcem. Tyto pravidla je nutné dále protřídit. Pokud se nejedná o stochastický L-systém vybere se pravidlo, které splňuje svou podmínku. V případě stochastického L-systému je běžné, že podmínku splňuje několik pravidel. Zde je zapotřebí vyhodnotit jejich pravděpodobnostní faktory a výsledky pak předat instanci pomocné třídy RandomIndex. Ta na základě těchto faktorů vybere náhodně jedno z pravidel, které je použito pro přepis.
+      </para>
+    </sect2>
+    <sect2 id="sec050503">
+      <title>Parametrické stochastické kontextové L-systémy</title>
+      <para>
+        Aby byl zásuvný modul schopen zpracovávat dotazy a signály, obsahuje také třídu pro zpracování kontextových L-systémů. Použití kontextu také znamená jiný zápis pravidel.
+      </para>
+      <para>
+        <programlisting><![CDATA[
+A(x,y) < B(z) > C(a,b,c) : (x + z > abs(a-c)) -> B(b-1)FA(x/2,y/2) : max(0, 1-1/z*z)
+     ]]></programlisting>
+      </para>
+      <para>
+        Oproti bezkontextovým gramatikám se zde navíc zadává levý a pravý kontext. Jeho zadání lze vynechat, avšak znaménka &lt; a > je nutné v řetězci pravidla zachovat. Zpracování podmínky i pravděpodobnostního faktoru je zde obdobné jako u bezkontextových L-systémů.    
+      </para>
+      <para>
+        Nejdůležitějším rozšířením je schopnost ověřovat kontext předchůdce. Ověřování kontextu se řídí pravidly popsanými v kapitole o kontextových L-systémech LINK. Pro tuto činnost byly implementovány metody matchRight() a matchLeft(). Jde o metody třídy LongString a vrací hodnotu int, která informuje zda bylo ověřování úspěšné. V případě úspěchu vrací tyto metody pozici úspěšně ověřeného modulu, jinak vrací -1. Metody instance třídy LongString tedy dostanou informace, jaký kontext a kde jej ověřovat a poté samy vyhodnotí výsledek. Jak vyplývá z výše zmíněných pravidel, je potřeba u L-systémů se závorkami provádět někdy ověření na více místech zároveň. Jedná se například o situaci symbolu vedle závorky nebo pokud je sousední symbol v seznamu ignorovaných znaků. Ověřovací metody tak uvnitř obsahují rekurzivní volání sebe sama, aby všechny tyto situace byly korektně vyhodnoceny. Pokud dochází při ověřování k větvení, je většinou nutné naleznout v řetězci správná místa pro ověření kontextu tak, aby byla respektována skutečná topologie modelu. K tomuto účelu slouží metody findMatchingRightBracket() a findMatchingLeftBracket(), které k nalezené závorce najdou její protějšek. Tímto umožní ověřovacímu mechanismu pokračovat za závorkou. Pseudokód fungování metody matchRight() zjednodušeně ukazuje princip fungování této metody. U metody matchLeft() je princip obdobný.
+      </para>
+      <para>
+        <programlisting><![CDATA[
+int matchRight( kontext,   /*symbol pravého kontextu*/
+                        pozice     /*odkud hledat*/,
+                        ignorovat /*seznam ignorovaných znaků*/ )
+{
+    if ( slovo[pozice] == '[' )
+         return matchRight( kontext, pozice + 1, ignorovat )  ||
+                   matchRight( kontext, findMatchingRightBracket(), ignorovat);
+    else if (( slovo[pozice] == '[' ) || ( ignorovat obsahuje slovo[pozice] )
+        return matchRight( kontext, pozice +1, ignorovat );
+    else if ( slovo[pozice] == kontext )
+        return pozice;
+    else
+        return -1;
+}
+     ]]></programlisting>
+      </para>
+      <para>
+        Levý i pravý kontext může stejně jako předchůdce mít své parametry, které je nutné načíst pro zpracování výrazů. Tyto parametry se načtou z řetězce slova díky pozicím modulů získaných během ověřování kontextu. Díky rozšíření o zpracování kontextu mohl být do zásuvném modulu implementován také mechanismus pro zpracování dotazů. Podrobnějším popisem implementace dotazů se zabývá kapitola LINK.
+      </para>
+    </sect2>
+  </sect1>
+  <sect1 id="sec0506">
+    <title>Dotazy</title>
+    <para>
+      Díky nim lze již během generování zjistit, kde a v jaké poloze se bude daný modul nacházet v prostoru. Díky rozšířitelnosti knihovny FunctionParser mohly být přidány do výrazů funkce, jež kterýkoli parametr polohy želvy vrátí. Toto připojení uživatelsky definovaných funkcí je prováděno pouze do výrazů které tyto funkce obsahují. Je to z důvodu, že výrazy, které tyto funkce obsahují, nemohou být optimalizovány vnitřními algoritmy knihovny FunctionParser. Tyto funkce jsou ve skutečnosti statickými metodami třídy Query. Každá tato metoda je bezparametrická a vrací hodnotu double. Pro každou souřadnici každého vektoru tedy existuje jedna metoda. 
+    </para> 
+    <para>
+      Třída Query však slouží pouze jako adaptér mezi třídami FunctionParser a QueryInterpret, což je speciálně uzpůsobený interpret pro zpracování dotazů. Jeho fungování je podobné jako u třídy pro intepretaci geometrie, jež bude popsána v kapitole LINK. Narozdíl od ní však nevytváří žádnou geometrii a intepretuje jen symboly, které jsou důležité pro polohu želvy. Je implementován dle návrhového vzoru jedináček. 
+    </para>
+    <para>
+      Na základě volání některé z metod třídy Query pak dostane pokyn k interpretaci slova. Interpretována je vždy jen ta část slova, která předcházela právě zpracovávanému modulu s dotazy. Nakonci interpretace je poloha želvy uložena a připravena pro dotazovaní metody. Celá tato operace získání polohy je zajišťována vnitřní metodou update(). Problémem je, že hodnoty polohy želvy velice rychle stárnou a jejich obnovení je kvůli nutnosti interpretace řetězce časově náročná procedura. Pro omezení volání metody update je implementován jednoduchý algoritmus. Je založen na principu, že pokud je některá souřadnice přečtena podruhé, jedná se o jiný modul a je tedy třeba provést obnovu. Na obrázku lze vidět, jakým způsobem vypadá pravidlo s dotazy a jak se jednotlivé dotazy pomocí instance třídy QueryInterpret vyhodnocují. U dotazů, které si vynutí provedení interpretace slova je spolu s důvodem uvedena metoda update(). Ostatní dotazy obdrží odpověď okamžitě. 
+    </para>
+    <para>
+      
+    </para>
+    <para>
+      Instance třídy QueryInterpret tedy při prvním volání dotazu positionX() zjistí všechny souřadníce polohy želvy. Poté je možné vracet jednotlivé souřadnice polohy. Jakmile se jeden z dotazů zopakuje, provede se obnova polohy želvy a tedy i nová interpretace želvy. Stejným způsobem reaguje interpret na dotazy týkající se aktuálních směrových vektorů želvy.
+    </para>
+    <para>
+      Zpracováním dotazů lze tedy do řetězce slova dostat poziční hodnoty ještě před fází vykreslování. Kombinací s kontextovými pravidly s pomínkou lze dosáhnout toho, že některá pravidla budou použita jen při urcčitých hodnotách těchto dotazů. Druhou možností je využít tyto hodnoty ke změně parametrů modulů pravidla. Například v případě popinavých rostlin lze na základě polohy a směru rostoucí větve vyhodnotit, kterým směrem by se měla daná větev vyvíjet a podle toho pak ovlivnit její směr.
+    </para>  
+  </sect1>
+  <sect1 id="sec0507">
+    <title>Podřízené L-systémy</title>
+    <para>
+      Problematiku návrhu modelu pomocí L-systémů lze rozdělit na několik úrovní. Pro lepší kontrolu, přehlednost a také nastavitelnost je lepší jednotlivé dílčí celky hiearchicky seřadit. U botanických organismů se může jednat například o rozdělení na rostlinné orgány. Jde však jí samozřejmě i hlouběji. Výhodou tohoto přístupu je modularita. Každý takovýto dílčí L-systém má svá vlastní nastavení a může být použit v libovolném počtu jiných L-systémů. Pokud tedy vytvořím L-systém pro list, je velice jednoduché přidat jej jako podsystém ke všem L-systémům stromů stejného druhu.  
+    </para> 
+    <para>
+      Každý L-systém si své podsystémy spravuje sám. Po jejich načtení pomocí metod třídy AbstractFile je každý L-systém inicializován a zpracován podobně jako ve třídě LSystemGenerator. Každému podsystému je přiřazeno unikátní číslo. Pod ním je tento systém reprezentován v řetězci pomocí modulu #( L-System_ID ). Všechna slova jsou vygenerována a ponechána uložena v nadřazeném L-systému. Do řetězce jsou vložena až po ukončení iteračního procesu, kdy jsou všechny moduly #( ) nahrazeny vygenerovanými slovy. Na začátku a konci každého slova podsystému jsou speciální moduly $, jež poté informují intepret o změně L-systému, který pak dle parametrů tohoto modulu přepne na zpracování řetězce dle odpovídajících nových parametrů. Neboť je toto chování dosti podobné zpracování závorkám, věnuje se jim společná kapitola o implementaci zásobníku LINK. 
+    </para>
+  </sect1>
+</chapter>
+<chapter id="ch06">
+  <title>Generovaní slov pro modely rostlin</title>
+  <para>
+    Předchozí kapitola se věnovala výhradně iteračnímu procesu L-systémů za účelem vytvoření slova, jež bude reprezentovat požadovaný model. V této kapitole budou podrobněji rozvedeny techniky, které takto vygenerované slovo intepretují a vytváří tak jeho geometrickou podobu. Pro intepretaci byla zvolena výše zmíněná technika želví grafiky. Jednotlivé moduly pak slouží jako příkazy želvě k různým úkonům. Díky abstrakci na úrovni modulů lze vybírat z různých technik, kterými želva kreslí, a tak vytvářet rozmanitější modely.
+  </para>
+  <para>
+    Kromě samotné geomterie je nutné řešit i jiné otázky týkající se zobrazení modelu. Jedná se zejména o mapování textur a o úroveň detailů. Na této vrstvě je také možné přidat i různé vlivy okolí. Jelikož se jedná již pouze o intepretaci, tyto vlivy nijak nemohou ovlivnit strukturu výsledného modelu. Mohou však globálně ovlivnit celý model. Lze tak jednoduše přidat modelu závislost na některých silách, jako je gravitace. Jinou možností je přiblížení rostlin svým reálným předlohám pomocí malé náhodnosti úhlů. Modely tak ztratí svou viditelnou matematickou přesnost.
+  </para>
+  <para>
+    Pro interpretaci slov slouží abstraktní třída AbstractInterpret. Implementováni jsou dva potomci. GeometryInterpret zpracovává věškeré příkazy želvy a slouží k vytváření geometrie. QueryIntepret provádí zpracování dotazů ohledně polohy želvy. Tento interpret zpracovává jen vybrané příkazy. Podrobněji byl popsán v kapitole LINK.  
+  </para>
+  <para>
+    Řetězec generovaný L-systémem je přetypován na nový typ. Z intstance třídy LongString je konvertován na instanci třídy ParseableString. Jedná se o jednoduchou třídu, která obsahuje metody pro dopředné procházení řetězcem a získávání parametrů.
+  </para>
+  <sect1 id="sec0601">
+    <title>Spojení s grafem scény</title>
+    <para>
+      Pro zobrazení generované geometrie je důležité napojení na graf scény. Při vytváření interpretu je mu kontruktorem předán ukazatel na rodiče v grafu. Vzhledem k tomu, že slovo může díky mechanismu podsystémů obsahovat řetězce několika L-systémů mající různé parametry, je nutné i při vytváření geometrie tyto L-systémy oddělit. Díky grafu scény je k dispozici ideální řešení. Pro každý L-systém vytvoří interpret jeden uzel s geometrií, jež bude obsahovat i svá nastavení. Tyto uzly jsou instancemi třídy LSGeode. Tato třída je rozšířením třídy osg::Geode. Navíc obsahuje metody pro volbu správného typu želvy pro generování geometrie a také metody pro předání výchozích hodnot nastavení želvy. Všechny tyto hodnoty jsou získány z parametrů, jež se načítají při zpracování souborů L-systémů potomky třídy AbstractFile LINK.  
+    </para> 
+    <para>
+      Při inicializaci instance LSGeode dochází také k nastavení uzlu. Nastaví se textura, materiály a další vlastnosti. Veškeré parametry jsou zpracovány a konvertovány do takové podoby, aby při generování byly buď již nastaveny nebo rychle připraveny ke zpracování.
+    </para>
+  </sect1>
+  <sect1 id="sec0602">
+    <title>Interpretace pomocí želví grafiky</title>
+    <para>
+        
+    </para> 
+    <sect2 id="sec060201">
+      <title>Zásobník pro ukládání želvích instancí</title>
+      <para>
+        Pro zpracování slov, které obsahují závorky a podsystémy, je nutná dobrá implementace zásobníku pro želvy. K tomuto účelu slouží třída TurtleStack, která poskytuje standardní funkce zásobníku. Je však uzpůsobena pro použití v tomto zásuvném modulu. Při procházení řetězce a interpretaci jednotlivých modulů se operace prov
+K operacím na zásobníku dochází v případě některých speciálních symbolů. 
+      </para> 
+      <para>
+        <itemizedlist mark='opencircle'>
+          <listitem>
+            <simpara>[ - Tato závorka označuje počátek nové větve. Je tedy nutné vytvořit na zásobníku metodou push() novou želvu, která se vykreslováním této větve bude zabývat. Parametry i typ si tato želva nastaví podle želvy na vrcholu zásobníku.
+            </simpara>
+          </listitem>
+          <listitem>
+            <simpara>] - Ukončení větve je signalizováno tímto symbolem. Želva je z vrcholu zásobníku odstraněna a v generování dále pokračuje želva pod ní.
+            </simpara>
+          </listitem>
+          <listitem>
+            <simpara>$(x) - Jednotlivé L-systémy mají již od svého načtení přiřazen jednoznačný identifikátor. Symbol dolaru s jedním parametrem oznamuje intepreteru, že má dojiít ke změně L-systému. Podle identifikátoru v parametru modulu se zvolí správný L-systém a jeho odpovídající uzel s geometrií LSGeode. Ten už poté ví, který typ želvy použít a jaké ji nastavit výchozí parametry. Některé parametry, jako je matice polohy, mohou být nastaveny podle želvy na vrcholu zásobníku. S novou želvou se pak na zásobníku provede operace push(). 
+            </simpara>
+          </listitem>
+          <listitem>
+            <simpara>$ - Ukončení slova podsystému signalizuje symbol dolaru bez parametru. Z vrcholu zásobníku je odstraněna želva a ve vykreslování tak pokračuje želva nadřazeného L-systému. 
+            </simpara>
+          </listitem>
+        </itemizedlist> 
+      </para>
+    </sect2>
+    <sect2 id="sec060202">
+      <title>Želví rozhraní</title>
+      <para>
+        Pro větší modularitu byl zvolen při návrhu model, jež umožňuje použití libovolného množství typů želv. Lze tedy generovat různou geometrii pomocí stejných mechanismů. Všechny třídy želv dědí z abstraktní třídy AbstractTurtle. Tato třída obsahuje rozhraní pro úplnou kontrolu želvy. Většinu tvoří metody pro zpracování všech příkázů, které se ve slovech vyskytují jako moduly. Kromě toho obsahuje metody pro propojení s uzlem geometrie. Do něj pak přímo ukládá veškerou geometrii. K propojení dochází při vkládání želvy na vrchol zásobníku. Je zde k dispozici i několik metod pro vykreslování pomocné geometrie při ladění.
+      </para>
+      <para>
+        Každá želva má celou řadu parametrů, jež se mohou během vykreslování neustále měnit. Proto obsahuje strukturu TurtleProperties, která všechny tyto hodnoty uchovává. Tyto parametry si želvy mezi sebou předávájí při operacích na zásobníku. Jinou možností nahrání výchozích parametrů z instance třídy LSGeode.
+      </para>
+    </sect2>
+    <sect2 id="sec060203">
+      <title>Želví příkazy</title>
+      <para>
+        Každá želva intepretuje celou řadu příkazů. Ne všechny želvy musí nutně implementovat všechny příkazy. Některé mohou být velice úzce specializované a mít implementováno jen několik příkazů. Obecně však lze příkazy rozdělit do několika kategorií. 
+      </para> 
+      <para>
+        <itemizedlist mark='opencircle'>
+          <listitem>
+            <simpara>Základní pohybové příkazy - Většina želv má implementovány základní příkazy pro pohyb. Metody pro pohyb jsou společné a nachází se v abstraktní třídě MovingTurtle. Umožňují například pohyb želvy dopředu a natáčení kolem všech os. Želva se může pohybovat i bez generování geometrie pouze za účelem přemístění se.
+            </simpara>
+          </listitem>
+          <listitem>
+            <simpara>Pokročilé pohybové příkazy - Jedná se o nestandardní pohyby želvy, jako je otočení do protisměru, vyrovnání náklonu do vodorovné polohy nebo náhodné otočení v libovolném směru.
+            </simpara>
+          </listitem>
+          <listitem>
+            <simpara>Změna stavových proměnných - Řadu parametrů želvy lze během intepretace měnit. Je tak možné například prodloužit délku kroku nebo měnit výchozí úhel rotace.
+            </simpara>
+          </listitem>
+          <listitem>
+            <simpara>Nastavení vnějších vlivů - Některé příkazy mohou ovlivnit reakci dané želvy na globální vnější vlivy. V případě gravitace se může například jednat o změnu pružnosti větve. 
+            </simpara>
+          </listitem>
+        </itemizedlist> 
       </para>
     </sect2>
   </sect1>
