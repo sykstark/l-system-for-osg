@@ -30,9 +30,9 @@ struct TurtleProperties
 
 	osg::ref_ptr<osg::Geometry> geometry;	///< pointer for quick access to geode's geometry
 
-	osg::Matrixd matrix;	///< matrix of turtle position and orientation
-
-	osg::Matrixd lastFrame;
+	osg::Matrixd matrix;			///< matrix of turtle position and orientation
+	osg::Matrixd lastMatrix;		///< matrix of previous turtle position and orientation
+	osg::Matrixd lastFrame;			///< matrix for storing not twisted frame for contour drawing
 
 	double length;					///< default length of one step
 	double lengthMultiplier;		///< default length multiplier

@@ -54,6 +54,7 @@ void MovingTurtle::adjustMatrices( )
 	drawFrame( properties.lastFrame * osg::Matrixd::translate( properties.matrix.getTrans() ), new osg::Vec4d( 1.0, 1.0, 0.5, 1.0 ) ); 
 	//drawFrame( properties.lastFrame, new osg::Vec4d( 1.0, 1.0, 0.5, 1.0 ) ); 
 
+	// TODO remove ?
 	osg::Vec3d levy = properties.lastFrame * LeftVec;
 	levy.normalize();
 	//drawVector( head, osg::Matrixd::identity(), osg::Vec4d( 1.0,0.5,1.0, 1.0 ));
@@ -121,7 +122,7 @@ int MovingTurtle::drawForward(std::vector<Parameter> & p)
 
 int MovingTurtle::drawForwardHalf( )
 {
-	this->doStep( properties.length / 2.0f );
+	this->drawStep( properties.length / 2.0f );
 	
 	return LS_OK;
 }

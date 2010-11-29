@@ -1,10 +1,10 @@
 #ifndef HERMITPIPE_H_
 #define HERMITPIPE_H_
 
-#include "loftturtle.h"
+#include "straightpipe.h"
 
 namespace AP_LSystem {
-class HermitPipe : public LoftTurtle
+class HermitPipe : public StraightPipe
 {
 private:
 	void initializePipe();
@@ -14,7 +14,7 @@ public:
 	HermitPipe(void){};
 	~HermitPipe(void){};
 
-	virtual int insideStep( );
+	virtual int drawStep( double dist );
 
 	virtual int initialize( );
 	virtual int finalize( );

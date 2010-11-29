@@ -106,6 +106,11 @@ void LSGeode::setDefaultTurtleProperties( int index )
 */
 			state->setTextureAttributeAndModes( 0, diffTexture.get(), osg::StateAttribute::ON );
 
+			osg::ref_ptr<osg::LightModel> lm = new osg::LightModel;
+			lm->setTwoSided(true);
+			state->setAttribute( lm.get(), osg::StateAttribute::OVERRIDE );
+			
+
 			// set blending only for translucent textures
 			if ( diffIm->isImageTranslucent() )
 			{
@@ -116,16 +121,16 @@ void LSGeode::setDefaultTurtleProperties( int index )
 	}
 
 	// version which sets the color of the wireframe.
- /*   osg::Material* material = new osg::Material;
+    osg::Material* material = new osg::Material;
     material->setColorMode(osg::Material::OFF); // switch glColor usage off
     // turn all lighting off
-    material->setAmbient(osg::Material::FRONT_AND_BACK, osg::Vec4(1.0,1.0f,1.0f,1.0f));
-    material->setDiffuse(osg::Material::FRONT_AND_BACK, osg::Vec4(1.0,1.0f,1.0f,1.0f));
+    material->setAmbient(osg::Material::FRONT_AND_BACK, osg::Vec4(0.3,0.3f,0.3f,1.0f));
+    material->setDiffuse(osg::Material::FRONT_AND_BACK, osg::Vec4(0.8,0.8f,0.8f,1.0f));
     material->setSpecular(osg::Material::FRONT_AND_BACK, osg::Vec4(1.0,1.0f,1.0f,1.0f));
     // except emission... in which we set the color we desire
     material->setEmission(osg::Material::FRONT_AND_BACK, osg::Vec4(0.0,0.0f,0.0f,1.0f));
 	state->setAttributeAndModes(material,osg::StateAttribute::ON);
-	state->setMode(GL_LIGHTING,osg::StateAttribute::ON);*/
+	state->setMode(GL_LIGHTING,osg::StateAttribute::ON);
 
 	// initialize starting T coordinate of texture
 	p.texCoordT = 0.0f;
@@ -158,7 +163,7 @@ void LSGeode::setDefaultTurtleProperties( int index )
 	if( Configuration::get()->getProperty(index, "DrawPipeCaps")->as<unsigned int>() )
 		p.flags |= TurtleProperties::DRAW_PIPE_CAPS;
 	if( Configuration::get()->getProperty(index, "UseQueries")->as<unsigned int>() )
-		p.flags |= TurtleProperties::DRAW_PIPE_CAPS;
+		p.flags |= TurtleProperties::USE_QUERIES;
 
 	p.texRepeatingS				= Configuration::get()->getProperty( index, "TextureSRepeatings")->as<unsigned int>();
 	p.angle						= Configuration::get()->getProperty( index, "DefaultAngle" )->as<double>();
