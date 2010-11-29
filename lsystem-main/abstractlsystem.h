@@ -9,6 +9,10 @@
 namespace AP_LSystem {
 class LongString;
 
+/**
+  * Abstract class for L-systems. It is basic interface for communication with
+  * L-system generator.
+  */
 class AbstractLSystem
 {
 protected:
@@ -22,6 +26,9 @@ public:
     AbstractLSystem(): _name(""), _iteration(0) {}
     AbstractLSystem( const AbstractLSystem & c):_name(c._name), _iteration(c._iteration) {}
 
+    /**
+      * Assignment operator
+      */
     AbstractLSystem & operator=(const AbstractLSystem & c )
     {
         _name = c._name;
@@ -29,10 +36,28 @@ public:
         return *this;
     }
 
+    /**
+      * Process next iteration. It uses transcription rules to get a new word.
+      * @return true if succeeded
+      */
     virtual bool nextIteration() = 0;
+
+    /**
+      * Translate a word to final form and get it.
+      * @return word as LongString
+      */
     virtual LongString * translate( ) = 0;
     
-    virtual void loadFromFile ( AbstractFile * ) = 0;
+    /**
+      * Load and initialize L-system according to it's parameters.
+      * @param file Loaded L-system file
+      */
+    virtual void loadFromFile ( AbstractFile * file ) = 0;
+
+    /**
+      * Get current iteration.
+      * @return current L-system iteration
+      */
     unsigned int getIteration() const {return _iteration;}
 
 };

@@ -62,13 +62,13 @@ char LongString::peekSymbol( int & pos, bool forward )
     {
         switch(pStr[pos])
         {
-        case LS_DOUBLE:
+        case Parameter::LS_DOUBLE:
 			pos += ((forward)?(1):(-1))*(sizeof(double)+2);
             break;
-        case LS_UBYTE:
+        case Parameter::LS_UBYTE:
             pos += ((forward)?(1):(-1))*(sizeof(unsigned char)+2);
             break;
-		case LS_INT:
+        case Parameter::LS_INT:
 			pos += ((forward)?(1):(-1))*(sizeof(int)+2);
 			break;
         default:
@@ -267,7 +267,7 @@ void LongString::convertFromString(std::string * source, unsigned int & pos, con
     }
 }
 
-void LongString::append( ParameterType type )
+void LongString::append( Parameter::Type type )
 {
     pStr[_length++] = static_cast<unsigned char>(type);
 }
@@ -331,13 +331,13 @@ char * LongString::getData( unsigned int & pos, unsigned int & length, char deli
     {
         switch(*pPos)
         {          
-        case LS_DOUBLE:
+        case Parameter::LS_DOUBLE:
             pPos += sizeof(double)+2;
             break;
-        case LS_UBYTE:
+        case Parameter::LS_UBYTE:
             pPos += sizeof(unsigned char)+2;
             break;
-		case LS_INT:
+        case Parameter::LS_INT:
 			pPos += sizeof(int)+2;
 			break;
         default:
@@ -366,10 +366,7 @@ std::string LongString::toString( )
     {
         switch(pStr[i])
         {
-        case LS_NO_PARAMETER:
-            str.append("()");
-            break;
-        case LS_DOUBLE:
+        case Parameter::LS_DOUBLE:
             memcpy(&dblnum, pStr + i + 1, sizeof(double));
             sprintf( number, "%.2f", dblnum );
             i += sizeof(double)+1;
@@ -377,7 +374,7 @@ std::string LongString::toString( )
             str.append( number );
             str.append(1,')');
             break;
-        case LS_UBYTE:
+        case Parameter::LS_UBYTE:
             memcpy(&ubytenum, pStr + i + 1, sizeof(unsigned char));
             sprintf( number, "%d", ubytenum );
             i += sizeof(unsigned char)+1;
@@ -385,7 +382,7 @@ std::string LongString::toString( )
             str.append( number );
             str.append(1,')');
             break;
-        case LS_INT:
+        case Parameter::LS_INT:
             memcpy(&ubytenum, pStr + i + 1, sizeof(int));
             sprintf( number, "%d", ubytenum );
             i += sizeof(int)+1;

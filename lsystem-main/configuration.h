@@ -11,16 +11,19 @@ using std::string;
 
 namespace AP_LSystem {
 
+/**
+  * All L-system capabilities. L-system type is built as bitmap from this values.
+  */
 enum LSystemCapabilities
 {
-    LS_0L               = 0x00000001,
-    LS_1LL              = 0x00000002,
-    LS_1LR              = 0x00000004,
-    LS_2L               = 0x00000008,
-    LS_kL               = 0x00000080,
-    LS_DETERMINISTIC    = 0x00000100,
-    LS_STOCHASTIC       = 0x00000200,
-    LS_PARAMETRIC       = 0x00010000,
+    LS_0L               = 0x00000001,   ///< 0L-system
+    LS_1LL              = 0x00000002,   ///< 1L-system with left context
+    LS_1LR              = 0x00000004,   ///< 1L-system with right context
+    LS_2L               = 0x00000008,   ///< 2L-system with left and right context
+    LS_kL               = 0x00000080,   ///< kL-system
+    LS_DETERMINISTIC    = 0x00000100,   ///< Deterministic L-system
+    LS_STOCHASTIC       = 0x00000200,   ///< Stochastic L-system
+    LS_PARAMETRIC       = 0x00010000,   ///< Parametric L-system
 };
 
 class Configuration
@@ -35,19 +38,6 @@ private:
     std::map<std::string, int> lsystemNameMap;
     std::vector<variables_map> lsystemProperties;
 public:
-    enum Properties
-    {
-        ITERATION,
-        CONTOUR_DETAIL,
-        DIFFUSE_TEXTURE,
-        TEXTURE_S_REPEATINGS,
-        GRAVITROPISM_ELASTICITY,
-        TROPISM_ELASTICITY,
-        TROPISM_ANGLE,
-        TROPISM_VECTOR,
-        DEFAULT_ANGLE,
-    };
-
     bool loadCfgFile(string);
     void setProperty(const string &);
     void setProperty(const string &, const string &);

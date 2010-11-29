@@ -13,23 +13,24 @@ public:
 	static int processVector( std::string str, std::vector<double> & v );
 };
 
-enum ParameterType
-{
-    LS_NO_PARAMETER = 1,
-    LS_BYTE,
-    LS_UBYTE,
-    LS_INT,
-    LS_UINT,
-    LS_FLOAT,
-    LS_DOUBLE
-};
+
 
 struct Parameter
 {
-	Parameter( void * value, ParameterType type ):value(value),type(type){}
+    enum Type
+    {
+        LS_BYTE = 1,
+        LS_UBYTE,
+        LS_INT,
+        LS_UINT,
+        LS_FLOAT,
+        LS_DOUBLE
+    };
+
+    Parameter( void * value, Type type ):value(value),type(type){}
 
 	void * value;
-	ParameterType type;
+    Type type;
 };
 }
 

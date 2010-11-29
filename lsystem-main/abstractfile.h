@@ -59,12 +59,16 @@ protected:
 		{
 			throw ParsingException("unknown lsystem type");
 		}
-	}
+    }
 public:
     AbstractFile(): m_Type(0){}
     virtual void open( std::string & ) = 0;
 
-    // nahradit vsechny vyskyty maker hodnotami
+    /**
+      * Substitute all occurences of map's keys by their values in axiom,
+      * rules and homomorphisms.
+      * @param pairs map of substitution pairs
+      */
     void substitute(std::map<string, string> & pairs)
     {
         unsigned int i;
@@ -110,26 +114,46 @@ public:
         }
     }
 
+    /**
+      * Get homomorphisms stored in std::vector.
+      * @return homomorphisms in string format
+      */
     virtual std::vector<string> * getHomomorphisms()
     {
         return &m_Homomorphisms;
     }
 
+    /**
+      * Get rules stored in std::vector.
+      * @return rules in string format
+      */
     virtual std::vector<string> * getRules()
     {
         return &m_Rules;
     }
 
+    /**
+      * Get filenames of all subsystems stored in std::vector.
+      * @return subsystem filenames
+      */
     virtual std::vector<string> * getSubsystems()
     {
         return &m_Subsytems;
     }
 
+    /**
+      * Get axiom - the initial word.
+      * @return axiom
+      */
     std::string & getAxiom()
     {
         return m_Axiom;
     }
 
+    /**
+      * Get type of L-system. Stored as bitmap of desired capabilities. Capabilities has type
+      * @return type of L-system
+      */
     unsigned int type()
     {
         return m_Type;
