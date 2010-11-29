@@ -12,5 +12,5 @@
     <DefaultRadius>0.5</DefaultRadius>
     <DiffuseTexture>data\ls\tex\bark\bark_20091031_05_512x512_seamless.jpg</DiffuseTexture>
   </Parameters>
-  <Axiom>F+(30.0)F</Axiom>
+  <Axiom>+(30)FF</Axiom>
 </LSystem>

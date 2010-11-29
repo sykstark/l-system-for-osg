@@ -3,6 +3,7 @@
   <Name>ternarni strom</Name>
   <Types>
     <Type>0L</Type>
+    <Type>PARAMETRIC</Type>
   </Types>
   <Constants>
     <high>0.2</high>
@@ -14,15 +15,15 @@
     <DefaultLength>10.0</DefaultLength>
     <ContourDetail>10</ContourDetail>
     <DefaultRadius>1.0</DefaultRadius>
-    <AngleVariance>60</AngleVariance>
-    <DiffuseTexture>data\ls\tex\bark\bark_20091031_05_512x512_seamless.jpg</DiffuseTexture>
+    <AngleVariance>0</AngleVariance>
+    <DiffuseTexture>data\ls\tex\bark\bark_20091031_02_512x512_seamless.jpg</DiffuseTexture>
   </Parameters>
   <Subsystems>
     <Subsystem>d:\HCI\VRECKO\bin\data\ls\leaf01.ls</Subsystem>
   </Subsystems>
   <Axiom>F'(0.65)A</Axiom>
   <Rules>
-    <P1>A:*->!(0.577)'(0.87)[/(90.74)B][/(-132.63)B]B</P1>
-    <P2>B:*->^(33.95)[^^#{Leaf01}][#{Leaf01}]Z[^^#{Leaf01}][#{Leaf01}]ZA</P2>
+    <P1>A->!(0.577)'(0.87)[/(90.74)B][/(-132.63)B]B</P1>
+    <P2>B->^(33.95)[^^#{Leaf01}][#{Leaf01}]Z[^^#{Leaf01}][#{Leaf01}]ZA</P2>
   </Rules>
 </LSystem>
