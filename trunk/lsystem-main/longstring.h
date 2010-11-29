@@ -15,16 +15,16 @@ private:
     unsigned int _allocated;
     unsigned int _increment;
 
-	inline ParameterType getType(double) { return LS_DOUBLE; }
-	inline ParameterType getType(double *) { return LS_DOUBLE; }
-	inline ParameterType getType(unsigned int) { return LS_UINT; }
-	inline ParameterType getType(unsigned char) { return LS_UBYTE; }
-	inline ParameterType getType(int) { return LS_INT; }
-	inline ParameterType getType(int *) { return LS_INT; }
+    inline Parameter::Type getType(double) { return Parameter::LS_DOUBLE; }
+    inline Parameter::Type getType(double *) { return Parameter::LS_DOUBLE; }
+    inline Parameter::Type getType(unsigned int) { return Parameter::LS_UINT; }
+    inline Parameter::Type getType(unsigned char) { return Parameter::LS_UBYTE; }
+    inline Parameter::Type getType(int) { return Parameter::LS_INT; }
+    inline Parameter::Type getType(int *) { return Parameter::LS_INT; }
 
     void resize();
 	void append( std::string );
-	void append( ParameterType );
+    void append( Parameter::Type );
 
 public:
     LongString( unsigned int = 1048576); // 2^20 bytes - 1 MB

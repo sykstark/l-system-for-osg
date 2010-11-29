@@ -4,6 +4,10 @@
 #include "lsystem.h"
 
 namespace AP_LSystem {
+
+/**
+  * Abstract class for kL-Systems
+  */
 class AbstractkLSystem : public LSystem
 {
 protected:

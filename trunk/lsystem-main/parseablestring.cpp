@@ -29,21 +29,19 @@ char ParseableString::next(std::vector<Parameter> &parameters)
     {
         switch(m_Str[m_Pos])
         {
-        case LS_DOUBLE:
+        case Parameter::LS_DOUBLE:
             {
                 //double * pPar = reinterpret_cast<double *>(m_Str);
-                parameters.push_back( Parameter( static_cast<void *>(m_Str + m_Pos + 1), LS_DOUBLE ) );
+                parameters.push_back( Parameter( static_cast<void *>(m_Str + m_Pos + 1), Parameter::LS_DOUBLE ) );
                 m_Pos += sizeof(double)+2;
             }
             break;
-        case LS_UBYTE:
+        case Parameter::LS_UBYTE:
             {
-                parameters.push_back( Parameter( static_cast<void *>(m_Str + m_Pos + 1), LS_UBYTE ) );
+                parameters.push_back( Parameter( static_cast<void *>(m_Str + m_Pos + 1), Parameter::LS_UBYTE ) );
                 m_Pos += sizeof(unsigned char)+2;
             }
             break;
-        case LS_NO_PARAMETER:
-            m_Pos++;
         default:
             if(m_Pos >= m_Length)
                 m_Eof = true;
