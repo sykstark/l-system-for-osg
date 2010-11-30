@@ -22,18 +22,17 @@
     </para></fi:thanks>
     <abstract>
         <para>
-        Tato práce se zabývá problematikou Lindenmayerovýchsystémů, jakožto nástroje pro generování rostlin. Rozebírá pak také metody a implementaci L-systémů a jejich grafickou implementaci. Součástí je i zásuvný modul pro generování rostlin pro systém Vrecko.
+        Tato práce se zabývá problematikou Lindenmayerových systémů, jakožto nástroje pro generování rostlin. Rozebírá pak také metody a implementaci L-systémů a jejich grafickou implementaci. Součástí je i zásuvný modul pro generování rostlin pro systém Vrecko.
         </para>
     </abstract>
     <keywordset>
-   		<keyword>AEC</keyword>
-   		<keyword>CAD</keyword>
-      <keyword>OpenGL</keyword>
-      <keyword>plovoucí podlahy</keyword>
-      <keyword>návrh interiéru</keyword>
-      <keyword>vizualizace interiéru</keyword>
-      <keyword>kladečské plány</keyword>
-      <keyword>FloorPlanner</keyword>
+   		<keyword>Lindenmayerovy systémy</keyword>
+   		<keyword>L-systémy</keyword>
+      <keyword>generování rostlin</keyword>
+      <keyword>generování stromů</keyword>
+      <keyword>Vrecko</keyword>
+      <keyword>OpenSceneGraph</keyword>
+      <keyword>LSystem</keyword>
     </keywordset>
 </bookinfo>
 
@@ -60,7 +59,7 @@ Jádro L-systémů spočívá v použití přepisovacího systému. Jedná se o 
 Jedním z prvních grafických modelů, používajících přepisovací pravidla, byla Kochova křivka, případně Kochova vločka (155 ABOP). Šlo o jednoduchý bezkontextový přepisovací systém, jež obsahoval pouze jediné pravidlo, přepisující jeden grafický prvek na jiný. (OBRAZEK). Později tento model podstatně rozšířil Mandelbrot, jež přidal systémy podporující přepisování úseček o různých délkách a hlavně podporu větvených topologií.
 		</para>
 		<para>
-Největší pozornost však byla ubírána ke studiu systémů založených na přepisování řetězců znaků. Velkým přínosem v tomto odvětví byly na konci padesátých let 20. století Chomského formální gramatiky, které využívaly princip přepisování pro popis syntaxe přirozeného jazyka. V roce 1968 pak biolog Aristid Lindenmayer představil odlišný typ mechanismu přepisujícího řetězce. Tento mechanismus byl posléze pojmenován jako L-systémy. Zásadní odlišností L-systémů od Chomského gramatik spočívá v použití přepisovacích pravidel. Zatímco v Chomského gramatikách jsou přepisovací pravidla aplikována postupně, v L-systémech jsou použity paralelně v jednom derivačním kroku na všechny symboly přepisovaného řetězce. Motivací pro tento přístup byla podobnost s biologickými procesy. Příkladem mohou být mnohobuněčné organismy, ve kterých se dělí buňky současně. Na rozdíl od přírodních pochodů vývoj L-systémů probíhá v diskrétních krocích.	Kvůli reprezentaci modelů jako řetězce znaků se často místo pojmu modul používá pojem symbol.		
+Největší pozornost však byla ubírána ke studiu systémů založených na přepisování řetězců znaků. Velkým přínosem v tomto odvětví byly na konci padesátých let 20. století Chomského formální gramatiky, které využívaly princip přepisování pro popis syntaxe přirozeného jazyka. V roce 1968 pak biolog Aristid Lindenmayer představil odlišný typ mechanismu přepisujícího řetězce. Tento mechanismus byl posléze pojmenován jako L-systémy. Zásadní odlišností L-systémů od Chomského gramatik spočívá v použití přepisovacích pravidel. Zatímco v Chomského gramatikách jsou přepisovací pravidla aplikována postupně, v L-systémech jsou použity paralelně v jednom derivačním kroku na všechny symboly přepisovaného řetězce. Motivací pro tento přístup byla podobnost s biologickými procesy. Příkladem mohou být mnohobuněčné organismy, ve kterých se dělí buňky současně. Na rozdíl od přírodních pochodů vývoj L-systémů probíhá v diskrétních krocích. Kvůli reprezentaci modelů jako řetězce znaků se často místo pojmu modul používá pojem symbol.		
    	</para>
   </sect1>
   <sect1 id="sec0202">
