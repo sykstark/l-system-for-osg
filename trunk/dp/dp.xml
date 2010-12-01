@@ -47,16 +47,26 @@
 <chapter id="ch02">
   <title>Lindenmayerovy systémy</title>
   <para>
-Lindenmayerovy systémy, zkráceně L-systémy, byly vytvořeny jako matematická teorie pro generování rostlin(82ABOP). Původně byl kladen důraz spíše na obecnou topologii. Byly totiž vytvořeny pro simulaci vývoje větších částí rostlin nebo buněk mnhobuněčných organismů. Geometrie, ani podrobnější detaily  v této původní teorii zahrnuty nebyly. Později se objevilo několik geometrických interpretací L-systémů, díky nimž se staly L-systémy univerzálním nástrojem pro simulaci a modelování rostlin. Ve své práci používám modelování pomocí želví grafiky.
+Lindenmayerovy systémy, zkráceně L-systémy, byly vytvořeny jako matematická teorie pro generování rostlin<citation>Linden68</citation>. Původně byl kladen důraz spíše na obecnou topologii. Byly totiž vytvořeny pro simulaci vývoje větších částí rostlin nebo buněk mnhobuněčných organismů. Geometrie, ani podrobnější detaily  v této původní teorii zahrnuty nebyly. Později se však objevilo několik geometrických interpretací L-systémů, díky nimž se staly L-systémy univerzálním nástrojem pro simulaci a modelování rostlin. V této práci je použito modelování pomocí želví grafiky.
 	</para>
   <sect1 id="sec0201">
     <title>Vývoj rostlin pomocí procesu přepisování</title>
    	
 		<para>
-Jádro L-systémů spočívá v použití přepisovacího systému. Jedná se o opakované nahrazování modulů předchůdců pomocí sady přepisovacích pravidel jejich následovníky, přičemž všechny moduly náleží do konečné abecedy modulů. Lze tak z jednoduchého původního objektu vytvořit opakováním přepisovacího procesu komplexní model. Modulem je myšlena libovolná atomická část modelu, jež většinou reprezentuje nějakou část simulovaného modelu. Pří použití při simulaci biologických procesů se tak může jednat například o buňky nebo růyné typy rostlinných orgánů. 
+Jádro L-systémů spočívá v použití přepisovacího systému. Jedná se o opakované nahrazování modulů předchůdců pomocí sady přepisovacích pravidel jejich následovníky, přičemž všechny moduly náleží do konečné abecedy modulů. Lze tak z jednoduchého původního objektu vytvořit opakováním přepisovacího procesu komplexní model. Modulem je myšlena libovolná atomická část modelu, jež většinou reprezentuje nějakou část simulovaného modelu. Pří použití pro simulaci biologických procesů se tak může jednat například o buňky nebo různé typy rostlinných orgánů. 
     </para>
     <para>
-Jedním z prvních grafických modelů, používajících přepisovací pravidla, byla Kochova křivka, případně Kochova vločka (155 ABOP). Šlo o jednoduchý bezkontextový přepisovací systém, jež obsahoval pouze jediné pravidlo, přepisující jeden grafický prvek na jiný. (OBRAZEK). Později tento model podstatně rozšířil Mandelbrot, jež přidal systémy podporující přepisování úseček o různých délkách a hlavně podporu větvených topologií.
+Jedním z prvních grafických modelů, používajících přepisovací pravidla, byla Kochova křivka, případně Kochova vločka <citation>Koch05</citation>. Šlo o jednoduchý bezkontextový přepisovací systém, jež obsahoval pouze jediné pravidlo, přepisující jeden grafický prvek na jiný(<xref linkend="pic020101"/>). Později tento model podstatně rozšířil Mandelbrot, jež přidal systémy podporující přepisování úseček o různých délkách a hlavně podporu větvených topologií.
+		</para>
+		<para>
+		  <figure float="1" id="pic020101">
+        <title>Kochova vločka a její první tři iterace přepisovacího procesu.</title>
+		  	<mediaobject>
+          <imageobject>
+				    <imagedata fileref="020101" format="PNG"/>
+		      </imageobject>
+        </mediaobject>
+		  </figure>
 		</para>
 		<para>
 Největší pozornost však byla ubírána ke studiu systémů založených na přepisování řetězců znaků. Velkým přínosem v tomto odvětví byly na konci padesátých let 20. století Chomského formální gramatiky, které využívaly princip přepisování pro popis syntaxe přirozeného jazyka. V roce 1968 pak biolog Aristid Lindenmayer představil odlišný typ mechanismu přepisujícího řetězce. Tento mechanismus byl posléze pojmenován jako L-systémy. Zásadní odlišností L-systémů od Chomského gramatik spočívá v použití přepisovacích pravidel. Zatímco v Chomského gramatikách jsou přepisovací pravidla aplikována postupně, v L-systémech jsou použity paralelně v jednom derivačním kroku na všechny symboly přepisovaného řetězce. Motivací pro tento přístup byla podobnost s biologickými procesy. Příkladem mohou být mnohobuněčné organismy, ve kterých se dělí buňky současně. Na rozdíl od přírodních pochodů vývoj L-systémů probíhá v diskrétních krocích. Kvůli reprezentaci modelů jako řetězce znaků se často místo pojmu modul používá pojem symbol.		
@@ -447,7 +457,7 @@ public:
     <sect2 id="sec050201">
       <title>Vnitřní struktura řetězce</title> 
       <para>
-        Datová struktura LongString je v jádru tvořena bajtovým polem. Toto pole se nezvětšuje při každém zvětšení řetězce, ale jen vždy po dosažení určité velikosti. Dochází tak ke znatelné úspoře času při alokaci paměti, která se provádí podstatně méně častěji. Každý modul je zde uložen jako znak identifikující daný modul a případně jeho parametry. Parametry mohou být typu int, unsigned char nebo typu double. Implementace dalších typů je možná a jednoduchá. Pro současné použití však nebyly jiné typy zapotřebí. Obrázek LINK ukazuje jakým je způsobem je struktura navržena. 
+        Datová struktura LongString je v jádru tvořena bajtovým polem. Toto pole se nezvětšuje při každém rozšíření řetězce, ale vždy jen po dosažení určité velikosti. Dochází tak ke znatelné úspoře času při alokaci paměti, která se provádí podstatně méně častěji. Každý modul je zde uložen jako znak identifikující daný modul a případně jeho parametry. Parametry mohou být typu int, unsigned char nebo typu double. Implementace dalších typů je možná a jednoduchá. Pro současné použití však nebyly jiné typy zapotřebí. Obrázek LINK ukazuje jakým je způsobem je struktura navržena. 
       </para>
       <para>
         Jedno políčko odpovídá jednomu bajtu. Každý modul obsahuje jeden znak, jenž jej identifikuje. Dále pak může obsahovat libovolný počet parametrů. Každý parametr je identifikován dvěma bajty zleva a zprava. Při použití této datové struktury tedy není nutné provádět jakékoli převody mezi typy, jejichž hodnoty jsou tak rychle dostupné. Pro ilustraci byly na obrázku použity u jednoho modulu dva různé datové typy. Současná implementace umožňuje pouze použití modulů, které mají všechny parametry shodného typu.
@@ -838,35 +848,58 @@ K operacím na zásobníku dochází v případě některých speciálních symb
 
 <bibliography>
    <biblioentry>
-      <abbrev>OpenGL</abbrev>
+      <abbrev>Prusin04</abbrev>
       <authorgroup>
          <author>
-           <firstname>Dave</firstname>
-           <surname>Shreiner</surname>
+           <firstname>Przemyslaw</firstname>
+           <surname>Prusinkiewicz</surname>
          </author>  
          <author>
-           <firstname>Mason</firstname>
-           <surname>Woo</surname>
-         </author>
-         <author>
-           <firstname>Jackie</firstname>
-           <surname>Neider</surname>
-         </author>
-         <author>
-           <firstname>Tom</firstname>
-           <surname>Davis</surname>
+           <firstname>Aristid</firstname>
+           <surname>Lindenmayer</surname>
          </author>
       </authorgroup>
-      <title>OpenGL Průvodce programátora</title>    
+      <title>The Algorithmic Beauty of Plants</title>    
       <publisher>
-         <publishername>Computer Press, a.s.</publishername>
+         <publishername>Springer-Verlag</publishername>
       </publisher>
-      <pubdate>2006</pubdate>
-      <isbn>80-251-1275-6</isbn>
+      <pubdate>1990</pubdate>
+      <isbn>9780387972978</isbn>
    </biblioentry>
    
    <biblioentry>
-      <abbrev>mpg</abbrev>
+      <abbrev>Koch05</abbrev>
+      <authorgroup>
+         <author>
+           <firstname>Helge</firstname>
+           <surname>von Koch</surname>
+         </author>
+      </authorgroup>
+      <title>Une méthode géométrique élémentaire pour l'étude de certaines questions de la théorie des courbes planes</title>    
+      <publisher>
+         <publishername>Acta mathematica</publishername>
+      </publisher>
+      <pubdate>1905</pubdate>
+   </biblioentry>
+   
+   <biblioentry>
+      <abbrev>Linden68</abbrev>
+      <authorgroup>
+         <author>
+           <firstname>Aristid</firstname>
+           <surname>Lindenmayer</surname>
+         </author>
+      </authorgroup>
+      <title>Mathematical models for cellular interaction in development, Díl I a II</title>    
+      <publisher>
+         <publishername>Journal of Theoretical Biology</publishername>
+      </publisher>
+      <pubdate>1968</pubdate>
+      <isbn>9780387972978</isbn>
+   </biblioentry>
+   
+   <biblioentry>
+      <abbrev>Zara04</abbrev>
       <authorgroup>
          <author>
            <firstname>Jiří</firstname>
@@ -891,125 +924,6 @@ K operacím na zásobníku dochází v případě některých speciálních symb
       </publisher>
       <pubdate>2004</pubdate>
    </biblioentry>
-   
-   <biblioentry>
-      <abbrev>CAD history</abbrev>
-      <authorgroup>
-         <author>
-           <firstname>Marian</firstname>
-           <surname>Bozdoc</surname>
-         </author>  
-      </authorgroup>
-      <title>iMB The History of CAD</title>    
-      <publisher>
-         <publishername>MB Solutions</publishername>
-      </publisher>
-      <pubdate>2004</pubdate>  
-      <releaseinfo>Dokument dostupný na 
-         <ulink url="http://mbinfo.mbdesign.net/CAD-History.htm"></ulink> (leden 2008)
-      </releaseinfo>
-   </biblioentry>
-   
-   <biblioentry>
-      <abbrev>CAD</abbrev>
-      <authorgroup>
-         <author>
-           <firstname>Michal</firstname>
-           <surname>Fischer</surname>
-         </author>  
-         <author>
-           <firstname>Petr</firstname>
-           <surname>Vaněk</surname>
-         </author>
-      </authorgroup>
-      <title>CAD I-V</title>    
-      <publisher>
-         <publishername>e-Architekt.cz</publishername>
-      </publisher>
-      <pubdate>2004</pubdate>   
-      <releaseinfo>Seriál dokumentů dostupný na 
-      <ulink url="http://www.e-architekt.cz/"></ulink> (leden 2008)</releaseinfo>
-   </biblioentry>
-   
-   <biblioentry>
-      <abbrev>scanline</abbrev>
-      <authorgroup>
-         <author>
-           <firstname>Robert R.</firstname>
-           <surname>Snapp</surname>
-         </author>  
-      </authorgroup>
-      <title>Scanline Fill Algorithm</title>    
-      <publisher>
-         <publishername>Department of Computer Science, University of Vermont</publishername>
-      </publisher>
-      <pubdate>2003</pubdate>   
-      <releaseinfo>Dokument dostupný na 
-         <ulink url="http://www.cs.uvm.edu/~snapp/teaching/CS274/lectures/scanlinefill.pdf"></ulink> (leden 2008)
-      </releaseinfo>
-   </biblioentry>
-   
-   <biblioentry>
-      <abbrev>adv oGL</abbrev>
-      <authorgroup>
-         <author>
-           <firstname>Tom</firstname>
-           <surname>McReynolds</surname>
-         </author>  
-         <author>
-           <firstname>David</firstname>
-           <surname>Blythe</surname>
-         </author> 
-      </authorgroup>
-      <title>Advanced Graphics Programming Techniques Using OpenGL</title>    
-      <publisher>
-         <publishername>Elsevier Inc.</publishername>
-      </publisher>
-      <pubdate>2005</pubdate>
-      <isbn>1-55860-659-9</isbn> 
-      <releaseinfo>Dokument dostupný na adrese
-         <ulink url="http://web.informatik.uni-bonn.de/II/ag-klein/global/proseminar_ss2001/course12.pdf"></ulink> (leden 2008)
-      </releaseinfo>
-   </biblioentry>
-   
-   <biblioentry>
-      <abbrev>oGL bible</abbrev>
-      <authorgroup>
-         <author>
-           <firstname>Richard S.</firstname>
-           <surname>Wright</surname>
-         </author>  
-         <author>
-           <firstname>Benjamin</firstname>
-           <surname>Lipchak</surname>
-         </author> 
-      </authorgroup>
-      <title>OpenGL Super Bible</title>    
-      <publisher>
-         <publishername>Macmillan Computer Publishing</publishername>
-      </publisher>
-      <pubdate>1996</pubdate>
-      <isbn>1-57169-073-5</isbn>
-   </biblioentry>
-   
-   <biblioentry>
-      <abbrev>nehe</abbrev>
-      <authorgroup>
-         <author>
-           <firstname>Michal</firstname>
-           <surname>Turek</surname>
-         </author>  
-      </authorgroup>
-      <title>CZ NeHe OpenGL</title>    
-      <publisher>
-         <publishername>Michal Turek</publishername>
-      </publisher>
-      <pubdate>2004</pubdate>
-      <releaseinfo>Dokument dostupný na 
-         <ulink url="http://nehe.ceske-hry.cz/download/download/cz_nehe_opengl.pdf"></ulink> (leden 2008)
-      </releaseinfo>
-   </biblioentry>
-
 </bibliography>
 
 <appendix id="appA">
