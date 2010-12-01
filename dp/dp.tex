@@ -22,7 +22,7 @@
 \thesisfaculty{fi}
 \thesisadvisor{RNDr. Vít Kovalèík, Ph.D.}
 % --------------------------------------------
-\label{id323181}\usepackage{ifthen}
+\label{id335413}\usepackage{ifthen}
 % --------------------------------------------
 % Check for PDFLaTeX/LaTeX 
 % --------------------------------------------
@@ -372,17 +372,17 @@ Chtìl bych podìkovat
 % --------------------------------------------
 \begin{ThesisAbstract}
 
-Tato práce se zabývá problematikou Lindenmayerovýchsystémù, jako¾to nástroje pro generování rostlin. Rozebírá pak také metody a implementaci L-systémù a jejich grafickou implementaci. Souèástí je i zásuvný modul pro generování rostlin pro systém Vrecko.
+Tato práce se zabývá problematikou Lindenmayerových systémù, jako¾to nástroje pro generování rostlin. Rozebírá pak také metody a implementaci L-systémù a jejich grafickou implementaci. Souèástí je i zásuvný modul pro generování rostlin pro systém Vrecko.
 \end{ThesisAbstract}
 
 % --------------------------------------------
 % KeyWords 
 % --------------------------------------------
 \begin{ThesisKeyWords}
-AEC, CAD, OpenGL, plovoucí podlahy, návrh interiéru, vizualizace interiéru, kladeèské plány, FloorPlanner\end{ThesisKeyWords}
+Lindenmayerovy systémy, L-systémy, generování rostlin, generování stromù, Vrecko, OpenSceneGraph, LSystem\end{ThesisKeyWords}
 
 \makeatletter
-\def\dbtolatex@contentsid{id397556}
+\def\dbtolatex@contentsid{id409565}
 \def\dbtolatex@@contentsname{\latex@@contentsname}
 \let\latex@@contentsname\contentsname
 \newif\ifdocbooktolatexcontentsname\docbooktolatexcontentsnametrue
@@ -411,16 +411,28 @@ AEC, CAD, OpenGL, plovoucí podlahy, návrh interiéru, vizualizace interiéru, klad
 \chapter{Lindenmayerovy systémy}
 \label{ch02}\hypertarget{ch02}{}%
 
-Lindenmayerovy systémy, zkrácenì L-systémy, byly vytvoøeny jako matematická teorie pro generování rostlin(82ABOP). Pùvodnì byl kladen dùraz spí¹e na obecnou topologii. Byly toti¾ vytvoøeny pro simulaci vývoje vìt¹ích èástí rostlin nebo bunìk mnhobunìèných organismù. Geometrie, ani podrobnìj¹í detaily v~této pùvodní teorii zahrnuty nebyly. Pozdìji se objevilo nìkolik geometrických interpretací L-systémù, díky nim¾ se staly L-systémy univerzálním nástrojem pro simulaci a modelování rostlin. Ve své práci pou¾ívám modelování pomocí ¾elví grafiky.
+Lindenmayerovy systémy, zkrácenì L-systémy, byly vytvoøeny jako matematická teorie pro generování rostlin\docbooktolatexcite{Linden68}{}. Pùvodnì byl kladen dùraz spí¹e na obecnou topologii. Byly toti¾ vytvoøeny pro simulaci vývoje vìt¹ích èástí rostlin nebo bunìk mnhobunìèných organismù. Geometrie, ani podrobnìj¹í detaily v~této pùvodní teorii zahrnuty nebyly. Pozdìji se v¹ak objevilo nìkolik geometrických interpretací L-systémù, díky nim¾ se staly L-systémy univerzálním nástrojem pro simulaci a modelování rostlin. V~této práci je pou¾ito modelování pomocí ¾elví grafiky.
 
 % ------------------------   
 % Section 
 \section{Vývoj rostlin pomocí procesu pøepisování}
 \label{sec0201}\hypertarget{sec0201}{}%
 
-Jádro L-systémù spoèívá v~pou¾ití pøepisovacího systému. Jedná se o~opakované nahrazování modulù pøedchùdcù pomocí sady pøepisovacích pravidel jejich následovníky, pøièem¾ v¹echny moduly nále¾í do koneèné abecedy modulù. Lze tak z~jednoduchého pùvodního objektu vytvoøit opakováním pøepisovacího procesu komplexní model. Modulem je my¹lena libovolná atomická èást modelu, je¾ vìt¹inou reprezentuje nìjakou èást simulovaného modelu. Pøí pou¾ití pøi simulaci biologických procesù se tak mù¾e jednat napøíklad o~buòky nebo rùyné typy rostlinných orgánù.
+Jádro L-systémù spoèívá v~pou¾ití pøepisovacího systému. Jedná se o~opakované nahrazování modulù pøedchùdcù pomocí sady pøepisovacích pravidel jejich následovníky, pøièem¾ v¹echny moduly nále¾í do koneèné abecedy modulù. Lze tak z~jednoduchého pùvodního objektu vytvoøit opakováním pøepisovacího procesu komplexní model. Modulem je my¹lena libovolná atomická èást modelu, je¾ vìt¹inou reprezentuje nìjakou èást simulovaného modelu. Pøí pou¾ití pro simulaci biologických procesù se tak mù¾e jednat napøíklad o~buòky nebo rùzné typy rostlinných orgánù.
 
-Jedním z~prvních grafických modelù, pou¾ívajících pøepisovací pravidla, byla Kochova køivka, pøípadnì Kochova vloèka (155 ABOP). ©lo o~jednoduchý bezkontextový pøepisovací systém, je¾ obsahoval pouze jediné pravidlo, pøepisující jeden grafický prvek na jiný. (OBRAZEK). Pozdìji tento model podstatnì roz¹íøil Mandelbrot, je¾ pøidal systémy podporující pøepisování úseèek o~rùzných délkách a hlavnì podporu vìtvených topologií.
+Jedním z~prvních grafických modelù, pou¾ívajících pøepisovací pravidla, byla Kochova køivka, pøípadnì Kochova vloèka \docbooktolatexcite{Koch05}{}. ©lo o~jednoduchý bezkontextový pøepisovací systém, je¾ obsahoval pouze jediné pravidlo, pøepisující jeden grafický prvek na jiný(\hyperlink{pic020101}{{\ref{pic020101}}}). Pozdìji tento model podstatnì roz¹íøil Mandelbrot, je¾ pøidal systémy podporující pøepisování úseèek o~rùzných délkách a hlavnì podporu vìtvených topologií.
+
+% figure ------------------------------------------------------
+\begin{figure}[hbt]
+\hypertarget{pic020101}{}%
+\begin{center}
+
+{{\includegraphics[]{020101}}\hypertarget{id409629}{}%
+\label{id409629}
+}
+{{\caption[{Kochova vloèka a její první tøi iterace pøepisovacího procesu.}]{{{Kochova vloèka a její první tøi iterace pøepisovacího procesu.}}}\label{pic020101}}}
+\end{center}
+\end{figure}
 
 Nejvìt¹í pozornost v¹ak byla ubírána ke studiu systémù zalo¾ených na pøepisování øetìzcù znakù. Velkým pøínosem v~tomto odvìtví byly na konci padesátých let 20. století Chomského formální gramatiky, které vyu¾ívaly princip pøepisování pro popis syntaxe pøirozeného jazyka. V~roce 1968 pak biolog Aristid Lindenmayer pøedstavil odli¹ný typ mechanismu pøepisujícího øetìzce. Tento mechanismus byl posléze pojmenován jako L-systémy. Zásadní odli¹ností L-systémù od Chomského gramatik spoèívá v~pou¾ití pøepisovacích pravidel. Zatímco v~Chomského gramatikách jsou pøepisovací pravidla aplikována postupnì, v~L-systémech jsou pou¾ity paralelnì v~jednom derivaèním kroku na v¹echny symboly pøepisovaného øetìzce. Motivací pro tento pøístup byla podobnost s~biologickými procesy. Pøíkladem mohou být mnohobunìèné organismy, ve kterých se dìlí buòky souèasnì. Na rozdíl od pøírodních pochodù vývoj L-systémù probíhá v~diskrétních krocích. Kvùli reprezentaci modelù jako øetìzce znakù se èasto místo pojmu modul pou¾ívá pojem symbol.
 
@@ -695,13 +707,13 @@ Pøi generování slova L-systémem dochází k~vytváøení velmi dlouhých øetìzcù s~nes
 \subsection{Vnitøní struktura øetìzce}
 \label{sec050201}\hypertarget{sec050201}{}%
 
-Datová struktura LongString je v~jádru tvoøena bajtovým polem. Toto pole se nezvìt¹uje pøi ka¾dém zvìt¹ení øetìzce, ale jen v¾dy po dosa¾ení urèité velikosti. Dochází tak ke znatelné úspoøe èasu pøi alokaci pamìti, která se provádí podstatnì ménì èastìji. Ka¾dý modul je zde ulo¾en jako znak identifikující daný modul a pøípadnì jeho parametry. Parametry mohou být typu int, unsigned char nebo typu double. Implementace dal¹ích typù je mo¾ná a jednoduchá. Pro souèasné pou¾ití v¹ak nebyly jiné typy zapotøebí. Obrázek LINK ukazuje jakým je zpùsobem je struktura navr¾ena.
+Datová struktura LongString je v~jádru tvoøena bajtovým polem. Toto pole se nezvìt¹uje pøi ka¾dém roz¹íøení øetìzce, ale v¾dy jen po dosa¾ení urèité velikosti. Dochází tak ke znatelné úspoøe èasu pøi alokaci pamìti, která se provádí podstatnì ménì èastìji. Ka¾dý modul je zde ulo¾en jako znak identifikující daný modul a pøípadnì jeho parametry. Parametry mohou být typu int, unsigned char nebo typu double. Implementace dal¹ích typù je mo¾ná a jednoduchá. Pro souèasné pou¾ití v¹ak nebyly jiné typy zapotøebí. Obrázek LINK ukazuje jakým je zpùsobem je struktura navr¾ena.
 
 Jedno políèko odpovídá jednomu bajtu. Ka¾dý modul obsahuje jeden znak, jen¾ jej identifikuje. Dále pak mù¾e obsahovat libovolný poèet parametrù. Ka¾dý parametr je identifikován dvìma bajty zleva a zprava. Pøi pou¾ití této datové struktury tedy není nutné provádìt jakékoli pøevody mezi typy, jejich¾ hodnoty jsou tak rychle dostupné. Pro ilustraci byly na obrázku pou¾ity u~jednoho modulu dva rùzné datové typy. Souèasná implementace umo¾òuje pouze pou¾ití modulù, které mají v¹echny parametry shodného typu.
 \subsection{Inicializace}
 \label{sec050202}\hypertarget{sec050202}{}%
 
-Pro vytvoøení instance slou¾í jediný konstruktor. Jediným parametrem je velikost øetìzce. Implicitní hodnota tohoto parametru je 1 048 576 bajtù. Právì tato hodnota je také pou¾ita jako minimální pøírùstek alokované pamìti, pokud se stávající pamì» naplní. Plnìní daty lze provádìt buï pøipojováním øetìzcù, je¾ je popsáno v~následující kapitole, nebo konverzí klasického zápisu øetìzce typu std::string do podoby øetìzce LongString. K~tomu slou¾í metoda convertFromString(). Této mo¾nosti lze vyu¾ít pøi naèítání pravidel získaných ze souboru. Pøíklad takovéhoto øetìzce:
+Pro vytvoøení instance slou¾í jediný konstruktor. Jediným parametrem je velikost øetìzce. Implicitní hodnota tohoto parametru je 1 048 576 bajtù. Právì hodnota tohoto parametru je také pou¾ita jako minimální pøírùstek alokované pamìti, pokud se stávající pamì» naplní. Plnìní daty lze provádìt buï pøipojováním øetìzcù, je¾ je popsáno v~následující kapitole, nebo konverzí klasického zápisu øetìzce typu std::string do podoby øetìzce LongString. K~tomu slou¾í metoda convertFromString(). Této mo¾nosti lze vyu¾ít pøi naèítání pravidel získaných ze souboru. Pøíklad takovéhoto øetìzce:
 
 Identifikující znaky modulù jsou v~nezmìnìné podobì ulo¾eny i v~øetìzci LongString. Hodnoty parametrù jsou v¹ak konvertovány do odpovídajícího typu. Pro rozli¹ení typù se pou¾ívají rùzné závorky. Zatímco kulaté závorky indikují typ double, slo¾ené závorky indikují typ integer. Konvertované hodnoty jsou v~øetìzci z~obou stran obaleny jednobajtovým identifikátorem. Hodnota tohoto idetifikátoru odpovídá poøadí ve výètu ParameterType.
 \subsection{Pøipojování øetìzcù}
@@ -1032,56 +1044,27 @@ Nastavení vnìj¹ích vlivù - Nìkteré pøíkazy mohou ovlivnit reakci dané ¾elvy na g
 %  Bibliography - chapter
 %
 % ------------------------------------------- 
-\begin{thebibliography}{123}\hypertarget{id401159}{}
+\begin{thebibliography}{123}\hypertarget{id413845}{}
 
 % ............. biblioentry 
-\bibitem{CAD}\docbooktolatexbibaux{id401347}{CAD}
-\hypertarget{id401347}
-Fischer, M. a Vanìk, P.: \emph{CAD I-V}, e-Architekt.cz, 2004, Seriál dokumentù dostupný na 
-      {\textless}\url{http://www.e-architekt.cz/}{\textgreater} (leden 2008). 
+\bibitem{Koch05}\docbooktolatexbibaux{id413897}{Koch05}
+\hypertarget{id413897}
+von Koch, H.: \emph{Une méthode géométrique élémentaire pour l'étude de certaines questions de la théorie des courbes planes}, Acta mathematica, 1905. 
 
 % ............. biblioentry 
-\bibitem{CAD history}\docbooktolatexbibaux{id401304}{CAD history}
-\hypertarget{id401304}
-Bozdoc, M.: \emph{iMB The History of CAD}, MB Solutions, 2004, Dokument dostupný na 
-         {\textless}\url{http://mbinfo.mbdesign.net/CAD-History.htm}{\textgreater} (leden 2008)
-      . 
+\bibitem{Linden68}\docbooktolatexbibaux{id413933}{Linden68}
+\hypertarget{id413933}
+Lindenmayer, A.: \emph{Mathematical models for cellular interaction in development, Díl I~a II}, Journal of Theoretical Biology, 1968, 9780387972978. 
 
 % ............. biblioentry 
-\bibitem{OpenGL}\docbooktolatexbibaux{id401161}{OpenGL}
-\hypertarget{id401161}
-Shreiner, D. a Woo, M. a Neider, J. a Davis, T.: \emph{OpenGL Prùvodce programátora}, Computer Press, a.s., 2006, 80-251-1275-6. 
+\bibitem{Prusin04}\docbooktolatexbibaux{id413847}{Prusin04}
+\hypertarget{id413847}
+Prusinkiewicz, P. a Lindenmayer, A.: \emph{The Algorithmic Beauty of Plants}, Springer-Verlag, 1990, 9780387972978. 
 
 % ............. biblioentry 
-\bibitem{adv oGL}\docbooktolatexbibaux{id401444}{adv oGL}
-\hypertarget{id401444}
-McReynolds, T. a Blythe, D.: \emph{Advanced Graphics Programming Techniques Using OpenGL}, Elsevier Inc., 2005, 1-55860-659-9, Dokument dostupný na adrese
-         {\textless}\url{http://web.informatik.uni-bonn.de/II/ag-klein/global/proseminar_ss2001/course12.pdf}{\textgreater} (leden 2008)
-      . 
-
-% ............. biblioentry 
-\bibitem{mpg}\docbooktolatexbibaux{id401234}{mpg}
-\hypertarget{id401234}
+\bibitem{Zara04}\docbooktolatexbibaux{id413973}{Zara04}
+\hypertarget{id413973}
 ®ára, J. a Bene¹, B. a Sochor, J. a Felkel, P.: \emph{Moderní poèítaèová grafika}, Computer Press, a.s., 2004. 
-
-% ............. biblioentry 
-\bibitem{nehe}\docbooktolatexbibaux{id401552}{nehe}
-\hypertarget{id401552}
-Turek, M.: \emph{CZ NeHe OpenGL}, Michal Turek, 2004, Dokument dostupný na 
-         {\textless}\url{http://nehe.ceske-hry.cz/download/download/cz_nehe_opengl.pdf}{\textgreater} (leden 2008)
-      . 
-
-% ............. biblioentry 
-\bibitem{oGL bible}\docbooktolatexbibaux{id401502}{oGL bible}
-\hypertarget{id401502}
-Wright, R. a Lipchak, B.: \emph{OpenGL Super Bible}, Macmillan Computer Publishing, 1996, 1-57169-073-5. 
-
-% ............. biblioentry 
-\bibitem{scanline}\docbooktolatexbibaux{id401401}{scanline}
-\hypertarget{id401401}
-Snapp, R.: \emph{Scanline Fill Algorithm}, Department of Computer Science, University of Vermont, 2003, Dokument dostupný na 
-         {\textless}\url{http://www.cs.uvm.edu/~snapp/teaching/CS274/lectures/scanlinefill.pdf}{\textgreater} (leden 2008)
-      . 
 
 \end{thebibliography}
 \addcontentsline{toc}{chapter}{Literatura}
