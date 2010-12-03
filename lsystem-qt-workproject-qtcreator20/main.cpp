@@ -93,6 +93,8 @@ int main(int argc, char *argv[])
     l->convertFromString(&w);
     k = *l;
     delete l;
+    Log::get()->write(k.toString());
+
     try
     {
         generator = new LSystemGenerator();
@@ -100,11 +102,12 @@ int main(int argc, char *argv[])
 
         for( int i = 0; i < 3 ; i++)
         {
+            Log::get()->write("nextIteration");
             generator->nextIteration();
         }
         generator->getWord();
 
- //       generator->saveWordToFile( lsw );
+//      generator->saveWordToFile( lsw );
 
 
     }
