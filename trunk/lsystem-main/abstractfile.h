@@ -10,6 +10,9 @@
 using std::string;
 
 namespace AP_LSystem {
+/**
+  * Abstract class for file types.
+  */
 class AbstractFile
 {
 protected:

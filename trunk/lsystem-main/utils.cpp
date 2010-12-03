@@ -3,6 +3,7 @@
 #include "utils.h"
 #include <fstream>
 #include <sstream>
+#include <algorithm>
 #include "lsystemexception.h"
 #include "boost/lexical_cast.hpp"
 
@@ -57,4 +58,10 @@ int StringUtils::processVector( std::string str, std::vector<double> & v )
 		v.push_back( lexical_cast<double>(str) );
 
 	return 0;
+}
+
+std::string & StringUtils::eraseWhiteSpaces(std::string & str)
+{
+    str.erase(remove_if(str.begin(), str.end(), isspace), str.end());
+    return str;
 }

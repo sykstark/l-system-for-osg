@@ -8,18 +8,18 @@
 #include "parstoch0lsystem.h"
 #include "par2lsystem.h"
 
-
+using boost::shared_ptr;
 using namespace AP_LSystem;
 
-AbstractLSystem * AbstractGenerator::createLSystem( AbstractFile * file )
+shared_ptr<AbstractLSystem> AbstractGenerator::createLSystem( AbstractFile * file )
 {
-    AbstractLSystem * lsystem;
+    shared_ptr<AbstractLSystem> lsystem;
     if( D0LSystem::isCapable( file->type() ) )
-        lsystem = new D0LSystem( file );
+        lsystem.reset( new D0LSystem( file ) );
     else if( ParStoch0LSystem::isCapable( file->type() ) )
-        lsystem = new ParStoch0LSystem( file );
+        lsystem.reset( new ParStoch0LSystem( file ) );
     else if( Par2LSystem::isCapable( file->type() ) )
-        lsystem = new Par2LSystem( file );
+        lsystem.reset( new Par2LSystem( file ) );
     else
         throw ParsingException("non of L-systems fulfils the conditions");
 

@@ -10,6 +10,16 @@ ParStoch0LSystem::ParStoch0LSystem( AbstractFile * file ): Abstract0LSystem( fil
 	RandomIndex::init();
 }
 
+ParStoch0LSystem::ParStoch0LSystem( const ParStoch0LSystem & c): Abstract0LSystem( c )
+{
+}
+
+ParStoch0LSystem & ParStoch0LSystem::operator=( const ParStoch0LSystem & c)
+{
+    this->Abstract0LSystem::operator=( c );
+    return *this;
+}
+
 multimap<char, Rule>::iterator * ParStoch0LSystem::selectRule(multimap<char, Rule>::iterator & begin,
                                                                      multimap<char, Rule>::iterator & end,
 																	 LongString * word,

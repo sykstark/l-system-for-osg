@@ -6,28 +6,45 @@
 #include <ctime>
 
 namespace AP_LSystem {
+/**
+  * Class for generating random index for stochastic rule selection
+  */
 class RandomIndex
 {
 private:
-    std::vector<double> probabilities;
-    double sum;
+    std::vector<double> probabilities;  ///< probability factors
+    double sum;                         ///< sum of all probabilities
 public:
+    /**
+      * Initialize random generator
+      */
 	static void init()
 	{
 		srand( time( NULL ) );
 	}
 
+    /**
+      * Constructor
+      */
     RandomIndex()
     {
 		sum = 0;
     }
 
+    /**
+      * Add probability factor of rule.
+      * @param p probability
+      */
     void addProbability( double p )
     {
         probabilities.push_back( sum + p );
         sum += p;
     }
 
+    /**
+      * Returns random index according to probability factor
+      * @return random index
+      */
     unsigned int getRandomIndex()
     {
         double r = (static_cast<double>(rand() % 100)) * sum / 100.0f;

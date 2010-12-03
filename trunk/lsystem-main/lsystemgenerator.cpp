@@ -55,7 +55,7 @@ void LSystemGenerator::loadFile(std::string & filename)
 
     m_MainLSystem = AbstractGenerator::createLSystem( file );
 
-    D0LSystem d = *dynamic_cast<D0LSystem *>(m_MainLSystem);
+    //D0LSystem d = *dynamic_cast<D0LSystem *>(m_MainLSystem);
 }
 
 void LSystemGenerator::nextIteration()
@@ -71,6 +71,10 @@ ParseableString * LSystemGenerator::getWord()
     LongString * word = NULL;
 
     word = m_MainLSystem->translate( );
+
+//    D0LSystem l = *dynamic_cast<D0LSystem *>(m_MainLSystem.get());
+//    int i = l.getIteration();
+//    Log::get()->write(i);
 	
 	if(!word)
 		return NULL;

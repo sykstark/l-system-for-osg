@@ -7,11 +7,14 @@
 #include "longstring.h"
 
 namespace AP_LSystem {
+/**
+  * Class for storing static strings. Can be used for storing static parts of successor.
+  */
 class StaticString
 {
 public:
-    char * str;
-	int length;
+    char * str;     ///< string buffer
+    int length;     ///< string length
 
 	StaticString( const char * str, int length ):length(length)
 	{
@@ -23,7 +26,7 @@ public:
     {
         this->length = str->length();
         this->str = new char[length];
-        memcpy( (void *) this->str, str->getString(), length);
+        memcpy( (void *) this->str, str->getData(), length);
     }
 
     StaticString( char ch ):length(1)

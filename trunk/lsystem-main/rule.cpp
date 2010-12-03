@@ -15,43 +15,36 @@ using boost::lexical_cast;
 using boost::bad_lexical_cast;
 using namespace AP_LSystem;
 
-Rule::Rule( const Rule & c )
+Rule::Rule( const Rule & c ) : strictPredecessor(c.strictPredecessor),
+                               variables( c.variables ),
+                               leftContext( c.leftContext ),
+                               rightContext( c.rightContext )
+
 {
-    this->variables = c.variables;
-    this->leftContext = c.leftContext;
-    this->rightContext = c.rightContext;
-    this->condition = c.condition;
-    this->probabilityFactor = c.probabilityFactor;
+    for(std::vector< StaticString *>::const_iterator it = c.staticStrings.begin(); it != c.staticStrings.end(); it++)
+        staticStrings.push_back( new StaticString(**it) );
 
-    for(unsigned int i = 0; i < c.staticStrings.size(); i++)
-    {
-        this->staticStrings.push_back(c.staticStrings.at(i));
-    }
+    for(std::vector< FunctionParser *>::const_iterator it = c.dynamicStrings.begin(); it != c.dynamicStrings.end(); it++)
+        dynamicStrings.push_back( new FunctionParser(**it) );
 
-    for(unsigned int i = 0; i < c.dynamicStrings.size(); i++)
-    {
-        this->dynamicStrings.push_back(c.dynamicStrings.at(i));
-    }
+    probabilityFactor = (c.probabilityFactor)?(new FunctionParser(*c.probabilityFactor) ):NULL;
+    condition = (c.condition)?(new FunctionParser(*c.condition) ):NULL;
 }
 
 Rule & Rule::operator=( const Rule & c)
 {
+    this->strictPredecessor = c.strictPredecessor;
     this->variables = c.variables;
     this->leftContext = c.leftContext;
     this->rightContext = c.rightContext;
-    this->condition = c.condition;
-    this->probabilityFactor = c.probabilityFactor;
+    probabilityFactor = (c.probabilityFactor)?(new FunctionParser(*c.probabilityFactor) ):NULL;
+    condition = (c.condition)?(new FunctionParser(*c.condition) ):NULL;
 
-    for(unsigned int i = 0; i < c.staticStrings.size(); i++)
-    {
-        this->staticStrings.push_back(c.staticStrings.at(i));
-    }
+    for(std::vector< StaticString *>::const_iterator it = c.staticStrings.begin(); it != c.staticStrings.end(); it++)
+        staticStrings.push_back( new StaticString(**it) );
 
-    for(unsigned int i = 0; i < c.dynamicStrings.size(); i++)
-    {
-        this->dynamicStrings.push_back(c.dynamicStrings.at(i));
-    }
-
+    for(std::vector< FunctionParser *>::const_iterator it = c.dynamicStrings.begin(); it != c.dynamicStrings.end(); it++)
+        dynamicStrings.push_back( new FunctionParser(**it) );
     return *this;
 }
 
@@ -59,12 +52,12 @@ Rule::~Rule()
 {
     if(condition)
     {
-        //delete condition;
+        delete condition;
     }
 
     if(probabilityFactor)
     {
-        //delete probabilityFactor;
+        delete probabilityFactor;
     }
 }
 
