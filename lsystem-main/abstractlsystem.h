@@ -6,6 +6,8 @@
 #include "abstractfile.h"
 #include "configuration.h"
 
+using boost::shared_ptr;
+
 namespace AP_LSystem {
 class LongString;
 
@@ -25,6 +27,11 @@ protected:
 public:
     AbstractLSystem(): _name(""), _iteration(0) {}
     AbstractLSystem( const AbstractLSystem & c):_name(c._name), _iteration(c._iteration) {}
+
+    /**
+      * Virtual constructor
+      */
+    virtual shared_ptr<AbstractLSystem> clone() const = 0;
 
     /**
       * Assignment operator
@@ -59,7 +66,6 @@ public:
       * @return current L-system iteration
       */
     unsigned int getIteration() const {return _iteration;}
-
 };
 }
 

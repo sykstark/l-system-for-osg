@@ -26,6 +26,14 @@ public:
         else
             return false;
     }
+
+    /**
+      * Virtual copy constructor
+      */
+    shared_ptr<AbstractLSystem> clone() const
+    {
+        return shared_ptr<AbstractLSystem>( new Par2LSystem(*this) );
+    }
 };
 }
 

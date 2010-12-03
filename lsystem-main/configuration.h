@@ -26,28 +26,105 @@ enum LSystemCapabilities
     LS_PARAMETRIC       = 0x00010000,   ///< Parametric L-system
 };
 
+/**
+  * Configuration class for storing all properties of all L-systems. Every property must be set
+  * globally. It is possible to set properties also only for particular L-systems. This value
+  * has higher priority.
+  */
 class Configuration
 {
 private:
-    Configuration();
-    static Configuration* config;
-    ~Configuration();
+    static Configuration* config;                   ///< singleton instance
 
-    options_description description;
-    variables_map globalProperties;
-    std::map<std::string, int> lsystemNameMap;
-    std::vector<variables_map> lsystemProperties;
+    options_description description;                ///< description of properties
+    variables_map globalProperties;                 ///< map for storing global properties values
+    std::vector<variables_map> lsystemProperties;   ///< map for storing properties values of particular L-systems
+    std::map<std::string, int> lsystemNameMap;      ///< map of L-system indexes
+
+    /**
+      * Private constructor - this class is singleton
+      */
+    Configuration();
+
+    /**
+      * Privated destructor - this class is singleton
+      */
+    ~Configuration();
 public:
-    bool loadCfgFile(string);
-    void setProperty(const string &);
-    void setProperty(const string &, const string &);
-	void setProperty(const string &, const string &, const string &);
-    const int getLSystemIndex( const string & );
+    /**
+      * Loads a configuration file. Loaded properties are marked as global
+      * @param filename configuration file filename
+      * @return true if succeeded
+      */
+    bool loadCfgFile(string filename);
+
+    /**
+      * Sets global property value
+      * @param prop property string in following form: <property>=<value>
+      */
+    void setProperty(const string & prop);
+
+    /**
+      * Sets property only for one particular L-system
+      * @param lsystemID name of L-system
+      * @param prop property string in following form: <property>=<value>
+      */
+    void setProperty(const string & lsystemID, const string & prop);
+
+    /**
+      * Sets property only for one particular L-system
+      * @param lsystemID name of L-system
+      * @param prop property name
+      * @param value property value
+      */
+    void setProperty(const string & lsystemID, const string & prop, const string & value);
+
+    /**
+      * Returns unique integer identifier of L-system
+      * @param lsystemID name of L-system
+      * @return unique index of L-system
+      */
+    const int getLSystemIndex( const string & lsystemID );
+
+    /**
+      * Returns number L-systems that have stored some properties
+      * @return number of L-systems
+      */
 	const int getLSystemCount();
-    const variable_value * getProperty(const string &);
-    const variable_value * getProperty(const string &, const string &);
-	const variable_value * getProperty(const unsigned int, const string &);
+
+    /**
+      * Returns property global value
+      * @param prop property name
+      * @return property value
+      */
+    const variable_value * getProperty(const string & prop);
+
+    /**
+      * Returns property value of one particular L-system
+      * @param lsystemID name of L-system
+      * @param prop property name
+      * @return property value
+      */
+    const variable_value * getProperty(const string & lsystemID, const string & prop);
+
+
+    /**
+      * Returns property value of one particular L-system
+      * @param lsystemIndex index of L-system
+      * @param prop property name
+      * @return property value
+      */
+    const variable_value * getProperty(const unsigned int lsystemIndex, const string & prop);
+
+    /**
+      * Returns instance of Configuration singleton
+      * @return Configuration instance
+      */
 	static Configuration * get();
+
+    /**
+      * Not implemented
+      */
     const void writeAll( std::basic_ostream<char> &, const string & );
 };
 }

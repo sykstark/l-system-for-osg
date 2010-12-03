@@ -9,6 +9,11 @@ Abstract0LSystem::Abstract0LSystem( AbstractFile * file ): LSystem(file)
     this->loadFromFile( file );
 }
 
+Abstract0LSystem::Abstract0LSystem(const Abstract0LSystem & c): LSystem( c )
+{
+
+}
+
 void Abstract0LSystem::processPredecessor(Rule & r, string * rule, string::iterator & it)
 {
     // process a rule

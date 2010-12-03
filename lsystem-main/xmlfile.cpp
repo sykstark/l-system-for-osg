@@ -163,7 +163,7 @@ void XmlFile::processParameters(xercesc::DOMNode * parameters)
 		}
 	}
 }
-
+/*
 void XmlFile::processRules(xercesc::DOMNode * node)
 {
 	unsigned ruleIndex = 1;
@@ -172,6 +172,26 @@ void XmlFile::processRules(xercesc::DOMNode * node)
 	{
 		rules.push_back( XMLString::transcode(ruleNode->getTextContent()) );
 		ruleIndex++;
+	}
+} */
+
+void XmlFile::processRules(xercesc::DOMNode * subs)
+{
+	DOMNodeList * children = subs->getChildNodes();
+    const XMLSize_t nodeCount = children->getLength();
+	string parameter, value;
+
+	for( XMLSize_t xx = 0; xx < nodeCount; ++xx )
+	{
+		DOMNode* currentNode = children->item(xx);
+		if( currentNode->getNodeType() && currentNode->getNodeType() == DOMNode::ELEMENT_NODE ) // is element 
+		{
+			// Found node which is an Element. Re-cast node as element
+			DOMElement* currentElement = dynamic_cast< xercesc::DOMElement* >( currentNode );
+
+			if( string(XMLString::transcode(currentElement->getTagName())) == "Rule" )
+				this->rules.push_back(XMLString::transcode(currentElement->getTextContent()));
+		}
 	}
 }
 
@@ -191,7 +211,7 @@ void XmlFile::processSubsystems(xercesc::DOMNode * subs)
 			DOMElement* currentElement = dynamic_cast< xercesc::DOMElement* >( currentNode );
 
 			if( string(XMLString::transcode(currentElement->getTagName())) == "Subsystem" )
-				this->subsytems.push_back(XMLString::transcode(currentElement->getTextContent()));
+				this->subsytems.push_back(eraseWhiteSpaces( XMLString::transcode(currentElement->getTextContent())));
 		}
 	}
 }
@@ -217,16 +237,36 @@ void XmlFile::processConstants(xercesc::DOMNode * node)
 	}
 }
 
+void XmlFile::processHomomorphisms(xercesc::DOMNode * subs)
+{
+	DOMNodeList * children = subs->getChildNodes();
+    const XMLSize_t nodeCount = children->getLength();
+	string parameter, value;
+
+	for( XMLSize_t xx = 0; xx < nodeCount; ++xx )
+	{
+		DOMNode* currentNode = children->item(xx);
+		if( currentNode->getNodeType() && currentNode->getNodeType() == DOMNode::ELEMENT_NODE ) // is element 
+		{
+			// Found node which is an Element. Re-cast node as element
+			DOMElement* currentElement = dynamic_cast< xercesc::DOMElement* >( currentNode );
+
+			if( string(XMLString::transcode(currentElement->getTagName())) == "Homomorphism" )
+				this->homomorphisms.push_back( eraseWhiteSpaces( XMLString::transcode(currentElement->getTextContent() ) ) );
+		}
+	}
+}
+/*
 void XmlFile::processHomomorphisms(xercesc::DOMNode * node)
 {
 	unsigned homIndex = 1;
 	DOMNode * homNode;
 	while( homNode = findXMLNode( node, ("H" + lexical_cast<std::string>(homIndex)).c_str() , false ) )
 	{
-		homomorphisms.push_back( XMLString::transcode(homNode->getTextContent()) );
+		homomorphisms.push_back( eraseWhiteSpaces( XMLString::transcode(homNode->getTextContent()) ) );
 		homIndex++;
 	}
-}
+} */
 
 void XmlFile::processType(xercesc::DOMNode * type)
 {
@@ -246,7 +286,7 @@ void XmlFile::processType(xercesc::DOMNode * type)
 			if( string(XMLString::transcode(currentElement->getTagName())) == "Type" )
 			{
 				value = XMLString::transcode(currentElement->getTextContent());
-				this->addType( value );
+				this->addType( eraseWhiteSpaces( value ) );
 			}
 		}
 	}

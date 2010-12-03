@@ -13,22 +13,33 @@
 #endif
 
 using namespace AP_LSystem;
+using namespace std;
 
 LSystem::LSystem( AbstractFile * file ):_word(NULL), ignore("")
 {
 }
 
-LSystem::LSystem( const LSystem & c ):ignore(c.ignore)
+LSystem::LSystem( const LSystem & c ): AbstractLSystem( c ),
+                                       _rules(c._rules),
+                                       _homomorphisms(c._homomorphisms),
+                                       _subSystemsFilenames(c._subSystemsFilenames),
+                                       ignore(c.ignore)
 {
-    _word = new LongString(*(c._word));
-    _rules = c._rules;
+    for(vector< LongString *>::const_iterator it = c._subSystemsWords.begin(); it != c._subSystemsWords.end(); it++)
+        _subSystemsWords.push_back( new LongString(**it) );
+
+    _word = (c._word)?( new LongString(*(c._word)) ):NULL;
 }
 
 LSystem & LSystem::operator =( const LSystem & c)
 {
-    ignore = c.ignore;
     _word = new LongString(*(c._word));
     _rules = c._rules;
+    _homomorphisms = c._homomorphisms;
+    _subSystemsFilenames = c._subSystemsFilenames;
+    for(vector< LongString *>::const_iterator it = c._subSystemsWords.begin(); it != c._subSystemsWords.end(); it++)
+        _subSystemsWords.push_back( new LongString(**it) );
+    ignore = c.ignore;
     return *this;
 }
 
@@ -43,7 +54,7 @@ void LSystem::loadFromFile( AbstractFile * file)
     this->_name = file->name();
 
     AbstractFile * subFile;
-    AbstractLSystem * ls;
+    boost::shared_ptr<AbstractLSystem> ls;
 
 	// map for replacing l-system names in rules, axiom and homomorphism by their index
     std::map< string, string > lsystemSubstitute;
