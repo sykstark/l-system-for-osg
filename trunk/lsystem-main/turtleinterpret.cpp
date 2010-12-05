@@ -1,11 +1,11 @@
 #include "precompiled.h"
-#include "defaultparser.h"
+#include "turtleinterpret.h"
 
 #include "configuration.h"
 
 using namespace AP_LSystem;
 
-DefaultParser::DefaultParser( osg::Group * owner )
+TurtleInterpret::TurtleInterpret( osg::Group * owner )
 {
 	// TODO move to abstract
 	if( owner )
@@ -15,17 +15,17 @@ DefaultParser::DefaultParser( osg::Group * owner )
 	}
 }
 
-DefaultParser::~DefaultParser( )
+TurtleInterpret::~TurtleInterpret( )
 {
 	// TODO delete geodes
 
 }
 
-osg::Group * DefaultParser::setShadows( osg::Group * owner )
+osg::Group * TurtleInterpret::setShadows( osg::Group * owner )
 {
 	osg::ref_ptr<osgShadow::ShadowedScene> shadowedScene = new osgShadow::ShadowedScene;
 	osg::ref_ptr<osgShadow::ShadowMap> sm = new osgShadow::ShadowMap;
-    shadowedScene->setShadowTechnique(sm.get());
+ //   shadowedScene->setShadowTechnique(sm.get());
 	owner->addChild( shadowedScene.get() );
 
 	osg::Vec3 lightPosition(150,150,150); 
@@ -34,7 +34,7 @@ osg::Group * DefaultParser::setShadows( osg::Group * owner )
 	ls->getLight()->setAmbient(osg::Vec4(0.8,0.8,0.8,1.0));
 	ls->getLight()->setDiffuse(osg::Vec4(1.0,1.0,1.0,1.0));
 
-	shadowedScene->addChild(ls);
+//	shadowedScene->addChild(ls);
 
 	lightPosition = osg::Vec3(-150,150,150); 
 	ls = new osg::LightSource;
@@ -42,7 +42,7 @@ osg::Group * DefaultParser::setShadows( osg::Group * owner )
 	ls->getLight()->setAmbient(osg::Vec4(0.4,0.4,0.4,1.0));
 	ls->getLight()->setDiffuse(osg::Vec4(0.7,0.7,0.7,1.0));
 
-	owner->addChild(ls);
+//	owner->addChild(ls);
 
 	lightPosition = osg::Vec3(100,100,0); 
 	ls = new osg::LightSource;
@@ -50,12 +50,12 @@ osg::Group * DefaultParser::setShadows( osg::Group * owner )
 	ls->getLight()->setAmbient(osg::Vec4(0.4,0.4,0.4,1.0));
 	ls->getLight()->setDiffuse(osg::Vec4(1.0,1.0,1.0,1.0));
 
-	owner->addChild(ls);
+//	owner->addChild(ls);
 
 	return shadowedScene;
 }
 
-int DefaultParser::parse(ParseableString * word)
+int TurtleInterpret::parse(ParseableString * word)
 {
 	int res = 0;
 	vector<Parameter> parameters;

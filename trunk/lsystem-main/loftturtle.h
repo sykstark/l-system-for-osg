@@ -33,6 +33,8 @@ protected:
 		// move forward - second half of the step
 		properties.matrix = t * properties.matrix;
 
+		postStep( );
+
 		return ret;
 	}
 
@@ -52,6 +54,10 @@ protected:
 			properties.contour->push_back( q * *(properties.contour->rbegin()) );		
 		}
 	}
+
+	virtual int addContourLoftGeometry();
+
+	virtual int createLoftGeometryOpening();	
 
 	virtual int insideStep() { return 0; }
 public:

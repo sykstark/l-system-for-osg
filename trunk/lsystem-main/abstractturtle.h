@@ -39,8 +39,8 @@ public:
 //****************************************************************
 //**						OTHER								**
 //****************************************************************
-	virtual int initialize()	= 0;			///< initialize turtle
-	virtual int finalize()		= 0;
+	virtual int initialize()	{ return 0;}			///< initialize turtle
+	virtual int finalize()		{ return 0;}
 	virtual int resetValues() { return 0;}//TODO	///< reset all values in properties to default value as set in Configuration
 	inline TurtleProperties & getProperties()	///< get Properties reference
 	{
@@ -102,14 +102,19 @@ public:
 //****************************************************************
 //**						ROTATION							**
 //****************************************************************
-	inline double processAngle( double a )
+	inline double toRad( double angle )
 	{
 		if( properties.flags & TurtleProperties::DEGREES_TO_RADIANS )
-			a = osg::DegreesToRadians( a );
+			return osg::DegreesToRadians( angle );
+		else
+			return angle;
+	}
 
+	inline double rand( double angle )
+	{
 		if( properties.angleVariance )
-			a *= Randomizer::get( properties.angleVariance );
-		return a;
+			angle *= Randomizer::get( properties.angleVariance );
+		return angle;
 	}
 
 	virtual int turnLeft(std::vector<Parameter> &)			= 0;

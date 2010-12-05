@@ -1,5 +1,5 @@
-#ifndef ABSTRACTPARSER_H_
-#define ABSTRACTPARSER_H_
+#ifndef ABSTRACTINTERPRET_H_
+#define ABSTRACTINTERPRET_H_
 
 #include <vector>
 
@@ -12,14 +12,14 @@ using std::vector;
 using std::string;
 
 namespace AP_LSystem {
-class AbstractParser
+class AbstractInterpret
 {
 protected:
 	vector< LSGeode *> geodes;
 	osg::Group * pOwner;
 	TurtleStack turtles;
 public:
-	AbstractParser( )
+	AbstractInterpret( )
 	{
 		pOwner = NULL;
 	}
@@ -32,7 +32,7 @@ public:
 			turtles.pop();
 			break;
 		case 1:
-			if (p[0].type != LS_UBYTE)
+			if (p[0].type != Parameter::LS_UBYTE)
 				return LS_ERR_PAR_BADTYPE;	
 			turtles.push( geodes[*(static_cast<unsigned char*>(p[0].value))] );
 			break;

@@ -120,18 +120,9 @@ void StraightPipe::initializePipe()
 	// beginning of drawing must be initialized by creating an initializing contour
 
 	// no drawing step before
-	if( ! properties.contourLastV )
+	if( !properties.contourLastV || !properties.contourLastN )
 	{
-		// create arrays for storing first contour
-		properties.contourLastV = new osg::Vec3dArray;
-		properties.contourLastN = new osg::Vec3dArray;
-
-		// create first contour
-		for(osg::Vec3dArray::iterator it = properties.contour->begin(); it != properties.contour->end(); it++ )
-		{
-			properties.contourLastV->push_back( (*it * properties.radius) * properties.matrix );
-			properties.contourLastN->push_back( properties.matrix.getRotate() * *it );
-		}
+		createLoftGeometryOpening( );
 	}
 }
 

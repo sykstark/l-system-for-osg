@@ -55,8 +55,8 @@ void MovingTurtle::adjustMatrices( )
 	//drawFrame( properties.lastFrame, new osg::Vec4d( 1.0, 1.0, 0.5, 1.0 ) ); 
 
 	// TODO remove ?
-	osg::Vec3d levy = properties.lastFrame * LeftVec;
-	levy.normalize();
+	//osg::Vec3d levy = properties.lastFrame * LeftVec;
+	//levy.normalize();
 	//drawVector( head, osg::Matrixd::identity(), osg::Vec4d( 1.0,0.5,1.0, 1.0 ));
 	
 }
@@ -65,7 +65,6 @@ int MovingTurtle::makeRotate(osg::Quat & q)
 {
 	preRotate();
 
-	// TODO test - rotating directly by quaternion
 	properties.matrix =  osg::Matrixd::rotate( q ) * properties.matrix;
 
 	postRotate();
@@ -109,7 +108,7 @@ int MovingTurtle::drawForward(std::vector<Parameter> & p)
 		this->drawStep( properties.length );
 		break;
 	case 1:
-		if (p[0].type != LS_DOUBLE)
+		if (p[0].type != Parameter::LS_DOUBLE)
 			return LS_ERR_PAR_BADTYPE;
 		this->drawStep( *(static_cast<double *>(p[0].value)) );
 		break;
@@ -135,7 +134,7 @@ int MovingTurtle::moveForward(std::vector<Parameter> & p)
 		this->doStep( properties.length );
 		break;
 	case 1:
-		if (p[0].type != LS_DOUBLE)
+		if (p[0].type != Parameter::LS_DOUBLE)
 			return LS_ERR_PAR_BADTYPE;
 		this->doStep( *(static_cast<double *>(p[0].value)) );
 		break;
@@ -158,12 +157,12 @@ int MovingTurtle::turnLeft(std::vector<Parameter> & p)
 	switch( p.size() )
 	{
 	case 0:
-		this->makeRotate( osg::Quat( - processAngle( properties.angle ), osg::Vec3d(1.0,0.0,0.0) ) ); 
+		this->makeRotate( osg::Quat( - rand( properties.angle ), osg::Vec3d(1.0,0.0,0.0) ) ); 
 		break;
 	case 1:
-		if (p[0].type != LS_DOUBLE)
+		if (p[0].type != Parameter::LS_DOUBLE)
 			return LS_ERR_PAR_BADTYPE;
-		this->makeRotate( osg::Quat( - processAngle(*(static_cast<double *>(p[0].value))), osg::Vec3d(1.0,0.0,0.0) ) ); 		
+		this->makeRotate( osg::Quat( - rand( toRad(*(static_cast<double *>(p[0].value)))), osg::Vec3d(1.0,0.0,0.0) ) ); 		
 		break;
 	default:
 		return LS_ERR_PAR_INVALIDCOUNT;
@@ -177,12 +176,12 @@ int MovingTurtle::turnRight(std::vector<Parameter> & p)
 	switch( p.size() )
 	{
 	case 0:
-		this->makeRotate( osg::Quat( processAngle(properties.angle), osg::Vec3d(1.0,0.0,0.0) ) ); 
+		this->makeRotate( osg::Quat( rand(properties.angle), osg::Vec3d(1.0,0.0,0.0) ) ); 
 		break;
 	case 1:
-		if (p[0].type != LS_DOUBLE)
+		if (p[0].type != Parameter::LS_DOUBLE)
 			return LS_ERR_PAR_BADTYPE;
-		this->makeRotate( osg::Quat( processAngle(*(static_cast<double *>(p[0].value))), osg::Vec3d(1.0,0.0,0.0) ) ); 
+		this->makeRotate( osg::Quat( rand( toRad(*(static_cast<double *>(p[0].value)))), osg::Vec3d(1.0,0.0,0.0) ) ); 
 		break;
 	default:
 		return LS_ERR_PAR_INVALIDCOUNT;
@@ -196,12 +195,12 @@ int MovingTurtle::pitchDown(std::vector<Parameter> & p)
 	switch( p.size() )
 	{
 	case 0:
-		this->makeRotate( osg::Quat( processAngle( properties.angle ), LeftVec ) ); 
+		this->makeRotate( osg::Quat( rand( properties.angle ), LeftVec ) ); 
 		break;
 	case 1:
-		if (p[0].type != LS_DOUBLE)
+		if (p[0].type != Parameter::LS_DOUBLE)
 			return LS_ERR_PAR_BADTYPE;
-		this->makeRotate( osg::Quat( processAngle(*(static_cast<double *>(p[0].value))), osg::Vec3d(0.0,0.0,1.0) ) ); 
+		this->makeRotate( osg::Quat( rand( toRad(*(static_cast<double *>(p[0].value)))), osg::Vec3d(0.0,0.0,1.0) ) ); 
 		break;
 	default:
 		return LS_ERR_PAR_INVALIDCOUNT;
@@ -215,12 +214,12 @@ int MovingTurtle::pitchUp(std::vector<Parameter> & p)
 	switch( p.size() )
 	{
 	case 0:
-		this->makeRotate( osg::Quat( - processAngle( properties.angle ), LeftVec ) ); 
+		this->makeRotate( osg::Quat( - rand( properties.angle ), LeftVec ) ); 
 		break;
 	case 1:
-		if (p[0].type != LS_DOUBLE)
+		if (p[0].type != Parameter::LS_DOUBLE)
 			return LS_ERR_PAR_BADTYPE;
-		this->makeRotate( osg::Quat( - processAngle(*(static_cast<double *>(p[0].value))), osg::Vec3d(0.0,0.0,1.0) ) ); 
+		this->makeRotate( osg::Quat( - rand( toRad(*(static_cast<double *>(p[0].value)))), osg::Vec3d(0.0,0.0,1.0) ) ); 
 		break;
 	default:
 		return LS_ERR_PAR_INVALIDCOUNT;
@@ -234,12 +233,12 @@ int MovingTurtle::rollLeft(std::vector<Parameter> & p)
 	switch( p.size() )
 	{
 	case 0:
-		this->makeRotate( osg::Quat( - processAngle( properties.angle ), osg::Vec3d(0.0,1.0,0.0) ) ); 
+		this->makeRotate( osg::Quat( - rand( properties.angle ), osg::Vec3d(0.0,1.0,0.0) ) ); 
 		break;
 	case 1:
-		if (p[0].type != LS_DOUBLE)
+		if (p[0].type != Parameter::LS_DOUBLE)
 			return LS_ERR_PAR_BADTYPE;
-		this->makeRotate( osg::Quat( - processAngle(*(static_cast<double *>(p[0].value))), osg::Vec3d(0.0,1.0,0.0) ) ); 
+		this->makeRotate( osg::Quat( - rand( toRad(*(static_cast<double *>(p[0].value)))), osg::Vec3d(0.0,1.0,0.0) ) ); 
 		break;
 	default:
 		return LS_ERR_PAR_INVALIDCOUNT;
@@ -253,12 +252,12 @@ int MovingTurtle::rollRight(std::vector<Parameter> & p)
 	switch( p.size() )
 	{
 	case 0:
-		this->makeRotate( osg::Quat( processAngle( properties.angle ), osg::Vec3d(0.0,1.0,0.0) ) ); 
+		this->makeRotate( osg::Quat( rand( properties.angle ), osg::Vec3d(0.0,1.0,0.0) ) ); 
 		break;
 	case 1:
-		if (p[0].type != LS_DOUBLE)
+		if (p[0].type != Parameter::LS_DOUBLE)
 			return LS_ERR_PAR_BADTYPE;
-		this->makeRotate( osg::Quat( processAngle(*(static_cast<double *>(p[0].value))), osg::Vec3d(0.0,1.0,0.0) ) ); 
+		this->makeRotate( osg::Quat( rand( toRad(*(static_cast<double *>(p[0].value)))), osg::Vec3d(0.0,1.0,0.0) ) ); 
 		break;
 	default:
 		return LS_ERR_PAR_INVALIDCOUNT;
@@ -300,7 +299,7 @@ int MovingTurtle::multiplyLength(std::vector<Parameter> & p)
 		this->properties.length *= properties.lengthMultiplier;
 		break;
 	case 1:
-		if (p[0].type != LS_DOUBLE)
+		if (p[0].type != Parameter::LS_DOUBLE)
 			return LS_ERR_PAR_BADTYPE;
 		this->properties.length *= *(static_cast<double *>(p[0].value) ); 
 		break;
@@ -319,7 +318,7 @@ int MovingTurtle::multiplyRadius(std::vector<Parameter> & p)
 		this->properties.length *= properties.radiusMultiplier;
 		break;
 	case 1:
-		if (p[0].type != LS_DOUBLE)
+		if (p[0].type != Parameter::LS_DOUBLE)
 			return LS_ERR_PAR_BADTYPE;
 		this->properties.radius *= *(static_cast<double *>(p[0].value) ); 
 		break;
@@ -338,7 +337,7 @@ int MovingTurtle::multiplyAngle(std::vector<Parameter> & p)
 		this->properties.length *= properties.angleMultiplier;
 		break;
 	case 1:
-		if (p[0].type != LS_DOUBLE)
+		if (p[0].type != Parameter::LS_DOUBLE)
 			return LS_ERR_PAR_BADTYPE;
 		this->properties.radius *= *(static_cast<double *>(p[0].value) ); 
 		break;

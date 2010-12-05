@@ -8,19 +8,17 @@ class JointedPipe : public LoftTurtle
 {
 private:
 	void createHemisphere();
+
+	virtual int addHemisphereGeometry( );
 public:
 	JointedPipe(void);
 	~JointedPipe(void);
 
-	virtual int drawStep(double dist);
-
 	virtual int initialize();
-	virtual int finalize();
 
-	virtual int preRotate() { return 0;}
-	virtual int postRotate() { return 0;}
 	virtual int preStep();
 	virtual int postStep();
+
 };
 }
 
