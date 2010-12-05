@@ -718,7 +718,7 @@ int matchRight( kontext,   /*symbol pravého kontextu*/
      ]]></programlisting>
       </para>
       <para>
-        Levý i pravý kontext může stejně jako předchůdce mít své parametry, které je nutné načíst pro zpracování výrazů. Tyto parametry se načtou z řetězce slova díky pozicím modulů získaných během ověřování kontextu. Díky rozšíření o zpracování kontextu mohl být do zásuvném modulu implementován také mechanismus pro zpracování dotazů. Podrobnějším popisem implementace dotazů se zabývá kapitola LINK.
+        Levý i pravý kontext může stejně jako předchůdce mít své parametry, které je nutné načíst pro zpracování výrazů. Tyto parametry se načtou z řetězce slova díky pozicím modulů získaných během ověřování kontextu jako návratové hodnoty. Díky rozšíření o zpracování kontextu mohl být do zásuvném modulu implementován také mechanismus pro zpracování dotazů. Podrobnějším popisem implementace dotazů se zabývá kapitola LINK.
       </para>
     </sect2>
   </sect1>
@@ -790,19 +790,19 @@ K operacím na zásobníku dochází v případě některých speciálních symb
       <para>
         <itemizedlist mark='opencircle'>
           <listitem>
-            <simpara>[ - Tato závorka označuje počátek nové větve. Je tedy nutné vytvořit na zásobníku metodou push() novou želvu, která se vykreslováním této větve bude zabývat. Parametry i typ si tato želva nastaví podle želvy na vrcholu zásobníku.
+            <simpara>[ &mdash; Tato závorka označuje počátek nové větve. Je tedy nutné vytvořit na zásobníku metodou push() novou želvu, která se vykreslováním této větve bude zabývat. Parametry i typ si tato želva nastaví podle želvy na vrcholu zásobníku.
             </simpara>
           </listitem>
           <listitem>
-            <simpara>] - Ukončení větve je signalizováno tímto symbolem. Želva je z vrcholu zásobníku odstraněna a v generování dále pokračuje želva pod ní.
+            <simpara>] &mdash; Ukončení větve je signalizováno tímto symbolem. Želva je z vrcholu zásobníku odstraněna a v generování dále pokračuje želva pod ní.
             </simpara>
           </listitem>
           <listitem>
-            <simpara>$(x) - Jednotlivé L-systémy mají již od svého načtení přiřazen jednoznačný identifikátor. Symbol dolaru s jedním parametrem oznamuje intepreteru, že má dojiít ke změně L-systému. Podle identifikátoru v parametru modulu se zvolí správný L-systém a jeho odpovídající uzel s geometrií LSGeode. Ten už poté ví, který typ želvy použít a jaké ji nastavit výchozí parametry. Některé parametry, jako je matice polohy, mohou být nastaveny podle želvy na vrcholu zásobníku. S novou želvou se pak na zásobníku provede operace push(). 
+            <simpara>$(x) &mdash; Jednotlivé L-systémy mají již od svého načtení přiřazen jednoznačný identifikátor. Symbol dolaru s jedním parametrem oznamuje intepreteru, že má dojiít ke změně L-systému. Podle identifikátoru v parametru modulu se zvolí správný L-systém a jeho odpovídající uzel s geometrií LSGeode. Ten už poté ví, který typ želvy použít a jaké ji nastavit výchozí parametry. Některé parametry, jako je matice polohy, mohou být nastaveny podle želvy na vrcholu zásobníku. S novou želvou se pak na zásobníku provede operace push(). 
             </simpara>
           </listitem>
           <listitem>
-            <simpara>$ - Ukončení slova podsystému signalizuje symbol dolaru bez parametru. Z vrcholu zásobníku je odstraněna želva a ve vykreslování tak pokračuje želva nadřazeného L-systému. 
+            <simpara>$ &mdash; Ukončení slova podsystému signalizuje symbol dolaru bez parametru. Z vrcholu zásobníku je odstraněna želva a ve vykreslování tak pokračuje želva nadřazeného L-systému. 
             </simpara>
           </listitem>
         </itemizedlist> 
