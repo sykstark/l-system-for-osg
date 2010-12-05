@@ -1,11 +1,11 @@
 #ifndef QUERYINTERPRET_H_
 #define QUERYINTERPRET_H_
 
-#include "abstractparser.h"
+#include "abstractinterpret.h"
 #include "lsgeode.h"
 
 namespace AP_LSystem {
-class QueryInterpret : public AbstractParser
+class QueryInterpret : public AbstractInterpret
 {
 private:
 	static QueryInterpret * interpret;

@@ -4,6 +4,7 @@
 #include "configuration.h"
 #include "lsystemexception.h"
 #include "boost/lexical_cast.hpp"
+#include "utils.h"
 #include <sys/stat.h>
 #include <errno.h>
 
@@ -73,7 +74,7 @@ void XmlFile::open(std::string & filename)
 		// set name of l-system
 		if(findXMLNode( elementRoot, "Name", false ))
 		{
-			ReaderWriter::getStringValue(this->_name, elementRoot, "Name");
+			ReaderWriter::getStringValue(this->m_Name, elementRoot, "Name");
 		}
 		else
 		{
@@ -83,7 +84,7 @@ void XmlFile::open(std::string & filename)
 		// set axiom of l-system
 		if(findXMLNode( elementRoot, "Axiom", false ))
 		{
-			ReaderWriter::getStringValue(this->axiom, elementRoot, "Axiom");
+			ReaderWriter::getStringValue(this->m_Axiom, elementRoot, "Axiom");
 		}
 		else
 		{
@@ -157,7 +158,7 @@ void XmlFile::processParameters(xercesc::DOMNode * parameters)
 			// Found node which is an Element. Re-cast node as element
 			DOMElement* currentElement = dynamic_cast< xercesc::DOMElement* >( currentNode );
 
-			Configuration::get()->setProperty(	this->_name, 
+			Configuration::get()->setProperty(	this->m_Name, 
 												XMLString::transcode(currentElement->getTagName()), 
 												XMLString::transcode(currentElement->getTextContent()) );
 		}
@@ -190,7 +191,7 @@ void XmlFile::processRules(xercesc::DOMNode * subs)
 			DOMElement* currentElement = dynamic_cast< xercesc::DOMElement* >( currentNode );
 
 			if( string(XMLString::transcode(currentElement->getTagName())) == "Rule" )
-				this->rules.push_back(XMLString::transcode(currentElement->getTextContent()));
+				this->m_Rules.push_back(XMLString::transcode(currentElement->getTextContent()));
 		}
 	}
 }
@@ -211,7 +212,7 @@ void XmlFile::processSubsystems(xercesc::DOMNode * subs)
 			DOMElement* currentElement = dynamic_cast< xercesc::DOMElement* >( currentNode );
 
 			if( string(XMLString::transcode(currentElement->getTagName())) == "Subsystem" )
-				this->subsytems.push_back(eraseWhiteSpaces( XMLString::transcode(currentElement->getTextContent())));
+				this->m_Subsytems.push_back(StringUtils::eraseWhiteSpaces( std::string(XMLString::transcode(currentElement->getTextContent()))));
 		}
 	}
 }
@@ -252,7 +253,7 @@ void XmlFile::processHomomorphisms(xercesc::DOMNode * subs)
 			DOMElement* currentElement = dynamic_cast< xercesc::DOMElement* >( currentNode );
 
 			if( string(XMLString::transcode(currentElement->getTagName())) == "Homomorphism" )
-				this->homomorphisms.push_back( eraseWhiteSpaces( XMLString::transcode(currentElement->getTextContent() ) ) );
+				this->m_Homomorphisms.push_back( StringUtils::eraseWhiteSpaces( string(XMLString::transcode(currentElement->getTextContent() )) ) );
 		}
 	}
 }
@@ -286,7 +287,7 @@ void XmlFile::processType(xercesc::DOMNode * type)
 			if( string(XMLString::transcode(currentElement->getTagName())) == "Type" )
 			{
 				value = XMLString::transcode(currentElement->getTextContent());
-				this->addType( eraseWhiteSpaces( value ) );
+				this->addType( StringUtils::eraseWhiteSpaces( value ) );
 			}
 		}
 	}

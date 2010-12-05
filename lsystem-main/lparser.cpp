@@ -2,7 +2,7 @@
 #include "lparser.h"
 #include "turtle.h"
 #include "polygonturtle.h"
-#include "jointedturtle.h"
+#include "jointedpipe.h"
 #include "contourturtle.h"
 #include "configuration.h"
 

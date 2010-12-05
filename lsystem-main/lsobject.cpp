@@ -4,7 +4,7 @@
 #include "lsobject.h"
 #include "lparser.h"
 #include "configuration.h"
-#include "defaultparser.h"
+#include "turtleinterpret.h"
 #include "lsystemgenerator.h"
 #include "log.h"
 #include "lsystemexception.h"
@@ -54,7 +54,7 @@ void LSObject::postInitialize()
 		return;
 	}
 
-	AbstractParser * parser = new DefaultParser( pEOOwner );
+	AbstractInterpret * parser = new TurtleInterpret( pEOOwner );
 	parser->parse( pWord );
 
 /*	osg::ref_ptr<osg::Node> obj = osgDB::readNodeFile( "data/ls/podivnost.3DS" );
