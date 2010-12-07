@@ -91,7 +91,7 @@ void Par2LSystem::processRuleSuccessor(Rule & r, string * rule, string::iterator
 	r.processProbabilityFactor(rule, it);
 
     // insert new rule into map with rules
-    this->_rules.insert(std::make_pair< char, Rule >(r.strictPredecessor, r ));
+    this->m_Rules.insert(std::make_pair< char, Rule >(r.strictPredecessor, r ));
 }
 
 void Par2LSystem::processHomomorphismSuccessor(Rule & r, string * hom, string::iterator & it)
@@ -105,7 +105,7 @@ void Par2LSystem::processHomomorphismSuccessor(Rule & r, string * hom, string::i
     r.processProbabilityFactor(hom, it);
 
     // insert new rule into map with rules
-    this->_homomorphisms.insert(std::make_pair< char, Rule >(r.strictPredecessor, r ));
+    this->m_Homomorphisms.insert(std::make_pair< char, Rule >(r.strictPredecessor, r ));
 }
 
 multimap<char, Rule>::iterator * Par2LSystem::selectRule(multimap<char, Rule>::iterator & begin,
@@ -130,8 +130,8 @@ multimap<char, Rule>::iterator * Par2LSystem::selectRule(multimap<char, Rule>::i
 			// TODO consider
 
 			// match left context
-			_word->peekSymbol(leftContext, false);
-			leftContext = _word->matchLeft( (*it)->second.leftContext[0], leftContext, &ignore, NULL );
+            m_Word->peekSymbol(leftContext, false);
+            leftContext = m_Word->matchLeft( (*it)->second.leftContext[0], leftContext, &m_Ignore, NULL );
 			// left context doesn't match
 			if( leftContext < 0 )
 				continue;
@@ -156,8 +156,8 @@ multimap<char, Rule>::iterator * Par2LSystem::selectRule(multimap<char, Rule>::i
 		if((*it)->second.rightContext.length())
 		{
 			// match right context
-			_word->peekSymbol(rightContext, true);
-			rightContext = _word->matchRight( (*it)->second.rightContext[0], rightContext, &ignore, NULL );
+            m_Word->peekSymbol(rightContext, true);
+            rightContext = m_Word->matchRight( (*it)->second.rightContext[0], rightContext, &m_Ignore, NULL );
 			// right context doesn't match
 			if( rightContext < 0 )
 				continue;

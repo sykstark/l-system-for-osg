@@ -16,14 +16,28 @@ namespace AP_LSystem {
 class AbstractFile
 {
 protected:
-    unsigned int m_Type;
-    string m_Name;
-    string m_Axiom;
+    unsigned int m_Type;                    ///< type of loaded L-system
+    string m_Name;                          ///< name of loaded L-system
+    string m_Axiom;                         ///< loaded axiom
 
-    std::vector<string> m_Rules;
-    std::vector<string> m_Homomorphisms;
-    std::vector<string> m_Subsytems;
+    std::vector<string> m_Rules;            ///< container with loaded rules strings
+    std::vector<string> m_Homomorphisms;    ///< container with loaded homomorphism rules
+    std::vector<string> m_Subsytems;        ///< container with subsystem's filenames
 
+    /**
+      * Type of L-system is composed by binary adding of some capabilities. This
+      * method binary adds new capability.
+      * List of capability strings:
+      * - 0L
+      * - 1LL
+      * - 1LR
+      * - 2L
+      * - IL
+      * - DETERMINISTIC
+      * - STOCHASTIC
+      * - PARAMETRIC
+      * @param type string with type to add
+      */
 	void addType( std::string & type )
 	{
 		if(type == "0L")
@@ -42,9 +56,9 @@ protected:
 		{
             m_Type |= LS_2L;
 		}
-		else if(type == "kL")
+        else if(type == "IL")
 		{
-            m_Type |= LS_kL;
+            m_Type |= LS_IL;
 		}
 		else if(type == "DETERMINISTIC")
 		{
@@ -64,13 +78,21 @@ protected:
 		}
     }
 public:
+    /**
+      * Constructor - inicialize L-system type to zero
+      */
     AbstractFile(): m_Type(0){}
-    virtual void open( std::string & ) = 0;
+
+    /**
+      * Pure method for opening file.
+      * @param filename filename of file
+      */
+    virtual void open( std::string & filename) = 0;
 
     /**
       * Substitute all occurences of map's keys by their values in axiom,
       * rules and homomorphisms.
-      * @param pairs map of substitution pairs
+      * @param pairs map with substitution pairs
       */
     void substitute(std::map<string, string> & pairs)
     {
@@ -154,7 +176,7 @@ public:
     }
 
     /**
-      * Get type of L-system. Stored as bitmap of desired capabilities. Capabilities has type
+      * Get type of L-system. Stored as bitmap of desired capabilities.
       * @return type of L-system
       */
     unsigned int type()
@@ -162,6 +184,10 @@ public:
         return m_Type;
     }
 
+    /**
+      * Returns name of L-system.
+      * @return name of L-system
+      */
     std::string & name()
     {
         return m_Name;

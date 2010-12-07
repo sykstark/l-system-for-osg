@@ -18,15 +18,15 @@ class LongString;
 class AbstractLSystem
 {
 protected:
-    std::string _name;
-    unsigned int _iteration;
+    std::string m_Name;          ///< name of L-system
+    unsigned int m_Iteration;    ///< number of processed iterations
 
 	virtual void addRule( std::string * ) = 0;
     virtual void addHomomorphism( std::string * ) = 0;
     virtual void setAxiom( std::string & ) = 0;
 public:
-    AbstractLSystem(): _name(""), _iteration(0) {}
-    AbstractLSystem( const AbstractLSystem & c):_name(c._name), _iteration(c._iteration) {}
+    AbstractLSystem(): m_Name(""), m_Iteration(0) {}
+    AbstractLSystem( const AbstractLSystem & c):m_Name(c.m_Name), m_Iteration(c.m_Iteration) {}
 
     /**
       * Virtual constructor
@@ -38,8 +38,8 @@ public:
       */
     AbstractLSystem & operator=(const AbstractLSystem & c )
     {
-        _name = c._name;
-        _iteration = c._iteration;
+        m_Name = c.m_Name;
+        m_Iteration = c.m_Iteration;
         return *this;
     }
 
@@ -65,7 +65,7 @@ public:
       * Get current iteration.
       * @return current L-system iteration
       */
-    unsigned int getIteration() const {return _iteration;}
+    unsigned int getIteration() const {return m_Iteration;}
 };
 }
 

@@ -7,8 +7,20 @@
 
 using namespace vrecko;
 
+/**
+ * @mainpage L-system plants modeler - module for Vrecko
+ * @section About
+ *  
+ * @section Features
+ * <ul>
+ *    <li> generating plants using L-systems </li>
+ *    <li> D0L-systems, parametric stochastic 0Lsystems, parametric stochastic 2L-systems </li>
+ *    <li> generating plants geometry using Turtle interpretation </li>
+ * </ul>
+ */
+
 #pragma warning(disable:4190)
-	// disable warning that tells us that using 'extern "C"' and 'string' at the same time is weird
+// disable warning that tells us that using 'extern "C"' and 'string' at the same time is weird	
 
 // several functions for maintaining abilities
 extern "C" AP_EXPORT const char *Garden_getPluginDescription(); // returns description of this plugin

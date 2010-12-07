@@ -7,6 +7,7 @@
 
 using namespace AP_LSystem;
 
+// inicialize singleton instance as NULL
 Configuration *Configuration::config = 0;
 
 Configuration::Configuration(void)
@@ -73,6 +74,7 @@ bool Configuration::loadCfgFile(std::string filename)
 
 Configuration * Configuration::get()
 {
+    // create a singleton
 	if(!config) config = new Configuration;
 
 	return config;
@@ -80,8 +82,10 @@ Configuration * Configuration::get()
 
 const int Configuration::getLSystemIndex(const string & name)
 {
+    // exists L-system with this name ?
     if( lsystemNameMap.count(name))
     {
+        // return it's index
         return lsystemNameMap[name];
     }
     else
