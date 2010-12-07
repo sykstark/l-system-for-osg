@@ -13,6 +13,9 @@ class AbstractkLSystem : public LSystem
 protected:
 	
 public:
+    /**
+      * Constructor
+      */
     AbstractkLSystem( AbstractFile * );
 };
 }

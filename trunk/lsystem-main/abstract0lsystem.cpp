@@ -51,7 +51,7 @@ void Abstract0LSystem::processRuleSuccessor(Rule & r, string * rule, string::ite
     r.processProbabilityFactor(rule, it);
 
     // insert new rule into map with rules
-    this->_rules.insert(std::make_pair< char, Rule >(r.strictPredecessor, r ));
+    this->m_Rules.insert(std::make_pair< char, Rule >(r.strictPredecessor, r ));
 }
 
 void Abstract0LSystem::processHomomorphismSuccessor(Rule & r, string * hom, string::iterator & it)
@@ -65,6 +65,6 @@ void Abstract0LSystem::processHomomorphismSuccessor(Rule & r, string * hom, stri
     r.processProbabilityFactor(hom, it);
 
     // insert new rule into map with rules
-    this->_homomorphisms.insert(std::make_pair< char, Rule >(r.strictPredecessor, r ));
+    this->m_Homomorphisms.insert(std::make_pair< char, Rule >(r.strictPredecessor, r ));
 }
 

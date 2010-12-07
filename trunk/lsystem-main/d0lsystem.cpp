@@ -18,16 +18,16 @@ bool D0LSystem::transcribe(multimap<char, Rule> &rules)
 
     multimap<char, Rule>::iterator pRuleIt;
 
-    for(unsigned int i = 0; i < _word->length(); i++ )
+    for(unsigned int i = 0; i < m_Word->length(); i++ )
     {
         // mozna dodat kontrolu estli jde o pismeno
-        pRuleIt = rules.find( (*_word)[i]);
+        pRuleIt = rules.find( (*m_Word)[i]);
 
         // not found
         if( pRuleIt == rules.end() )
         {
             j = i;
-            buffer = _word->getSymbol(i);
+            buffer = m_Word->getSymbol(i);
             if(buffer)
                 newWord->append(buffer,i-j+1);
         }
@@ -40,10 +40,10 @@ bool D0LSystem::transcribe(multimap<char, Rule> &rules)
         }
     }
 
-    if(_word)
-        delete _word;
+    if(m_Word)
+        delete m_Word;
 
-    _word = newWord;
+    m_Word = newWord;
 
 //    processCutSymbol();
 
@@ -74,7 +74,7 @@ void D0LSystem::processRuleSuccessor(Rule & r, string * rule, string::iterator &
     r.addStaticString(rule, it);
 
     // insert new rule into map with rules
-    this->_rules.insert(std::make_pair< char, Rule >(r.strictPredecessor, r ));
+    this->m_Rules.insert(std::make_pair< char, Rule >(r.strictPredecessor, r ));
 }
 
 void D0LSystem::processHomomorphismSuccessor(Rule & r, string * hom, string::iterator & it)
@@ -84,5 +84,5 @@ void D0LSystem::processHomomorphismSuccessor(Rule & r, string * hom, string::ite
     r.addStaticString( hom, it );
 
     // insert new rule into map with rules
-    this->_homomorphisms.insert(std::make_pair< char, Rule >(r.strictPredecessor, r ));
+    this->m_Homomorphisms.insert(std::make_pair< char, Rule >(r.strictPredecessor, r ));
 }

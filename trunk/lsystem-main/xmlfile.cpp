@@ -164,17 +164,6 @@ void XmlFile::processParameters(xercesc::DOMNode * parameters)
 		}
 	}
 }
-/*
-void XmlFile::processRules(xercesc::DOMNode * node)
-{
-	unsigned ruleIndex = 1;
-	DOMNode * ruleNode;
-	while( ruleNode = findXMLNode( node, ("P" + lexical_cast<std::string>(ruleIndex)).c_str() , false ) )
-	{
-		rules.push_back( XMLString::transcode(ruleNode->getTextContent()) );
-		ruleIndex++;
-	}
-} */
 
 void XmlFile::processRules(xercesc::DOMNode * subs)
 {
@@ -257,17 +246,6 @@ void XmlFile::processHomomorphisms(xercesc::DOMNode * subs)
 		}
 	}
 }
-/*
-void XmlFile::processHomomorphisms(xercesc::DOMNode * node)
-{
-	unsigned homIndex = 1;
-	DOMNode * homNode;
-	while( homNode = findXMLNode( node, ("H" + lexical_cast<std::string>(homIndex)).c_str() , false ) )
-	{
-		homomorphisms.push_back( eraseWhiteSpaces( XMLString::transcode(homNode->getTextContent()) ) );
-		homIndex++;
-	}
-} */
 
 void XmlFile::processType(xercesc::DOMNode * type)
 {

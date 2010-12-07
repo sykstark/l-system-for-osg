@@ -104,31 +104,35 @@ void LSGeode::setDefaultTurtleProperties( int index )
 			alphaFunc->setFunction(osg::AlphaFunc::GEQUAL,0.05f);
 			state->setAttributeAndModes( alphaFunc, osg::StateAttribute::ON );
 */
-			state->setTextureAttributeAndModes( 0, diffTexture.get(), osg::StateAttribute::ON );
+			state->setTextureAttributeAndModes( 0, diffTexture.get(), osg::StateAttribute::ON );		
 
-			osg::ref_ptr<osg::LightModel> lm = new osg::LightModel;
-			lm->setTwoSided(true);
-			state->setAttribute( lm.get(), osg::StateAttribute::OVERRIDE );
-			
-
-			// set blending only for translucent textures
+			// for translucent textures
 			if ( diffIm->isImageTranslucent() )
 			{
+			  // set blending 
 				state->setMode(GL_BLEND,osg::StateAttribute::ON);
-				state->setRenderingHint(osg::StateSet::TRANSPARENT_BIN);			
+				state->setRenderingHint(osg::StateSet::TRANSPARENT_BIN);
+   
+        // use lighting for both sides     
+        osg::ref_ptr<osg::LightModel> lm = new osg::LightModel;
+  			lm->setTwoSided(true);
+  			state->setAttribute( lm.get(), osg::StateAttribute::OVERRIDE );			
 			}
 		}
+		else
+		{
+		    // TODO logger
+    }
 	}
 
 	// version which sets the color of the wireframe.
-    osg::Material* material = new osg::Material;
-    material->setColorMode(osg::Material::OFF); // switch glColor usage off
-    // turn all lighting off
-    material->setAmbient(osg::Material::FRONT_AND_BACK, osg::Vec4(0.3,0.3f,0.3f,1.0f));
-    material->setDiffuse(osg::Material::FRONT_AND_BACK, osg::Vec4(0.8,0.8f,0.8f,1.0f));
-    material->setSpecular(osg::Material::FRONT_AND_BACK, osg::Vec4(1.0,1.0f,1.0f,1.0f));
-    // except emission... in which we set the color we desire
-    material->setEmission(osg::Material::FRONT_AND_BACK, osg::Vec4(0.0,0.0f,0.0f,1.0f));
+  osg::Material* material = new osg::Material;
+  material->setColorMode(osg::Material::OFF); // switch glColor usage off
+
+  material->setAmbient(osg::Material::FRONT_AND_BACK, osg::Vec4(0.3,0.3f,0.3f,1.0f));
+  material->setDiffuse(osg::Material::FRONT_AND_BACK, osg::Vec4(0.8,0.8f,0.8f,1.0f));
+  material->setSpecular(osg::Material::FRONT_AND_BACK, osg::Vec4(1.0,1.0f,1.0f,1.0f));
+  material->setEmission(osg::Material::FRONT_AND_BACK, osg::Vec4(0.0,0.0f,0.0f,1.0f));
 	state->setAttributeAndModes(material,osg::StateAttribute::ON);
 	state->setMode(GL_LIGHTING,osg::StateAttribute::ON);
 

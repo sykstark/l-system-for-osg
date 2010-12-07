@@ -20,7 +20,7 @@ enum LSystemCapabilities
     LS_1LL              = 0x00000002,   ///< 1L-system with left context
     LS_1LR              = 0x00000004,   ///< 1L-system with right context
     LS_2L               = 0x00000008,   ///< 2L-system with left and right context
-    LS_kL               = 0x00000080,   ///< kL-system
+    LS_IL               = 0x00000080,   ///< IL-system
     LS_DETERMINISTIC    = 0x00000100,   ///< Deterministic L-system
     LS_STOCHASTIC       = 0x00000200,   ///< Stochastic L-system
     LS_PARAMETRIC       = 0x00010000,   ///< Parametric L-system

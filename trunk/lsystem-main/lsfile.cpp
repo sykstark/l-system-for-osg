@@ -18,6 +18,10 @@ void LSFile::open(std::string & filename)
 
 	if(!file->is_open( ))
     {
+        if(file)
+        {
+            delete file;
+        }
         throw FileException( "file " + filename + " cannot be opened" );
     }
 
@@ -39,6 +43,11 @@ void LSFile::open(std::string & filename)
                 line >> prop;
                 if( prop == "" )
                 {
+                    if(file)
+                    {
+                        file->close();
+                        delete file;
+                    }
                     throw ParsingException("Bad format of #set");
                 }
 
@@ -48,6 +57,11 @@ void LSFile::open(std::string & filename)
                 }
                 catch( std::exception & e)
                 {
+                    if(file)
+                    {
+                        file->close();
+                        delete file;
+                    }
                     throw ParsingException( "Property error in L-system \"" + m_Name + "\": " + string(e.what()) );
                 }
             }
@@ -58,6 +72,11 @@ void LSFile::open(std::string & filename)
                 //line.str("");
                 if( lsystem == "" )
                 {
+                    if(file)
+                    {
+                        file->close();
+                        delete file;
+                    }
                     throw ParsingException("Bad format of #include");
                 }
                 m_Subsytems.push_back( lsystem );
@@ -68,21 +87,36 @@ void LSFile::open(std::string & filename)
                 line >> definition >> value;
                 if( (definition == "" ) || (value == ""))
                 {
+                    if(file)
+                    {
+                        file->close();
+                        delete file;
+                    }
                     throw ParsingException("Bad format of #define");
                 }
                 defines.insert(std::make_pair<std::string, std::string>(definition, value));
             }
             else if(id=="#type")
             {
-                // ( 2L | STOCHASTIC | 1L | 0L | DETERMINISTIC )
+                // example : ( 2L | STOCHASTIC | 1L | 0L | DETERMINISTIC )
                 if( m_Type )
                 {
+                    if(file)
+                    {
+                        file->close();
+                        delete file;
+                    }
                     throw ParsingException("#type was already set");
                 }
 				std::string type;
 				line >> type;
                 if( type == "")
                 {
+                    if(file)
+                    {
+                        file->close();
+                        delete file;
+                    }
                     throw ParsingException("Bad format of #type");
                 }
                 processType( type );
@@ -93,6 +127,11 @@ void LSFile::open(std::string & filename)
 
                 if( StringUtils::processLine( file, line) != "#endaxiom")
                 {
+                    if(file)
+                    {
+                        file->close();
+                        delete file;
+                    }
                     throw ParsingException("#endaxiom not found");
                 }
             }
@@ -128,14 +167,23 @@ void LSFile::open(std::string & filename)
             }
             else if(id.length())
             {
+                if(file)
+                {
+                    file->close();
+                    delete file;
+                }
                 throw ParsingException("Unknown expression: " + id);
             }
-            // dodelat prazdny radek jen s komentarem
 
 			line >> emptyString;
 			if( emptyString != "" )
 			{
-				// v radu neco zbylo navic
+                if(file)
+                {
+                    file->close();
+                    delete file;
+                }
+                // there is something left in the row
 				throw ParsingException("Illegal redundant operator: " + emptyString);
 			}
 
@@ -146,11 +194,18 @@ void LSFile::open(std::string & filename)
     }
     else
     {
-        if(file) file->close();
+        if(file)
+        {
+            file->close();
+            delete file;
+        }
         throw ParsingException("#lsystem not found");
     }
-    file->close();
-    delete file;
+    if(file)
+    {
+        file->close();
+        delete file;
+    }
 }
 
 
