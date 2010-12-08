@@ -47,7 +47,7 @@
 <chapter id="ch02">
   <title>Lindenmayerovy systémy</title>
   <para>
-Lindenmayerovy systémy, zkráceně L-systémy, byly vytvořeny jako matematická teorie pro generování rostlin<citation>Linden68</citation>. Původně byl kladen důraz spíše na obecnou topologii. Byly totiž vytvořeny pro simulaci vývoje větších částí rostlin nebo buněk mnhobuněčných organismů. Geometrie, ani podrobnější detaily  v této původní teorii zahrnuty nebyly. Později se však objevilo několik geometrických interpretací L-systémů, díky nimž se staly L-systémy univerzálním nástrojem pro simulaci a modelování rostlin. V této práci je použito modelování pomocí želví grafiky.
+Lindenmayerovy systémy, zkráceně L-systémy, byly vytvořeny jako matematická teorie pro generování rostlin <citation>Linden68</citation>. Původně byl kladen důraz spíše na obecnou topologii. Byly totiž vytvořeny pro simulaci vývoje větších částí rostlin nebo buněk mnhobuněčných organismů. Geometrie, ani podrobnější detaily  v této původní teorii zahrnuty nebyly. Později se však objevilo několik geometrických interpretací L-systémů, díky nimž se staly L-systémy univerzálním nástrojem pro simulaci a modelování rostlin. V této práci je použito modelování pomocí želví grafiky.
 	</para>
   <sect1 id="sec0201">
     <title>Vývoj rostlin pomocí procesu přepisování</title>
@@ -75,10 +75,10 @@ Největší pozornost však byla ubírána ke studiu systémů založených na p
   <sect1 id="sec0202">
     <title>D0L-systémy</title>
     <para>
-Deterministické bezkontextové L-systémy, zkráceně D0L-systémy,jsou nejjednodušší formou L-systémů. Původní Lindenmayerovy systémy zahrnovaly právě pouze tento typ. Takovýto typ L-systém se skládá z abecedy modulů, přepisovacích pravidel a axiomu, jež slouží jako počáteční řetězec modulů. Na obrázku ( str 5 ABOP) je znázorněna simulace vývoje mnohobuněčného vlákna buněk, jež se nachází v bakterii Anabaena catenula( 99 ABOP ). Tyto řetězce jsou tvořeny dvěma typy buněk. První typ jsou mladé, kratší buňky a druhým jsou buňky starší, delší. Každá buňka má také svou polaritu polaritu, která určuje, kterým směrem bude buňka růst.
+Deterministické bezkontextové L-systémy, zkráceně D0L-systémy,jsou nejjednodušší formou L-systémů. Původní Lindenmayerovy systémy zahrnovaly právě pouze tento typ. Takovýto typ L-systém se skládá z abecedy modulů, přepisovacích pravidel a axiomu, jež slouží jako počáteční řetězec modulů. Na obrázku ( str 5 ABOP) je znázorněna simulace vývoje mnohobuněčného vlákna buněk, jež se nachází v bakterii Anabaena catenula <citation>Mitch1972</citation>. Tyto řetězce jsou tvořeny dvěma typy buněk. První typ jsou mladé, kratší buňky. Druhý typ jsou buňky starší a delší. Každá buňka má také svou polaritu, která určuje, kterým směrem bude buňka růst.
     </para>
     <para>
-    Formální definice D0L-systémů podle (Roz1980 Radekk) je následující:
+    Formální definice D0L-systémů je následující <citation>Rozen1980</citation>:
     <itemizedlist mark='opencircle'>
       <listitem>
         <para>
@@ -172,17 +172,27 @@ Abeceda <emphasis>V</emphasis> je konečná množina <emphasis>symbolů</emphasi
      <graphic fileref="math020114.png"/>
     </inlineequation>
     pravidla.
-    </para>   
+    </para>  
+    <para>
+      Dle této definice je pak možné pro vývoj vláken bakterie Anabaena zavést L-systém, jež popisuje jeho vývoj. V těchto pravidlech nahrazují delší buňky moduly <emphasis>a</emphasis> a kratší buňky moduly <emphasis>b</emphasis>. Index u modulů označuje jejich orientaci.
+    </para> 
+    
   </sect1>
   
   
   <sect1 id="sec0203">
     <title>L-systémy se závorkami</title>
     <para>
-    Obecné D0L-systémy poskytují možnosti pouze pro vytvoření sekvence modulů. Aby však bylo možné vytvořit slova reprezentující rostliny, je nutné umožnit L-systémům vytvářet větvené topologie. Pro reprezentaci větvených topologií je potřeba zavést dva moduly. Tyto moduly byly již součástí původního Lindenmayerova konceptu(Lin 1968 Radekk). Pro označení začátku a konce větve se používají symboly pravé a levé hranaté závorky.
+    Obecné D0L-systémy poskytují možnosti pouze pro vytvoření sekvence modulů. Aby však bylo možné vytvořit slova reprezentující rostliny, je nutné umožnit L-systémům vytvářet větvené topologie. Pro reprezentaci větvených topologií je potřeba zavést dva moduly. Tyto moduly byly již součástí původního Lindenmayerova konceptu <citation>Linden68</citation>. Pro označení začátku a konce větve se používají symboly pravé a levé hranaté závorky.
     </para>
     <para>
-    Slova, vyprodukovaná derivacemi přepisovacích pravidel závorkového L-systému, se označují jako stromy. Příklad takovéto stromové struktury vytvořené závorkovým L-systémem je na obrázku (str9 fig 3.2 handbook). Strom je dle (98) slovo w nad abecedou VE = V U {[,]}, kde V je abeceda všech modulů z nichž se skládají větve. Větev je pak libovolné slovo generované L-systémem bez závorek.
+    Slova, vyprodukovaná derivacemi přepisovacích pravidel závorkového L-systému, se označují jako stromy. Příklad takovéto stromové struktury vytvořené L-systémem se závorkami je na obrázku (str9 fig 3.2 handbook). Jedná se o základní větvenou strukturu s jednou hlavní osou tvořenou moduly <emphasis>aehik</emphasis>.Slovo reprezentující tento strom lze pomocí jednoho řetězce zapsat následujícím způsobem:
+    </para>
+    <para>    
+      <emphasis>w = a[b[c]d]e[fg]hi[j]k</emphasis>
+    </para>
+    <para>    
+    Strom je dle (98) slovo w nad abecedou VE = V U {[,]}, kde V je abeceda všech modulů z nichž se skládají větve. Větev je pak libovolné slovo generované L-systémem bez závorek.
     </para>
   </sect1>
   <sect1 id="sec0204">
@@ -895,7 +905,44 @@ K operacím na zásobníku dochází v případě některých speciálních symb
          <publishername>Journal of Theoretical Biology</publishername>
       </publisher>
       <pubdate>1968</pubdate>
-      <isbn>9780387972978</isbn>
+   </biblioentry>
+   
+   <biblioentry>
+      <abbrev>Rozen1980</abbrev>
+      <authorgroup>
+         <author>
+           <firstname>Grzegorz</firstname>
+           <surname>Rozenberg</surname>
+         </author> 
+         <author>
+           <firstname>Arto</firstname>
+           <surname>Saloma</surname>
+         </author>
+      </authorgroup>
+      <title>The mathematical theory of L-systems</title>    
+      <publisher>
+         <publishername>Academic Press</publishername>
+      </publisher>
+      <pubdate>1980</pubdate>
+   </biblioentry>
+   
+   <biblioentry>
+      <abbrev>Mitch1972</abbrev>
+      <authorgroup>
+         <author>
+           <firstname>G.J.</firstname>
+           <surname>Mitchinson</surname>
+         </author> 
+         <author>
+           <firstname>Michael</firstname>
+           <surname>Wilcox</surname>
+         </author>
+      </authorgroup>
+      <title>Rules governing cell division in Anabaena</title>    
+      <publisher>
+         <publishername>Nature</publishername>
+      </publisher>
+      <pubdate>1972</pubdate>
    </biblioentry>
    
    <biblioentry>
