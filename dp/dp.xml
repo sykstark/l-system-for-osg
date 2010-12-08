@@ -51,19 +51,18 @@ Lindenmayerovy systémy, zkráceně L-systémy, byly vytvořeny jako matematick�
 	</para>
   <sect1 id="sec0201">
     <title>Vývoj rostlin pomocí procesu přepisování</title>
-   	
 		<para>
 Jádro L-systémů spočívá v použití přepisovacího systému. Jedná se o opakované nahrazování modulů předchůdců pomocí sady přepisovacích pravidel jejich následovníky, přičemž všechny moduly náleží do konečné abecedy modulů. Lze tak z jednoduchého původního objektu vytvořit opakováním přepisovacího procesu komplexní model. Modulem je myšlena libovolná atomická část modelu, jež většinou reprezentuje nějakou část simulovaného modelu. Pří použití pro simulaci biologických procesů se tak může jednat například o buňky nebo různé typy rostlinných orgánů. 
     </para>
     <para>
-Jedním z prvních grafických modelů, používajících přepisovací pravidla, byla Kochova křivka, případně Kochova vločka <citation>Koch05</citation>. Šlo o jednoduchý bezkontextový přepisovací systém, jež obsahoval pouze jediné pravidlo, přepisující jeden grafický prvek na jiný(<xref linkend="pic020101"/>). Později tento model podstatně rozšířil Mandelbrot, jež přidal systémy podporující přepisování úseček o různých délkách a hlavně podporu větvených topologií.
+Jedním z prvních grafických modelů, používajících přepisovací pravidla, byla Kochova křivka, případně Kochova vločka <citation>Koch05</citation>. Šlo o jednoduchý bezkontextový přepisovací systém, jež obsahoval pouze jediné pravidlo, přepisující jeden grafický prvek na jiný (<xref linkend="pic020101"/>). Později tento model podstatně rozšířil Mandelbrot, jež přidal systémy podporující přepisování úseček o různých délkách a hlavně podporu větvených topologií.
 		</para>
 		<para>
 		  <figure float="1" id="pic020101">
         <title>Kochova vločka a její první tři iterace přepisovacího procesu.</title>
 		  	<mediaobject>
           <imageobject>
-				    <imagedata fileref="020101" format="PNG"/>
+				    <imagedata fileref="020102.jpg" format="JPG"/>
 		      </imageobject>
         </mediaobject>
 		  </figure>
@@ -75,8 +74,18 @@ Největší pozornost však byla ubírána ke studiu systémů založených na p
   <sect1 id="sec0202">
     <title>D0L-systémy</title>
     <para>
-Deterministické bezkontextové L-systémy, zkráceně D0L-systémy,jsou nejjednodušší formou L-systémů. Původní Lindenmayerovy systémy zahrnovaly právě pouze tento typ. Takovýto typ L-systém se skládá z abecedy modulů, přepisovacích pravidel a axiomu, jež slouží jako počáteční řetězec modulů. Na obrázku ( str 5 ABOP) je znázorněna simulace vývoje mnohobuněčného vlákna buněk, jež se nachází v bakterii Anabaena catenula <citation>Mitch1972</citation>. Tyto řetězce jsou tvořeny dvěma typy buněk. První typ jsou mladé, kratší buňky. Druhý typ jsou buňky starší a delší. Každá buňka má také svou polaritu, která určuje, kterým směrem bude buňka růst.
+Deterministické bezkontextové L-systémy, zkráceně D0L-systémy,jsou nejjednodušší formou L-systémů. Původní Lindenmayerovy systémy zahrnovaly právě pouze tento typ. Takovýto typ L-systém se skládá z abecedy modulů, přepisovacích pravidel a axiomu, jež slouží jako počáteční řetězec modulů. Na obrázku <xref linkend="pic020201"/> je znázorněna simulace vývoje mnohobuněčného vlákna buněk, jež se nachází v bakterii Anabaena catenula <citation>Mitch1972</citation>. Tyto řetězce jsou tvořeny dvěma typy buněk. První typ jsou mladé, kratší buňky. Druhý typ jsou buňky starší a delší. Každá buňka má také svou polaritu, která určuje, kterým směrem bude buňka růst.
     </para>
+    <para>
+		  <figure float="1" id="pic020201">
+        <title>První tři iterace vlákna buňky <emphasis>Anabaena catenula</emphasis></title>
+		  	<mediaobject>
+          <imageobject>
+				    <imagedata fileref="020201.jpg" format="JPG"/>
+		      </imageobject>
+        </mediaobject>
+		  </figure>
+		</para>
     <para>
     Formální definice D0L-systémů je následující <citation>Rozen1980</citation>:
     <itemizedlist mark='opencircle'>
@@ -176,7 +185,9 @@ Abeceda <emphasis>V</emphasis> je konečná množina <emphasis>symbolů</emphasi
     <para>
       Dle této definice je pak možné pro vývoj vláken bakterie Anabaena zavést L-systém, jež popisuje jeho vývoj. V těchto pravidlech nahrazují delší buňky moduly <emphasis>a</emphasis> a kratší buňky moduly <emphasis>b</emphasis>. Index u modulů označuje jejich orientaci.
     </para> 
-    
+    <para>
+      
+    </para>
   </sect1>
   
   
@@ -185,11 +196,19 @@ Abeceda <emphasis>V</emphasis> je konečná množina <emphasis>symbolů</emphasi
     <para>
     Obecné D0L-systémy poskytují možnosti pouze pro vytvoření sekvence modulů. Aby však bylo možné vytvořit slova reprezentující rostliny, je nutné umožnit L-systémům vytvářet větvené topologie. Pro reprezentaci větvených topologií je potřeba zavést dva moduly. Tyto moduly byly již součástí původního Lindenmayerova konceptu <citation>Linden68</citation>. Pro označení začátku a konce větve se používají symboly pravé a levé hranaté závorky.
     </para>
+    <figure float="1" id="pic020301">
+        <title>První tři iterace vlákna buňky <emphasis>Anabaena catenula</emphasis></title>
+		  	<mediaobject>
+          <imageobject>
+				    <imagedata fileref="020301.jpg" format="JPG"/>
+		      </imageobject>
+        </mediaobject>
+		  </figure>
     <para>
-    Slova, vyprodukovaná derivacemi přepisovacích pravidel závorkového L-systému, se označují jako stromy. Příklad takovéto stromové struktury vytvořené L-systémem se závorkami je na obrázku (str9 fig 3.2 handbook). Jedná se o základní větvenou strukturu s jednou hlavní osou tvořenou moduly <emphasis>aehik</emphasis>.Slovo reprezentující tento strom lze pomocí jednoho řetězce zapsat následujícím způsobem:
-    </para>
+    Slova, vyprodukovaná derivacemi přepisovacích pravidel závorkového L-systému, se označují jako stromy. Příklad takovéto stromové struktury vytvořené L-systémem se závorkami je na obrázku <xref linkend="pic020301"/>. Jedná se o základní větvenou strukturu s jednou hlavní osou tvořenou moduly <emphasis>aehik</emphasis>. Slovo reprezentující tento strom lze pomocí jednoho řetězce zapsat následujícím způsobem:
+    </para>    
     <para>    
-      <emphasis>w = a[b[c]d]e[fg]hi[j]k</emphasis>
+      <envar>w = a[b[c]d]e[fg]hi[j]k</envar>
     </para>
     <para>    
     Strom je dle (98) slovo w nad abecedou VE = V U {[,]}, kde V je abeceda všech modulů z nichž se skládají větve. Větev je pak libovolné slovo generované L-systémem bez závorek.

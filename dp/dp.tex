@@ -22,7 +22,7 @@
 \thesisfaculty{fi}
 \thesisadvisor{RNDr. Vít Kovalèík, Ph.D.}
 % --------------------------------------------
-\label{id335413}\usepackage{ifthen}
+\label{id326458}\usepackage{ifthen}
 % --------------------------------------------
 % Check for PDFLaTeX/LaTeX 
 % --------------------------------------------
@@ -382,7 +382,7 @@ Tato práce se zabývá problematikou Lindenmayerových systémù, jako¾to nástroje pr
 Lindenmayerovy systémy, L-systémy, generování rostlin, generování stromù, Vrecko, OpenSceneGraph, LSystem\end{ThesisKeyWords}
 
 \makeatletter
-\def\dbtolatex@contentsid{id409565}
+\def\dbtolatex@contentsid{id400830}
 \def\dbtolatex@@contentsname{\latex@@contentsname}
 \let\latex@@contentsname\contentsname
 \newif\ifdocbooktolatexcontentsname\docbooktolatexcontentsnametrue
@@ -411,7 +411,7 @@ Lindenmayerovy systémy, L-systémy, generování rostlin, generování stromù, Vrecko
 \chapter{Lindenmayerovy systémy}
 \label{ch02}\hypertarget{ch02}{}%
 
-Lindenmayerovy systémy, zkrácenì L-systémy, byly vytvoøeny jako matematická teorie pro generování rostlin\docbooktolatexcite{Linden68}{}. Pùvodnì byl kladen dùraz spí¹e na obecnou topologii. Byly toti¾ vytvoøeny pro simulaci vývoje vìt¹ích èástí rostlin nebo bunìk mnhobunìèných organismù. Geometrie, ani podrobnìj¹í detaily v~této pùvodní teorii zahrnuty nebyly. Pozdìji se v¹ak objevilo nìkolik geometrických interpretací L-systémù, díky nim¾ se staly L-systémy univerzálním nástrojem pro simulaci a modelování rostlin. V~této práci je pou¾ito modelování pomocí ¾elví grafiky.
+Lindenmayerovy systémy, zkrácenì L-systémy, byly vytvoøeny jako matematická teorie pro generování rostlin \docbooktolatexcite{Linden68}{}. Pùvodnì byl kladen dùraz spí¹e na obecnou topologii. Byly toti¾ vytvoøeny pro simulaci vývoje vìt¹ích èástí rostlin nebo bunìk mnhobunìèných organismù. Geometrie, ani podrobnìj¹í detaily v~této pùvodní teorii zahrnuty nebyly. Pozdìji se v¹ak objevilo nìkolik geometrických interpretací L-systémù, díky nim¾ se staly L-systémy univerzálním nástrojem pro simulaci a modelování rostlin. V~této práci je pou¾ito modelování pomocí ¾elví grafiky.
 
 % ------------------------   
 % Section 
@@ -420,15 +420,15 @@ Lindenmayerovy systémy, zkrácenì L-systémy, byly vytvoøeny jako matematická teor
 
 Jádro L-systémù spoèívá v~pou¾ití pøepisovacího systému. Jedná se o~opakované nahrazování modulù pøedchùdcù pomocí sady pøepisovacích pravidel jejich následovníky, pøièem¾ v¹echny moduly nále¾í do koneèné abecedy modulù. Lze tak z~jednoduchého pùvodního objektu vytvoøit opakováním pøepisovacího procesu komplexní model. Modulem je my¹lena libovolná atomická èást modelu, je¾ vìt¹inou reprezentuje nìjakou èást simulovaného modelu. Pøí pou¾ití pro simulaci biologických procesù se tak mù¾e jednat napøíklad o~buòky nebo rùzné typy rostlinných orgánù.
 
-Jedním z~prvních grafických modelù, pou¾ívajících pøepisovací pravidla, byla Kochova køivka, pøípadnì Kochova vloèka \docbooktolatexcite{Koch05}{}. ©lo o~jednoduchý bezkontextový pøepisovací systém, je¾ obsahoval pouze jediné pravidlo, pøepisující jeden grafický prvek na jiný(\hyperlink{pic020101}{{\ref{pic020101}}}). Pozdìji tento model podstatnì roz¹íøil Mandelbrot, je¾ pøidal systémy podporující pøepisování úseèek o~rùzných délkách a hlavnì podporu vìtvených topologií.
+Jedním z~prvních grafických modelù, pou¾ívajících pøepisovací pravidla, byla Kochova køivka, pøípadnì Kochova vloèka \docbooktolatexcite{Koch05}{}. ©lo o~jednoduchý bezkontextový pøepisovací systém, je¾ obsahoval pouze jediné pravidlo, pøepisující jeden grafický prvek na jiný (\hyperlink{pic020101}{{\ref{pic020101}}}). Pozdìji tento model podstatnì roz¹íøil Mandelbrot, je¾ pøidal systémy podporující pøepisování úseèek o~rùzných délkách a hlavnì podporu vìtvených topologií.
 
 % figure ------------------------------------------------------
 \begin{figure}[hbt]
 \hypertarget{pic020101}{}%
 \begin{center}
 
-{{\includegraphics[]{020101}}\hypertarget{id409629}{}%
-\label{id409629}
+{{\includegraphics[]{020102}}\hypertarget{id400893}{}%
+\label{id400893}
 }
 {{\caption[{Kochova vloèka a její první tøi iterace pøepisovacího procesu.}]{{{Kochova vloèka a její první tøi iterace pøepisovacího procesu.}}}\label{pic020101}}}
 \end{center}
@@ -441,9 +441,21 @@ Nejvìt¹í pozornost v¹ak byla ubírána ke studiu systémù zalo¾ených na pøepisování
 \section{D0L-systémy}
 \label{sec0202}\hypertarget{sec0202}{}%
 
-Deterministické bezkontextové L-systémy, zkrácenì D0L-systémy,jsou nejjednodu¹¹í formou L-systémù. Pùvodní Lindenmayerovy systémy zahrnovaly právì pouze tento typ. Takovýto typ L-systém se skládá z~abecedy modulù, pøepisovacích pravidel a axiomu, je¾ slou¾í jako poèáteèní øetìzec modulù. Na obrázku ( str 5 ABOP) je znázornìna simulace vývoje mnohobunìèného vlákna bunìk, je¾ se nachází v~bakterii Anabaena catenula( 99 ABOP ). Tyto øetìzce jsou tvoøeny dvìma typy bunìk. První typ jsou mladé, krat¹í buòky a druhým jsou buòky star¹í, del¹í. Ka¾dá buòka má také svou polaritu polaritu, která urèuje, kterým smìrem bude buòka rùst.
+Deterministické bezkontextové L-systémy, zkrácenì D0L-systémy,jsou nejjednodu¹¹í formou L-systémù. Pùvodní Lindenmayerovy systémy zahrnovaly právì pouze tento typ. Takovýto typ L-systém se skládá z~abecedy modulù, pøepisovacích pravidel a axiomu, je¾ slou¾í jako poèáteèní øetìzec modulù. Na obrázku ( str 5 ABOP) je znázornìna simulace vývoje mnohobunìèného vlákna bunìk, je¾ se nachází v~bakterii Anabaena catenula \docbooktolatexcite{Mitch1972}{}. Tyto øetìzce jsou tvoøeny dvìma typy bunìk. První typ jsou mladé, krat¹í buòky. Druhý typ jsou buòky star¹í a del¹í. Ka¾dá buòka má také svou polaritu, která urèuje, kterým smìrem bude buòka rùst.
 
-Formální definice D0L-systémù podle (Roz1980 Radekk) je následující: 
+% figure ------------------------------------------------------
+\begin{figure}[hbt]
+\hypertarget{pic020201}{}%
+\begin{center}
+
+{{\includegraphics[]{020201}}\hypertarget{id400940}{}%
+\label{id400940}
+}
+{{\caption[{První tøi iterace vlákna buòky {\em{Anabaena catenula}}}]{{{První tøi iterace vlákna buòky {\em{Anabaena catenula}}}}}\label{pic020201}}}
+\end{center}
+\end{figure}
+
+Formální definice D0L-systémù je následující \docbooktolatexcite{Rozen1980}{}: 
 \begin{itemize}
 %--- Item
 \item 
@@ -464,14 +476,20 @@ Abeceda {\em{V}} je koneèná mno¾ina {\em{symbolù}}.
 \end{itemize}
 \noindent  Dle obecných konvencí bývá pøepisovací pravidlo \ensuremath{a \to u} oznaèováno jako odpovídající modulu a pro modul, kterému neodpovídá ¾ádné z~pøepisovacích pravidel, bývá pou¾ito pravidlo identity \ensuremath{a \to a} . Modul je mo¾né bìhem vývoje L-systému odstranit pomocí pou¾ití \ensuremath{\epsilon} pravidla.
 
+Dle této definice je pak mo¾né pro vývoj vláken bakterie Anabaena zavést L-systém, je¾ popisuje jeho vývoj. V~tìchto pravidlech nahrazují del¹í buòky moduly {\em{a}} a krat¹í buòky moduly {\em{b}}. Index u~modulù oznaèuje jejich orientaci.
+
 % ------------------------   
 % Section 
 \section{L-systémy se závorkami}
 \label{sec0203}\hypertarget{sec0203}{}%
 
-Obecné D0L-systémy poskytují mo¾nosti pouze pro vytvoøení sekvence modulù. Aby v¹ak bylo mo¾né vytvoøit slova reprezentující rostliny, je nutné umo¾nit L-systémùm vytváøet vìtvené topologie. Pro reprezentaci vìtvených topologií je potøeba zavést dva moduly. Tyto moduly byly ji¾ souèástí pùvodního Lindenmayerova konceptu(Lin 1968 Radekk). Pro oznaèení zaèátku a konce vìtve se pou¾ívají symboly pravé a levé hranaté závorky.
+Obecné D0L-systémy poskytují mo¾nosti pouze pro vytvoøení sekvence modulù. Aby v¹ak bylo mo¾né vytvoøit slova reprezentující rostliny, je nutné umo¾nit L-systémùm vytváøet vìtvené topologie. Pro reprezentaci vìtvených topologií je potøeba zavést dva moduly. Tyto moduly byly ji¾ souèástí pùvodního Lindenmayerova konceptu \docbooktolatexcite{Linden68}{}. Pro oznaèení zaèátku a konce vìtve se pou¾ívají symboly pravé a levé hranaté závorky.
 
-Slova, vyprodukovaná derivacemi pøepisovacích pravidel závorkového L-systému, se oznaèují jako stromy. Pøíklad takovéto stromové struktury vytvoøené závorkovým L-systémem je na obrázku (str9 fig 3.2 handbook). Strom je dle (98) slovo w nad abecedou VE = V~U~\{[,]\}, kde V~je abeceda v¹ech modulù z~nich¾ se skládají vìtve. Vìtev je pak libovolné slovo generované L-systémem bez závorek.
+Slova, vyprodukovaná derivacemi pøepisovacích pravidel závorkového L-systému, se oznaèují jako stromy. Pøíklad takovéto stromové struktury vytvoøené L-systémem se závorkami je na obrázku (str9 fig 3.2 handbook). Jedná se o~základní vìtvenou strukturu s~jednou hlavní osou tvoøenou moduly {\em{aehik}}.Slovo reprezentující tento strom lze pomocí jednoho øetìzce zapsat následujícím zpùsobem:
+
+{\em{w = a [ b [ c ] d ] e [ f g ] h i [ j ] k}}
+
+Strom je dle (98) slovo w nad abecedou VE = V~U~\{[,]\}, kde V~je abeceda v¹ech modulù z~nich¾ se skládají vìtve. Vìtev je pak libovolné slovo generované L-systémem bez závorek.
 
 % ------------------------   
 % Section 
@@ -931,7 +949,7 @@ int matchRight( kontext,   /*symbol pravého kontextu*/
 }
 \end{Verbatim}
 
-Levý i pravý kontext mù¾e stejnì jako pøedchùdce mít své parametry, které je nutné naèíst pro zpracování výrazù. Tyto parametry se naètou z~øetìzce slova díky pozicím modulù získaných bìhem ovìøování kontextu. Díky roz¹íøení o~zpracování kontextu mohl být do zásuvném modulu implementován také mechanismus pro zpracování dotazù. Podrobnìj¹ím popisem implementace dotazù se zabývá kapitola LINK.
+Levý i pravý kontext mù¾e stejnì jako pøedchùdce mít své parametry, které je nutné naèíst pro zpracování výrazù. Tyto parametry se naètou z~øetìzce slova díky pozicím modulù získaných bìhem ovìøování kontextu jako návratové hodnoty. Díky roz¹íøení o~zpracování kontextu mohl být do zásuvném modulu implementován také mechanismus pro zpracování dotazù. Podrobnìj¹ím popisem implementace dotazù se zabývá kapitola LINK.
 
 % ------------------------   
 % Section 
@@ -993,19 +1011,19 @@ Pro zpracování slov, které obsahují závorky a podsystémy, je nutná dobrá impleme
 \begin{itemize}
 %--- Item
 \item 
-[ - Tato závorka oznaèuje poèátek nové vìtve. Je tedy nutné vytvoøit na zásobníku metodou push() novou ¾elvu, která se vykreslováním této vìtve bude zabývat. Parametry i typ si tato ¾elva nastaví podle ¾elvy na vrcholu zásobníku.
+[ --- Tato závorka oznaèuje poèátek nové vìtve. Je tedy nutné vytvoøit na zásobníku metodou push() novou ¾elvu, která se vykreslováním této vìtve bude zabývat. Parametry i typ si tato ¾elva nastaví podle ¾elvy na vrcholu zásobníku.
 
 %--- Item
 \item 
-] - Ukonèení vìtve je signalizováno tímto symbolem. ®elva je z~vrcholu zásobníku odstranìna a v~generování dále pokraèuje ¾elva pod ní.
+] --- Ukonèení vìtve je signalizováno tímto symbolem. ®elva je z~vrcholu zásobníku odstranìna a v~generování dále pokraèuje ¾elva pod ní.
 
 %--- Item
 \item 
-\$(x) - Jednotlivé L-systémy mají ji¾ od svého naètení pøiøazen jednoznaèný identifikátor. Symbol dolaru s~jedním parametrem oznamuje intepreteru, ¾e má dojiít ke zmìnì L-systému. Podle identifikátoru v~parametru modulu se zvolí správný L-systém a jeho odpovídající uzel s~geometrií LSGeode. Ten u¾ poté ví, který typ ¾elvy pou¾ít a jaké ji nastavit výchozí parametry. Nìkteré parametry, jako je matice polohy, mohou být nastaveny podle ¾elvy na vrcholu zásobníku. S~novou ¾elvou se pak na zásobníku provede operace push().
+\$(x) --- Jednotlivé L-systémy mají ji¾ od svého naètení pøiøazen jednoznaèný identifikátor. Symbol dolaru s~jedním parametrem oznamuje intepreteru, ¾e má dojiít ke zmìnì L-systému. Podle identifikátoru v~parametru modulu se zvolí správný L-systém a jeho odpovídající uzel s~geometrií LSGeode. Ten u¾ poté ví, který typ ¾elvy pou¾ít a jaké ji nastavit výchozí parametry. Nìkteré parametry, jako je matice polohy, mohou být nastaveny podle ¾elvy na vrcholu zásobníku. S~novou ¾elvou se pak na zásobníku provede operace push().
 
 %--- Item
 \item 
-\$ - Ukonèení slova podsystému signalizuje symbol dolaru bez parametru. Z~vrcholu zásobníku je odstranìna ¾elva a ve vykreslování tak pokraèuje ¾elva nadøazeného L-systému.
+\$ --- Ukonèení slova podsystému signalizuje symbol dolaru bez parametru. Z~vrcholu zásobníku je odstranìna ¾elva a ve vykreslování tak pokraèuje ¾elva nadøazeného L-systému.
 
 \end{itemize}
 \noindent 
@@ -1044,26 +1062,36 @@ Nastavení vnìj¹ích vlivù - Nìkteré pøíkazy mohou ovlivnit reakci dané ¾elvy na g
 %  Bibliography - chapter
 %
 % ------------------------------------------- 
-\begin{thebibliography}{123}\hypertarget{id413845}{}
+\begin{thebibliography}{123}\hypertarget{id404532}{}
 
 % ............. biblioentry 
-\bibitem{Koch05}\docbooktolatexbibaux{id413897}{Koch05}
-\hypertarget{id413897}
+\bibitem{Koch05}\docbooktolatexbibaux{id404584}{Koch05}
+\hypertarget{id404584}
 von Koch, H.: \emph{Une méthode géométrique élémentaire pour l'étude de certaines questions de la théorie des courbes planes}, Acta mathematica, 1905. 
 
 % ............. biblioentry 
-\bibitem{Linden68}\docbooktolatexbibaux{id413933}{Linden68}
-\hypertarget{id413933}
-Lindenmayer, A.: \emph{Mathematical models for cellular interaction in development, Díl I~a II}, Journal of Theoretical Biology, 1968, 9780387972978. 
+\bibitem{Linden68}\docbooktolatexbibaux{id404620}{Linden68}
+\hypertarget{id404620}
+Lindenmayer, A.: \emph{Mathematical models for cellular interaction in development, Díl I~a II}, Journal of Theoretical Biology, 1968. 
 
 % ............. biblioentry 
-\bibitem{Prusin04}\docbooktolatexbibaux{id413847}{Prusin04}
-\hypertarget{id413847}
+\bibitem{Mitch1972}\docbooktolatexbibaux{id404703}{Mitch1972}
+\hypertarget{id404703}
+Mitchinson, G. a Wilcox, M.: \emph{Rules governing cell division in Anabaena}, Nature, 1972. 
+
+% ............. biblioentry 
+\bibitem{Prusin04}\docbooktolatexbibaux{id404534}{Prusin04}
+\hypertarget{id404534}
 Prusinkiewicz, P. a Lindenmayer, A.: \emph{The Algorithmic Beauty of Plants}, Springer-Verlag, 1990, 9780387972978. 
 
 % ............. biblioentry 
-\bibitem{Zara04}\docbooktolatexbibaux{id413973}{Zara04}
-\hypertarget{id413973}
+\bibitem{Rozen1980}\docbooktolatexbibaux{id404656}{Rozen1980}
+\hypertarget{id404656}
+Rozenberg, G. a Saloma, A.: \emph{The mathematical theory of L-systems}, Academic Press, 1980. 
+
+% ............. biblioentry 
+\bibitem{Zara04}\docbooktolatexbibaux{id404750}{Zara04}
+\hypertarget{id404750}
 ®ára, J. a Bene¹, B. a Sochor, J. a Felkel, P.: \emph{Moderní poèítaèová grafika}, Computer Press, a.s., 2004. 
 
 \end{thebibliography}
