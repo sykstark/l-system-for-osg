@@ -61,8 +61,10 @@ bool Configuration::loadCfgFile(std::string filename)
 		}
 		catch( std::exception & e )
 		{
+            ifs.close();
 			throw FileException(string("Configuration file parsing error: ") + e.what());
 		}
+        ifs.close();
         return true;
     }
     else

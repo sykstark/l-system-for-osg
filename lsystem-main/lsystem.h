@@ -61,17 +61,39 @@ protected:
                                                         double * parameters);
 
     /**
-      * Generates a successor of word
+      * Generates a successor of module by recurrent appending of rule's static strings and evaluated
+      * expressions.
+      * @param word strings will bee appended to this word
+      * @param rule selected rule
+      * @param params parameter values for expressions evaluation
       */
-	virtual void generateSuccessor( LongString *, multimap<char, Rule>::iterator &, double *);
+    virtual void generateSuccessor( LongString * word, multimap<char, Rule>::iterator & rule, double * params);
 public:
+
+    /**
+      * Constructor
+      */
     LSystem(AbstractFile *);
+
+    /**
+      * Copy constructor
+      */
     LSystem( const LSystem & );
+
+    /**
+      * Destructor
+      */
     ~LSystem();
 
+    /**
+      * Assignment operator
+      */
     LSystem & operator=( const LSystem & );
 
-    virtual void loadFromFile( AbstractFile * );
+    /**
+      * Load L-system from file
+      * @param file of L-system as instance of
+    virtual void loadFromFile( AbstractFile * file );
     
     unsigned int wordLength() { return m_Word->length(); }
     virtual void transcribeSubSystems( );
