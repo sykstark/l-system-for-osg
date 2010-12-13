@@ -205,13 +205,51 @@ Abeceda <emphasis>V</emphasis> je konečná množina <emphasis>symbolů</emphasi
         </mediaobject>
 		  </figure>
     <para>
-    Slova, vyprodukovaná derivacemi přepisovacích pravidel závorkového L-systému, se označují jako stromy. Příklad takovéto stromové struktury vytvořené L-systémem se závorkami je na obrázku <xref linkend="pic020301"/>. Jedná se o základní větvenou strukturu s jednou hlavní osou tvořenou moduly <emphasis>aehik</emphasis>. Slovo reprezentující tento strom lze pomocí jednoho řetězce zapsat následujícím způsobem:
+    Slova, vyprodukovaná derivacemi přepisovacích pravidel závorkového L-systému, se označují jako stromy. Příklad takovéto stromové struktury vytvořené L-systémem se závorkami je na obrázku <xref linkend="pic020301"/>. Jedná se o základní větvenou strukturu s jednou hlavní osou tvořenou moduly <emphasis>aehik</emphasis>. Slovo reprezentující tento strom lze pomocí jednoho řetězce zapsat jako
     </para>    
-    <para>    
-      <envar>w = a[b[c]d]e[fg]hi[j]k</envar>
+    <para>  
+      <inlineequation>
+        <alt role="tex">w = a[b[c]d]e[fg]hi[j]k</alt>
+        <graphic fileref="math020301.png"/>
+      </inlineequation>  
     </para>
+      Řetězce modulů <emphasis>a</emphasis>, <emphasis>e</emphasis> a <emphasis>hi</emphasis> se označují jako meziuzly a řetězce <emphasis>b[c]d</emphasis>, <emphasis>fg</emphasis> a <emphasis>j</emphasis> jako vedlejší větve. Modul <emphasis>k</emphasis> je hrotem hlavní osy. Obdobně lze pojmenovat i moduly na nižších úrovních a označit například moduly c, d, g a j jako hroty vedlejších větví.   
     <para>    
-    Strom je dle (98) slovo w nad abecedou VE = V U {[,]}, kde V je abeceda všech modulů z nichž se skládají větve. Větev je pak libovolné slovo generované L-systémem bez závorek.
+      Strom lze podle <citation>Prusin94</citation> definovat jako slovo w nad abecedou 
+      <inlineequation>
+        <alt role="tex">V_{E} = V /cup {[,]}</alt>
+        <graphic fileref="math020301.png"/>
+      </inlineequation> 
+      pro které platí, že:
+      <itemizedlist mark='opencircle'>
+      <listitem>
+        <para>
+          <inlineequation>
+            <alt role="tex">w = x_{1}[a_{1}]x_{2}[a_{2}]...x_{n}[a_{n}]x_{n+1}</alt>
+            <graphic fileref="math020301.png"/>
+          </inlineequation>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Podslova
+          <inlineequation>
+            <alt role="tex">x_{1},x_{2},...,x_{n+1} \in V*</alt>
+            <graphic fileref="math020402.png"/>
+          </inlineequation>
+           neobsahují moduly závorek.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Podslova
+          <inlineequation>
+            <alt role="tex">x_{1},x_{2},...,x_{n+1} \in V_{E}*</alt>
+            <graphic fileref="math020402.png"/>
+          </inlineequation>
+          jsou stromy.
+        </para>
+      </listitem> 
     </para>
   </sect1>
   <sect1 id="sec0204">
@@ -238,8 +276,35 @@ Existuje mnoho implementací kontextových L-systémů. Nejpoužívanější jso
       </inlineequation>
       následník
       </emphasis></quote>
-    </para>
-, kde <emphasis>lk</emphasis> je levý a <emphasis>pk</emphasis> pravý kontext. Následující L-systém ukazuje, jakým způsobem je možné propagovat signál. 
+    
+, kde <emphasis>lk</emphasis> je levý a <emphasis>pk</emphasis> pravý kontext. Následující L-systém ukazuje, jakým způsobem je možné propagovat signál.
+      </para>
+      <para>
+        Obecnější třídu tvoří (k,l)-systémy, kde levý kontext tvoří slovo o délce k modulů a pravý kontext slovo o délce l modulů. V některé litaratuře bývají označovány ajko IL-systémy. V této práci se zabývám jejich podmnožinou, třídou 2L-systémů. Přepisovací pravidla v tomto případě zjišťují levý i pravý kontext s maximální délkou 1. Touto třídou lze pokrýt všechny požadované vlastnosti L-systémů na komunikaci modulů mezi sebou i s okolím. Pravidla 2L-systémů se zapisují v následující podobě:
+      </para>
+      <para>
+        <emphasis>lk &lt; předchůdce > pk</emphasis>
+        <inlineequation>
+          <alt role="tex">\to</alt>
+          <graphic fileref="math020402.png"/>
+        </inlineequation> 
+        <emphasis>následovník</emphasis>.
+      </para>
+      <param>
+        U bezzávorkových l-systémů je proces zjišťování, zda přepisovací pravidlo odpovídá kontextu předchůdce, triviální a jednoznačné. Pro závorkové systémy se však literatura rozchází a jsou použity rozdílné podmínky. Jde především o zpracování pravého kontextu. Pro tuto práci jsem se rozhodl použít způsob, jež obdobně používá ve své práci (Hannan). Na rozdíl od jiných přístupů respektuje topologickou strukturu rostliny. Pokud se totiž například při zpracování pravého kontextu narazí na větvení, porovná se s pravým kontextem každá větev. U jiných přístupů se někdy porovnává pouze větev, která s předchůdcem sousedí v řetězci. Příklad je zobrazen na obrázku...(OBRAZEK 26 radekk) Tento způsob párování kontextů je tedy optimální pro použití při interakcích mezi jednotlivými moduly a mezi moduly a prostředím. 
+      </param>
+      <sect2 id="sec020401"> 
+        <title>Párování levého kontextu</title>
+        <param>
+          Při párování levého kontextu dochází k porovnání modulů kontextu s moduly, které jsou v řetězci slova umístěny nalevo od modulu předchůdce. V topologii rostlinného organismu se tedy jedná o části rostliny, jež leží na nejkratší cestě ke kořenům. Pro každý modul existuje pouze jedna taková cesta a párování se tedy provádí pouze s jedním řetězcem modulů. Tato cesta, jež je v topologii spojitá, nemusí v řetězci slova tvořit spojitý řetězec modulů. Pokud je při tomto párování nalezen modul ']', znamená to , že zde končí vedlejší větev, která však topologicky nenavazuje a musí být přeskočena. Párování tedy pokračuje za odpovídajícím symbolem '['.      
+        </param>
+      </sect2>
+      <sect2 id="sec020401"> 
+        <title>Párování pravého kontextu</title>
+        <param>
+          Párování pravého kontextu srovnává moduly napravo od  
+        </param>
+      </sect2>
   </sect1>
   <sect1 id="sec0205">
     <title>Parametrické L-systémy</title>
@@ -899,7 +964,7 @@ A(x,y) < B(z) > C(a,b,c):(z > abs(a-c))->B(b-1)FA(x/2,y/2):max(0,1-1/z*z)
         Oproti bezkontextovým gramatikám se zde navíc zadává levý a pravý kontext. Jeho zadání lze vynechat, avšak znaménka &lt; a > je nutné v řetězci pravidla zachovat. Zpracování podmínky i pravděpodobnostního faktoru je zde obdobné jako u bezkontextových L-systémů.    
       </para>
       <para>
-        Nejdůležitějším rozšířením je schopnost ověřovat kontext předchůdce. Ověřování kontextu se řídí pravidly popsanými v kapitole o kontextových L-systémech LINK. Pro tuto činnost byly implementovány metody matchRight() a matchLeft(). Jde o metody třídy LongString a vrací hodnotu int, která informuje zda bylo ověřování úspěšné. V případě úspěchu vrací tyto metody pozici úspěšně ověřeného modulu, jinak vrací -1. Metody instance třídy LongString tedy dostanou informace, jaký kontext a kde jej ověřovat a poté samy vyhodnotí výsledek. Jak vyplývá z výše zmíněných pravidel, je potřeba u L-systémů se závorkami provádět někdy ověření na více místech zároveň. Jedná se například o situaci symbolu vedle závorky nebo pokud je sousední symbol v seznamu ignorovaných znaků. Ověřovací metody tak uvnitř obsahují rekurzivní volání sebe sama, aby všechny tyto situace byly korektně vyhodnoceny. Pokud dochází při ověřování k větvení, je většinou nutné naleznout v řetězci správná místa pro ověření kontextu tak, aby byla respektována skutečná topologie modelu. K tomuto účelu slouží metody findMatchingRightBracket() a findMatchingLeftBracket(), které k nalezené závorce najdou její protějšek. Tímto umožní ověřovacímu mechanismu pokračovat za závorkou. Pseudokód fungování metody matchRight() zjednodušeně ukazuje princip fungování této metody. U metody matchLeft() je princip obdobný.
+        Nejdůležitějším rozšířením je schopnost ověřovat kontext předchůdce. Ověřování kontextu se řídí pravidly popsanými v kapitole o kontextových L-systémech LINK. Pro tuto činnost byly implementovány metody matchRight() a matchLeft(). Jde o metody třídy LongString a vrací hodnotu int, která informuje zda bylo ověřování úspěšné. V případě úspěchu vrací tyto metody pozici úspěšně ověřeného modulu, jinak vrací -1. Metody instance třídy LongString tedy dostanou informace, jaký kontext a kde jej ověřovat a poté samy vyhodnotí výsledek. Jak vyplývá z výše zmíněných pravidel, je potřeba u L-systémů se závorkami provádět někdy ověření na více místech zároveň. Jedná se například o situaci symbolu vedle závorky nebo pokud je sousední symbol v seznamu ignorovaných znaků. Ověřovací metody tak uvnitř obsahují rekurzivní volání sebe sama, aby všechny tyto situace byly korektně vyhodnoceny. Pokud dochází při ověřování k větvení, je většinou nutné naleznout v řetězci správná místa pro ověření kontextu tak, aby byla respektována skutečná topologie modelu. K tomuto účelu slouží metody findMatchingRightBracket() a <envar>findMatchingLeftBracket()</envar>, které k nalezené závorce najdou její protějšek. Tímto umožní ověřovacímu mechanismu pokračovat za závorkou. Pseudokód fungování metody <envar>matchRight()</envar> zjednodušeně ukazuje princip fungování této metody. U metody <envar>matchLeft()</envar> je princip obdobný.
       </para>
       <para>
         <programlisting><![CDATA[
@@ -1231,6 +1296,26 @@ K operacím na zásobníku dochází v případě některých speciálních symb
          <publishername>Nature</publishername>
       </publisher>
       <pubdate>1972</pubdate>
+   </biblioentry>
+   
+   <biblioentry>
+      <abbrev>Prusin94</abbrev>
+      <authorgroup>
+         <author>
+           <firstname>Przemyslaw</firstname>
+           <surname>Prusinkiewicz</surname>
+         </author>
+         <author>
+           <firstname>Lila</firstname>
+           <surname>Kari</surname>
+         </author>
+      </authorgroup>
+      <title>Subapical bracketed L-systems</title>    
+      <publisher>
+         <publishername>Proceedings of the Fifth International Workshop on Graph Grammars and
+their Application to Computer Science</publishername>
+      </publisher>
+      <pubdate>1994</pubdate>
    </biblioentry>
    
    <biblioentry>
