@@ -65,7 +65,4 @@
 
 //#include "configuration.h"
 
-#define VMATH_NAMESPACE
-#include "vmath.h"
-
 #endif // _MSC_VER
