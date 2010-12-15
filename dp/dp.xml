@@ -197,13 +197,13 @@ Abeceda <emphasis>V</emphasis> je konečná množina <emphasis>symbolů</emphasi
     Obecné D0L-systémy poskytují možnosti pouze pro vytvoření sekvence modulů. Aby však bylo možné vytvořit slova reprezentující rostliny, je nutné umožnit L-systémům vytvářet větvené topologie. Pro reprezentaci větvených topologií je potřeba zavést dva moduly. Tyto moduly byly již součástí původního Lindenmayerova konceptu <citation>Linden68</citation>. Pro označení začátku a konce větve se používají symboly pravé a levé hranaté závorky.
     </para>
     <figure float="1" id="pic020301">
-        <title>První tři iterace vlákna buňky <emphasis>Anabaena catenula</emphasis></title>
-		  	<mediaobject>
-          <imageobject>
-				    <imagedata fileref="020301.jpg" format="JPG"/>
-		      </imageobject>
-        </mediaobject>
-		  </figure>
+      <title>První tři iterace vlákna buňky <emphasis>Anabaena catenula</emphasis></title>
+	  	<mediaobject>
+        <imageobject>
+			    <imagedata fileref="020301.jpg" format="JPG"/>
+	      </imageobject>
+      </mediaobject>
+	  </figure>
     <para>
     Slova, vyprodukovaná derivacemi přepisovacích pravidel závorkového L-systému, se označují jako stromy. Příklad takovéto stromové struktury vytvořené L-systémem se závorkami je na obrázku <xref linkend="pic020301"/>. Jedná se o základní větvenou strukturu s jednou hlavní osou tvořenou moduly <emphasis>aehik</emphasis>. Slovo reprezentující tento strom lze pomocí jednoho řetězce zapsat jako
     </para>    
@@ -222,34 +222,35 @@ Abeceda <emphasis>V</emphasis> je konečná množina <emphasis>symbolů</emphasi
       </inlineequation> 
       pro které platí, že:
       <itemizedlist mark='opencircle'>
-      <listitem>
-        <para>
-          <inlineequation>
-            <alt role="tex">w = x_{1}[a_{1}]x_{2}[a_{2}]...x_{n}[a_{n}]x_{n+1}</alt>
-            <graphic fileref="math020301.png"/>
-          </inlineequation>
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          Podslova
-          <inlineequation>
-            <alt role="tex">x_{1},x_{2},...,x_{n+1} \in V*</alt>
-            <graphic fileref="math020402.png"/>
-          </inlineequation>
-           neobsahují moduly závorek.
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          Podslova
-          <inlineequation>
-            <alt role="tex">x_{1},x_{2},...,x_{n+1} \in V_{E}*</alt>
-            <graphic fileref="math020402.png"/>
-          </inlineequation>
-          jsou stromy.
-        </para>
-      </listitem> 
+        <listitem>
+          <para>
+            <inlineequation>
+              <alt role="tex">w = x_{1}[a_{1}]x_{2}[a_{2}]...x_{n}[a_{n}]x_{n+1}</alt>
+              <graphic fileref="math020301.png"/>
+            </inlineequation>
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Podslova
+            <inlineequation>
+              <alt role="tex">x_{1},x_{2},...,x_{n+1} \in V*</alt>
+              <graphic fileref="math020402.png"/>
+            </inlineequation>
+             neobsahují moduly závorek.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Podslova
+            <inlineequation>
+              <alt role="tex">x_{1},x_{2},...,x_{n+1} \in V_{E}*</alt>
+              <graphic fileref="math020402.png"/>
+            </inlineequation>
+            jsou stromy.
+          </para>
+        </listitem>
+      </itemizedlist> 
     </para>
   </sect1>
   <sect1 id="sec0204">
@@ -290,20 +291,36 @@ Existuje mnoho implementací kontextových L-systémů. Nejpoužívanější jso
         </inlineequation> 
         <emphasis>následovník</emphasis>.
       </para>
-      <param>
-        U bezzávorkových l-systémů je proces zjišťování, zda přepisovací pravidlo odpovídá kontextu předchůdce, triviální a jednoznačné. Pro závorkové systémy se však literatura rozchází a jsou použity rozdílné podmínky. Jde především o zpracování pravého kontextu. Pro tuto práci jsem se rozhodl použít způsob, jež obdobně používá ve své práci (Hannan). Na rozdíl od jiných přístupů respektuje topologickou strukturu rostliny. Pokud se totiž například při zpracování pravého kontextu narazí na větvení, porovná se s pravým kontextem každá větev. U jiných přístupů se někdy porovnává pouze větev, která s předchůdcem sousedí v řetězci. Příklad je zobrazen na obrázku...(OBRAZEK 26 radekk) Tento způsob párování kontextů je tedy optimální pro použití při interakcích mezi jednotlivými moduly a mezi moduly a prostředím. 
-      </param>
+      <para>
+        U bezzávorkových L-systémů je proces zjišťování, zda přepisovací pravidlo odpovídá kontextu předchůdce, triviální a jednoznačné. Pro závorkové systémy se však literatura rozchází a jsou použity rozdílné podmínky. Jde především o zpracování pravého kontextu. Pro tuto práci jsem se rozhodl použít způsob, jež obdobně používá ve své práci James Scott Hannan <citation>Hanan92</citation>. Na rozdíl od jiných přístupů respektuje topologickou strukturu rostliny. Pokud totiž algoritmus například při zpracování pravého kontextu narazí na větvení, porovnává s pravým kontextem každou větev. U jiných přístupů se někdy porovnává pouze větev, která s předchůdcem sousedí v řetězci. Příklad je zobrazen na obrázku <xref linkend="pic020501"/>. Tento způsob párování kontextů je tedy optimální pro použití při interakcích mezi jednotlivými moduly a mezi moduly a prostředím. 
+      </para>
       <sect2 id="sec020401"> 
         <title>Párování levého kontextu</title>
-        <param>
-          Při párování levého kontextu dochází k porovnání modulů kontextu s moduly, které jsou v řetězci slova umístěny nalevo od modulu předchůdce. V topologii rostlinného organismu se tedy jedná o části rostliny, jež leží na nejkratší cestě ke kořenům. Pro každý modul existuje pouze jedna taková cesta a párování se tedy provádí pouze s jedním řetězcem modulů. Tato cesta, jež je v topologii spojitá, nemusí v řetězci slova tvořit spojitý řetězec modulů. Pokud je při tomto párování nalezen modul ']', znamená to , že zde končí vedlejší větev, která však topologicky nenavazuje a musí být přeskočena. Párování tedy pokračuje za odpovídajícím symbolem '['.      
-        </param>
+        <para>
+          Při párování levého kontextu dochází k porovnání modulů kontextu s moduly, které jsou v řetězci slova umístěny nalevo od modulu předchůdce. V topologii rostlinného organismu se tedy jedná o části rostliny, jež leží na nejkratší cestě ke kořenům. Pro každý modul existuje pouze jedna taková cesta a párování se tedy provádí pouze s jedním řetězcem modulů. Tato cesta, jež je v topologii spojitá, nemusí v řetězci slova tvořit spojitý řetězec modulů. Pokud je při tomto párování nalezen modul <envar>]</envar>, znamená to , že zde končí vedlejší větev, která však topologicky nenavazuje a musí být přeskočena. Párování tedy pokračuje za odpovídajícím symbolem <envar><alt role="tex">[</alt></envar>. Obrázek <xref linkend="pic020401"/> ukazuje, jakým způsobem se levý kontext páruje. Modul <emphasis>A</emphasis> je zde levým kontextem pro předchůdce <emphasis>B</emphasis> i <emphasis>C</emphasis>. Modul <emphasis>B</emphasis> však není předchůdcem <emphasis>C</emphasis>, neboť spolu topologicky nijak nesouvisí.      
+        </para>
+        <figure float="1" id="pic020401">
+          <title>Párování levého kontextu</title>
+    	  	<mediaobject>
+            <imageobject>
+    			    <imagedata fileref="020401.jpg" format="JPG"/>
+    	      </imageobject>
+          </mediaobject>
+    	  </figure>
       </sect2>
-      <sect2 id="sec020401"> 
+      <sect2 id="sec020402"> 
         <title>Párování pravého kontextu</title>
-        <param>
-          Párování pravého kontextu srovnává moduly napravo od  
-        </param>
+        <para>
+          Párování pravého kontextu srovnává moduly napravo od předchůdce. Jde tedy o moduly, jež vyrůstají z předchůdce. Situace je zde komplikovanější, neboť je někdy zapotřebí kvůli větvení provést párování na více řetězcích. Pokud totiž za předchůdcem následuje rozvětvení symbolizované modulem <envar>[</envar>, je nutné provést párování s hlavní větví a se všemi vedlejšími větvemi. Pokud alespoň v jednom případě dojde ke shodě, je pravidlo oznčeno jako odpovídající danému modulu předchůdce. Na obrázku <xref linkend="pic020501"/> je znázoněno jednoduché větvení, kdy ke shodě dochází v případě, že pravý kontext bude modul <emphasis>B</emphasis> nebo i <emphasis>C</emphasis>.  
+        </para>
+        <figure float="1" id="pic020501">
+          <title>Párování pravého kontextu</title>
+    	  	<mediaobject>
+            <imageobject>
+    			    <imagedata fileref="020501.jpg" format="JPG"/>
+    	      </imageobject>
+          </mediaobject>
+    	  </figure>
       </sect2>
   </sect1>
   <sect1 id="sec0205">
@@ -507,9 +524,6 @@ Protože byly L-systémy navrženy jako matematický model bez geometrické inte
         </inlineequation>. Vektor <emphasis>H</emphasis> pododbně jako u rovinné želvy udává kam želva směřuje, tedy čelo. Vektor <emphasis>U</emphasis> směřuje směrem nahoru a vektor <emphasis>L</emphasis> pak směřuje vlevo od želvy.
       </para>
       <para>
-        Sada příkazů je v 3D také značně rozšířena. Pro změnu orientace želva interpretuje příkazy, jež želvu rotují okolo jednotlivých os. Pro tyto rotace jsou běžně používány termíny z letectví: směr, podélný sklon a příčný náklon. Kompletní sada příkazů, kterou intepretuje i zásuvný modul, jež byl vytvořen v rámci této práce, je i spolu s popisem iterpretovaných funkcí uvedena v příloze LINK.  
-      </para>
-      <para>
   		  <figure float="1" id="pic03010301">
           <title>Polohové a pohybové parametry želvy v 3D prostoru</title>
   		  	<mediaobject>
@@ -519,6 +533,9 @@ Protože byly L-systémy navrženy jako matematický model bez geometrické inte
           </mediaobject>
   		  </figure>
       </para>
+      <para>
+        Sada příkazů je v 3D také značně rozšířena. Pro změnu orientace želva interpretuje příkazy, jež želvu rotují okolo jednotlivých os. Pro tyto rotace jsou běžně používány termíny z letectví: směr, podélný sklon a příčný náklon. Kompletní sada příkazů, kterou intepretuje i zásuvný modul, jež byl vytvořen v rámci této práce, je i spolu s popisem iterpretovaných funkcí uvedena v příloze LINK.  
+      </para>    
     </sect2>    
   </sect1>
   <sect1 id="sec0302">
@@ -581,7 +598,7 @@ V přírodě rozeznáváme tři typy vzorů větvení jež splňují podmínku s
     Tato kapitola se zabývá implementací syntaktického analyzátoru a následným generováním slov pomocí L-systémů. Při implementaci této části byl kladen velký důraz na rychlost a také na modularitu. Rychlost je zde důležitá zejména při iteračním procesu, neboť výsledné slovo může mít délku až v řádu miliónů modulů. Je tedy třeba zajistit vhodné struktury pro ukládání dat a vybrat vhodný algoritmus pro rychlý přepis pravidel. Modularita a rozšířitelnost zde s rychlostí úzce souvisí. Jednotlivé typy L-systémy totiž vyžadují rozdílné přístupy při přepisování pravidel a tak je důležité vytvořit více algoritmů jež budou různé typy jednodušších i komplexnějších L-systémů zpracovávat Zároveň je však třeba zaručit, aby jednodušší L-systémy nebyly zpracovány příliš složitými algoritmy, ale aby byly vybrány jednodušší a hlavně optimalizovanější postupy pro daný problém. Modularita je zde dýležitá i pro syntaktický analyzátor jež tak zvládne zpracovat více formátů L-systémů.
   </para>
   <para>
-    Celou tuto funkcionalitu a komunikaci s okolím zajišťuje třída LSystemGenerator. Tato třída je potomkem třídy AbstractGenerator jež obsahuje rozhraní pro obsluhu této třídy. Instance třídy LSystemGenerator obsahuje odkaz na hlavní L-systém třídy AbstractLSystem, který je poté použit pro generování slova. Hlavním úkolem třídy LSystemGenerator je vybrat správný syntaktický analyzátor pro nahrání souboru s L-systémem a na základě získaných parametrů vybrat a vytvořit instanci třídy dědící z AbstractLSystem, jež bude pro následný iterační proces nejvhodnější. Nahráním souborů a jejich strukturou se zabývá následující kapitola.
+    Celou tuto funkcionalitu a komunikaci s okolím zajišťuje třída LSystemGenerator. Tato třída je potomkem třídy AbstractGenerator jež obsahuje rozhraní pro obsluhu této třídy. Instance třídy <envar>LSystemGenerator</envar> obsahuje odkaz na hlavní L-systém třídy AbstractLSystem, který je poté použit pro generování slova. Hlavním úkolem třídy LSystemGenerator je vybrat správný syntaktický analyzátor pro nahrání souboru s L-systémem a na základě získaných parametrů vybrat a vytvořit instanci třídy dědící z AbstractLSystem, jež bude pro následný iterační proces nejvhodnější. Nahráním souborů a jejich strukturou se zabývá následující kapitola.
   </para>
   <sect1 id="sec0501">
     <title>Soubory L-systémů</title>
@@ -646,19 +663,46 @@ public:
   			]]></programlisting>
     </para>
     <para>
-      Třídy odvozené od třídy AbstractFile musí implementovat metodu <envar>open()</envar>, jež zaručí zpracování dat ze souboru a uloží je do jednotlivých atributů této třídy. Metoda <envar>substitute()</envar> slouží jako výpomocná metoda při nahrazování řetězců a může být použita pro zpracování konstant nebo subsystémů. Ostatní metody slouží jen přístupové metody k atributům. 
+      Třídy odvozené od třídy <envar>AbstractFile</envar> musí implementovat metodu <envar>open()</envar>, jež zaručí zpracování dat ze souboru a uloží je do jednotlivých atributů této třídy. Metoda <envar>substitute()</envar> slouží jako výpomocná metoda při nahrazování řetězců a může být použita pro zpracování konstant nebo subsystémů. Ostatní metody slouží jen přístupové metody k atributům. 
     </para>
     <sect2 id="sec050101">
       <title>Formát LS</title>
       <para>
-        Jedná se o jednoduchý textový formát založený na příkazech jež jsou podobné preprocesorovým příkazům jazyka C. Některé příkazy jsou párové a musí být ukončeny. Jako hodnota je brán řetězec následující po příkazu. Tento řetězec nemůže obsahovat žádné bílé znaky. Formát LS dovoluje také vkládat komentáře použitím dvojitého lomítka "//".  
+        Jedná se o jednoduchý textový formát založený na příkazech jež jsou podobné preprocesorovým příkazům jazyka C. Některé příkazy jsou párové a musí být ukončeny. Jako hodnota je brán řetězec následující po příkazu. Tento řetězec nemůže obsahovat žádné bílé znaky. Formát <emphasis>LS</emphasis> dovoluje také vkládat komentáře použitím dvojitého lomítka <envar>//</envar>.  
+      </para>
+      <para>
+        <programlisting><![CDATA[
+#lsystem TernaryTree          // unikátní ID L-systému
+
+#type 0L                      // typ L-systému
+#define LeafPitch 65          // konstanta
+#include data\ls\leaf.ls      // cesta k podřízenému L-systému
+
+// parametry
+#set Iteration=14             
+#set TurtleType=STRAIGHT_PIPE
+#set DefaultAngle=30.0
+
+// axiom
+#axiom
+F'(0.65)A
+#endaxiom
+
+// přepisovací pravidla
+#rules 
+A:*->!(0.577)'(0.87)[/(90.74)B][/(-132.63)B]B
+B:*->^(33.95)[^(LeafPitch)#{Leaf}][#{Leaf}]Z[^(LeafPitch)#{Leaf}][#{Leaf}]ZA
+#endrules
+
+#endlsystem
+     ]]></programlisting>
       </para>
     </sect2>
     
     <sect2 id="sec050102">
       <title>Formát XML</title>
       <para>
-        V případě XML souboru jde o klasický XML dokument verze 1.0 s kódováním UTF-8. Veškeré použité elementy jsou párové a nejsou použity žádné atributy. Kořenovou značkou je LSystem a ta pak obsahuje všechny potřebné entity. V následujícím odstavci je příklad zápisu L-systému do XML souboru.  
+        V případě <emphasis>XML</emphasis> souboru jde o klasický <emphasis>XML</emphasis> dokument verze 1.0 s kódováním UTF-8. Veškeré použité elementy jsou párové a nejsou použity žádné atributy. Kořenovou značkou je <envar>LSystem</envar> a ta pak obsahuje všechny potřebné entity. V následujícím odstavci je příklad zápisu L-systému do <emphasis>XML</emphasis> souboru.  
       </para>
       <para>
         <programlisting><![CDATA[
@@ -731,10 +775,10 @@ public:
     <sect2 id="sec050203">
       <title>Připojování řetězců</title>
       <para>
-        Jak již bylo výše zmíněno, je tato struktura optimalizována pro opakované zvětšování přidáváním řetězců na její konec. Při každém připojení se provádí kontrola, zda je alokované místo dostatečné pro připojení dalších dat. Pokud ne, volá se automaticky metoda resize(), jež alokuje novou paměť a zvětší tento řetězec o délku nastavenou při vytváření instance.
+        Jak již bylo výše zmíněno, je tato struktura optimalizována pro opakované zvětšování přidáváním řetězců na její konec. Při každém připojení se provádí kontrola, zda je alokované místo dostatečné pro připojení dalších dat. Pokud ne, volá se automaticky metoda <envar>resize()</envar>, jež alokuje novou paměť a zvětší tento řetězec o délku nastavenou při vytváření instance.
       </para>
       <para>
-        Pro připojení dat je k dispozici několik metod. Jedná se o různé formy metody append(). Ta poskytuje díky šabloně možnost uložit libovolný, ve výčtu ParameterType definovaný, datový typ. Kromě toho je tato metoda přetížena kvůli specifickým způsobům připojení některých dat. Lze tak připojit jiný řetězec typu LongString nebo pole bajtů ve správném formátu.
+        Pro připojení dat je k dispozici několik metod. Jedná se o různé formy metody <envar>append()</envar>. Ta poskytuje díky šabloně možnost uložit libovolný, ve výčtu <envar>ParameterType</envar> definovaný, datový typ. Kromě toho je tato metoda přetížena kvůli specifickým způsobům připojení některých dat. Lze tak připojit jiný řetězec typu <envar>LongString</envar> nebo pole bajtů ve správném formátu.
       </para>
     </sect2>
     <sect2 id="sec050204">
@@ -743,23 +787,23 @@ public:
         Přistupovat lze k datům jedním ze čtyř způsobů. 
         <itemizedlist mark='opencircle'>
           <listitem>
-            <simpara>Pomocí operátoru [] získat přímo hodnotu bajtu na určité pozici řetězce. 
+            <simpara>Pomocí operátoru <envar>[]</envar> získat přímo hodnotu bajtu na určité pozici řetězce. 
             </simpara>
           </listitem>
           <listitem>
-            <simpara>Díky metodě getData() lze získat blok dat nebo celý řetězec bajtů. Hodí se především při provádění substitucí. 
+            <simpara>Díky metodě <envar>getData()</envar> lze získat blok dat nebo celý řetězec bajtů. Hodí se především při provádění substitucí. 
             </simpara>
           </listitem>
           <listitem>
-            <simpara>Nejpoužívanější možností je metoda getSymbol(), díky níž lze získat blok dat odpovídající jednomu modulu, neboli symbolu, na dané pozici. 
+            <simpara>Nejpoužívanější možností je metoda <envar>getSymbol()</envar>, díky níž lze získat blok dat odpovídající jednomu modulu, neboli symbolu, na dané pozici. 
             </simpara>
           </listitem>
           <listitem>
-            <simpara>Pro zpracování parametrických L-systémů se používá jedna z metod šablony getParameters(), která vrací pole parametrů libovolného typu a jejich počet. Tyto parametry jsou získány z pozice za identifikujícím znakem. 
+            <simpara>Pro zpracování parametrických L-systémů se používá jedna z metod šablony <envar>getParameters()</envar>, která vrací pole parametrů libovolného typu a jejich počet. Tyto parametry jsou získány z pozice za identifikujícím znakem. 
             </simpara>
           </listitem>
           <listitem>
-            <simpara>Metody matchRight() a matchLeft() slouží především k ověřování kontextu. Pro svou funkci využívají metody peekSymbol() pro nahlédnutí na levý nebo pravý nejbližší znak a jelikož řetězce obsahují i závorky, jsou implementovány i pomocné metody findMatchingRightBracket() a findMatchingLeftBracket() pro nalezení odpovídajícího protějšku k nalezené závorce. Podrobněji je celá funkcionalita nalezení kontextu popsána v kapitole LINK.
+            <simpara>Metody <envar>matchRight()</envar> a <envar>matchLeft()</envar> slouží především k ověřování kontextu. Pro svou funkci využívají metody <envar>peekSymbol()</envar> pro nahlédnutí na levý nebo pravý nejbližší znak a jelikož řetězce obsahují i závorky, jsou implementovány i pomocné metody <envar>findMatchingRightBracket()</envar> a <envar>findMatchingLeftBracket()</envar> pro nalezení odpovídajícího protějšku k nalezené závorce. Podrobněji je celá funkcionalita nalezení kontextu popsána v kapitole <xref linkend="sec050503"/>.
             </simpara>
           </listitem>
         </itemizedlist>
@@ -777,18 +821,22 @@ public:
         <listitem>
           <simpara>Každý modul na straně následníka může místo parametru obsahovat výraz, jež se vyhodnocuje až na základě parametrů předchůdce 
           </simpara>
+        </listitem>
+        <listitem>
           <simpara>U parametrických L-systémů se může vyskytnout podmínka přepisu, která se musí před každým přepisem vyhodnotit. Při jejím nesplnění je pravidlo zamítnuto. 
           </simpara>
+        </listitem>
+        <listitem>
           <simpara>Stochastické L-systémy mívají nastaven pravděpodobnostní faktor, na jejímž základě závisí pravděpodobnost vybrání daného pravidla pro přepis. Tento faktor se může rovněž vyhodnocovat z výrazu.
           </simpara>
         </listitem>
       </itemizedlist> 
     </para>
     <para>
-      Pro zpracování výrazů byla vybrána knihovna FunctionParser. Jedná se o volně dostupnou knhovnu, která poskytuje dostatečnou a navíc uživatelsky rozšíritelnou  funkcionalitu. Nabízí i možnosti optimalizace. Pro každý výraz je tedy vytvořena instance třídy FunctionParser. Pro zpracování slouží metoda <envar>Parse()</envar> s parametry zpracovávaného  výrazu a řetězce všech proměnných. Vyhodnocení se provádí metodou Eval(), která po předání pole s hodnotami proměnných vrací výsledek výrazu.
+      Pro zpracování výrazů byla vybrána knihovna <envar>FunctionParser</envar>. Jedná se o volně dostupnou knihovnu, která poskytuje dostatečnou a navíc uživatelsky rozšíritelnou  funkcionalitu. Nabízí i možnosti optimalizace. Pro každý výraz, jež je v pravidlech nalezen, je vytvořena jedna instance třídy <envar>FunctionParser</envar>. Pro zpracování slouží metoda <envar>Parse()</envar> s parametry zpracovávaného  výrazu a řetězce všech proměnných. Vyhodnocení se provádí metodou <envar>Eval()</envar>, která po předání pole s hodnotami proměnných vrací výsledek výrazu.
     </para>
     <para>
-      Jako příklad je zde uvedeno pravidlo stochastického parametrického 2L-systému, kterým se zabývala kapitola LINK.  
+      Jako příklad je zde uvedeno pravidlo stochastického parametrického 2L-systému, kterým se zabývala kapitola <xref linkend="sec050503"/>.  
     </para>
     <para>
       <programlisting><![CDATA[
@@ -796,41 +844,53 @@ A(x,y) < B(z) > C(a,b,c) : (x + z > abs(a-c)) -> B(b-1)FA(x/2,y/2) : max(0, 1-1/
    ]]></programlisting>
     </para>
     <para>
-      Z tohoto zápisu je zřejmé že pro všechny výrazy se používají pouze proměnné předchůdce a kontextů. V tomto případě se jedná o x, y, z, a, b, c. Tyto znaky jsou uloženy ve struktuře Rule jako m_Variables a slouží k vytváření instancí třídy FunctionParser. Dále struktura obsahuje proměnné pro uložení znaků přechůdce, obou kontextů a odkazy na instance pro vyhodnocení podmínky pravidla a pravděpodobnostního faktoru.
+      Z tohoto zápisu je zřejmé, že pro všechny výrazy se používají pouze proměnné předchůdce a kontextů. V tomto případě se jedná o <envar>x</envar>, <envar>y</envar>, <envar>z</envar>, <envar>a</envar>, <envar>b</envar>, <envar>c</envar>. Tyto znaky jsou uloženy ve struktuře <envar>Rule</envar> jako <envar>m_Variables</envar> a slouží k vytváření instancí třídy <envar>FunctionParser</envar>. Dále struktura obsahuje proměnné pro uložení znaků přechůdce, obou kontextů a odkazy na instance pro vyhodnocení podmínky pravidla a pravděpodobnostního faktoru. Tyto proměnné pak slouží k výběru správného pravidla pro přepis modulu.
     </para>
     <para>
-Jelikož se následník skládá z klasických řetězců a výrazů, je jeho zpracování složitější. Jednoduché řetězce jsou uloženy do instancí třídy StaticString. Jedná se o zjednodušenou variantu třídy LongString. Data jsou zde uložena ve stejné podobě. Rozdílem však je, že tento řetězec nelze zvětšit. Pro účel krátkých neměnných řetězců následníka je tedy ideální protože paměťově nezabírá tolik prostoru jako LongString. Řetězce i výrazy se ukládájí do konejneru typu std::vector. Jsou zde uloženy tak, aby mohly být při přepisu tohoto pravidla střídavě z kontejneru vybírány. Ukázka zpracovaného pravidla z předchozího příkladu je na obrázku LINK  
+Jelikož se následník skládá z řetězců modulů a výrazů, je jeho zpracování složitější. Řetězce modulů jsou uloženy do instancí třídy <envar>StaticString</envar>. Jedná se o zjednodušenou variantu třídy <envar>LongString</envar>. Data jsou zde uložena ve stejné podobě. Rozdílem však je, že tento řetězec nelze zvětšit. Pro účel krátkých neměnných řetězců následníka je tedy ideální, protože nezabírá tolik prostoru v paměti. Řetězce i výrazy se ukládájí do konejneru typu <envar>std::vector</envar>. Jsou zde uloženy tak, aby mohly být při přepisu tohoto pravidla střídavě z kontejneru vybírány. Ukázka zpracovaného pravidla z předchozího příkladu je na obrázku <xref linkend="pic050301"/>.  
     </para>
+    <figure float="1" id="pic050301">
+      <title>Rozdělení následníka na řetězce modulů a výrazy</title>
+	  	<mediaobject>
+        <imageobject>
+			    <imagedata fileref="050301.jpg" format="JPG"/>
+	      </imageobject>
+      </mediaobject>
+	  </figure>  
     <para>
-      Z příkladu je vidět, že pokud po sobě následují dva výrazy, může být řetězec mezi nimi prázdný. Šedě jsou znázorněny znaky, které jsou zahozeny, neboť nejsou pro další zpracování potřebné.Při zpracování i následném přepisu pravidla se vždy začíná a končí. Velikost kontejneru s řetězci je tedy vždy o jednu větší než kontejner s výrazy. Je to z toho důvodu, že často existují pravidla, která obsahují v následníkovi pouze řetězec a žádný výraz.
+      Z příkladu <xref linkend="pic050301"/> je vidět, že pokud po sobě následují dva výrazy, může být řetězec mezi nimi prázdný. Šedě jsou znázorněny znaky, které jsou zahozeny, neboť jsou pro další zpracování nepotřebné. Při zpracování i následném přepisu pravidla se vždy začíná a končí výběrem řetězce modulů. Velikost kontejneru s řetězci je tedy vždy právě o jednu větší než velikost kontejneru s výrazy. Je to z toho důvodu, že často existují pravidla, která obsahují v následníkovi pouze řetězec a žádný výraz. Pokud nějaký výraz obsahují, vyskytuje se většinou někde uprostřed následníka. Proto je tento způsob zpracování optimálnější. 
     </para>
   </sect1>
   <sect1 id="sec0504">
     <title>Zpracování L-systémů</title>
     <para>
-      Všechny tyto typy jsou implementovány jako potomci třídy AbstractLSystem. Obrázek LINK ukazuje hiearchii tříd L-systémů.
+      Všechny tyto typy jsou implementovány jako potomci třídy <envar>AbstractLSystem</envar>. Obrázek LINK ukazuje hiearchii tříd L-systémů.
     </para>
     <para>
       Abstraktní třída AbstractLSystem obsahuje několik metod, sloužící jako rozhraní pro L-systémy. 
       <itemizedlist mark='opencircle'>
         <listitem>
-          <simpara>Pro inicializaci slouží metoda loadFromFile(), která načte všechna potřebná nastavení. Jako zdroj nastavení slouží některá z instancí potomků abstraktní třídy AbstractFile. 
+          <simpara>Pro inicializaci slouží metoda <envar>loadFromFile()</envar>, která načte všechna potřebná nastavení. Jako zdroj nastavení slouží některá z instancí potomků abstraktní třídy <envar>AbstractFile</envar>. 
           </simpara>
-          <simpara>Pro provedení další iterace slouží metoda nextIteration(). Počet iterací lze ovlivnit i nastavení v konfiguračním souboru a v parametrech L-systému. Díky této metodě je však možné interaktivně provádět další iterace L-systému. 
+        </listitem>
+        <listitem>
+          <simpara>Pro provedení další iterace slouží metoda <envar>nextIteration()</envar>. Počet iterací lze ovlivnit i nastavení v konfiguračním souboru a v parametrech L-systému. Díky této metodě je však možné interaktivně provádět další iterace L-systému. 
           </simpara>
-          <simpara>Metoda translate() vrátí vygenerované slovo. Slovo je vždy uvnitř třídy L-systému uloženo ve své nejvyšší iteraci. Na slově, které vrací tato metoda jsou provedeny navíc finální úpravy. Jedná se o aplikaci pravidel homomorfismů a vložení slov, jež generují subystémy tohoto L-systému.
+        </listitem>
+        <listitem>
+          <simpara>Metoda <envar>translate()</envar> vrátí vygenerované slovo. Slovo je vždy uvnitř třídy L-systému uloženo ve své nejvyšší iteraci. Na slově, které tato metoda vrátí, jsou ještě předtím provedeny finální úpravy. Aplikují se pravidla homomorfismů a odkazy na podřízené L-systémy se nahradí slovy, jež tyto L-systémy stejným způsobem vygenerovaly.
           </simpara>
         </listitem>
       </itemizedlist>   
-      Veškerá funcionalita, jež je společná pro všechny typy L-systémů je implementována ve společném rodiči LSystem. Veškeré funkce se dají rozdělit do tří fází.
+      Veškerá funcionalita, jež je společná pro všechny typy L-systémů je implementována ve společném rodiči <envar>LSystem</envar>. Celý proces se dá rozdělit do tří fází, jejichž popis je obsahem následujících kapitol.
     </para>
     <sect2 id="sec050401">
       <title>Výběr nejvhodnějšího L-systému</title>
       <para>
-        Zásuvný modul v současné podobě obsahuje tři různé třídy zpracovávající různé typy L-systémů. Liší se rychlostí a svými schopnostmi. Je tedy nutné, aby generátor vybral vhodný algoritmus. Stejně důležitý je i výběr u sybsystémů. Každý soubor L-systému má nastaven svůj typ. Jedná se o výčet vlastností, které od třídy L-systému bude požadovat. Samotné třídy mají pak implementovanou statickou metodu bool isCapable(), na základě níž lze rozpoznat zda daná třída požadavkům vyhovuje. Používá k tomu statického atributu capabilities, neboť zde jsou schopnosti uloženy jako jejich bitový součet. Jednotlivých schopností jsou definovány ve výčtu LSystemCapabilities. 
+        Zásuvný modul v současné podobě obsahuje tři různé třídy zpracovávající různé typy L-systémů. Liší se rychlostí a svými schopnostmi. Je tedy nutné, aby generátor vybral vhodný algoritmus. Stejně důležitý je i výběr u sybsystémů. Každý soubor L-systému má nastaven svůj typ. Jedná se o výčet vlastností, které od třídy L-systému bude požadovat. Samotné třídy mají pak implementovanou statickou metodu <envar>isCapable()</envar>, na základě níž lze rozpoznat zda daná třída požadavkům vyhovuje. Používá k tomu statického atributu capabilities, neboť zde jsou schopnosti uloženy jako jejich bitový součet. Jednotlivých schopností jsou definovány ve výčtu LSystemCapabilities. 
       </para>
       <para>
-        Vytvoření nejvhodnější instance usnadňuje statická metoda AbstractGenerator::createLSystem(), jež na základě typu načteného souboru automaticky vytvoří a vrátí vhodnou instanci L-systému. Testování, zda daný typ L-systému vyhovuje, zde probíhá od nejrychlejšího typu algoritmu k nejpomalejšímu. První typ, který splňuje všechny požadavky, je vybrán a použit. 
+        Vytvoření nejvhodnější instance usnadňuje statická tovární metoda <envar>AbstractGenerator::createLSystem()</envar>, jež na základě typu načteného souboru automaticky vytvoří a vrátí vhodnou instanci L-systému. Testování, zda daný typ L-systému vyhovuje, zde probíhá od nejrychlejšího typu algoritmu k nejpomalejšímu. První typ, který splňuje všechny požadavky, je vybrán a použit. Jelikož se jedná o tovární metodu, která nemůže zaruči uvolnění paměti, je zde jako návratová hodnota použit inteligentní ukazatel <envar>boost::share_ptr</envar>.
       </para>
     </sect2>
     <sect2 id="sec050402">
@@ -964,7 +1024,7 @@ A(x,y) < B(z) > C(a,b,c):(z > abs(a-c))->B(b-1)FA(x/2,y/2):max(0,1-1/z*z)
         Oproti bezkontextovým gramatikám se zde navíc zadává levý a pravý kontext. Jeho zadání lze vynechat, avšak znaménka &lt; a > je nutné v řetězci pravidla zachovat. Zpracování podmínky i pravděpodobnostního faktoru je zde obdobné jako u bezkontextových L-systémů.    
       </para>
       <para>
-        Nejdůležitějším rozšířením je schopnost ověřovat kontext předchůdce. Ověřování kontextu se řídí pravidly popsanými v kapitole o kontextových L-systémech LINK. Pro tuto činnost byly implementovány metody matchRight() a matchLeft(). Jde o metody třídy LongString a vrací hodnotu int, která informuje zda bylo ověřování úspěšné. V případě úspěchu vrací tyto metody pozici úspěšně ověřeného modulu, jinak vrací -1. Metody instance třídy LongString tedy dostanou informace, jaký kontext a kde jej ověřovat a poté samy vyhodnotí výsledek. Jak vyplývá z výše zmíněných pravidel, je potřeba u L-systémů se závorkami provádět někdy ověření na více místech zároveň. Jedná se například o situaci symbolu vedle závorky nebo pokud je sousední symbol v seznamu ignorovaných znaků. Ověřovací metody tak uvnitř obsahují rekurzivní volání sebe sama, aby všechny tyto situace byly korektně vyhodnoceny. Pokud dochází při ověřování k větvení, je většinou nutné naleznout v řetězci správná místa pro ověření kontextu tak, aby byla respektována skutečná topologie modelu. K tomuto účelu slouží metody findMatchingRightBracket() a <envar>findMatchingLeftBracket()</envar>, které k nalezené závorce najdou její protějšek. Tímto umožní ověřovacímu mechanismu pokračovat za závorkou. Pseudokód fungování metody <envar>matchRight()</envar> zjednodušeně ukazuje princip fungování této metody. U metody <envar>matchLeft()</envar> je princip obdobný.
+        Nejdůležitějším rozšířením je schopnost ověřovat kontext předchůdce. Ověřování kontextu se řídí pravidly popsanými v kapitole o kontextových L-systémech LINK. Pro tuto činnost byly implementovány metody <envar>matchRight()</envar> a<envar> matchLeft()</envar>. Jde o metody třídy LongString a vrací hodnotu int, která informuje zda bylo ověřování úspěšné. V případě úspěchu vrací tyto metody pozici úspěšně ověřeného modulu, jinak vrací -1. Metody instance třídy LongString tedy dostanou informace, jaký kontext a kde jej ověřovat a poté samy vyhodnotí výsledek. Jak vyplývá z výše zmíněných pravidel, je potřeba u L-systémů se závorkami provádět někdy ověření na více místech zároveň. Jedná se například o situaci symbolu vedle závorky nebo pokud je sousední symbol v seznamu ignorovaných znaků. Ověřovací metody tak uvnitř obsahují rekurzivní volání sebe sama, aby všechny tyto situace byly korektně vyhodnoceny. Pokud dochází při ověřování k větvení, je většinou nutné naleznout v řetězci správná místa pro ověření kontextu tak, aby byla respektována skutečná topologie modelu. K tomuto účelu slouží metody <envar>findMatchingRightBracket()</envar> a <envar>findMatchingLeftBracket()</envar>, které k nalezené závorce najdou její protějšek. Tímto umožní ověřovacímu mechanismu pokračovat za závorkou. Pseudokód fungování metody <envar>matchRight()</envar> zjednodušeně ukazuje princip fungování této metody. U metody <envar>matchLeft()</envar> je princip obdobný.
       </para>
       <para>
         <programlisting><![CDATA[
@@ -1207,6 +1267,106 @@ K operacím na zásobníku dochází v případě některých speciálních symb
       . Úhel <emphasis>V</emphasis> pak bude vždy ve stejné rovině s úhlem <emphasis>L</emphasis>. Narozdíl od něj však nebude podléhat příčnému náklonu. 
     </para>
   </sect1>
+  <sect1 id="sec0606">
+    <title>Odezva na směrové podněty</title>
+    <para>
+      Rostlinné organismy v přírodě reagují na celou řadu podnětů. Některé podněty, jako je gravitace, mohou mít na vzhled rostliny zásadní vliv a implementací reakce na tyto podněty lze modely podstatně přiblížit realitě. Pro směrové podněty se používá termín tropismus. Jedná se o změnu orientace rostlinného organismu na základě nějakého podnětu či podráždění LINK PLANT FORM. Tento podnět je v případě tropismu veden vždy v nějakém směru. V přírodě existuje mnoho druhů tropismu. Některé z nich jsou velmi důležité i zajímavé pro simulaci.  
+    </para>
+    <variablelist>
+			<varlistentry>
+				<term>Geotropismus/Gravitropismus</term>
+				<listitem>
+					<para>V rámci simulace biomechanických jevů se jedná o nejdůležitější formu tropismu. Geotropismus je reakce rostlinného organismu na gravitaci. Příkladem může být směřování větví pod svou tíhou k zemi nebo naopak růst stonku proti gravitaci.</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>Fototropismus</term>
+				<listitem>
+					<para>Dalším často simulovaným jevem je reakce na světelné podmínky, kdy se orgány rostlin orientují směrem k největšímu zdroji světla. Obdobnou formou je pohyb za sluncem nazývaný heliotropismus.</para>
+				</listitem>
+			</varlistentry>
+		</variablelist>	
+    <para>
+      Při aplikaci těchto vlivů na želvu, dochází při každém kroku želvy ke korekci jejího směru tak, aby respektovala síly, které na ní působí.
+    </para>	
+    <sect2 id="sec060601">
+      <title>Geotropismus</title>
+      <para>
+        Pro implementaci tropismu byla použita metoda založená na výpočtu zrychlení momentu síly. Lze tak vypočítat úhel, o který je třeba otočit směrový vektor želvy 
+        <inlineequation>
+          <alt role="tex">\overrightarrow{H}</alt>
+        </inlineequation>
+        směrem k vektoru podnětu 
+        <inlineequation>
+          <alt role="tex">\overrightarrow{T}</alt>
+        </inlineequation>
+        .  
+      </para>
+      <equation>
+        <title>Výpočet korekčního úhlu při geotropismu.</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="math06060101.png"/>
+          </imageobject>
+          <textobject role="tex">
+            <phrase>\beta = e  \vert \overrightarrow{H} \times \overrightarrow{T} \vert </phrase>  
+          </textobject>
+        </mediaobject>
+      </equation>
+      <para>
+        Důležitou roli zde hraje parametr 
+        <inlineequation>
+          <alt role="tex">e</alt>
+        </inlineequation>
+        , který udává přizpůsobivost danému podnětu. Například u větví tento parametr udává jejich ohebnost. V zásuvném modulu je geotropismus implementován odděleně od ostatních tropismů, neboť se jedná o velmi důležitý podnět. Úhel podnětu směřuje vždy směrem k zemi (proti směrovému vektoru 
+        <inlineequation>
+          <alt role="tex">\overrightarrow{H}</alt>
+        </inlineequation>
+         na počátku interpretace). Nastavení se provádí pomocí parametru <envar>GeotropismElasticity</envar>.
+      </para>
+      <para>
+Při každém kroku želvy je metodou <envar>adjustMatrices()</envar> vypočten pomocí výše zmiňovaného vzorce nový směrový vektor a zbývající ortogonální vektory jsou adekvátně dopočítány. 
+      </para>
+    </sect2>
+    <sect2 id="sec060602">
+      <title>Diatropismus</title>
+      <para>
+        Tento vzorec lze dále rozšířit na obecnější formu <xref linkend="eq06060201"/>. Jedná se o takzvaný diatropismus, při němž se rostlinné orgány snaží se směrovým vektorem podnětu svírat úhel 
+        <inlineequation>
+          <alt role="tex">\gamma</alt>
+        </inlineequation>
+        . Tato obecná forma tropismu lze využít pro modelování různých jevů. Na obrázku lze vidět ovlivnění stromu při různých nastaveních. Implementace je obdobná jako u geotropismu. Navíc jsou však dispozici parametry <envar>TropismAngle</envar> pro nastavení úhlu 
+        <inlineequation>
+          <alt role="tex">\gamma</alt>
+        </inlineequation>
+        a <envar>TropismVector</envar> pro nastavení úhlu tropismu. Ohebnost se zde nastavuje parametrem <envar>TropismElasticity</envar>.
+      </para>
+      <para>
+Pro každý model lze nastavit maximálně jeden takový podnět. Zároveň však díky oddělené implementaci lze vždy nastavit geotropismus.  
+      </para>
+      <equation id="eq06060201">
+        <title>Výpočet korekčního úhlu při diatropismu.</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="math06060201.png"/>
+          </imageobject>
+          <textobject role="tex">
+            <phrase>\beta = e \left( \cos ( \gamma ) - \sin ( \gamma )  \frac{ \overrightarrow{H} \cdot \overrightarrow{T} }
+                    { \bigl\vert \overrightarrow{H} \times \overrightarrow{T} \bigr\vert }  \right)</phrase>  
+          </textobject>
+        </mediaobject>
+      </equation>
+    </sect2>
+  </sect1>
+  <sect1 id="sec0607">
+    <title>Odezva na směrové podněty</title>
+    <para>
+      Jedním z velkých kladů L-systémů je, že každé slovo přesně odpovídá generované rostlině. Někdy je však žádoucí, aby bylo možné pomocí minimálních změn vytvořit organismus, který bude topologicky shodný, ale vizuálně mírně odlišný. Tímto způsobem lze z jednoho již vygenerovaného slova vytvářet ne zcela identické jedince. Druhým argumentem pro zavedení toho mechanismu je často absolutní matematická přesnost úhlů generovaných rostlin. Mírným náhodným roztřesením úhlů lze odstranit viditelnou pravidelnost a dosáhnout tak mnohem lepších vizuálních výsledků.
+    </para>
+    <para>
+      V zásuvném modulu LSystem lze tohoto efektu dosáhnout nastavením parametru <envar>AngleVariance</envar>. Jde o procentuální hodnotu, která udává o kolik procent se mohou úhly maximálně změnit. Při provádění libovolné rotace želvy kolem jedné z jejich os, je pak úhel otočení upraven náhodnou hodnotou získanou na základě tohoto parametru.   
+    </para>
+  </sect1>
 </chapter>
 
 <bibliography>
@@ -1228,6 +1388,20 @@ K operacím na zásobníku dochází v případě některých speciálních symb
       </publisher>
       <pubdate>1990</pubdate>
       <isbn>9780387972978</isbn>
+   </biblioentry>
+   
+   <biblioentry>
+      <abbrev>Hanan92</abbrev>
+      <authorgroup>
+         <author>
+           <firstname>James Scott</firstname>
+           <surname>Hanan</surname>
+         </author>  
+      </authorgroup>
+      <title>Parametric L-systems and their application to the modelling and visualisation of plants</title>    
+      <publisher>
+      </publisher>
+      <pubdate>1992</pubdate>
    </biblioentry>
    
    <biblioentry>
