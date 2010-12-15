@@ -142,7 +142,7 @@ void LSystem::setAxiom(std::string & axiom)
     if(m_Word) delete m_Word;
     m_Word = new LongString( );
     m_Word->append('$');
-    m_Word->append( static_cast<unsigned char>(Configuration::get()->getLSystemIndex( this->_name )) );
+    m_Word->append( static_cast<unsigned char>(Configuration::get()->getLSystemIndex( this->m_Name )) );
     m_Word->convertFromString( &axiom );
     m_Word->append('$');
 }

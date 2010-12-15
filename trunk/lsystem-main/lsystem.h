@@ -93,6 +93,7 @@ public:
     /**
       * Load L-system from file
       * @param file of L-system as instance of
+	  */
     virtual void loadFromFile( AbstractFile * file );
     
     unsigned int wordLength() { return m_Word->length(); }
