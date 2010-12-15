@@ -61,29 +61,5 @@ extern "C" AP_EXPORT Ability *Garden_getAbilityInstance(const char* pchName)
 
 extern "C" AP_EXPORT void Garden_setAbilitiesParameters()
 {
-	// not needed now, will be used in future implementations of editor
 
-	/*// prepare temp variables
-	Ability::ParameterVector* pParameterVector;
-	Ability::ParameterStruct parameterStruct;
-
-	// create new parameter vector on the heap
-	pParameterVector = new Ability::ParameterVector;
-
-	// add transparency of active form parameter info
-	parameterStruct.name = "ActFrmTrp";
-	parameterStruct.description = "Transparency of active form";
-	parameterStruct.type = BaseClass::FLOAT;
-	parameterStruct.range = "<0.0,1.0>";
-	pParameterVector->insert(pParameterVector->end(), parameterStruct);
-
-	// add transparency of active form element parameter info
-	parameterStruct.name = "ActFrmElemTrp";
-	parameterStruct.description = "Transparency of active form element";
-	parameterStruct.type = BaseClass::VEC3;
-	parameterStruct.range = "<0.0,1.0>";
-	pParameterVector->insert(pParameterVector->end(), parameterStruct);
-
-	// set parameter vector for the BusinessProcess ability
-	BusinessProcess::m_pParameterVector = pParameterVector;*/
 }

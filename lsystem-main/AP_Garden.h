@@ -1,5 +1,5 @@
-#ifndef AP_ROOMEDIT
-#define AP_ROOMEDIT
+#ifndef AP_GARDEN_H_
+#define AP_GARDEN_H_
 
 #include <vrecko/Ability.h>
 #include <vreckoAP/Export>

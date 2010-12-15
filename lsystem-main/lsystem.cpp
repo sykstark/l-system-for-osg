@@ -113,6 +113,9 @@ void LSystem::loadFromFile( AbstractFile * file)
         this->addRule( &*itRules );
     }
 
+//	if(this->m_Rules.empty())
+//		vrecko::logger.debugLog( "No rules loaded from L-system %s", this->_name );	
+
 	// process homomoprhism strings - convert to instances of Rule class
 	itRules = file->getHomomorphisms()->begin();
 	for(; itRules != file->getHomomorphisms()->end(); itRules++)
@@ -123,7 +126,7 @@ void LSystem::loadFromFile( AbstractFile * file)
     const variable_value * ignoreVar = Configuration::get()->getProperty( m_Name, "Ignore" );
 	if( ignoreVar )
 	{
-        m_Ignore = ignoreVar->as<std::string>();
+		m_Ignore = ignoreVar->as<std::string>();
 	}
 
     unsigned initIteration = Configuration::get()->getProperty( m_Name, "Iteration" )->as<unsigned>();
@@ -139,7 +142,7 @@ void LSystem::setAxiom(std::string & axiom)
     if(m_Word) delete m_Word;
     m_Word = new LongString( );
     m_Word->append('$');
-    m_Word->append( static_cast<unsigned char>(Configuration::get()->getLSystemIndex( this->m_Name )) );
+    m_Word->append( static_cast<unsigned char>(Configuration::get()->getLSystemIndex( this->_name )) );
     m_Word->convertFromString( &axiom );
     m_Word->append('$');
 }
@@ -158,10 +161,10 @@ void LSystem::transcribeSubSystems()
 	int parametersCnt = 0;
 
 	// look for subsystems
-    for(unsigned int i = 0; i < m_Word->length(); i++ )
+	for(unsigned int i = 0; i < m_Word->length(); i++ )
     {
 		// subsystems are indetified by $ sign - get all data before $
-        data = m_Word->getData( i, len, '#' );
+		data = m_Word->getData( i, len, '#' );
 
 		// no data
 		if(data == NULL)
@@ -170,11 +173,11 @@ void LSystem::transcribeSubSystems()
 		// append data before
 		newWord->append( data, len );
 
-        if( i >= m_Word->length() )
+		if( i >= m_Word->length() )
 			break;
 
 		parametersCnt = 0;
-        m_Word->getParameters<int>( i, pParams, parametersCnt );
+		m_Word->getParameters<int>( i, pParams, parametersCnt );
 
 		if( parametersCnt != 1 )
 			return;
@@ -193,12 +196,17 @@ void LSystem::transcribeSubSystems()
 
 LongString * LSystem::translate( )
 {
+	// backup and make a copy of current word
+	LongString * original = new LongString( *m_Word );
     // use all homomorphism rules
     this->transcribe( m_Homomorphisms );
     // insert all sub L-systems
     this->transcribeSubSystems( );
+	// swap words
+	LongString * final = m_Word;
+	m_Word = original;
     // return final word
-    return m_Word;
+    return final;
 }
 
 bool LSystem::nextIteration( )
@@ -254,7 +262,7 @@ bool LSystem::transcribe(multimap<char, Rule> &rules)
 			else
 			{
 				j = i;
-                buffer = m_Word->getSymbol(i);
+				buffer = m_Word->getSymbol(i);
 				if(buffer)
 					newWord->append(buffer,i-j+1);
 			}
@@ -316,10 +324,10 @@ void LSystem::processCutSymbol( )
 	// TODO predelat ten cyklus...konci uprostred
 	// TODO optimalizace - neni vzdy treba kopirovat
 	// look for cut symbol
-    for(unsigned int i = 0; i < m_Word->length(); i++ )
+	for(unsigned int i = 0; i < m_Word->length(); i++ )
     {
 		// get data before cut symbol 
-        data = m_Word->getData( i, len, '%' );
+		data = m_Word->getData( i, len, '%' );
 
 		// no data
 		if(data == NULL)
@@ -329,11 +337,11 @@ void LSystem::processCutSymbol( )
 		newWord->append( data, len );
 
 		// end of string
-        if( i >= m_Word->length() )
+		if( i >= m_Word->length() )
 			break;
 
 		// find end and skip symbols of rest of this branch
-        i = m_Word->findMatchingRightBracket( i ) - 1;
+		i = m_Word->findMatchingRightBracket( i ) - 1;
 
         //Log::write(newWord->toString());
     }

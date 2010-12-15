@@ -135,7 +135,7 @@ void Rule::addQueryFunctions( FunctionParser * fp, string & expression )
 
     if( !query )
     {
-        fp->Optimize();
+        //fp->Optimize();
     }
 
 }
