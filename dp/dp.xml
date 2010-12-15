@@ -205,7 +205,11 @@ Abeceda <emphasis>V</emphasis> je konečná množina <emphasis>symbolů</emphasi
       </mediaobject>
 	  </figure>
     <para>
-    Slova, vyprodukovaná derivacemi přepisovacích pravidel závorkového L-systému, se označují jako stromy. Příklad takovéto stromové struktury vytvořené L-systémem se závorkami je na obrázku <xref linkend="pic020301"/>. Jedná se o základní větvenou strukturu s jednou hlavní osou tvořenou moduly <emphasis>aehik</emphasis>. Slovo reprezentující tento strom lze pomocí jednoho řetězce zapsat jako
+    Slova, vyprodukovaná derivacemi přepisovacích pravidel závorkového L-systému, se označují jako stromy. Příklad takovéto stromové struktury vytvořené L-systémem se závorkami je na obrázku <xref linkend="pic020301"/>. Jedná se o základní větvenou strukturu s jednou hlavní osou tvořenou moduly 
+    <inlineequation>
+      <alt role="tex">aehik</alt>
+    </inlineequation>
+    . Slovo reprezentující tento strom lze pomocí jednoho řetězce zapsat jako
     </para>    
     <para>  
       <inlineequation>
@@ -213,11 +217,61 @@ Abeceda <emphasis>V</emphasis> je konečná množina <emphasis>symbolů</emphasi
         <graphic fileref="math020301.png"/>
       </inlineequation>  
     </para>
-      Řetězce modulů <emphasis>a</emphasis>, <emphasis>e</emphasis> a <emphasis>hi</emphasis> se označují jako meziuzly a řetězce <emphasis>b[c]d</emphasis>, <emphasis>fg</emphasis> a <emphasis>j</emphasis> jako vedlejší větve. Modul <emphasis>k</emphasis> je hrotem hlavní osy. Obdobně lze pojmenovat i moduly na nižších úrovních a označit například moduly c, d, g a j jako hroty vedlejších větví.   
-    <para>    
-      Strom lze podle <citation>Prusin94</citation> definovat jako slovo w nad abecedou 
+    <para>
+      Řetězce modulů 
       <inlineequation>
-        <alt role="tex">V_{E} = V /cup {[,]}</alt>
+        <alt role="tex">a</alt>
+      </inlineequation>
+      , 
+      <inlineequation>
+        <alt role="tex">e</alt>
+      </inlineequation> 
+      a 
+      <inlineequation>
+        <alt role="tex">hi</alt>
+      </inlineequation> 
+      se označují jako meziuzly a řetězce 
+      <inlineequation>
+        <alt role="tex">b[c]d</alt>
+      </inlineequation>
+      , 
+      <inlineequation>
+        <alt role="tex">fg</alt>
+      </inlineequation> 
+      a 
+      <inlineequation>
+        <alt role="tex">j</alt>
+      </inlineequation> 
+      jako vedlejší větve. Modul 
+      <inlineequation>
+        <alt role="tex">k</alt>
+      </inlineequation> 
+      je hrotem hlavní osy. Obdobně lze pojmenovat i moduly na nižších úrovních a označit například moduly 
+      <inlineequation>
+        <alt role="tex">c</alt>
+      </inlineequation>
+      , 
+      <inlineequation>
+        <alt role="tex">d</alt>
+      </inlineequation>
+      , 
+      <inlineequation>
+        <alt role="tex">g</alt>
+      </inlineequation>
+      a
+      <inlineequation>
+        <alt role="tex">j</alt>
+      </inlineequation>
+      jako hroty vedlejších větví. 
+    </para>  
+    <para>    
+      Strom lze podle <citation>Prusin94</citation> definovat jako slovo 
+      <inlineequation>
+        <alt role="tex">w</alt>
+      </inlineequation>
+      nad abecedou 
+      <inlineequation>
+        <alt role="tex">V_{E} = V \cup \{ [,] \}</alt>
         <graphic fileref="math020301.png"/>
       </inlineequation> 
       pro které platí, že:
@@ -234,7 +288,7 @@ Abeceda <emphasis>V</emphasis> je konečná množina <emphasis>symbolů</emphasi
           <para>
             Podslova
             <inlineequation>
-              <alt role="tex">x_{1},x_{2},...,x_{n+1} \in V*</alt>
+              <alt role="tex">x_{1},x_{2},...,x_{n+1} \in V^*</alt>
               <graphic fileref="math020402.png"/>
             </inlineequation>
              neobsahují moduly závorek.
@@ -244,7 +298,7 @@ Abeceda <emphasis>V</emphasis> je konečná množina <emphasis>symbolů</emphasi
           <para>
             Podslova
             <inlineequation>
-              <alt role="tex">x_{1},x_{2},...,x_{n+1} \in V_{E}*</alt>
+              <alt role="tex">x_{1},x_{2},...,x_{n+1} \in V_{E}^*</alt>
               <graphic fileref="math020402.png"/>
             </inlineequation>
             jsou stromy.
@@ -262,41 +316,54 @@ Mozna dat tri typy pouziti – kapitola 7.3 handbook
     </para>
     <para>
 Existuje mnoho implementací kontextových L-systémů. Nejpoužívanější jsou 1L-systémy a 2L-systémy. U 1L-systémů je brán zřetel buď pouze na levý nebo pouze na pravý kontext modulu předchůdce. Zápis pravidel s jednostranným kontextem tedy může být ve tvaru
-      <quote><emphasis>lk &lt; předchůdce 
-      <inlineequation>
-        <alt role="tex">\to</alt>
-        <graphic fileref="math020401.png"/>
-      </inlineequation>
-      následník
-      </emphasis></quote>
-      nebo
-      <quote><emphasis>předchůdce > pk
-      <inlineequation>
-        <alt role="tex">\to</alt>
-        <graphic fileref="math020402.png"/>
-      </inlineequation>
-      následník
-      </emphasis></quote>
-    
-, kde <emphasis>lk</emphasis> je levý a <emphasis>pk</emphasis> pravý kontext. Následující L-systém ukazuje, jakým způsobem je možné propagovat signál.
-      </para>
-      <para>
+    </para>
+    <para>
+      <simplelist type="vert" columns="1">
+        <member> </member>
+        <member>
+          <emphasis>lk &lt; předchůdce 
+          <inlineequation>
+            <alt role="tex">\to</alt>
+          </inlineequation>
+          následník
+          </emphasis>
+          nebo
+          <emphasis>předchůdce > pk
+          <inlineequation>
+            <alt role="tex">\to</alt>
+          </inlineequation>
+          následník</emphasis>,
+        </member>
+        <member> </member>
+      </simplelist>
+    </para>
+      <quote></quote>
+    <para>
+        kde <emphasis>lk</emphasis> je levý a <emphasis>pk</emphasis> pravý kontext. Následující L-systém ukazuje, jakým způsobem je možné propagovat signál.
+    </para>
+    <para>
         Obecnější třídu tvoří (k,l)-systémy, kde levý kontext tvoří slovo o délce k modulů a pravý kontext slovo o délce l modulů. V některé litaratuře bývají označovány ajko IL-systémy. V této práci se zabývám jejich podmnožinou, třídou 2L-systémů. Přepisovací pravidla v tomto případě zjišťují levý i pravý kontext s maximální délkou 1. Touto třídou lze pokrýt všechny požadované vlastnosti L-systémů na komunikaci modulů mezi sebou i s okolím. Pravidla 2L-systémů se zapisují v následující podobě:
-      </para>
-      <para>
-        <emphasis>lk &lt; předchůdce > pk</emphasis>
+    </para>
+    <para>
+      <simplelist type="vert" columns="1">
+        <member> </member>
+        <member>
+          <emphasis>lk &lt; předchůdce > pk</emphasis>
         <inlineequation>
           <alt role="tex">\to</alt>
           <graphic fileref="math020402.png"/>
         </inlineequation> 
         <emphasis>následovník</emphasis>.
-      </para>
+        </member>
+        <member> </member>
+      </simplelist>
+    </para>
+    <para>
+      U bezzávorkových L-systémů je proces zjišťování, zda přepisovací pravidlo odpovídá kontextu předchůdce, triviální a jednoznačné. Pro závorkové systémy se však literatura rozchází a jsou použity rozdílné podmínky. Jde především o zpracování pravého kontextu. Pro tuto práci jsem se rozhodl použít způsob, jež obdobně používá ve své práci James Scott Hannan <citation>Hanan92</citation>. Na rozdíl od jiných přístupů respektuje topologickou strukturu rostliny. Pokud totiž algoritmus například při zpracování pravého kontextu narazí na větvení, porovnává s pravým kontextem každou větev. U jiných přístupů se někdy porovnává pouze větev, která s předchůdcem sousedí v řetězci. Příklad je zobrazen na obrázku <xref linkend="pic020501"/>. Tento způsob párování kontextů je tedy optimální pro použití při interakcích mezi jednotlivými moduly a mezi moduly a prostředím. 
+    </para>
+    <sect2 id="sec020401"> 
+      <title>Párování levého kontextu</title>
       <para>
-        U bezzávorkových L-systémů je proces zjišťování, zda přepisovací pravidlo odpovídá kontextu předchůdce, triviální a jednoznačné. Pro závorkové systémy se však literatura rozchází a jsou použity rozdílné podmínky. Jde především o zpracování pravého kontextu. Pro tuto práci jsem se rozhodl použít způsob, jež obdobně používá ve své práci James Scott Hannan <citation>Hanan92</citation>. Na rozdíl od jiných přístupů respektuje topologickou strukturu rostliny. Pokud totiž algoritmus například při zpracování pravého kontextu narazí na větvení, porovnává s pravým kontextem každou větev. U jiných přístupů se někdy porovnává pouze větev, která s předchůdcem sousedí v řetězci. Příklad je zobrazen na obrázku <xref linkend="pic020501"/>. Tento způsob párování kontextů je tedy optimální pro použití při interakcích mezi jednotlivými moduly a mezi moduly a prostředím. 
-      </para>
-      <sect2 id="sec020401"> 
-        <title>Párování levého kontextu</title>
-        <para>
           Při párování levého kontextu dochází k porovnání modulů kontextu s moduly, které jsou v řetězci slova umístěny nalevo od modulu předchůdce. V topologii rostlinného organismu se tedy jedná o části rostliny, jež leží na nejkratší cestě ke kořenům. Pro každý modul existuje pouze jedna taková cesta a párování se tedy provádí pouze s jedním řetězcem modulů. Tato cesta, jež je v topologii spojitá, nemusí v řetězci slova tvořit spojitý řetězec modulů. Pokud je při tomto párování nalezen modul <envar>]</envar>, znamená to , že zde končí vedlejší větev, která však topologicky nenavazuje a musí být přeskočena. Párování tedy pokračuje za odpovídajícím symbolem <envar><alt role="tex">[</alt></envar>. Obrázek <xref linkend="pic020401"/> ukazuje, jakým způsobem se levý kontext páruje. Modul <emphasis>A</emphasis> je zde levým kontextem pro předchůdce <emphasis>B</emphasis> i <emphasis>C</emphasis>. Modul <emphasis>B</emphasis> však není předchůdcem <emphasis>C</emphasis>, neboť spolu topologicky nijak nesouvisí.      
         </para>
         <figure float="1" id="pic020401">
