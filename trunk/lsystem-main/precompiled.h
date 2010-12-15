@@ -31,6 +31,9 @@
 #include <osg/LightModel>
 #include <osgShadow/ShadowedScene>
 #include <osgShadow/ShadowMap>
+#include <osgShadow/SoftShadowMap>
+#include <osgShadow/ShadowVolume>
+#include <osgShadow/ShadowTexture>
 #include <osgDB/ReadFile>
 
 #include <xercesc/parsers/XercesDOMParser.hpp>

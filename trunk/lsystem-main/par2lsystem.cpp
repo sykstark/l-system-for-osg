@@ -130,8 +130,8 @@ multimap<char, Rule>::iterator * Par2LSystem::selectRule(multimap<char, Rule>::i
 			// TODO consider
 
 			// match left context
-            m_Word->peekSymbol(leftContext, false);
-            leftContext = m_Word->matchLeft( (*it)->second.leftContext[0], leftContext, &m_Ignore, NULL );
+			m_Word->peekSymbol(leftContext, false);
+			leftContext = m_Word->matchLeft( (*it)->second.leftContext[0], leftContext, &m_Ignore, NULL );
 			// left context doesn't match
 			if( leftContext < 0 )
 				continue;
@@ -156,8 +156,8 @@ multimap<char, Rule>::iterator * Par2LSystem::selectRule(multimap<char, Rule>::i
 		if((*it)->second.rightContext.length())
 		{
 			// match right context
-            m_Word->peekSymbol(rightContext, true);
-            rightContext = m_Word->matchRight( (*it)->second.rightContext[0], rightContext, &m_Ignore, NULL );
+			m_Word->peekSymbol(rightContext, true);
+			rightContext = m_Word->matchRight( (*it)->second.rightContext[0], rightContext, &m_Ignore, NULL );
 			// right context doesn't match
 			if( rightContext < 0 )
 				continue;

@@ -18,7 +18,7 @@ protected:
     multimap<char, Rule> m_Homomorphisms;
     vector<string> m_SubSystemsFilenames;
     vector< LongString *> m_SubSystemsWords;
-    string m_Ignore;
+	string m_Ignore;
 
     // Loading and parsing
     virtual void setAxiom(std::string &);
