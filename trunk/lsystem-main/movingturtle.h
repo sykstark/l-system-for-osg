@@ -41,6 +41,8 @@ public:
 	virtual int multiplyLength(std::vector<Parameter> &);
 	virtual int multiplyRadius(std::vector<Parameter> &);
 	virtual int multiplyAngle(std::vector<Parameter> &);
+	virtual int multiplyTropismElasticity(std::vector<Parameter> &);
+	virtual int multiplyGravitropismElasticity(std::vector<Parameter> &);
 
 //****************************************************************
 //**						MOVEMENT							**
