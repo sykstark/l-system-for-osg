@@ -209,13 +209,12 @@ Abeceda <emphasis>V</emphasis> je konečná množina <emphasis>symbolů</emphasi
     <inlineequation>
       <alt role="tex">aehik</alt>
     </inlineequation>
-    . Slovo reprezentující tento strom lze pomocí jednoho řetězce zapsat jako
-    </para>    
-    <para>  
+    . Slovo reprezentující tento strom lze pomocí jednoho řetězce zapsat jako 
       <inlineequation>
         <alt role="tex">w = a[b[c]d]e[fg]hi[j]k</alt>
         <graphic fileref="math020301.png"/>
       </inlineequation>  
+      .
     </para>
     <para>
       Řetězce modulů 
@@ -246,7 +245,7 @@ Abeceda <emphasis>V</emphasis> je konečná množina <emphasis>symbolů</emphasi
       <inlineequation>
         <alt role="tex">k</alt>
       </inlineequation> 
-      je hrotem hlavní osy. Obdobně lze pojmenovat i moduly na nižších úrovních a označit například moduly 
+      je hrotem hlavní osy. Obdobně lze pojmenovat i moduly na nižších úrovních a označit  tak například moduly 
       <inlineequation>
         <alt role="tex">c</alt>
       </inlineequation>
@@ -337,7 +336,6 @@ Existuje mnoho implementací kontextových L-systémů. Nejpoužívanější jso
         <member> </member>
       </simplelist>
     </para>
-      <quote></quote>
     <para>
         kde <emphasis>lk</emphasis> je levý a <emphasis>pk</emphasis> pravý kontext. Následující L-systém ukazuje, jakým způsobem je možné propagovat signál.
     </para>
@@ -544,14 +542,42 @@ Protože byly L-systémy navrženy jako matematický model bez geometrické inte
     <sect2 id="sec030101">
       <title>Planární želví grafika</title>
       <para>
-        Neboť původ želví grafiky spočívá v pohybu kurzoru po obrazovce, její původní koncept zahrnoval pohyb ve dvojrozměrném prostředí. Želva je definovaná jako trojice parametrů <emphasis>(x,y,α)</emphasis>, kde <emphasis>x</emphasis> a <emphasis>y</emphasis> udávají kartézké souřadnice želvy a úhel <emphasis>α</emphasis> směr, kterým želva míří, tzv. čelo. Pokud zavedeme navíc hodnotu pro délku kroku a výchozí přírůstek úhlu o který se želva bude otáčet, můžeme vytvořit jednoduchá pravidla pro pohyb želvy v rovině. Jednotlivé znaky pak reprezentují daný modul a také akci která je při načtení tohoto modulu provedena.
+        Neboť původ želví grafiky spočívá v pohybu kurzoru po obrazovce, její původní koncept zahrnoval pohyb ve dvojrozměrném prostředí. Želva je definovaná jako trojice parametrů 
+        <inlineequation>
+          <alt role="tex">(x,y, \alpha )</alt>
+        </inlineequation>
+        , kde 
+        <inlineequation>
+          <alt role="tex">x</alt>
+        </inlineequation>
+        a
+        <inlineequation>
+          <alt role="tex">y</alt>
+        </inlineequation> 
+        udávají kartézké souřadnice želvy a úhel 
+        <inlineequation>
+          <alt role="tex">\alpha</alt>
+        </inlineequation>
+        směr, kterým želva míří. Jde o tzv. čelo želvy. Pokud zavedeme navíc hodnotu pro délku kroku a výchozí přírůstek úhlu o který se želva bude otáčet, můžeme vytvořit jednoduchá pravidla pro pohyb želvy v rovině. Jednotlivé znaky pak reprezentují daný modul a také akci která je při načtení tohoto modulu provedena.
       </para>
       <para>
         <variablelist>
     			<varlistentry>
     				<term>F</term>
     				<listitem>
-    					<para>Želva provede krok vpřed o předem definované délce na pozici <emphasis>(x',y')</emphasis>. Mezi body <emphasis>(x,y)</emphasis> a <emphasis>(x',y')</emphasis> je vykreslena úsečka.</para>
+    					<para>Želva provede krok vpřed o předem definované délce na pozici 
+              <inlineequation>
+                <alt role="tex">(x',y')</alt>
+              </inlineequation>
+              . Mezi body 
+              <inlineequation>
+                <alt role="tex">(x,y)</alt>
+              </inlineequation>
+              a
+              <inlineequation>
+                <alt role="tex">(x',y')</alt>
+              </inlineequation> 
+              je vykreslena úsečka.</para>
     				</listitem>
     			</varlistentry>
           <varlistentry>
@@ -817,15 +843,23 @@ B:*->^(33.95)[^(LeafPitch)#{Leaf}][#{Leaf}]Z[^(LeafPitch)#{Leaf}][#{Leaf}]ZA
     </sect2>
   </sect1>
   <sect1 id="sec0502">
-    <title>Soubory L-systémů</title>
+    <title>Řetězce modulů</title>
     <para>
-      Při generování slova L-systémem dochází k vytváření velmi dlouhých řetězců s nestejnorodými daty. Moduly, ze kterých se řetězce tvoří, totiž kromě znaku pro identifikaci modulu obsahují také parametry různých datových formátů. Zpracování takovýchto dat musí být navíc dostatečně rychlé. Pro tento účel byla proto vytvořena na míru přizpůsobená třída LongString. Data jsou zde uložena ve formátu, který umožňuje rychlou manipulaci s daty, především pak připojení nového řetězce na konec stávajícího. Rychlost provedení této operace je potřeba při iteračním procesu. Ten při každém kroku zpracovává původní slovo a vytváří podle něj na základě přepisovacích pravidel nové slovo další iterace. Provádí to tak, že nahlíží na jednotlivé moduly původního slova zleva doprava a hledá shodu s některým z předchůdců v přepisovacích pravidlech. V případě nalezení pravidla je následník přidán na konec nového slova. V případě, že předchůdce mezi pravidly nalezen není, připojí se na konec kopie původního modulu. Použije se tedy pravidlo identity. Implementací se zabývá kapitola LINK  
+      Při generování slova L-systémem dochází k vytváření velmi dlouhých řetězců s nestejnorodými daty. Moduly, ze kterých se řetězce tvoří, totiž kromě znaku pro identifikaci modulu obsahují také parametry různých datových formátů. Zpracování takovýchto dat musí být navíc dostatečně rychlé. Pro tento účel byla proto vytvořena na míru přizpůsobená třída <envar>LongString</envar>. Data jsou zde uložena ve formátu, který umožňuje rychlou manipulaci s daty, především pak připojení nového řetězce na konec stávajícího. Rychlost provedení této operace je potřeba při iteračním procesu. Ten při každém kroku zpracovává původní slovo a vytváří podle něj na základě přepisovacích pravidel nové slovo další iterace. Provádí to tak, že nahlíží na jednotlivé moduly původního slova zleva doprava a hledá shodu s některým z předchůdců v přepisovacích pravidlech. V případě nalezení pravidla je následník přidán na konec nového slova. V případě, že předchůdce mezi pravidly nalezen není, připojí se na konec kopie původního modulu. Použije se tedy pravidlo identity. Implementací samotného přepisovacího mechanismu se zabývá kapitola <xref linkend="sec050403"/>  
     </para>
     <sect2 id="sec050201">
       <title>Vnitřní struktura řetězce</title> 
       <para>
-        Datová struktura LongString je v jádru tvořena bajtovým polem. Toto pole se nezvětšuje při každém rozšíření řetězce, ale vždy jen po dosažení určité velikosti. Dochází tak ke znatelné úspoře času při alokaci paměti, která se provádí podstatně méně častěji. Každý modul je zde uložen jako znak identifikující daný modul a případně jeho parametry. Parametry mohou být typu int, unsigned char nebo typu double. Implementace dalších typů je možná a jednoduchá. Pro současné použití však nebyly jiné typy zapotřebí. Obrázek LINK ukazuje jakým je způsobem je struktura navržena. 
+        Datová struktura <envar>LongString</envar> je v jádru tvořena bajtovým polem. Toto pole se nezvětšuje při každém rozšíření řetězce, ale vždy jen po dosažení určité velikosti. Dochází tak ke znatelné úspoře času při alokaci paměti, která se provádí podstatně méně častěji. Každý modul je zde uložen jako znak identifikující daný modul a případně jeho parametry. Parametry mohou být typu int, unsigned char nebo typu double. Implementace dalších typů je možná a jednoduchá. Pro současné použití však nebyly jiné typy zapotřebí. Obrázek <xref linkend="pic05020101"/> ukazuje jakým je způsobem je struktura navržena. 
       </para>
+      <figure float="1" id="pic05020101">
+        <title>Vnitřní uspořádání dat v řetězci typu LongString</title>
+  	  	<mediaobject>
+          <imageobject>
+  			    <imagedata fileref="05020101.jpg" format="JPG"/>
+  	      </imageobject>
+        </mediaobject>
+  	  </figure>
       <para>
         Jedno políčko odpovídá jednomu bajtu. Každý modul obsahuje jeden znak, jenž jej identifikuje. Dále pak může obsahovat libovolný počet parametrů. Každý parametr je identifikován dvěma bajty zleva a zprava. Při použití této datové struktury tedy není nutné provádět jakékoli převody mezi typy, jejichž hodnoty jsou tak rychle dostupné. Pro ilustraci byly na obrázku použity u jednoho modulu dva různé datové typy. Současná implementace umožňuje pouze použití modulů, které mají všechny parametry shodného typu.
       </para>
@@ -907,7 +941,7 @@ B:*->^(33.95)[^(LeafPitch)#{Leaf}][#{Leaf}]Z[^(LeafPitch)#{Leaf}][#{Leaf}]ZA
     </para>
     <para>
       <programlisting><![CDATA[
-A(x,y) < B(z) > C(a,b,c) : (x + z > abs(a-c)) -> B(b-1)FA(x/2,y/2) : max(0, 1-1/z*z)
+A(x,y) < B(z) > C(a,b,c):(x>abs(a-c))->B(b-1)FA(x/2,y/2):max(0,1-1/z*z)
    ]]></programlisting>
     </para>
     <para>
@@ -997,7 +1031,7 @@ přidejPřepisovacíPravidlo( řetězec zápisPravidla )
         <programlisting><![CDATA[
 LongString puvodniSlovo;
 LongString noveSlovo;
-for( všechny moduly v puvodniSlovo )
+for( všechny moduly v]]>&nbsp;<![CDATA[puvodniSlovo )
 {
     najdi všechny pravidla, které mají aktuální modul jako předchůdce;
     if( existuje alespoň jedno takové)
