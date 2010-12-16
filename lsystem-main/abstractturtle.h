@@ -26,6 +26,8 @@ const osg::Vec3d UpVec(1.0,0.0,0.0);
 const osg::Vec3d LeftVec(0.0,0.0,1.0);
 const osg::Vec3d Center(0.0,0.0,0.0);
 
+const osg::Vec4d White(1.0,1.0,1.0,1.0);
+
 /**
  *	Abstract class for all turtles with declarations of all necessary functions.
  */
@@ -136,6 +138,8 @@ public:
 	virtual int multiplyLength(std::vector<Parameter> &)	= 0;
 	virtual int multiplyRadius(std::vector<Parameter> &)	= 0;
 	virtual int multiplyAngle(std::vector<Parameter> &)		= 0;
+	virtual int multiplyTropismElasticity(std::vector<Parameter> &)= 0;
+	virtual int multiplyGravitropismElasticity(std::vector<Parameter> &)= 0;
 
 //****************************************************************
 //**						MOVEMENT							**

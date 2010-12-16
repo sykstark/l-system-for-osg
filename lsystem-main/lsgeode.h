@@ -51,6 +51,7 @@ struct TurtleProperties
 	unsigned int flags;
 
 	// direction stimuli
+	double elasticityMultiplier;		///< default multiplier of gravitropism elasticity and diatropism elasticity
 	double gravitropismElasticity;		///< response of stems to gravity
 	double tropismElasticity;			///< response to general tropism
 	double tropismAngle;				///< angle of general tropism

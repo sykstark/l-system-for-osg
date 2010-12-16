@@ -61,24 +61,33 @@ void LSGeode::setDefaultTurtleProperties( TurtleProperties & props )
 
 void LSGeode::setDefaultTurtleProperties( int index )
 {
+	// vector values
+	std::vector<double> values;
+
+	// set reference
 	TurtleProperties & p = defaultTurtleProperties;
+	
 	// create geometry for turtle geometry
 	p.geometry = new osg::Geometry();
+	
 	// create vertex array
 	osg::ref_ptr<osg::Vec3dArray> vertices = new osg::Vec3dArray;
 	p.geometry->setVertexArray( vertices.get() );
+	
 	// create colors array
 	osg::ref_ptr<osg::Vec4dArray> colors = new osg::Vec4dArray;
 	p.geometry->setColorArray( colors.get() );
 	p.geometry->setColorBinding( osg::Geometry::BIND_OVERALL );
-	colors->push_back( osg::Vec4( 1.0, 1.0, 1.0, 1.0 ) );
+	
 	// create normal array
 	osg::ref_ptr<osg::Vec3dArray> normals = new osg::Vec3dArray;
 	p.geometry->setNormalArray( normals.get() );
 	p.geometry->setNormalBinding( osg::Geometry::BIND_PER_VERTEX );
+	
 	// create textures array
 	osg::ref_ptr<osg::Vec2dArray> textures = new osg::Vec2dArray;
 	p.geometry->setTexCoordArray( 0, textures.get() );
+	
 	// add geometry to LSGeode
 	this->addDrawable( defaultTurtleProperties.geometry.get() );
 
@@ -97,32 +106,33 @@ void LSGeode::setDefaultTurtleProperties( int index )
 			diffTexture->setWrap( osg::Texture::WRAP_S, osg::Texture::REPEAT ); // x-axis
 			diffTexture->setWrap( osg::Texture::WRAP_T, osg::Texture::REPEAT ); // y-axis
 			
-/*
-			state->setMode(GL_ALPHA_TEST, osg::StateAttribute::ON);
-			state->setAttributeAndModes( new osg::BlendFunc, osg::StateAttribute::ON );
-			osg::AlphaFunc* alphaFunc = new osg::AlphaFunc;
-			alphaFunc->setFunction(osg::AlphaFunc::GEQUAL,0.05f);
-			state->setAttributeAndModes( alphaFunc, osg::StateAttribute::ON );
-*/
 			state->setTextureAttributeAndModes( 0, diffTexture.get(), osg::StateAttribute::ON );		
 
 			// for translucent textures
 			if ( diffIm->isImageTranslucent() )
 			{
-			  // set blending 
+				// set blending 
 				state->setMode(GL_BLEND,osg::StateAttribute::ON);
 				state->setRenderingHint(osg::StateSet::TRANSPARENT_BIN);
    
-        // use lighting for both sides     
-        osg::ref_ptr<osg::LightModel> lm = new osg::LightModel;
-  			lm->setTwoSided(true);
-  			state->setAttribute( lm.get(), osg::StateAttribute::OVERRIDE );			
+				// use lighting for both sides     
+				osg::ref_ptr<osg::LightModel> lm = new osg::LightModel;
+  				lm->setTwoSided(true);
+  				state->setAttribute( lm.get(), osg::StateAttribute::OVERRIDE );			
 			}
 		}
 		else
 		{
-		    // TODO logger
-    }
+			vrecko::logger.warningLog( "Texture %s not laoded !", file.c_str() );
+		}
+
+		colors->push_back( White );
+	}
+	else
+	{
+		StringUtils::processVector(Configuration::get()->getProperty( index, "Color" )->as<std::string>(), values );
+		colors->push_back( osg::Vec4d( values[0], values[1], values[2], 1.0 ) );
+		values.clear();
 	}
 
 	// version which sets the color of the wireframe.
@@ -184,8 +194,7 @@ void LSGeode::setDefaultTurtleProperties( int index )
 	p.tropismElasticity			= Configuration::get()->getProperty( index, "TropismElasticity" )->as<double>();
 	p.tropismAngle				= Configuration::get()->getProperty( index, "TropismAngle" )->as<double>();
 	
-	// process vectors
-	std::vector<double> values;
+	
 
 	StringUtils::processVector(Configuration::get()->getProperty( index, "TropismVector" )->as<std::string>(), values );
 	p.tropismVector = osg::Vec3d( values[0], values[1], values[2] );

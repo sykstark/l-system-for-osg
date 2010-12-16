@@ -315,7 +315,7 @@ int MovingTurtle::multiplyRadius(std::vector<Parameter> & p)
 	switch( p.size() )
 	{
 	case 0:
-		this->properties.length *= properties.radiusMultiplier;
+		this->properties.radius *= properties.radiusMultiplier;
 		break;
 	case 1:
 		if (p[0].type != Parameter::LS_DOUBLE)
@@ -334,12 +334,50 @@ int MovingTurtle::multiplyAngle(std::vector<Parameter> & p)
 	switch( p.size() )
 	{
 	case 0:
-		this->properties.length *= properties.angleMultiplier;
+		this->properties.angle *= properties.angleMultiplier;
 		break;
 	case 1:
 		if (p[0].type != Parameter::LS_DOUBLE)
 			return LS_ERR_PAR_BADTYPE;
-		this->properties.radius *= *(static_cast<double *>(p[0].value) ); 
+		this->properties.angle *= *(static_cast<double *>(p[0].value) ); 
+		break;
+	default:
+		return LS_ERR_PAR_INVALIDCOUNT;
+	}
+
+	return LS_OK;
+}
+
+int MovingTurtle::multiplyTropismElasticity(std::vector<Parameter> & p)
+{
+	switch( p.size() )
+	{
+	case 0:
+		this->properties.tropismElasticity *= properties.elasticityMultiplier;
+		break;
+	case 1:
+		if (p[0].type != Parameter::LS_DOUBLE)
+			return LS_ERR_PAR_BADTYPE;
+		this->properties.tropismElasticity *= *(static_cast<double *>(p[0].value) ); 
+		break;
+	default:
+		return LS_ERR_PAR_INVALIDCOUNT;
+	}
+
+	return LS_OK;
+}
+
+int MovingTurtle::multiplyGravitropismElasticity(std::vector<Parameter> & p)
+{
+	switch( p.size() )
+	{
+	case 0:
+		this->properties.gravitropismElasticity *= properties.elasticityMultiplier;
+		break;
+	case 1:
+		if (p[0].type != Parameter::LS_DOUBLE)
+			return LS_ERR_PAR_BADTYPE;
+		this->properties.gravitropismElasticity *= *(static_cast<double *>(p[0].value) ); 
 		break;
 	default:
 		return LS_ERR_PAR_INVALIDCOUNT;
