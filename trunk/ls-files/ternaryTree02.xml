@@ -3,6 +3,7 @@
   <Name>ternarni strom</Name>
   <Types>
     <Type>0L</Type>
+    <Type>PARAMETRIC</Type>
   </Types>
   <Constants>
     <high>0.2</high>
@@ -22,7 +23,13 @@
   </Subsystems>
   <Axiom>F'(0.65)A</Axiom>
   <Rules>
-    <Rule>A->!(0.577)'(0.87)[/(90.74)B][/(-132.63)B]B</Rule>
-    <Rule>B->^(33.95)[^^#{Leaf01}][#{Leaf01}]Z[^^#{Leaf01}][#{Leaf01}]ZA</Rule>
+    <Rule>A:*->!(0.577)'(0.87)[/(90.74)B][/(-132.63)B]B</Rule>
+    <Rule>B:*->^(33.95)[^^L(0)][L(0)]Z[^^L(0)][L(0)]ZA</Rule>
+    <Rule>L(x):(5>x)->L(x+1)</Rule>
+    <Rule>L(x):(x>4)->e</Rule>
+    
   </Rules>
+  <Homomorphisms>
+    <Homomorphism>L(x)->#{Leaf01}</Homomorphism>
+  </Homomorphisms>
 </LSystem>
