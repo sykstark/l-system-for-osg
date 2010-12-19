@@ -33,7 +33,6 @@ public:
 	virtual int rollArround();
 	virtual int rollUntilHorizontal();
 	virtual int randomTurnPitchRoll(std::vector<Parameter> &);
-	virtual int tropism(std::vector<Parameter> &);
 
 //****************************************************************
 //**				    CHANGE PROPERTIES						**

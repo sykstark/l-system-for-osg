@@ -82,9 +82,6 @@ int TurtleInterpret::parse(ParseableString * word)
 		case '~':
 			res = turtles.top()->multiplyGravitropismElasticity( parameters );
 			break;
-		case '~':
-			res = turtles.top()->multiplyTropismElasticity( parameters );
-			break;
 		case '$':
 			res = switchGeode( parameters );
 			break;
