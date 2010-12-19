@@ -5,21 +5,21 @@
     <Type>2L</Type>
   </Types>
   <Constants>
-    <prune>(abs(x)>4)|(y&lt;0)|(y>8)|(abs(z)>4)</prune>
-    <_a_>42</_a_>
-    <_b_>42</_b_>
+    <prune>(abs(x)>4)|(0>y)|(y>8)|(abs(z)>4)</prune>
+    <_a_>40</_a_>
+    <_b_>46</_b_>
     <_c_>93</_c_>
-    <XX>'(0.89)!(max(0.5,1-(k/(k*1.8*(k+1)))))</XX>
+    <XX>'(0.96)!(max(0.5,1-(k/(k*1.8*(k+1)))))</XX>
   </Constants>
   <Parameters>
-    <Iteration>55</Iteration>
+    <Iteration>90</Iteration>
     <TurtleType>STRAIGHT_PIPE</TurtleType>
     <DefaultAngle>40.0</DefaultAngle>
-    <DefaultLength>0.4</DefaultLength>
-    <ContourDetail>4</ContourDetail>
-    <DefaultRadius>0.05</DefaultRadius>
+    <DefaultLength>0.5</DefaultLength>
+    <ContourDetail>7</ContourDetail>
+    <DefaultRadius>0.06</DefaultRadius>
     <AngleVariance>0</AngleVariance>
-    <DiffuseTexture>data\ls\tex\bark\bark_20091031_02_512x512_seamless.jpg</DiffuseTexture>
+    <!-- <DiffuseTexture>data\ls\tex\bark\bark_20091031_02_512x512_seamless.jpg</DiffuseTexture> -->
     <Ignore>+/-</Ignore>
   </Parameters>
   <Subsystems>
