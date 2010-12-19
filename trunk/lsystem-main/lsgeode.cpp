@@ -78,6 +78,7 @@ void LSGeode::setDefaultTurtleProperties( int index )
 	osg::ref_ptr<osg::Vec4dArray> colors = new osg::Vec4dArray;
 	p.geometry->setColorArray( colors.get() );
 	p.geometry->setColorBinding( osg::Geometry::BIND_OVERALL );
+	colors->push_back( White );
 	
 	// create normal array
 	osg::ref_ptr<osg::Vec3dArray> normals = new osg::Vec3dArray;
@@ -125,40 +126,68 @@ void LSGeode::setDefaultTurtleProperties( int index )
 		{
 			vrecko::logger.warningLog( "Texture %s not laoded !", file.c_str() );
 		}
+	}
 
-		colors->push_back( White );
+	const variable_value * mat = Configuration::get()->getProperty( index , "DiffuseMaterial" );
+	
+	if( mat )
+	{
+		osg::Material* material = new osg::Material;
+		// disable glColor
+		material->setColorMode(osg::Material::OFF);
+		
+		// diffuse material
+		StringUtils::processVector(Configuration::get()->getProperty( index, "DiffuseMaterial" )->as<std::string>(), values );
+		material->setDiffuse(osg::Material::FRONT_AND_BACK, osg::Vec4(values[0],values[1],values[2],1.0f));
+		values.clear();
+
+		mat = Configuration::get()->getProperty( index , "AmbientMaterial" );
+		if( mat )
+		{
+			StringUtils::processVector(mat->as<std::string>(), values );
+			material->setAmbient(osg::Material::FRONT_AND_BACK, osg::Vec4(values[0],values[1],values[2],1.0f));
+			values.clear();
+		}
+		else
+			material->setAmbient(osg::Material::FRONT_AND_BACK, osg::Vec4(0.0f,0.0f,0.0f,1.0f));
+
+		mat = Configuration::get()->getProperty( index , "SpecularMaterial" );
+		if( mat )
+		{
+			StringUtils::processVector(mat->as<std::string>(), values );
+			material->setSpecular(osg::Material::FRONT_AND_BACK, osg::Vec4(values[0],values[1],values[2],1.0f));
+			values.clear();
+		}
+		else
+			material->setSpecular(osg::Material::FRONT_AND_BACK, osg::Vec4(0.0f,0.0f,0.0f,1.0f));
+
+		mat = Configuration::get()->getProperty( index , "EmissionMaterial" );
+		if( mat )
+		{
+			StringUtils::processVector(mat->as<std::string>(), values );
+			material->setEmission(osg::Material::FRONT_AND_BACK, osg::Vec4(values[0],values[1],values[2],1.0f));
+			values.clear();
+		}
+		else
+			material->setEmission(osg::Material::FRONT_AND_BACK, osg::Vec4(0.0f,0.0f,0.0f,1.0f));
+		
+		state->setAttributeAndModes(material,osg::StateAttribute::ON);
+		state->setMode(GL_LIGHTING,osg::StateAttribute::ON);
 	}
 	else
 	{
-		StringUtils::processVector(Configuration::get()->getProperty( index, "Color" )->as<std::string>(), values );
-		colors->push_back( osg::Vec4d( values[0], values[1], values[2], 1.0 ) );
-		values.clear();
+		const variable_value * color = Configuration::get()->getProperty( index , "Color" );
+		if( color )
+		{
+			StringUtils::processVector(color->as<std::string>(), values );
+			colors->clear();
+			colors->push_back( osg::Vec4d( values[0], values[1], values[2], 1.0 ) );
+			values.clear();
+		}
 	}
-
-	// version which sets the color of the wireframe.
-    osg::Material* material = new osg::Material;
-    material->setColorMode(osg::Material::OFF); // switch glColor usage off
-    // turn all lighting off
-    material->setAmbient(osg::Material::FRONT_AND_BACK, osg::Vec4(0.5,0.5f,0.5f,1.0f));
-    material->setDiffuse(osg::Material::FRONT_AND_BACK, osg::Vec4(0.5,0.5f,0.5f,1.0f));
-    material->setSpecular(osg::Material::FRONT_AND_BACK, osg::Vec4(0.0,0.0f,0.0f,1.0f));
-    // except emission... in which we set the color we desire
-    material->setEmission(osg::Material::FRONT_AND_BACK, osg::Vec4(0.0,0.0f,0.0f,1.0f));
-	state->setAttributeAndModes(material,osg::StateAttribute::ON);
-	state->setMode(GL_LIGHTING,osg::StateAttribute::ON);
 
 	// initialize starting T coordinate of texture
 	p.texCoordT = 0.0f;
-
-	const variable_value * diffMatFile = Configuration::get()->getProperty( index , "diffuse_material" );
-	if( diffMatFile )
-	{
-/*		osg::ref_ptr<osg::StateSet> state = this->getOrCreateStateSet();
-		state->setTextureAttributeAndModes( 0, diffTexture.get(), osg::StateAttribute::ON );
-		state->setMode(GL_BLEND,osg::StateAttribute::ON);
-		state->setRenderingHint(osg::StateSet::TRANSPARENT_BIN);	*/		
-	}
-	/* else if TODO material & color */
 
 	// set anti-twist frame
 	p.lastFrame.makeIdentity();

@@ -51,14 +51,7 @@ void MovingTurtle::adjustMatrices( )
 	osg::Vec3d headLast = properties.lastFrame.getRotate() * HeadVec;
 	properties.lastFrame = properties.lastFrame * osg::Matrixd::rotate( headLast, head );
 
-	drawFrame( properties.lastFrame * osg::Matrixd::translate( properties.matrix.getTrans() ), new osg::Vec4d( 1.0, 1.0, 0.5, 1.0 ) ); 
-	//drawFrame( properties.lastFrame, new osg::Vec4d( 1.0, 1.0, 0.5, 1.0 ) ); 
-
-	// TODO remove ?
-	//osg::Vec3d levy = properties.lastFrame * LeftVec;
-	//levy.normalize();
-	//drawVector( head, osg::Matrixd::identity(), osg::Vec4d( 1.0,0.5,1.0, 1.0 ));
-	
+	drawFrame( properties.lastFrame * osg::Matrixd::translate( properties.matrix.getTrans() ), new osg::Vec4d( 1.0, 1.0, 0.5, 1.0 ) ); 	
 }
 
 int MovingTurtle::makeRotate(osg::Quat & q)
@@ -157,12 +150,15 @@ int MovingTurtle::turnLeft(std::vector<Parameter> & p)
 	switch( p.size() )
 	{
 	case 0:
-		this->makeRotate( osg::Quat( - rand( properties.angle ), osg::Vec3d(1.0,0.0,0.0) ) ); 
+		{
+		double a = rand( properties.angle );
+		this->makeRotate( osg::Quat( - a, UpVec ) ); 
+		}
 		break;
 	case 1:
 		if (p[0].type != Parameter::LS_DOUBLE)
 			return LS_ERR_PAR_BADTYPE;
-		this->makeRotate( osg::Quat( - rand( toRad(*(static_cast<double *>(p[0].value)))), osg::Vec3d(1.0,0.0,0.0) ) ); 		
+		this->makeRotate( osg::Quat( - rand( toRad(*(static_cast<double *>(p[0].value)))), UpVec ) ); 		
 		break;
 	default:
 		return LS_ERR_PAR_INVALIDCOUNT;
@@ -176,12 +172,12 @@ int MovingTurtle::turnRight(std::vector<Parameter> & p)
 	switch( p.size() )
 	{
 	case 0:
-		this->makeRotate( osg::Quat( rand(properties.angle), osg::Vec3d(1.0,0.0,0.0) ) ); 
+		this->makeRotate( osg::Quat( rand(properties.angle), UpVec ) ); 
 		break;
 	case 1:
 		if (p[0].type != Parameter::LS_DOUBLE)
 			return LS_ERR_PAR_BADTYPE;
-		this->makeRotate( osg::Quat( rand( toRad(*(static_cast<double *>(p[0].value)))), osg::Vec3d(1.0,0.0,0.0) ) ); 
+		this->makeRotate( osg::Quat( rand( toRad(*(static_cast<double *>(p[0].value)))), UpVec ) ); 
 		break;
 	default:
 		return LS_ERR_PAR_INVALIDCOUNT;
@@ -200,7 +196,7 @@ int MovingTurtle::pitchDown(std::vector<Parameter> & p)
 	case 1:
 		if (p[0].type != Parameter::LS_DOUBLE)
 			return LS_ERR_PAR_BADTYPE;
-		this->makeRotate( osg::Quat( rand( toRad(*(static_cast<double *>(p[0].value)))), osg::Vec3d(0.0,0.0,1.0) ) ); 
+		this->makeRotate( osg::Quat( rand( toRad(*(static_cast<double *>(p[0].value)))), LeftVec ) ); 
 		break;
 	default:
 		return LS_ERR_PAR_INVALIDCOUNT;
@@ -219,7 +215,7 @@ int MovingTurtle::pitchUp(std::vector<Parameter> & p)
 	case 1:
 		if (p[0].type != Parameter::LS_DOUBLE)
 			return LS_ERR_PAR_BADTYPE;
-		this->makeRotate( osg::Quat( - rand( toRad(*(static_cast<double *>(p[0].value)))), osg::Vec3d(0.0,0.0,1.0) ) ); 
+		this->makeRotate( osg::Quat( - rand( toRad(*(static_cast<double *>(p[0].value)))), LeftVec ) ); 
 		break;
 	default:
 		return LS_ERR_PAR_INVALIDCOUNT;
@@ -233,12 +229,12 @@ int MovingTurtle::rollLeft(std::vector<Parameter> & p)
 	switch( p.size() )
 	{
 	case 0:
-		this->makeRotate( osg::Quat( - rand( properties.angle ), osg::Vec3d(0.0,1.0,0.0) ) ); 
+		this->makeRotate( osg::Quat( - rand( properties.angle ), HeadVec ) ); 
 		break;
 	case 1:
 		if (p[0].type != Parameter::LS_DOUBLE)
 			return LS_ERR_PAR_BADTYPE;
-		this->makeRotate( osg::Quat( - rand( toRad(*(static_cast<double *>(p[0].value)))), osg::Vec3d(0.0,1.0,0.0) ) ); 
+		this->makeRotate( osg::Quat( - rand( toRad(*(static_cast<double *>(p[0].value)))), HeadVec ) ); 
 		break;
 	default:
 		return LS_ERR_PAR_INVALIDCOUNT;
@@ -252,12 +248,12 @@ int MovingTurtle::rollRight(std::vector<Parameter> & p)
 	switch( p.size() )
 	{
 	case 0:
-		this->makeRotate( osg::Quat( rand( properties.angle ), osg::Vec3d(0.0,1.0,0.0) ) ); 
+		this->makeRotate( osg::Quat( rand( properties.angle ), HeadVec ) ); 
 		break;
 	case 1:
 		if (p[0].type != Parameter::LS_DOUBLE)
 			return LS_ERR_PAR_BADTYPE;
-		this->makeRotate( osg::Quat( rand( toRad(*(static_cast<double *>(p[0].value)))), osg::Vec3d(0.0,1.0,0.0) ) ); 
+		this->makeRotate( osg::Quat( rand( toRad(*(static_cast<double *>(p[0].value)))), HeadVec ) ); 
 		break;
 	default:
 		return LS_ERR_PAR_INVALIDCOUNT;
@@ -268,12 +264,17 @@ int MovingTurtle::rollRight(std::vector<Parameter> & p)
 
 int MovingTurtle::rollUntilHorizontal( )
 {
-	return LS_NOTDEFINED;
-}
+	osg::Vec3d head0 = properties.matrix.getRotate() * HeadVec;
+	osg::Vec3d left0 = properties.matrix.getRotate() * LeftVec;
+	osg::Vec3d left1 = HeadVec ^ head0;
 
-int MovingTurtle::tropism(std::vector<Parameter> & p)
-{
-	return LS_NOTDEFINED;
+	left0.normalize();
+	left1.normalize();
+
+	properties.matrix = ( osg::Matrixd::rotate(properties.matrix.getRotate()) * osg::Matrixd::rotate( left0, left1 )) *
+						osg::Matrixd::translate( properties.matrix.getTrans() );
+
+	return LS_OK;
 }
 
 int MovingTurtle::rollArround( )
@@ -283,7 +284,9 @@ int MovingTurtle::rollArround( )
 
 int MovingTurtle::turnArround( )
 {
-	return LS_NOTDEFINED;
+	this->makeRotate( osg::Quat( PI, UpVec ) ); 
+
+	return LS_OK;
 }
 
 int MovingTurtle::randomTurnPitchRoll(std::vector<Parameter> & p)

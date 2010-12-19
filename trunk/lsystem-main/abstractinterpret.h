@@ -60,6 +60,29 @@ public:
 		}
 	}
 
+	static const char * errorText( int error )
+	{
+		switch( error )
+		{
+		case LS_OK:
+			return "OK. No error.";
+		case LS_NOTDEFINED:
+			return "Method is not defined";
+		case LS_ERR_PAR_BADTYPE:
+			return "Bad type of module parameter";
+		case LS_ERR_PAR_INVALIDCOUNT:
+			return "Invalid number of parameters";
+		case LS_ERR_DRAWFORWARD_NEGATIVEDISTANCE:
+			return "Negative value of step distance";
+		case LS_ERR_STACK_UNKNOWN_TURTLE_TYPE:
+			return "Unknown turtle type";
+		case LS_ERR_STACK_NULL_LSGEODE:
+			return "NULL geode";
+		default:
+			return "Unknown error code";
+		}
+	}
+
 	virtual int parse( ParseableString * ) = 0;
 };
 }

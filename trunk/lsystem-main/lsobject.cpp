@@ -48,11 +48,11 @@ void LSObject::postInitialize()
 		return;
 	}
 
-	AbstractInterpret * interpreter = new TurtleInterpret( /*LSScene*/pEOOwner );
+	AbstractInterpret * interpreter = new TurtleInterpret( pEOOwner );
 	int res = interpreter->parse( pWord ); 
 	if( res )
 	{
-		logger.errorLog( "Parser error: %d ", res );
+		logger.errorLog( "Parser error: %s ", AbstractInterpret::errorText(res) );
 		return;
 	}
 

@@ -9,7 +9,7 @@ namespace AP_LSystem {
 //class LSGeode;
 //struct TurtleProperties;
 
-enum ParsingErrorCodes
+enum InterpretErrorCodes
 {
 	LS_OK,
 	LS_NOTDEFINED,
@@ -130,7 +130,6 @@ public:
 	virtual int rollArround()								= 0;
 	virtual int rollUntilHorizontal()						= 0;
 	virtual int randomTurnPitchRoll(std::vector<Parameter>&)= 0;
-	virtual int tropism(std::vector<Parameter> &)			= 0;
 
 //****************************************************************
 //**				    CHANGE PROPERTIES						**
