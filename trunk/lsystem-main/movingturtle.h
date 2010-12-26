@@ -22,6 +22,9 @@ public:
 //****************************************************************
 //**						ROTATION							**
 //****************************************************************
+	/**
+	  *
+	  */
 	virtual int turnLeft(std::vector<Parameter> &);
 	virtual int turnRight(std::vector<Parameter> &);
 	virtual int pitchDown(std::vector<Parameter> &);

@@ -56,8 +56,6 @@ void LSystemGenerator::loadFile(std::string & filename)
     m_MainLSystem = AbstractGenerator::createLSystem( file );
 
     delete file;
-
-    //D0LSystem d = *dynamic_cast<D0LSystem *>(m_MainLSystem);
 }
 
 void LSystemGenerator::nextIteration()

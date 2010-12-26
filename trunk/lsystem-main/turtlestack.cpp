@@ -5,6 +5,7 @@
 #include "rectangle.h"
 #include "queryturtle.h"
 #include "hermitpipe.h"
+#include "log.h"
 
 using namespace AP_LSystem;
 
@@ -90,6 +91,8 @@ AbstractTurtle * TurtleStack::createTurtle(AP_LSystem::TurtleType type)
 {
 	AbstractTurtle * turtle = NULL;
 
+	Log::get()->incTurtleCounter();
+
 	switch( type )
 	{
 	case LS_TURTLE_JOINTEDPIPE:
@@ -107,7 +110,6 @@ AbstractTurtle * TurtleStack::createTurtle(AP_LSystem::TurtleType type)
 	case LS_TURTLE_QUERY:
 		turtle = new QueryTurtle( );
 		break;
-	// TODO other types
 	}
 
 	return turtle;

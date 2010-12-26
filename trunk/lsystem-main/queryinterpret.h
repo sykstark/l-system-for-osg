@@ -3,6 +3,7 @@
 
 #include "abstractinterpret.h"
 #include "lsgeode.h"
+#include "log.h"
 
 namespace AP_LSystem {
 class QueryInterpret : public AbstractInterpret
@@ -147,6 +148,8 @@ public:
 		}
 		dirty |= QueryInterpret::POSITIONX;
 
+		Log::get()->incQueryCounter();
+
 		return matrix.getTrans().x();
 	}
 
@@ -162,6 +165,8 @@ public:
 		}
 		dirty |= QueryInterpret::POSITIONY;
 
+		Log::get()->incQueryCounter();
+
 		return matrix.getTrans().y();
 	}
 
@@ -176,6 +181,8 @@ public:
 			dirty &= ~QueryInterpret::POSITION;
 		}
 		dirty |= QueryInterpret::POSITIONZ;
+
+		Log::get()->incQueryCounter();
 
 		return matrix.getTrans().z();
 	}
@@ -194,6 +201,8 @@ public:
 
 		osg::Vec3d v = matrix.getRotate() * HeadVec;
 
+		Log::get()->incQueryCounter();
+
 		return v.x();
 	}
 
@@ -210,6 +219,8 @@ public:
 		dirty |= QueryInterpret::HEADING;
 
 		osg::Vec3d v = matrix.getRotate() * HeadVec;
+
+		Log::get()->incQueryCounter();
 
 		return v.y();
 	}
@@ -228,6 +239,8 @@ public:
 
 		osg::Vec3d v = matrix.getRotate() * HeadVec;
 
+		Log::get()->incQueryCounter();
+
 		return v.z();
 	}
 
@@ -244,6 +257,8 @@ public:
 		dirty |= QueryInterpret::UP;
 
 		osg::Vec3d v = matrix.getRotate() * UpVec;
+
+		Log::get()->incQueryCounter();
 
 		return v.x();
 	}
@@ -262,6 +277,8 @@ public:
 
 		osg::Vec3d v = matrix.getRotate() * UpVec;
 
+		Log::get()->incQueryCounter();
+
 		return v.y();
 	}
 
@@ -278,6 +295,8 @@ public:
 		dirty |= QueryInterpret::UP;
 
 		osg::Vec3d v = matrix.getRotate() * UpVec;
+
+		Log::get()->incQueryCounter();
 
 		return v.z();
 	}
@@ -296,6 +315,8 @@ public:
 
 		osg::Vec3d v = matrix.getRotate() * LeftVec;
 
+		Log::get()->incQueryCounter();
+
 		return v.x();
 	}
 
@@ -313,6 +334,8 @@ public:
 
 		osg::Vec3d v = matrix.getRotate() * LeftVec;
 
+		Log::get()->incQueryCounter();
+
 		return v.y();
 	}
 
@@ -329,6 +352,8 @@ public:
 		dirty |= QueryInterpret::LEFT;
 
 		osg::Vec3d v = matrix.getRotate() * LeftVec;
+
+		Log::get()->incQueryCounter();
 
 		return v.z();
 	}

@@ -238,6 +238,8 @@ bool LSystem::transcribe(multimap<char, Rule> &rules)
 
     for(unsigned int i = 0; i < m_Word->length(); i++ )
     {
+		Log::get()->incModuleCounter();
+
         // mozna dodat kontrolu estli jde o pismeno
         result = rules.equal_range( (*m_Word)[i]);
 
@@ -252,6 +254,7 @@ bool LSystem::transcribe(multimap<char, Rule> &rules)
         // found
         else
 		{
+			Log::get()->incRewritingCounter();
             pRuleIt = selectRule( result.first, result.second, m_Word, i, pParams );
 
 			if(pRuleIt)
