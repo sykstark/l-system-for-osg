@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<LSystem>
+  <Name>klouby</Name>
+  <Types>
+    <Type>0L</Type>
+  </Types>
+  <Constants>
+    <high>0.2</high>
+  </Constants>
+  <Parameters>
+    <Iteration>0</Iteration>
+    <TurtleType>STRAIGHT_PIPE</TurtleType>
+    <DefaultAngle>90.0</DefaultAngle>
+    <DefaultLength>1.0</DefaultLength>
+    <ContourDetail>10</ContourDetail>
+    <DefaultRadius>0.05</DefaultRadius>
+    <AngleVariance>0</AngleVariance>
+    <DiffuseTexture>data\ls\tex\kura02.jpg</DiffuseTexture>
+    <TextureSRepeatings>3</TextureSRepeatings>
+  </Parameters>
+  <Subsystems>
+    <Subsystem>d:\HCI\VRECKO\bin\data\ls\leaf01.ls</Subsystem>
+    <Subsystem>d:\HCI\VRECKO\bin\data\ls\leafbriza.ls</Subsystem>
+    <Subsystem>d:\HCI\VRECKO\bin\data\ls\leafjavor.ls</Subsystem>
+    <Subsystem>d:\HCI\VRECKO\bin\data\ls\leaftresen.ls</Subsystem>
+  </Subsystems>
+  <Axiom>/(45)FF&amp;FF#{SerikList}F#{TresenList}F#{BrizaList}F#{JavorList}F</Axiom>
+  <Rules>
+    <Rule>A->F[+A][-A]</Rule>
+  </Rules>
+  <Homomorphisms>
+    <!--  <Homomorphism>+->+F+F+F+F</Homomorphism> -->
+  </Homomorphisms>
+</LSystem>

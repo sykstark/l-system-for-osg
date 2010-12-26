@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<LSystem>
+  <Name>antiroll</Name>
+  <Types>
+    <Type>0L</Type>
+  </Types>
+  <Parameters>
+    <Iteration>0</Iteration>
+    <TurtleType>STRAIGHT_PIPE</TurtleType>
+    <DefaultAngle>30.0</DefaultAngle>
+    <DefaultLength>2.0</DefaultLength>
+    <ContourDetail>8</ContourDetail>
+    <DefaultRadius>0.5</DefaultRadius>
+    <AngleVariance>0</AngleVariance>   
+    <DrawDebugGeometry>0</DrawDebugGeometry>
+    <MinimizeTwist>1</MinimizeTwist>
+  </Parameters>
+  <Axiom>F/F/F/F/F/F</Axiom>
+</LSystem>
