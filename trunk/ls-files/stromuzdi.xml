@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<LSystem>
+  <Name>ternarni strom</Name>
+  <Types>
+    <Type>2L</Type>
+  </Types>
+  <Constants>
+    <prune>(-10>z)</prune>
+    <_a_>20</_a_>
+    <_b_>35</_b_>
+    <_c_>90</_c_>
+    <XX>'(0.88)!(0.807)<!-- (max(0.5,1-(k/(k*1.8*(k+1))))) --></XX>
+    <YY>'(0.82)!(0.607)<!-- (max(0.5,1-(k/(k*1.8*(k+1))))) --></YY>
+    <ZZ>'(0.90)!(0.9)<!-- (max(0.5,1-(k/(k*1.8*(k+1))))) --></ZZ>
+  </Constants>
+  <Parameters>
+    <Iteration>20</Iteration>
+    <TurtleType>STRAIGHT_PIPE</TurtleType>
+    <DefaultAngle>40.0</DefaultAngle>
+    <DefaultLength>3</DefaultLength>
+    <ContourDetail>7</ContourDetail>
+    <DefaultRadius>0.5</DefaultRadius>
+    <AngleVariance>0</AngleVariance>
+    <DiffuseTexture>data\ls\tex\bark\bark_20091031_02_512x512_seamless.jpg</DiffuseTexture> 
+    <Ignore>+/-</Ignore>
+  </Parameters>
+  <Subsystems>
+    <Subsystem>d:\HCI\VRECKO\bin\data\ls\leaf01.ls</Subsystem>
+  </Subsystems>
+  <Axiom>X</Axiom>
+  <Rules>
+    <Rule>&lt;X>->FA(1)P(positionX(),positionY(),positionZ())</Rule>
+   <!--  <Rule>&lt;A(k)>P(x,y,z)->/(45)[+(_a_)XXFA(k+1)]-(_b_)XXFA(k+1):min(1,(2*k+1)/(k*k))</Rule> -->
+    <Rule>&lt;A(k)>P(x,y,z):(!(prune))->/(_c_)[+(_a_)XXL(0)FA(k+1)P(positionX(),positionY(),positionZ())]-(_b_)YYL(0)FA(k+1):min(1,(2*k+1)/(k*k))</Rule>
+    <Rule>&lt;A(k)>P(x,y,z):(!(prune))->/(_c_)B(k+1,k+1)-(_b_)ZZL(0)FA(k+1):max(0,1-((2*k+1)/(k*k)))</Rule>
+    <Rule>&lt;A(k)>P(x,y,z):(prune)->T%</Rule>  
+    <Rule>&lt;F>T->S</Rule>
+    <Rule>&lt;F>S->SF</Rule>
+    <Rule>&lt;S>->e</Rule>
+    <Rule>&lt;B(m,n)>S->[+(_a_)XXL(0)FA(_a_*m+_b_*n+_c_)P(positionX(),positionY(),positionZ())]</Rule>
+    <Rule>&lt;B(m,n)>F->B(m+1,n)</Rule>
+    <Rule>&lt;P(x,y,z)>->P(positionX(),positionY(),positionZ())</Rule>
+    <Rule>&lt;T>->e</Rule>
+    <Rule>&lt;L(x)>->L(x+1)</Rule>
+  </Rules>
+  <Homomorphisms>
+    <Homomorphism>&lt;L(x)>:(15>x)->#{SerikList}</Homomorphism>    
+  </Homomorphisms>
+</LSystem>

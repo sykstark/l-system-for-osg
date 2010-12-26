@@ -15,8 +15,10 @@
     <DefaultLength>5.0</DefaultLength>
     <ContourDetail>10</ContourDetail>
     <DefaultRadius>1.0</DefaultRadius>
-    <AngleVariance>50</AngleVariance>
-    <GravitropismElasticity>0.1</GravitropismElasticity>
+    <AngleVariance>30</AngleVariance>
+    <TropismElasticity>0.2</TropismElasticity>
+    <TropismVector>0.0 1.0 0.0</TropismVector>
+    <TropismAngle>90</TropismAngle>
     <DiffuseTexture>data\ls\tex\bark\bark_20091031_02_512x512_seamless.jpg</DiffuseTexture>
   </Parameters>
   <Subsystems>
