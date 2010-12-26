@@ -10,7 +10,13 @@ class Log
 {
 private:
 	static Log * logInst;
-    Log(){}
+
+	unsigned m_RewritingCounter;
+	unsigned m_ModuleCounter;
+	unsigned m_TurtleCounter;
+	unsigned m_QueryCounter;
+
+	Log(): m_RewritingCounter(0), m_ModuleCounter(0), m_TurtleCounter(0), m_QueryCounter(0) {}
     
     ~Log(){}
 
@@ -56,6 +62,22 @@ public:
         str << i;
         OutputDebugStringA( str.str().c_str() );
     }
+
+	unsigned int getRewritingCounter() const {return m_RewritingCounter;}
+
+	unsigned int getModuleCounter() const {return m_ModuleCounter;}
+
+	unsigned int getTurtleCounter() const {return m_TurtleCounter;}
+
+	unsigned int getQueryCounter() const {return m_QueryCounter;}
+
+	void incRewritingCounter() { m_RewritingCounter++;}
+
+	void incModuleCounter() { m_ModuleCounter++;}
+
+	void incTurtleCounter() { m_TurtleCounter++;}
+
+	void incQueryCounter() { m_QueryCounter++;}
 };
 }
 

@@ -4,6 +4,9 @@
 #include <vector>
 #include <cstdlib>
 #include <ctime>
+#include "configuration.h"
+
+using namespace boost::program_options;
 
 namespace AP_LSystem {
 /**
@@ -20,7 +23,15 @@ public:
       */
 	static void init()
 	{
-		srand( time( NULL ) );
+		const variable_value * seed = Configuration::get()->getProperty( "StochasticSeed" );
+		if( seed )
+		{
+			srand( seed->as<unsigned int>() );
+		}
+		else
+		{
+			srand( time( NULL ) );
+		}
 	}
 
     /**

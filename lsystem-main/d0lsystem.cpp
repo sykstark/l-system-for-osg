@@ -20,6 +20,7 @@ bool D0LSystem::transcribe(multimap<char, Rule> &rules)
 
     for(unsigned int i = 0; i < m_Word->length(); i++ )
     {
+		Log::get()->incModuleCounter();
         // mozna dodat kontrolu estli jde o pismeno
         pRuleIt = rules.find( (*m_Word)[i]);
 
@@ -34,6 +35,7 @@ bool D0LSystem::transcribe(multimap<char, Rule> &rules)
         // found
         else
         {
+			Log::get()->incRewritingCounter();
             // add successor
             newWord->append( (*pRuleIt->second.staticStrings.begin())->str,
                              (*pRuleIt->second.staticStrings.begin())->length );

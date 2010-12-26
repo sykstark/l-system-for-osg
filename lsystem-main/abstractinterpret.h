@@ -22,6 +22,7 @@ public:
 	AbstractInterpret( )
 	{
 		pOwner = NULL;
+		Randomizer::init();
 	}
 
 	int switchGeode( std::vector<Parameter> & p )
@@ -55,9 +56,14 @@ public:
 			{
 				pOwner->addChild( (osg::Group *)pGeode );
 			}
+			else
+			{
+				vrecko::logger.warningLog( "No parent node. LSGeode not added!" );
+			}
 
 			geodes.push_back( pGeode );
 		}
+		vrecko::logger.debugLog( "%d LSGeodes successfuly created and binded with scene graph.", count );
 	}
 
 	static const char * errorText( int error )

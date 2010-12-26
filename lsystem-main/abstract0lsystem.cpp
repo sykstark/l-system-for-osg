@@ -6,7 +6,6 @@ using namespace AP_LSystem;
 
 Abstract0LSystem::Abstract0LSystem( AbstractFile * file ): LSystem(file)
 {
-    this->loadFromFile( file );
 }
 
 Abstract0LSystem::Abstract0LSystem(const Abstract0LSystem & c): LSystem( c )

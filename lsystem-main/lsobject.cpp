@@ -39,7 +39,12 @@ void LSObject::postInitialize()
 
 		generator = new LSystemGenerator( );
 		generator->loadFile( lsystemFile );
-		pWord = generator->getWord();	
+		pWord = generator->getWord();
+		logger.debugLog( "Word generated. Generator stats: Processed modules: %d, Rewritings: %d", 
+			Log::get()->getModuleCounter(), Log::get()->getRewritingCounter() );
+
+		if( Log::get()->getQueryCounter() )
+			logger.debugLog( "Queries was processed. Number of queries: %d ", Log::get()->getQueryCounter() );
 	}
 	catch( std::exception & e)
 	{
@@ -54,6 +59,10 @@ void LSObject::postInitialize()
 	{
 		logger.errorLog( "Parser error: %s ", AbstractInterpret::errorText(res) );
 		return;
+	}
+	else
+	{
+		logger.debugLog( "Geometry succesfulle generated. %d turtles processed.", Log::get()->getTurtleCounter() );	
 	}
 
 	return;
