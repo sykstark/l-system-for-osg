@@ -22,7 +22,7 @@
 \thesisfaculty{fi}
 \thesisadvisor{RNDr. Vít Kovalèík, Ph.D.}
 % --------------------------------------------
-\label{id331769}\usepackage{ifthen}
+\label{id319029}\usepackage{ifthen}
 % --------------------------------------------
 % Check for PDFLaTeX/LaTeX 
 % --------------------------------------------
@@ -382,7 +382,7 @@ Tato práce se zabývá problematikou Lindenmayerových systémù, jako¾to nástroje pr
 Lindenmayerovy systémy, L-systémy, generování rostlin, generování stromù, Vrecko, OpenSceneGraph, LSystem\end{ThesisKeyWords}
 
 \makeatletter
-\def\dbtolatex@contentsid{id404495}
+\def\dbtolatex@contentsid{id393181}
 \def\dbtolatex@@contentsname{\latex@@contentsname}
 \let\latex@@contentsname\contentsname
 \newif\ifdocbooktolatexcontentsname\docbooktolatexcontentsnametrue
@@ -405,51 +405,61 @@ Lindenmayerovy systémy, L-systémy, generování rostlin, generování stromù, Vrecko
 \chapter{Úvod}
 \label{ch01}\hypertarget{ch01}{}%
 
+Snaha pøevést pøírodu do digitální podoby provází poèítaèovou grafiku ji¾ od samého poèátku. Po celou tuto dobu je zpracování pøírodních procesù jednou z~nejvíce studovaných a tedy i rozvíjejících se oblastí. Od poèátku toti¾ byly pøírodní procesy pøíli¹ slo¾ité, ne¾ aby bylo mo¾né vytvoøit je pomocí poèítaèe bez jakéhokoli zpracování a zjednodu¹ení. Zároveò jsou v¹ak souèástí témìø ka¾dé animace, filmu, simulace èi poèítaèové hry. Díky tomu vzniklo za posledních padesát let od vynálezu svìtelného pera Ivana Sutherlanda, tedy od poèátku moderní poèítaèové grafiky, obrovské mno¾ství více èi ménì úspì¹ných metod. Proto také dnes ty nejmodernìj¹í metody umo¾òují nìkdy i fotorealistické zpracování modelù nebo simulaci rùzných pøírodních jevù graficky i fyzikálnì. S~urèitými omezeními je to navíc mo¾né i v~reálném èase. V~tomto vývoji samozøejmì hrál velkou roli i vývoj samotné poèítaèové techniky.
+
+První pokusy o~vytvoøení poèítaèových modelù rostlinných organismù pochází z~roku 1966, kdy Stanislaw Ulman pøi¹el s~prvním mechanismem pro vytváøení vìtvených struktur. Vyu¾il k~tomu principu von Neumannova Celulárního automatu. Zanedlouho v¹ak Aristid Lindenmayer publikoval koncept Lindenmayerových systémù, které se pozdìji staly nejpou¾ívanìj¹í metodou pro generování rostlinných organismù. Bìhem posledních 45 let se z~generování rostlin stal jeden z~dùle¾itých mezivìdních oborù. Na jedné stranì v¾dy stáli biologové, je¾ se za pomocí poèítaèových modelù a simulací sna¾ili pochopit principy vývoje a stavby rostlin. Na druhé stranì jsou pak specialisti na poèítaèovou grafiku, je¾ stromy pou¾ívají jako souèást grafických scén. Kombinací poznatkù obou vìdních oborù tak vznikají stále nové metody. Výsledkem je, ¾e modely rostlin jsou dnes èasto tì¾ko rozeznatelné od svých opravdových protìj¹kù.
+
+Tato diplomová práce se vìnuje modelování rostlinných organismù za pou¾ití Lindenmayerových systémù. Cílem bylo navrhnout zásuvný modul LSystem pro systém Vrecko. Tento modul umo¾òuje na základì u¾ivatelsky definovaných parametrù vytvoøit ¹irokou ¹kálu rùzných modelù. Implementován toti¾ není pouze pùvodní Lindenmayerùv princip, ale také øada metod, je¾ jej roz¹iøuje o~dal¹í mo¾nosti. Modely tak mohou napøíklad reagovat na okolní prostøedí. Lindenmayerovy systémy lze díky jejich v¹estranosti pou¾ít i pro vytváøení rùzných neorganických modelù.
+
+Zaèátek této diplomové práce se vìnuje pøedev¹ím samotným Lindenmayerovým systémùm, jejím typùm a mo¾nostem. Tøetí kapitola pak rozebírá problematiku modelování rostlinných organismù. Zbývající kapitoly se ji¾ vìnují samotnému návrhu a implementaci zásuvného modulu LSystem. Ètvrtá kapitola se tedy zabývá obecným popisem modulu. Následující pátá kapitola pak obsahuje popis implementace generování øetìzcù pomocí L-systémù. Interpretace øetìzcù a vytváøení samotné geometrie modelù je pak obsahem ¹esté kapitoly. Práci pak uzavírá sedmá kapitola shrnující výkonnostní i zobrazovací výsledky.
+
 % -------------------------------------------------------------
 % Chapter Lindenmayerovy systémy 
 % ------------------------------------------------------------- 	
 \chapter{Lindenmayerovy systémy}
 \label{ch02}\hypertarget{ch02}{}%
 
-Lindenmayerovy systémy, zkrácenì L-systémy, byly vytvoøeny jako matematická teorie pro generování rostlin \docbooktolatexcite{Linden68}{}. Pùvodnì byl kladen dùraz spí¹e na obecnou topologii. Byly toti¾ vytvoøeny pro simulaci vývoje vìt¹ích èástí rostlin nebo bunìk mnhobunìèných organismù. Geometrie, ani podrobnìj¹í detaily v~této pùvodní teorii zahrnuty nebyly. Pozdìji se v¹ak objevilo nìkolik geometrických interpretací L-systémù, díky nim¾ se staly L-systémy univerzálním nástrojem pro simulaci a modelování rostlin. V~této práci je pou¾ito modelování pomocí ¾elví grafiky.
+Lindenmayerovy systémy, zkrácenì L-systémy, byly vytvoøeny jako matematická teorie pro generování rostlin \docbooktolatexcite{Linden68}{}. Pùvodnì byl kladen dùraz spí¹e na obecnou topologii. Byly toti¾ vytvoøeny pro simulaci vývoje vìt¹ích èástí rostlin nebo bunìk mnhobunìèných organismù. Geometrie ani podrobnìj¹í detaily v~této pùvodní teorii zahrnuty nebyly. Pozdìji se v¹ak objevilo nìkolik geometrických interpretací L-systémù, díky nim¾ se staly L-systémy univerzálním nástrojem pro simulaci a modelování rostlin. V~této práci je napøíklad pou¾ito modelování pomocí ¾elví grafiky.
+
+Lindemayerovy systémy v¹ak nenalezly uplatnìní zdaleka jen v~generování rostlinných organismù. Existuje øada projektù, je¾ rùznými zpùsoby experimentuje s~pou¾itím L-systémù.
 
 % ------------------------   
 % Section 
 \section{Vývoj rostlin pomocí procesu pøepisování}
 \label{sec0201}\hypertarget{sec0201}{}%
 
-Jádro L-systémù spoèívá v~pou¾ití pøepisovacího systému. Jedná se o~opakované nahrazování modulù pøedchùdcù pomocí sady pøepisovacích pravidel jejich následovníky, pøièem¾ v¹echny moduly nále¾í do koneèné abecedy modulù. Lze tak z~jednoduchého pùvodního objektu vytvoøit opakováním pøepisovacího procesu komplexní model. Modulem je my¹lena libovolná atomická èást modelu, je¾ vìt¹inou reprezentuje nìjakou èást simulovaného modelu. Pøí pou¾ití pro simulaci biologických procesù se tak mù¾e jednat napøíklad o~buòky nebo rùzné typy rostlinných orgánù.
+Jádro L-systémù spoèívá v~pou¾ití pøepisovacího systému. Jedná se o~opakované nahrazování modulù pøedchùdcù pomocí sady pøepisovacích pravidel jejich následníky, pøièem¾ následník je øetìzec modulù. V¹echny moduly nále¾í do koneèné abecedy modulù. Lze tak z~jednoduchého pùvodního objektu vytvoøit opakováním pøepisovacího procesu komplexní model. Modulem je my¹lena libovolná atomická èást modelu, je¾ vìt¹inou reprezentuje nìjakou èást simulovaného modelu. Pøí pou¾ití pro simulaci biologických procesù se tak mù¾e jednat napøíklad o~buòky nebo rùzné typy rostlinných orgánù.
 
-Jedním z~prvních grafických modelù, pou¾ívajících pøepisovací pravidla, byla Kochova køivka, pøípadnì Kochova vloèka \docbooktolatexcite{Koch05}{}. ©lo o~jednoduchý bezkontextový pøepisovací systém, je¾ obsahoval pouze jediné pravidlo, pøepisující jeden grafický prvek na jiný (\hyperlink{pic020101}{{\ref{pic020101}}}). Pozdìji tento model podstatnì roz¹íøil Mandelbrot, je¾ pøidal systémy podporující pøepisování úseèek o~rùzných délkách a hlavnì podporu vìtvených topologií.
+Jedním z~prvních grafických modelù, pou¾ívajících pøepisovací pravidla, byla Kochova køivka, pøípadnì Kochova vloèka \docbooktolatexcite{Koch05}{}. ©lo o~jednoduchý bezkontextový pøepisovací systém, je¾ obsahoval pouze jediné pravidlo, pøepisující jeden grafický prvek na jiný (\hyperlink{pic020101}{{\ref{pic020101}}}). Pozdìji tento model podstatnì roz¹íøil Mandelbrot LINK, je¾ pøidal systémy podporující pøepisování úseèek o~rùzných délkách a hlavnì podporu vìtvených topologií.
 
 % figure ------------------------------------------------------
 \begin{figure}[hbt]
 \hypertarget{pic020101}{}%
 \begin{center}
 
-{{\includegraphics[]{020102}}\hypertarget{id404559}{}%
-\label{id404559}
+{{\includegraphics[]{020102}}\hypertarget{id393259}{}%
+\label{id393259}
 }
 {{\caption[{Kochova vloèka a její první tøi iterace pøepisovacího procesu.}]{{{Kochova vloèka a její první tøi iterace pøepisovacího procesu.}}}\label{pic020101}}}
 \end{center}
 \end{figure}
 
-Nejvìt¹í pozornost v¹ak byla ubírána ke studiu systémù zalo¾ených na pøepisování øetìzcù znakù. Velkým pøínosem v~tomto odvìtví byly na konci padesátých let 20. století Chomského formální gramatiky, které vyu¾ívaly princip pøepisování pro popis syntaxe pøirozeného jazyka. V~roce 1968 pak biolog Aristid Lindenmayer pøedstavil odli¹ný typ mechanismu pøepisujícího øetìzce. Tento mechanismus byl posléze pojmenován jako L-systémy. Zásadní odli¹ností L-systémù od Chomského gramatik spoèívá v~pou¾ití pøepisovacích pravidel. Zatímco v~Chomského gramatikách jsou pøepisovací pravidla aplikována postupnì, v~L-systémech jsou pou¾ity paralelnì v~jednom derivaèním kroku na v¹echny symboly pøepisovaného øetìzce. Motivací pro tento pøístup byla podobnost s~biologickými procesy. Pøíkladem mohou být mnohobunìèné organismy, ve kterých se dìlí buòky souèasnì. Na rozdíl od pøírodních pochodù vývoj L-systémù probíhá v~diskrétních krocích. Kvùli reprezentaci modelù jako øetìzce znakù se èasto místo pojmu modul pou¾ívá pojem symbol.
+Nejvìt¹í pozornost v¹ak byla ubírána ke studiu systémù zalo¾ených na pøepisování øetìzcù znakù. Velkým pøínosem v~tomto odvìtví byly na konci padesátých let 20. století Chomského formální gramatiky, které vyu¾ívaly princip pøepisování pro popis syntaxe pøirozeného jazyka. V~roce 1968 pak biolog Aristid Lindenmayer pøedstavil odli¹ný typ mechanismu pøepisujícího øetìzce. Tento mechanismus byl posléze pojmenován jako L-systémy. Zásadní odli¹ností L-systémù od Chomského gramatik spoèívá v~pou¾ití pøepisovacích pravidel. Zatímco v~Chomského gramatikách jsou pøepisovací pravidla aplikována postupnì, v~L-systémech jsou pou¾ity paralelnì v~jednom derivaèním kroku na v¹echny symboly pøepisovaného øetìzce. Motivací pro tento pøístup byla podobnost s~biologickými procesy. Pøíkladem mohou být mnohobunìèné organismy, ve kterých se dìlí v¹echny buòky souèasnì. Na rozdíl od pøírodních pochodù vývoj L-systémù probíhá v~diskrétních krocích. Kvùli reprezentaci modelù jako øetìzce znakù se èasto místo pojmu modul pou¾ívá pojem symbol.
 
 % ------------------------   
 % Section 
 \section{D0L-systémy}
 \label{sec0202}\hypertarget{sec0202}{}%
 
-Deterministické bezkontextové L-systémy, zkrácenì D0L-systémy,jsou nejjednodu¹¹í formou L-systémù. Pùvodní Lindenmayerovy systémy zahrnovaly právì pouze tento typ. Takovýto typ L-systém se skládá z~abecedy modulù, pøepisovacích pravidel a axiomu, je¾ slou¾í jako poèáteèní øetìzec modulù. Na obrázku \hyperlink{pic020201}{{\ref{pic020201}}} je znázornìna simulace vývoje mnohobunìèného vlákna bunìk, je¾ se nachází v~bakterii Anabaena catenula \docbooktolatexcite{Mitch1972}{}. Tyto øetìzce jsou tvoøeny dvìma typy bunìk. První typ jsou mladé, krat¹í buòky. Druhý typ jsou buòky star¹í a del¹í. Ka¾dá buòka má také svou polaritu, která urèuje, kterým smìrem bude buòka rùst.
+Deterministické bezkontextové L-systémy, zkrácenì D0L-systémy,jsou nejjednodu¹¹í formou L-systémù. Pùvodní Lindenmayerovy systémy zahrnovaly právì pouze tento typ. Takovýto typ L-systému se skládá z~abecedy modulù, pøepisovacích pravidel a axiomu, je¾ slou¾í jako poèáteèní øetìzec modulù. Na obrázku \hyperlink{pic020201}{{\ref{pic020201}}} je znázornìna simulace vývoje mnohobunìèného vlákna bunìk, je¾ se nachází v~bakterii Anabaena catenula \docbooktolatexcite{Mitch1972}{}. Tyto øetìzce jsou tvoøeny dvìma??? typy bunìk. Prvním typem jsou mladé, krat¹í buòky. Druhý typ jsou buòky star¹í a del¹í. Ka¾dá buòka má také svou polaritu, která urèuje, kterým smìrem bude buòka rùst.
 
 % figure ------------------------------------------------------
 \begin{figure}[hbt]
 \hypertarget{pic020201}{}%
 \begin{center}
 
-{{\includegraphics[]{020201}}\hypertarget{id404609}{}%
-\label{id404609}
+{{\includegraphics[]{020201}}\hypertarget{id393310}{}%
+\label{id393310}
 }
 {{\caption[{První tøi iterace vlákna buòky {\em{Anabaena catenula}}}]{{{První tøi iterace vlákna buòky {\em{Anabaena catenula}}}}}\label{pic020201}}}
 \end{center}
@@ -467,16 +477,26 @@ Abeceda {\em{V}} je koneèná mno¾ina {\em{symbolù}}.
 
 %--- Item
 \item 
-{\em{Pøepisovací pravidlo}} je uspoøádaná dvojice \ensuremath{(a,u)} zapsaná jako \ensuremath{a \to u} , kde \ensuremath{a} je symbol nále¾ící {\em{V*}} a \ensuremath{u} je slovo nále¾ící {\em{V*}}. Symbol \ensuremath{a} se nazývá {\em{pøedchùdce}} a slovo \ensuremath{u} {\em{následník}}.
+{\em{Pøepisovací pravidlo}} je uspoøádaná dvojice \ensuremath{(a,u)} zapsaná jako \ensuremath{a \to u} , kde \ensuremath{a} je symbol nále¾ící {\em{V}} a \ensuremath{u} je slovo nále¾ící {\em{V*}}. Symbol \ensuremath{a} se nazývá {\em{pøedchùdce}} a slovo \ensuremath{u} {\em{následník}}.
 
 %--- Item
 \item 
-{\em{D0L-systém}} je trojice \ensuremath{G= \langle V, \omega ,P \rangle} , kde {\em{V}} je abeceda, \ensuremath{\omega \in } {\em{V*}} je poèáteèní slovo, nazývané {\em{axiom}}, a {\em{P}} je mno¾ina pøepisovacích pravidel takových, ¾e pro \ensuremath{\forall a \in V: \exists p_{a} \in P} , kde \ensuremath{p_{a}} oznaèuje pøepisovací pravidlo, jeho¾ pøedchùdce je modul \ensuremath{a} .
+{\em{D0L-systém}} je uspoøádaná trojice \ensuremath{G= \langle V, \omega ,P \rangle} , kde {\em{V}} je abeceda, \ensuremath{\omega \in } {\em{V*}} je poèáteèní slovo, nazývané {\em{axiom}}, a {\em{P}} je mno¾ina pøepisovacích pravidel takových, ¾e pro \ensuremath{\forall a \in V: \exists p_{a} \in P}, kde \ensuremath{p_{a}} oznaèuje pøepisovací pravidlo, jeho¾ pøedchùdce je modul \ensuremath{a}.
 
 \end{itemize}
 \noindent  Dle obecných konvencí bývá pøepisovací pravidlo \ensuremath{a \to u} oznaèováno jako odpovídající modulu a pro modul, kterému neodpovídá ¾ádné z~pøepisovacích pravidel, bývá pou¾ito pravidlo identity \ensuremath{a \to a} . Modul je mo¾né bìhem vývoje L-systému odstranit pomocí pou¾ití \ensuremath{\epsilon} pravidla.
 
-Dle této definice je pak mo¾né pro vývoj vláken bakterie Anabaena zavést L-systém, je¾ popisuje jeho vývoj. V~tìchto pravidlech nahrazují del¹í buòky moduly {\em{a}} a krat¹í buòky moduly {\em{b}}. Index u~modulù oznaèuje jejich orientaci.
+Dle této definice je pak mo¾né pro vývoj vláken bakterie Anabaena zavést L-systém, je¾ popisuje jeho vývoj. V~tìchto pravidlech nahrazují del¹í buòky moduly \ensuremath{a} a krat¹í buòky moduly \ensuremath{b}. Index u~modulù oznaèuje jejich orientaci.
+
+\ensuremath{\omega : a_p}
+
+\ensuremath{p_1 : a_p \to a_l b_p}
+
+\ensuremath{p_2 : a_l \to b_l a_p}
+
+\ensuremath{p_3 : b_p \to a_p}
+
+\ensuremath{p_4 : b_l \to a_l}
 
 % ------------------------   
 % Section 
@@ -490,16 +510,16 @@ Obecné D0L-systémy poskytují mo¾nosti pouze pro vytvoøení sekvence modulù. Aby v
 \hypertarget{pic020301}{}%
 \begin{center}
 
-{{\includegraphics[]{020301}}\hypertarget{id404928}{}%
-\label{id404928}
+{{\includegraphics[]{020301}}\hypertarget{id393694}{}%
+\label{id393694}
 }
 {{\caption[{První tøi iterace vlákna buòky {\em{Anabaena catenula}}}]{{{První tøi iterace vlákna buòky {\em{Anabaena catenula}}}}}\label{pic020301}}}
 \end{center}
 \end{figure}
 
-Slova, vyprodukovaná derivacemi pøepisovacích pravidel závorkového L-systému, se oznaèují jako stromy. Pøíklad takovéto stromové struktury vytvoøené L-systémem se závorkami je na obrázku \hyperlink{pic020301}{{\ref{pic020301}}}. Jedná se o~základní vìtvenou strukturu s~jednou hlavní osou tvoøenou moduly \ensuremath{aehik} . Slovo reprezentující tento strom lze pomocí jednoho øetìzce zapsat jako \ensuremath{w = a[b[c]d]e[fg]hi[j]k} .
+Slova, vyprodukovaná derivacemi pøepisovacích pravidel závorkového L-systému, se oznaèují jako stromy. Pøíklad takovéto stromové struktury vytvoøené L-systémem se závorkami je na obrázku \hyperlink{pic020301}{{\ref{pic020301}}}. Jedná se o~základní vìtvenou strukturu s~jednou hlavní osou tvoøenou moduly \ensuremath{aehik} . Slovo reprezentující tento strom lze pomocí jednoho øetìzce zapsat jako \ensuremath{w = a[b[c]d]e[fg]hi[j]k}.
 
-Øetìzce modulù \ensuremath{a} , \ensuremath{e} a \ensuremath{hi} se oznaèují jako meziuzly a øetìzce \ensuremath{b[c]d} , \ensuremath{fg} a \ensuremath{j} jako vedlej¹í vìtve. Modul \ensuremath{k} je hrotem hlavní osy. Obdobnì lze pojmenovat i moduly na ni¾¹ích úrovních a oznaèit tak napøíklad moduly \ensuremath{c} , \ensuremath{d} , \ensuremath{g} a \ensuremath{j} jako hroty vedlej¹ích vìtví.
+Øetìzce modulù \ensuremath{a}, \ensuremath{e} a \ensuremath{hi} se oznaèují jako meziuzly a øetìzce \ensuremath{b[c]d}, \ensuremath{fg} a \ensuremath{j} jako vedlej¹í vìtve. Modul \ensuremath{k} je hrotem hlavní osy. Obdobnì lze pojmenovat i moduly na ni¾¹ích úrovních a oznaèit tak napøíklad moduly \ensuremath{c}, \ensuremath{d}, \ensuremath{g} a \ensuremath{j} jako hroty vedlej¹ích vìtví.
 
 Strom lze podle \docbooktolatexcite{Prusin94}{} definovat jako slovo \ensuremath{w} nad abecedou \ensuremath{V_{E} = V~\cup \{ [,] \}} pro které platí, ¾e: 
 \begin{itemize}
@@ -513,7 +533,7 @@ Podslova \ensuremath{x_{1},x_{2},...,x_{n+1} \in V^*} neobsahují moduly závorek.
 
 %--- Item
 \item 
-Podslova \ensuremath{x_{1},x_{2},...,x_{n+1} \in V_{E}^*} jsou stromy.
+Podslova \ensuremath{a_1,a_2,...,a_n \in V_{E}^*} jsou stromy.
 
 \end{itemize}
 \noindent 
@@ -523,7 +543,7 @@ Podslova \ensuremath{x_{1},x_{2},...,x_{n+1} \in V_{E}^*} jsou stromy.
 \section{Kontextové L-systémy}
 \label{sec0204}\hypertarget{sec0204}{}%
 
-Pøepisování pravidel u~0L-systémù je bezkontextové. Pøi produkci následníkù tedy nezále¾í na modulech v~okolí pøedchùdce. Pøi pøepisování kontextových L-systémù v¹ak musí kromì pøedchùdcù odpovídat také jejich sousední moduly. Tímto zpùsobem mohou mezi sebou jednotlivé moduly komunikovat nebo posílat ostatním modulùm signály. Lze tak simulovat reakci na proudìní látek rostlinou nebo informovat moduly o~globálních vlastnostech celého L-systému, jako je délka stonku, poèet kvìtù, stáøí apod. Moduly v¹ak takto mohou komunikovat i s~okolím L-systému a získávat tak informace napøíklad o~mno¾ství svìtla, mno¾ství ¾ivin, roèním období nebo o~pøeká¾ce v~rùstu. Mozna dat tri typy pouziti -- kapitola 7.3 handbook
+Pøepisování pravidel u~0L-systémù je bezkontextové. Pøi produkci následníkù tedy nezále¾í na modulech v~okolí pøedchùdce. Pøi pøepisování kontextových L-systémù v¹ak musí kromì pøedchùdcù odpovídat také jejich sousední moduly. Tímto zpùsobem mohou mezi sebou jednotlivé moduly komunikovat nebo posílat ostatním modulùm signály. Lze tak simulovat reakci na proudìní látek rostlinou nebo informovat moduly o~globálních vlastnostech celého L-systému, jako je délka stonku, poèet kvìtù, stáøí apod. Moduly v¹ak takto mohou komunikovat i s~okolím L-systému a získávat tak informace napøíklad o~mno¾ství svìtla, mno¾ství ¾ivin, roèním období nebo o~pøeká¾ce v~rùstu. Mozna dat tri typy pouziti kapitola 7.3 handbook
 
 Existuje mnoho implementací kontextových L-systémù. Nejpou¾ívanìj¹í jsou 1L-systémy a 2L-systémy. U~1L-systémù je brán zøetel buï pouze na levý nebo pouze na pravý kontext modulu pøedchùdce. Zápis pravidel s~jednostranným kontextem tedy mù¾e být ve tvaru
 
@@ -545,38 +565,38 @@ Obecnìj¹í tøídu tvoøí (k,l)-systémy, kde levý kontext tvoøí slovo o~délce k~modu
   \\
 \end{tabular}
 
-U~bezzávorkových L-systémù je proces zji¹»ování, zda pøepisovací pravidlo odpovídá kontextu pøedchùdce, triviální a jednoznaèné. Pro závorkové systémy se v¹ak literatura rozchází a jsou pou¾ity rozdílné podmínky. Jde pøedev¹ím o~zpracování pravého kontextu. Pro tuto práci jsem se rozhodl pou¾ít zpùsob, je¾ obdobnì pou¾ívá ve své práci James Scott Hannan \docbooktolatexcite{Hanan92}{}. Na rozdíl od jiných pøístupù respektuje topologickou strukturu rostliny. Pokud toti¾ algoritmus napøíklad pøi zpracování pravého kontextu narazí na vìtvení, porovnává s~pravým kontextem ka¾dou vìtev. U~jiných pøístupù se nìkdy porovnává pouze vìtev, která s~pøedchùdcem sousedí v~øetìzci. Pøíklad je zobrazen na obrázku \hyperlink{pic020501}{{\ref{pic020501}}}. Tento zpùsob párování kontextù je tedy optimální pro pou¾ití pøi interakcích mezi jednotlivými moduly a mezi moduly a prostøedím.
+U~bezzávorkových L-systémù je proces zji¹»ování, zda pøepisovací pravidlo odpovídá kontextu pøedchùdce, triviální a jednoznaèné. Pro závorkové systémy se v¹ak literatura rozchází a jsou pou¾ity rozdílné podmínky. Jde pøedev¹ím o~zpracování pravého kontextu. Pro tuto práci jsem se rozhodl pou¾ít zpùsob, je¾ obdobnì pou¾ívá ve své práci James Scott Hannan \docbooktolatexcite{Hanan92}{}. Na rozdíl od jiných pøístupù respektuje topologickou strukturu rostliny. Pokud toti¾ algoritmus napøíklad pøi zpracování pravého kontextu narazí na vìtvení, porovnává s~pravým kontextem ka¾dou vìtev. U~jiných pøístupù se nìkdy porovnává pouze vìtev, která s~pøedchùdcem sousedí v~øetìzci. Pøíklad je zobrazen na obrázku \hyperlink{pic02040201}{{\ref{pic02040201}}}. Tento zpùsob párování kontextù je tedy optimální pro pou¾ití pøi interakcích mezi jednotlivými moduly a mezi moduly a prostøedím.
 \subsection{Párování levého kontextu}
 \label{sec020401}\hypertarget{sec020401}{}%
 
-Pøi párování levého kontextu dochází k~porovnání modulù kontextu s~moduly, které jsou v~øetìzci slova umístìny nalevo od modulu pøedchùdce. V~topologii rostlinného organismu se tedy jedná o~èásti rostliny, je¾ le¾í na nejkrat¹í cestì ke koøenùm. Pro ka¾dý modul existuje pouze jedna taková cesta a párování se tedy provádí pouze s~jedním øetìzcem modulù. Tato cesta, je¾ je v~topologii spojitá, nemusí v~øetìzci slova tvoøit spojitý øetìzec modulù. Pokud je pøi tomto párování nalezen modul {\texttt{{]}}}, znamená to , ¾e zde konèí vedlej¹í vìtev, která v¹ak topologicky nenavazuje a musí být pøeskoèena. Párování tedy pokraèuje za odpovídajícím symbolem {\texttt{{[}}}. Obrázek \hyperlink{pic020401}{{\ref{pic020401}}} ukazuje, jakým zpùsobem se levý kontext páruje. Modul {\em{A}} je zde levým kontextem pro pøedchùdce {\em{B}} i {\em{C}}. Modul {\em{B}} v¹ak není pøedchùdcem {\em{C}}, nebo» spolu topologicky nijak nesouvisí.
+Pøi párování levého kontextu dochází k~porovnání modulù kontextu s~moduly, které jsou v~øetìzci slova umístìny nalevo od modulu pøedchùdce. V~topologii rostlinného organismu se tedy jedná o~èásti rostliny, je¾ le¾í na nejkrat¹í cestì ke koøenùm. Pro ka¾dý modul existuje pouze jedna taková cesta a párování se tedy provádí pouze s~jedním øetìzcem modulù. Tato cesta, je¾ je v~topologii spojitá, nemusí v~øetìzci slova tvoøit spojitý øetìzec modulù. Pokud je pøi tomto párování nalezen modul {\texttt{{]}}}, znamená to , ¾e zde konèí vedlej¹í vìtev, která v¹ak topologicky nenavazuje a musí být pøeskoèena. Párování tedy pokraèuje za odpovídajícím symbolem {\texttt{{[}}}. Obrázek \hyperlink{pic02040101}{{\ref{pic02040101}}} ukazuje, jakým zpùsobem se levý kontext páruje. Modul {\em{A}} je zde levým kontextem pro pøedchùdce {\em{B}} i {\em{C}}. Modul {\em{B}} v¹ak není pøedchùdcem {\em{C}}, nebo» spolu topologicky nijak nesouvisí.
 
 % figure ------------------------------------------------------
 \begin{figure}[hbt]
-\hypertarget{pic020401}{}%
+\hypertarget{pic02040101}{}%
 \begin{center}
 
-{{\includegraphics[]{020401}}\hypertarget{id405335}{}%
-\label{id405335}
+{{\includegraphics[]{02040101}}\hypertarget{id394101}{}%
+\label{id394101}
 }
-{{\caption[{Párování levého kontextu}]{{{Párování levého kontextu}}}\label{pic020401}}}
+{{\caption[{Párování levého kontextu}]{{{Párování levého kontextu}}}\label{pic02040101}}}
 \end{center}
 \end{figure}
 
 \subsection{Párování pravého kontextu}
 \label{sec020402}\hypertarget{sec020402}{}%
 
-Párování pravého kontextu srovnává moduly napravo od pøedchùdce. Jde tedy o~moduly, je¾ vyrùstají z~pøedchùdce. Situace je zde komplikovanìj¹í, nebo» je nìkdy zapotøebí kvùli vìtvení provést párování na více øetìzcích. Pokud toti¾ za pøedchùdcem následuje rozvìtvení symbolizované modulem {\texttt{{[}}}, je nutné provést párování s~hlavní vìtví a se v¹emi vedlej¹ími vìtvemi. Pokud alespoò v~jednom pøípadì dojde ke shodì, je pravidlo oznèeno jako odpovídající danému modulu pøedchùdce. Na obrázku \hyperlink{pic020501}{{\ref{pic020501}}} je znázonìno jednoduché vìtvení, kdy ke shodì dochází v~pøípadì, ¾e pravý kontext bude modul {\em{B}} nebo i {\em{C}}.
+Párování pravého kontextu srovnává moduly napravo od pøedchùdce. Jde tedy o~moduly, je¾ vyrùstají z~pøedchùdce. Situace je zde komplikovanìj¹í, nebo» je nìkdy zapotøebí kvùli vìtvení provést párování na více øetìzcích. Pokud toti¾ za pøedchùdcem následuje rozvìtvení symbolizované modulem {\texttt{{[}}}, je nutné provést párování s~hlavní vìtví a se v¹emi vedlej¹ími vìtvemi. Pokud alespoò v~jednom pøípadì dojde ke shodì, je pravidlo oznèeno jako odpovídající danému modulu pøedchùdce. Na obrázku \hyperlink{pic02040201}{{\ref{pic02040201}}} je znázonìno jednoduché vìtvení, kdy ke shodì dochází v~pøípadì, ¾e pravý kontext bude modul {\em{B}} nebo i {\em{C}}.
 
 % figure ------------------------------------------------------
 \begin{figure}[hbt]
-\hypertarget{pic020501}{}%
+\hypertarget{pic02040201}{}%
 \begin{center}
 
-{{\includegraphics[]{020501}}\hypertarget{id405386}{}%
-\label{id405386}
+{{\includegraphics[]{02040201}}\hypertarget{id394151}{}%
+\label{id394151}
 }
-{{\caption[{Párování pravého kontextu}]{{{Párování pravého kontextu}}}\label{pic020501}}}
+{{\caption[{Párování pravého kontextu}]{{{Párování pravého kontextu}}}\label{pic02040201}}}
 \end{center}
 \end{figure}
 
@@ -587,7 +607,7 @@ Párování pravého kontextu srovnává moduly napravo od pøedchùdce. Jde tedy o~modu
 
 Pøesto¾e doposud popisované typy L-systémù poskytují ¹irokou ¹kálu mo¾ností pro generování rostlin, jejich mo¾nosti jsou v~jistém smìru omezené. Problém spoèívá v~tom, ¾e ve¹keré moduly lze pou¾ít pouze v~celoèíselných násobcích. Výsledkem pak je, ¾e nelze napøíklad vytvoøit tak jednoduchý tvar, jako je rovnoramenný trojúhelník, jeho¾ základna má v~pomìru k~ramenùm iracionální délku. Pro odbourání tìchto problémù je nutné zavést parametrické L-systémy je¾ pracují nad parametrickými slovy. Parametrická slova se skládají z~modulù, které kromì znaku obsahují také pøidru¾ené parametry.
 
-Identifikující znak \ensuremath{A} nále¾í do abecedy \ensuremath{V} a parametry \ensuremath{a_1 , a_2 ,\dots, a_n} nále¾í do mno¾iny \ensuremath{\Re}. Takovýto roz¹íøený modul se znaèí jako \ensuremath{A( a_1 , a_2 ,..., a_n )} a patøí do mno¾iny \ensuremath{M = V\times \Re^*} , kde \ensuremath{\Re^*} je mno¾ina v¹ech koneèných posloupností parametrù.
+Identifikující znak \ensuremath{A} nále¾í do abecedy \ensuremath{V} a parametry \ensuremath{a_1 , a_2 ,\dots, a_n} nále¾í do mno¾iny \ensuremath{\Re}. Takovýto roz¹íøený modul se znaèí jako \ensuremath{A( a_1 , a_2 ,..., a_n )} a patøí do mno¾iny \ensuremath{M = V\times \Re^*}, kde \ensuremath{\Re^*} je mno¾ina v¹ech koneèných posloupností parametrù.
 
 Pravidla parametrických 0L-systémù mají tvar
 
@@ -621,6 +641,43 @@ Parametrické 0L-systémy \docbooktolatexcite{Prusin04}{} jsou definovány jako usp
 \end{itemize}
 \noindent 
 
+Ukázkou, jak je díky parametrùm ¹kála vytváøených slov roz¹íøena, je následující L-systém. Pomocí parametrù a rùzného nastavení konstant lze pomocí jediného pravidla vytváøet tvarovì velice rozmanité struktury. Obrázek \hyperlink{pic020501}{{\ref{pic020501}}} zobrazuje ètyøi pøíklady nastavení L-systému dle \docbooktolatexcite{Prusin96}{}. V¹echny tyto stromové struktury byly vytvoøeny pomocí následujícího jednoduchého L-systému:
+
+\ensuremath{\omega : A(100, w_0 )}
+
+\ensuremath{p_1 : A(s,w) : s>= min \to !(w)F(s)[+( \alpha_1 )/( \varphi_1 ) A~( s~\star r_1 , (w \star q)^e ) ]
+        [+( \alpha_2 )/( \varphi_2 ) A~( s~\star r_2 , (w \star (1-q) )^e ) ]}
+
+% figure ------------------------------------------------------
+\begin{figure}[hbt]
+\hypertarget{pic020501}{}%
+\begin{center}
+
+{{\includegraphics[]{020501}}\hypertarget{id394425}{}%
+\label{id394425}
+}
+{{\caption[{Stromové struktury vytvoøené pomocí parametrického L-systému.}]{{{Stromové struktury vytvoøené pomocí parametrického L-systému.}}}\label{pic020501}}}
+\end{center}
+\end{figure}
+
+% table ------------------------------------------------------
+\begin{table}[htb]
+\begin{center}%
+\hypertarget{tab030401}{}%
+\begin{tabular}{cccccccccccc}
+\hline 
+{{Obrázek}} & {{\ensuremath{r_1}}} & {{\ensuremath{r_2}}} & {{\ensuremath{\alpha_1}}} & {{\ensuremath{\alpha_2}}} & {{\ensuremath{\varphi_1}}} & {{\ensuremath{\varphi_2}}} & {{\ensuremath{w_0}}} & {{\ensuremath{q}}} & {{\ensuremath{e}}} & {{\ensuremath{min}}} & {{\ensuremath{n}}} \tabularnewline
+{{a}} & {{.65}} & {{.71}} & {{27}} & {{-68}} & {{0}} & {{0}} & {{20}} & {{.53}} & {{.50}} & {{1.7}} & {{12}} \tabularnewline
+{{b}} & {{.92}} & {{.37}} & {{0}} & {{60}} & {{180}} & {{0}} & {{2}} & {{.50}} & {{.00}} & {{0.5}} & {{15}} \tabularnewline
+{{c}} & {{.80}} & {{.80}} & {{30}} & {{-30}} & {{137}} & {{137}} & {{30}} & {{.50}} & {{.50}} & {{0.0}} & {{10}} \tabularnewline
+{{d}} & {{.55}} & {{.95}} & {{-5}} & {{30}} & {{137}} & {{137}} & {{5}} & {{.40}} & {{.00}} & {{5.0}} & {{12}} \tabularnewline
+\hline 
+\end{tabular}
+{{\caption{Hodnoty konstant pro vytvoøení stromù z~obrázku {{\ref{pic020501}}}.}\label{tab030401}}}
+\label{tab030401}
+\end{center}
+\end{table}
+
 % ------------------------   
 % Section 
 \section{Stochastické L-systémy}
@@ -628,12 +685,24 @@ Parametrické 0L-systémy \docbooktolatexcite{Prusin04}{} jsou definovány jako usp
 
 V¹echna slova generovaná stejným deterministickým L-systémem jsou identická. Tato pøedvídatelnost je samozøejmì jednou z~velkých výhod modelování pomocí L-systémù. Díky ní mù¾e u¾ivatel pøímo pozorovat dopady provedených zmìn. Tento determinismus má v¹ak také za následek, ¾e modely zcela neodpovídájí svým biologickým protìj¹kùm. V~pøírodì se toti¾ jedinci urèitého rostlinného druhu èasto li¹í mezi sebou. Mohou se li¹it stavbou i tvarem, a pøitom stále sdílet urèité vlastnosti dané svým druhem. Pro simulaci tohoto jevu je dobré vnést do L-systému urèitý druh náhodnosti, je¾ zároveò zajistí, ¾e základní vlastnosti daného druhu budou zachovány a výslední jedinci se budou li¹it jen ve vybraných detailech. Pro tento úèel byly zavedeny stochastické L-systémy, které umo¾òují do pøepisovacího procesu zavést náhodnost velice dobøe kontrolovatelným zpùsobem.
 
-Takovýto parametrický stochastický 0L-systém lze definovat jako pìtici \ensuremath{G_\pi = \langle V, \Sigma, \omega, P, \pi \rangle} . Definice abecedy {\em{V}}, formálních parametrù {\em{$\Sigma$}}, axiomu \ensuremath{\omega} a mno¾iny pøepisovacích pravidel {\em{P}} je stejná jako u~parametrických L-systémù. Navíc se zde definuje funkce \ensuremath{\pi} , je¾ ka¾dému pravidlu z~mno¾iny {\em{P}} pøiøazuje aritmetický výraz \ensuremath{E( \Sigma )} . Tento výraz nabývá v¾dy nezáporných hodnot a jeho výsledek se oznaèuje jako {\em{pravdìpodobnostní faktor}} pøepisovacího pravidla. Pokud je pøi pøepisovacím procesu více pravidel, které odpovídají urèitému modulu, pou¾ije se pro výbìr pravidla vzorec, je¾ na základì pravdìpodobnostního faktoru urèí pravidlo pro pøepis. Tento faktor nenabývá obecnì konstantních hodnot pro celý pøepisovací proces, ale vyhodnocuje se, podobnì jako podmínka a následník, na základì formálních parametrù pøedchùdce pøi ka¾dé iteraci. Pokud oznaèíme \ensuremath{\widehat{P} \subseteq P } jako mno¾inu v¹ech odpovídajících pravidel jednomu modulu, pak pravdìpodobnost \ensuremath{prob(p_k)} jednoho pravidla \ensuremath{p_k \in \widehat{P}} odpovídá výsledku rovnice 2.6.1.
+% figure ------------------------------------------------------
+\begin{figure}[hbt]
+\hypertarget{pic020601}{}%
+\begin{center}
+
+{{\includegraphics[]{020601}}\hypertarget{id397073}{}%
+\label{id397073}
+}
+{{\caption[{Pøíklady rùzných jedincù generovaných jedním stochastickým L-systémem.}]{{{Pøíklady rùzných jedincù generovaných jedním stochastickým L-systémem.}}}\label{pic020601}}}
+\end{center}
+\end{figure}
+
+Takovýto parametrický stochastický 0L-systém lze definovat jako uspoøádanou pìtici \ensuremath{G_\pi = \langle V, \Sigma, \omega, P, \pi \rangle .} Definice abecedy {\em{V}}, formálních parametrù {\em{$\Sigma$}}, axiomu \ensuremath{\omega} a mno¾iny pøepisovacích pravidel {\em{P}} je stejná jako u~parametrických L-systémù. Navíc se zde definuje funkce \ensuremath{\pi} , je¾ ka¾dému pravidlu z~mno¾iny {\em{P}} pøiøazuje aritmetický výraz \ensuremath{E( \Sigma )} . Tento výraz nabývá v¾dy nezáporných hodnot a jeho výsledek se oznaèuje jako {\em{pravdìpodobnostní faktor}} pøepisovacího pravidla. Pokud je pøi pøepisovacím procesu více pravidel, které odpovídají urèitému modulu, pou¾ije se pro výbìr pravidla vzorec, je¾ na základì pravdìpodobnostního faktoru urèí pravidlo pro pøepis. Tento faktor nenabývá obecnì konstantních hodnot pro celý pøepisovací proces, ale vyhodnocuje se, podobnì jako podmínka a následník, na základì formálních parametrù pøedchùdce pøi ka¾dé iteraci. Pokud oznaèíme \ensuremath{\widehat{P} \subseteq P } jako mno¾inu v¹ech odpovídajících pravidel jednomu modulu, pak pravdìpodobnost \ensuremath{prob(p_k)} jednoho pravidla \ensuremath{p_k \in \widehat{P}} odpovídá výsledku rovnice 2.6.1.
 
 \begin{dbequation}
 \begin{center}
-\hypertarget{id405706}{}%
-\ensuremath{prob(p_k) = \frac {\pi ( p_k )}{ \sum_{ p_i \in \widehat{P} } \pi ( p_i )  }}{{\caption{Výpoèet pravdìpodobnosti výbìru pravidla p$_\textrm{\tiny k}$}\label{id405706}}}
+\hypertarget{id397168}{}%
+\ensuremath{prob(p_k) = \frac {\pi ( p_k )}{ \sum_{ p_i \in \widehat{P} } \pi ( p_i )  }}{{\caption{Výpoèet pravdìpodobnosti výbìru pravidla p$_\textrm{\tiny k}$}\label{id397168}}}
 \end{center}
 \end{dbequation}
 
@@ -682,29 +751,118 @@ Jednou z~hlavních výhod ¾elví grafiky je její jednoduchá roz¹iøitelnost pro pou¾
 \hypertarget{pic03010301}{}%
 \begin{center}
 
-{{\includegraphics[]{03010301}}\hypertarget{id408597}{}%
-\label{id408597}
+{{\includegraphics[]{03010301}}\hypertarget{id397441}{}%
+\label{id397441}
 }
 {{\caption[{Polohové a pohybové parametry ¾elvy v~3D prostoru}]{{{Polohové a pohybové parametry ¾elvy v~3D prostoru}}}\label{pic03010301}}}
 \end{center}
 \end{figure}
 
-Sada pøíkazù je v~3D také znaènì roz¹íøena. Pro zmìnu orientace ¾elva interpretuje pøíkazy, je¾ ¾elvu rotují okolo jednotlivých os. Pro tyto rotace jsou bì¾nì pou¾ívány termíny z~letectví: smìr, podélný sklon a pøíèný náklon. Kompletní sada pøíkazù, kterou intepretuje i zásuvný modul, je¾ byl vytvoøen v~rámci této práce, je i spolu s~popisem iterpretovaných funkcí uvedena v~pøíloze LINK.
+Sada pøíkazù je v~3D také znaènì roz¹íøena. Pro zmìnu orientace ¾elva interpretuje pøíkazy, je¾ ¾elvu rotují okolo jednotlivých os. Pro tyto rotace jsou bì¾nì pou¾ívány termíny z~letectví: kurs, podélný sklon a pøíèný náklon. Kompletní sada pøíkazù, kterou intepretuje i zásuvný modul, je¾ byl vytvoøen v~rámci této práce, je i spolu s~popisem iterpretovaných funkcí uvedena v~pøíloze \hyperlink{appA}{{\ref{appA}}}.
 
 % ------------------------   
 % Section 
 \section{Subapikální L-systémy}
 \label{sec0302}\hypertarget{sec0302}{}%
 
-Závorkové L-systémy umo¾nují vytváøet velice ¹irokou ¹kálu øetìzcù. Ne v¹echny v¹ak odpovídají rostlinné stavbì a pro generování rostlin se tak nehodí. Zavádìjí se proto jistá omezení a pravidla, obvykle nazýváné jako vzory vìtvení, je¾ nám zaruèí respektování nìkterých pøírodních vlastností. Výsledkem pak jsou L-systémy, které pravdivìji odpovídají reálným rostlinám. Jednou z~tìchto podmno¾in jsou i subapikální L-systémy. Poprvé byly pøedstaveny Kelemenovou v~roce 1987(7 apical). My¹lenkou tìchto L-systémù je, ¾e k~vìtvení dochází pouze u~vrcholù ji¾ exitujících vìtví. Tato vlastnost výchází ze základních výsledkù pøi pozorování rostoucích rostlin. Nové rostlinné orgány, jako je stonek, vìtve, listy nebo kvìty mohou být vytvoøeny pouze z~apikálního meristému. Tato tkáò obsahuje aktivnì se dìlicí buòky a nachází se v~oblasti vrcholù vìtví.
+Závorkové L-systémy umo¾nují vytváøet velice ¹irokou ¹kálu øetìzcù. Ne v¹echny v¹ak odpovídají rostlinné stavbì a pro generování rostlin se tak nehodí. Zavádìjí se proto jistá omezení a pravidla, obvykle nazýváné jako vzory vìtvení, je¾ nám zaruèí respektování nìkterých pøírodních vlastností. Výsledkem pak jsou L-systémy, které pravdivìji odpovídají reálným rostlinám. Jednou z~tìchto podmno¾in jsou i subapikální L-systémy. Poprvé byly pøedstaveny Kelemenovou v~roce 1986 \docbooktolatexcite{Kele86}{}. My¹lenkou tìchto L-systémù je, ¾e k~vìtvení dochází pouze u~vrcholù ji¾ exitujících vìtví. Tato vlastnost výchází ze základních výsledkù pøi pozorování rostoucích rostlin. Nové rostlinné orgány, jako je stonek, vìtve, listy nebo kvìty mohou být vytvoøeny pouze z~apikálního meristému. Tato tkáò obsahuje aktivnì se dìlicí buòky a nachází se v~oblasti vrcholù vìtví.
 
-V~pøírodì rozeznáváme tøi typy vzorù vìtvení je¾ splòují podmínku subapikálních L-systémù. Jednoduché bazitonické a slo¾itìj¹í mezotonické a akrotonické vzory.
-\subsection{Bazitonický vzor vìtvení}
-\label{sec030201}\hypertarget{sec030201}{}%
+% figure ------------------------------------------------------
+\begin{figure}[hbt]
+\hypertarget{pic030201}{}%
+\begin{center}
 
-Jedná se o~struktury v~nich¾ je vìtvení u~vrcholu rostliny ménì vyvinuté ne¾ vìtve blí¾e základny rostliny. Bazitonické struktury lze vytvoøit i za pomocí jednoduchých D0L-systémù. Klasic
-\subsection{Mezotonický a Akrotonický vzor vìtvení}
-\label{sec030202}\hypertarget{sec030202}{}%
+{{\includegraphics[]{030201}}\hypertarget{id397494}{}%
+\label{id397494}
+}
+{{\caption[{První øada (a) zobrazuje vývoj struktury, je¾ splòuje podmínku subapikálního vìtvení. Druhá vìtvená struktura (b) ji nesplòuje\docbooktolatexcite{Prusin94}{}.}]{{{První øada (a) zobrazuje vývoj struktury, je¾ splòuje podmínku subapikálního vìtvení. Druhá vìtvená struktura (b) ji nesplòuje\docbooktolatexcite{Prusin94}{}.}}}\label{pic030201}}}
+\end{center}
+\end{figure}
+
+% ------------------------   
+% Section 
+\section{Vzory vìtvených struktur}
+\label{sec0303}\hypertarget{sec0303}{}%
+
+Jedním z~nejvýznamnìj¹ích parametrù je zpùsob vìtvení. Má toti¾ velice zásadní vliv na vzhled rostliny. Zaøazením rostliny do nìkterého z~typù vìtvení lze také nìkdy odvodit typ L-systému, který bude nutné pro vygenerování modelu pou¾ít. Tato kapitola obsahuje základní vzory vìtvení rostlin, je¾ se v~pøírodì vyskytují.
+\subsection{Monopodiální vzor}
+\label{sec030301}\hypertarget{sec030301}{}%
+
+Monopodiální struktury se vyznaèují jedním hlavním souvislým stonkem. Z~nìj pak vychází mnoho vedlej¹ích vìtví. Jeliko¾ je hlavní kmen v¾dy nejstar¹í vìtví, jeho tlou¹»ka je nejvìt¹í. Vedlej¹í vìtve se pak vyvíjejí podle stejného vzoru. Tento vzor lze dále rozdìlit podle distribuce vedlej¹ích vìtví na hlavním stonku.
+
+% figure ------------------------------------------------------
+\begin{figure}[hbt]
+\hypertarget{pic03030101}{}%
+\begin{center}
+
+{{\includegraphics[]{03030101}}\hypertarget{id397546}{}%
+\label{id397546}
+}
+{{\caption[{Ukázky monopodiálního vìtvení stromù \docbooktolatexcite{Prusin04}{}.}]{{{Ukázky monopodiálního vìtvení stromù \docbooktolatexcite{Prusin04}{}.}}}\label{pic03030101}}}
+\end{center}
+\end{figure}
+
+\begin{itemize}
+%--- Item
+\item 
+{\em{Bazitonické struktury}} mají vìtve u~vrcholu rostliny ménì vyvinuté ne¾ vìtve blí¾e základny rostliny. Lze je vytvoøit i za pomocí jednoduchých D0L-systémù. Pokud toti¾ pøi pøepisování dodr¾íme subapikální podmínku a postupujem tak, ¾e moduly vrcholu pøepisujem urèitým poètem meziuzlù zakonèených opìt vrcholy, je zøejmé, ¾e vìtve blí¾e koøenù budou rozvinutìj¹í. Je na nich toti¾ provedeno vìt¹í mno¾ství iterací. V~pøírodì se také jedná o~jednodu¹¹í organismy. Typickými zástupci jsou napøíklad jehliènany.
+
+%--- Item
+\item 
+{\em{Mezotonický a akrotonický typ vìtvení}} lze také v~pøírodì nalézt. U~takto stavìných rostlin jsou nejrozvinutìj¹í vìtve uprostøed, respektive u~vrcholu stonku. Pro vìtvení dále od poèátku vìtve je v¹ak zapotøebí zavést do L-systému signály nebo rùstový potenciál. Tyto mechanismy v¹ak nelze vytvoøit pomocí D0L-systémù. Propagaci signálu lze provést pomocí kontextu u~kontextových L-systémù. Zvy¹ování rùstového potenciálu lze provést naopak pomocí parametrických L-systémù.
+
+\end{itemize}
+\noindent 
+
+% figure ------------------------------------------------------
+\begin{figure}[hbt]
+\hypertarget{pic03030102}{}%
+\begin{center}
+
+{{\includegraphics[]{03030102}}\hypertarget{id397604}{}%
+\label{id397604}
+}
+{{\caption[{Bazitonické (a), mezotonické (b) a akrotonické (c) dìlení \docbooktolatexcite{Prusin94}{}.}]{{{Bazitonické (a), mezotonické (b) a akrotonické (c) dìlení \docbooktolatexcite{Prusin94}{}.}}}\label{pic03030102}}}
+\end{center}
+\end{figure}
+
+\subsection{Sympodiální vzor}
+\label{sec030302}\hypertarget{sec030302}{}%
+
+Jedná se o~vývojovì pokroèilej¹í typ vìtvení. Hlavní stonek je nesouvislý a jeho rùst je brzy potlaèen. Vedlej¹ích vìtví je zde men¹í poèet. Jsou v¹ak o~to více rozvinutìj¹í. Vìt¹ina listnatých stromù tvoøí právì sympodiální struktury. Modely s~touto strukturou lze vytvoøit i za pomocí D0L-systémù. Docílíme v¹ak pouze jednodu¹e se dìlících a opakujících se topologií. Pro pokroèilej¹í modely je mo¾né pou¾ít i jiné typy L-systémù.
+
+% figure ------------------------------------------------------
+\begin{figure}[hbt]
+\hypertarget{pic03030201}{}%
+\begin{center}
+
+{{\includegraphics[]{03030201}}\hypertarget{id397645}{}%
+\label{id397645}
+}
+{{\caption[{Ukázky sympodiálního vìtvení stromù \docbooktolatexcite{Prusin04}{}.}]{{{Ukázky sympodiálního vìtvení stromù \docbooktolatexcite{Prusin04}{}.}}}\label{pic03030201}}}
+\end{center}
+\end{figure}
+
+% ------------------------   
+% Section 
+\section{Vlastnosti vìtvených struktur rostlinných organismù}
+\label{sec0304}\hypertarget{sec0304}{}%
+
+Aèkoli se vìtvení stromù, ale i jiných rostlin, mù¾e jevit náhodné, platí i pro nì urèitá pravidla. Ji¾ Leonardo da Vinci zkoumal nìkteré zákonitosti vìtvení stromù a stanovil postulát. Ten øíká, ¾e obsah prùøezu vìtve pøed vìtvením je shodný se souètem v¹ech obsahù vìtví za vìtvením. Pozdìji se ukázalo, ¾e tento odhad byl velice pøesný a je vhodné jej pøi návrhu L-systému dodr¾ovat.
+
+% figure ------------------------------------------------------
+\begin{figure}[hbt]
+\hypertarget{pic030401}{}%
+\begin{center}
+
+{{\includegraphics[]{030401}}\hypertarget{id397684}{}%
+\label{id397684}
+}
+{{\caption[{Distribuce cév ve vìtvích a závíslost mno¾ství cév na úhlu dìlení.}]{{{Distribuce cév ve vìtvích a závíslost mno¾ství cév na úhlu dìlení.}}}\label{pic030401}}}
+\end{center}
+\end{figure}
+
+V~roce 1994 tento postulát roz¹íøil Matthew Holton \docbooktolatexcite{Holt94}{}. Na rozdíl od da Vinciho v¹ak ji¾ znal vnitøní strukturu vìtví a také princip cévních svazkù u~cévnatých rostlin. Cévní svazky jsou souèástí transportního systému rostlin a rozvádìjí ¾iviny z~koøenù rostliny do jejího tìla. Pøi vìtvení dochází k~rozdìlení svazku na dva èi více samostaných svazkù. Toto rozdìlení právì souvisí s~da Vinciho postulátem. Kvùli men¹ímu mno¾ství ¾ivin, mají rozvìtvené vìtve adekvátnì men¹í obsah prùøezu. Holton v¹ak navíc pøi modelování svých rostlin pou¾il zajímavou spojitost mno¾ství cévních svazkù a úhlu dìlení vìtví. Cévní svazky toti¾ plní také zpevòovací funkci. Zavedl vztah, podle nìho¾ lze mno¾ství cév, a tedy i tlou¹»ku vìtve pøi dìlení, urèit podle ùhlu odchylky od pùvodní osy. Èím je tento úhel vìt¹í, tím men¹í je poèet cév a prùmìr vìtve.
 
 % -------------------------------------------------------------
 % Chapter Zásuvný modul LSystem 
@@ -898,17 +1056,17 @@ Pøi generování slova L-systémem dochází k~vytváøení velmi dlouhých øetìzcù s~nes
 \subsection{Vnitøní struktura øetìzce}
 \label{sec050201}\hypertarget{sec050201}{}%
 
-Datová struktura {\texttt{{LongString}}} je v~jádru tvoøena bajtovým polem. Toto pole se nezvìt¹uje pøi ka¾dém roz¹íøení øetìzce, ale v¾dy jen po dosa¾ení urèité velikosti. Dochází tak ke znatelné úspoøe èasu pøi alokaci pamìti, která se provádí podstatnì ménì èastìji. Ka¾dý modul je zde ulo¾en jako znak identifikující daný modul a pøípadnì jeho parametry. Parametry mohou být typu int, unsigned char nebo typu double. Implementace dal¹ích typù je mo¾ná a jednoduchá. Pro souèasné pou¾ití v¹ak nebyly jiné typy zapotøebí. Obrázek \hyperlink{pic05020101}{{\ref{pic05020101}}} ukazuje jakým je zpùsobem je struktura navr¾ena.
+Datová struktura {\texttt{{LongString}}} je v~jádru tvoøena bajtovým polem. Toto pole se nezvìt¹uje pøi ka¾dém roz¹íøení øetìzce, ale v¾dy jen po dosa¾ení urèité velikosti. Dochází tak ke znatelné úspoøe èasu pøi alokaci pamìti, která se provádí podstatnì ménì èastìji. Ka¾dý modul je zde ulo¾en jako znak identifikující daný modul a pøípadnì jeho parametry. Parametry mohou být typu {\texttt{{int}}}, {\texttt{{unsigned char}}} nebo typu {\texttt{{double}}}. Implementace dal¹ích typù je mo¾ná a jednoduchá. Pro souèasné pou¾ití v¹ak nebyly jiné typy zapotøebí. Obrázek \hyperlink{pic05020101}{{\ref{pic05020101}}} ukazuje, jakým zpùsobem je struktura navr¾ena.
 
 % figure ------------------------------------------------------
 \begin{figure}[hbt]
 \hypertarget{pic05020101}{}%
 \begin{center}
 
-{{\includegraphics[]{05020101}}\hypertarget{id408977}{}%
-\label{id408977}
+{{\includegraphics[]{05020101}}\hypertarget{id398040}{}%
+\label{id398040}
 }
-{{\caption[{Vnitøní uspoøádání dat v~øetìzci typu LongString}]{{{Vnitøní uspoøádání dat v~øetìzci typu LongString}}}\label{pic05020101}}}
+{{\caption[{Vnitøní uspoøádání dat v~øetìzci typu {\texttt{{LongString}}}}]{{{Vnitøní uspoøádání dat v~øetìzci typu {\texttt{{LongString}}}}}}\label{pic05020101}}}
 \end{center}
 \end{figure}
 
@@ -994,8 +1152,8 @@ Jeliko¾ se následník skládá z~øetìzcù modulù a výrazù, je jeho zpracování slo¾it
 \hypertarget{pic050301}{}%
 \begin{center}
 
-{{\includegraphics[]{050301}}\hypertarget{id409268}{}%
-\label{id409268}
+{{\includegraphics[]{050301}}\hypertarget{id398330}{}%
+\label{id398330}
 }
 {{\caption[{Rozdìlení následníka na øetìzce modulù a výrazy}]{{{Rozdìlení následníka na øetìzce modulù a výrazy}}}\label{pic050301}}}
 \end{center}
@@ -1183,8 +1341,8 @@ Na základì volání nìkteré z~metod tøídy {\texttt{{Query}}} pak dostane pokyn k~i
 \hypertarget{pic050601}{}%
 \begin{center}
 
-{{\includegraphics[]{050601}}\hypertarget{id409701}{}%
-\label{id409701}
+{{\includegraphics[]{050601}}\hypertarget{id398764}{}%
+\label{id398764}
 }
 {{\caption[{Zpracování dotazù tøídou QueryInterpret}]{{{Zpracování dotazù tøídou QueryInterpret}}}\label{pic050601}}}
 \end{center}
@@ -1201,7 +1359,7 @@ Zpracováním dotazù lze tedy do øetìzce slova dostat pozièní hodnoty je¹tì pøed f
 
 Problematiku návrhu modelu pomocí L-systémù lze rozdìlit na nìkolik hiearchických úrovní. Pro lep¹í kontrolu, pøehlednost a také nastavitelnost je lep¹í jednotlivé dílèí celky hiearchicky seøadit. U~botanických organismù se mù¾e jednat napøíklad o~rozdìlení na rostlinné orgány. Jde v¹ak jí samozøejmì i hloubìji. Výhodou tohoto pøístupu je modularita. Ka¾dý takovýto dílèí L-systém má svá vlastní nastavení a mù¾e být pou¾it v~libovolném poètu jiných L-systémù. Pokud tedy vytvoøím L-systém pro list, je velice jednoduché pøidat jej jako podsystém ke v¹em L-systémùm stromù stejného druhu.
 
-Ka¾dý L-systém si své podsystémy spravuje sám. Po jejich naètení pomocí metod tøídy {\texttt{{AbstractFile}}} je ka¾dý L-systém inicializován a zpracován podobnì jako ve tøídì {\texttt{{LSystemGenerator}}}. Ka¾dému podsystému je pøiøazeno unikátní èíslo. Pod ním je tento systém reprezentován v~øetìzci pomocí modulu {\texttt{{\#(L-System\_ID)}}}. V¹echna slova jsou vygenerována a ponechána ulo¾ena v~nadøazeném L-systému. Do øetìzce jsou vlo¾ena a¾ po ukonèení iteraèního procesu, kdy jsou v¹echny moduly {\texttt{{\#()}}} nahrazeny vygenerovanými slovy. Na zaèátku a konci ka¾dého slova podsystému jsou speciální moduly {\texttt{{\$}}}, je¾ poté informují intepret o~zmìnì L-systému, který pak dle parametrù tohoto modulu pøepne na zpracování øetìzce dle odpovídajících nových parametrù. Nebo» je toto chování dosti podobné zpracování závorkám, vìnuje se jim spoleèná kapitola o~implementaci zásobníku LINK.
+Ka¾dý L-systém si své podsystémy spravuje sám. Po jejich naètení pomocí metod tøídy {\texttt{{AbstractFile}}} je ka¾dý L-systém inicializován a zpracován podobnì jako ve tøídì {\texttt{{LSystemGenerator}}}. Ka¾dému podsystému je pøiøazeno unikátní èíslo. Pod ním je tento systém reprezentován v~øetìzci pomocí modulu {\texttt{{\#(L-System\_ID)}}}. V¹echna slova jsou vygenerována a ponechána ulo¾ena v~nadøazeném L-systému. Do øetìzce jsou vlo¾ena a¾ po ukonèení iteraèního procesu, kdy jsou v¹echny moduly {\texttt{{\#()}}} nahrazeny vygenerovanými slovy. Na zaèátku a konci ka¾dého slova podsystému jsou speciální moduly {\texttt{{\$}}}, je¾ poté informují intepret o~zmìnì L-systému, který pak dle parametrù tohoto modulu pøepne na zpracování øetìzce dle odpovídajících nových parametrù. Nebo» je toto chování dosti podobné zpracování závorkám, vìnuje se jim spoleèná kapitola o~implementaci zásobníku \hyperlink{sec060201}{{\ref{sec060201}}}.
 
 % -------------------------------------------------------------
 % Chapter Generovaní slov pro modely rostlin 
@@ -1213,16 +1371,16 @@ Pøedchozí kapitola se vìnovala výhradnì iteraènímu procesu L-systémù za úèelem v
 
 Kromì samotné geomterie je nutné øe¹it i jiné otázky týkající se zobrazení modelu. Jedná se zejména o~mapování textur a o~úroveò detailù. Na této vrstvì je také mo¾né pøidat i rùzné vlivy okolí. Jeliko¾ se jedná ji¾ pouze o~intepretaci, tyto vlivy nijak nemohou ovlivnit strukturu výsledného modelu. Mohou v¹ak globálnì ovlivnit celý model. Lze tak jednodu¹e pøidat modelu závislost na nìkterých silách, jako je gravitace. Jinou mo¾ností je pøiblí¾ení rostlin svým reálným pøedlohám pomocí malé náhodnosti úhlù. Modely tak ztratí svou viditelnou matematickou pøesnost.
 
-Pro interpretaci slov slou¾í abstraktní tøída AbstractInterpret. Implementováni jsou dva potomci. TurtleInterpret zpracovává vì¹keré pøíkazy ¾elvy a slou¾í k~vytváøení geometrie. QueryIntepret provádí zpracování dotazù ohlednì polohy ¾elvy. Tento interpret zpracovává jen vybrané pøíkazy. Podrobnìji byl popsán v~kapitole LINK.
+Pro interpretaci slov slou¾í abstraktní tøída {\texttt{{AbstractInterpret}}}. Implementováni jsou dva potomci. {\texttt{{TurtleInterpret}}} zpracovává vì¹keré pøíkazy ¾elvy a slou¾í k~vytváøení geometrie. {\texttt{{QueryIntepret}}} provádí zpracování dotazù ohlednì polohy ¾elvy. Tento interpret zpracovává jen vybrané pøíkazy. Podrobnìji byl popsán v~kapitole \hyperlink{sec0506}{{\ref{sec0506}}}.
 
-Øetìzec generovaný L-systémem je pøetypován na nový typ. Z~intstance tøídy LongString je konvertován na instanci tøídy ParseableString. Jedná se o~jednoduchou tøídu, která obsahuje metody pro dopøedné procházení øetìzcem a získávání parametrù.
+Øetìzec generovaný L-systémem je pøetypován na nový typ. Z~intstance tøídy {\texttt{{LongString}}} je p5eveden na instanci tøídy {\texttt{{ParseableString}}}. Jedná se o~jednoduchou tøídu, která obsahuje metody pro dopøedné procházení øetìzcem a získávání modulù a jejich parametrù.
 
 % ------------------------   
 % Section 
 \section{Spojení s~grafem scény}
 \label{sec0601}\hypertarget{sec0601}{}%
 
-Pro zobrazení generované geometrie je dùle¾ité napojení na graf scény. Pøi vytváøení interpretu je mu kontruktorem pøedán ukazatel na rodièe v~grafu. Vzhledem k~tomu, ¾e slovo mù¾e díky mechanismu podsystémù obsahovat øetìzce nìkolika L-systémù mající rùzné parametry, je nutné i pøi vytváøení geometrie tyto L-systémy oddìlit. Díky grafu scény je k~dispozici ideální øe¹ení. Pro ka¾dý L-systém vytvoøí interpret jeden uzel s~geometrií, je¾ bude obsahovat i svá nastavení. Tyto uzly jsou instancemi tøídy LSGeode. Tato tøída je roz¹íøením tøídy osg::Geode. Navíc obsahuje metody pro volbu správného typu ¾elvy pro generování geometrie a také metody pro pøedání výchozích hodnot nastavení ¾elvy. V¹echny tyto hodnoty jsou získány z~parametrù, je¾ se naèítají pøi zpracování souborù L-systémù potomky tøídy AbstractFile LINK.
+Pro zobrazení generované geometrie je dùle¾ité napojení na graf scény. Pøi vytváøení interpretu je mu kontruktorem pøedán ukazatel na rodièe v~grafu. Vzhledem k~tomu, ¾e slovo mù¾e díky mechanismu podsystémù obsahovat øetìzce nìkolika L-systémù mající rùzné parametry, je nutné i pøi vytváøení geometrie tyto L-systémy oddìlit. Díky grafu scény je k~dispozici ideální øe¹ení. Pro ka¾dý L-systém vytvoøí interpret jeden uzel s~geometrií, je¾ bude obsahovat i svá nastavení. Tyto uzly jsou instancemi tøídy LSGeode. Tato tøída je roz¹íøením tøídy {\texttt{{osg::Geode}}}. Navíc obsahuje metody pro volbu správného typu ¾elvy pro generování geometrie a také metody pro pøedání výchozích hodnot nastavení ¾elvy. V¹echny tyto hodnoty jsou získány z~parametrù, je¾ se naèítají pøi zpracování souborù L-systémù potomky tøídy {\texttt{{AbstractFile}}}.
 
 Pøi inicializaci instance LSGeode dochází také k~nastavení uzlu. Nastaví se textura, materiály a dal¹í vlastnosti. Ve¹keré parametry jsou zpracovány a konvertovány do takové podoby, aby pøi generování byly buï ji¾ nastaveny nebo rychle pøipraveny ke zpracování.
 
@@ -1304,6 +1462,12 @@ Jedná se o~jednoduché vykreslování grafiky, je¾ simuluje ¾elvou kreslenou èáru. 
 ®elvy tohoto typu generují podobnì jako pøedchozí typ geometrii slo¾enou z~válcù. Díky odli¹nému pøístupu zde v¹ak nedochází k~nespojitostem geometrie pøi rotacích ¾elvy mezi jednotlivými kroky. Ka¾dý krok je zde rozdìlen na dva pùlkroky. Po provedení prvního pùlkroku je pozice ¾elvy ulo¾ena jako kontrolní bod a je pou¾ita jako bod pro generování kontúry, která pak tvoøí horní podstavu pøede¹lé válcovité geometrie a zároveò spodní podstavu geometrie kroku, který bude pøípadnì následovat. Rovina kontúry je v¾dy kolmá na smìr pohybu ¾elvy.
 
 Geometrie v~tomto pøípadì tedy pøesnì nekopíruje trasu ¾elvy. Generuje v¹ak vizuálnì mnohem lep¹í výsledek ne¾ v~pøípadì válcù s~klouby, je¾ navíc kvùli absenci polokoulí obsahuje men¹í mno¾ství trojúhelníkù. Mnohem lépe jde zde také vyøe¹it navazování textur.
+\subsection{Obdélníky}
+\label{sec060303}\hypertarget{sec060303}{}%
+
+Pøedchozí dva typy ¾elv jsou vhodné pro tvotbu stonkù a kmenù. Pro modely stromù je implementována tato tøída pro tvorbu listù. Stromy obsahují velké mno¾ství tvarovì málo rozmanitých listù. Právì pro tento úèel je vhodná ¾elva typu Rectangle. Pøi kroku vpøed vytváøí v¾dy pouze obdélník. Tento obdélník je pak vhodný pro naná¹ení textury, je¾ díky prùhlednosti list jednodu¹e a tvarovì pøesnì vykreslí. Velikost obdélníku se øídí bì¾nými parametry ¾elvy. Jde o~délku kroku a tlou¹»ku èáry.
+
+Listy stromù je vhodné vytvoøit pomocí samotného podøízeného L-systému. Pokud je pro interpretaci slov listù pou¾ita tato ¾elva, nemusí byt L-systém, je¾ toto slovo generuje, nijak slo¾itý. Vìt¹inou postaèí jeden krok kupøedu spoleènì s~pøípadnýma rotacema.
 
 % ------------------------   
 % Section 
@@ -1314,32 +1478,71 @@ Pro reálné zobrazení rostlinných organismù je dùle¾ité naná¹ení textur. U~genero
 \subsection{Mapování textur na navazující válce}
 \label{sec060401}\hypertarget{sec060401}{}%
 
-Na geometrie vìtví se obvykle naná¹ejí textury kùry nebo stonku, které jsou vytvoøeny tak, aby pøi jejich skládání nebyly viditelné okraje textur. Z~dùvodu válcovitého tvaru se generování texturových souøadnic v¾dy øídí podle obvodu podstav válce. Aby textury správnì navazovaly, je nutné, aby se po obvodu opakovaly v~celoèíselných násobcích. Tento násobek je mo¾né nastavit parametrem {\texttt{{TextureSRepeatings}}}, který nastavuje kolikrát se bude textura podél obvodu opakovat. Smìr podél obvodu odpovídá texturové souøadnici {\em{s}}. Smìr pohybu ¾elvy kupøedu pak urèuje smìr texturové souøadnice {\em{t}}. Tato souøadnice se v¾dy pøizpùsobuje obvodu vìtve tak, aby byl pøibli¾nì zachován pomìr stran a textura tak pùsobila pøirozenì. Opakování textury v~tomto podélném smìru tedy nemusí být celoèíselné a hodnota souøadnice z~konce jednoho válcovitého dílu se pøená¹í dále jako poèáteèní hodnota pro dal¹í krok. Pøená¹í se v¹ak pouze desetinná èást, nebo» pouze ta je dùle¾itá pro korektní navázání textury. Podobný zpùspob naná¹ení textury lze nalézt v~této práci LINK. Implementace v~tomto zásuvném modulu ale navíc umo¾òuje opakování ve smìru s. Zpùsob generování texturových souøadnic je znázornìn na následujícím obrázku. Celý válec pøedstavuje jeden krok ¾elvy. Kolem obvodu se textura na tomto obrázku opakuje dvakrát. Podélná textura je pak adekvátnì pøizpùsobena.
+Na geometrie vìtví se obvykle naná¹ejí textury kùry nebo stonku, které jsou vytvoøeny tak, aby pøi jejich skládání nebyly viditelné okraje textur. Z~dùvodu válcovitého tvaru se generování texturových souøadnic v¾dy øídí podle obvodu podstav válce. Aby textury správnì navazovaly, je nutné, aby se po obvodu opakovaly v~celoèíselných násobcích. Tento násobek je mo¾né nastavit parametrem {\texttt{{TextureSRepeatings}}}, který nastavuje kolikrát se bude textura podél obvodu opakovat. Smìr podél obvodu odpovídá texturové souøadnici {\em{s}}. Smìr pohybu ¾elvy kupøedu pak urèuje smìr texturové souøadnice {\em{t}}. Tato souøadnice se v¾dy pøizpùsobuje obvodu vìtve tak, aby byl pøibli¾nì zachován pomìr stran a textura tak pùsobila pøirozenì. Opakování textury v~tomto podélném smìru tedy nemusí být celoèíselné a hodnota souøadnice z~konce jednoho válcovitého dílu se pøená¹í dále jako poèáteèní hodnota pro dal¹í krok. Pøená¹í se v¹ak pouze desetinná èást, nebo» pouze ta je dùle¾itá pro korektní navázání textury. Podobný princip naná¹ení textury lze nalézt v~práci \docbooktolatexcite{Mech97}{}. Implementace v~tomto zásuvném modulu ale navíc umo¾òuje opakování ve smìru {\em{s}}. Zpùsob generování texturových souøadnic je znázornìn na následujícím obrázku. Celý válec pøedstavuje jeden krok ¾elvy. Kolem obvodu se textura na tomto obrázku opakuje dvakrát. Podélná textura je pak adekvátnì pøizpùsobena.
+
+% figure ------------------------------------------------------
+\begin{figure}[hbt]
+\hypertarget{pic06040101}{}%
+\begin{center}
+
+{{\includegraphics[]{06040101}}\hypertarget{id399898}{}%
+\label{id399898}
+}
+{{\caption[{Mapování textury na válce}]{{{Mapování textury na válce}}}\label{pic06040101}}}
+\end{center}
+\end{figure}
+
 \subsection{Mapování textur na obdélníky}
 \label{sec060402}\hypertarget{sec060402}{}%
 
 Pro naná¹ení textury na objekty listù je pou¾ita jednoduchá metoda mapování. Nebo» je ka¾dý list reprezentován jedním obdélníkem, jeho krajní body odpovídají krajním bodùm textury. Tvaru listu je dosa¾eno pomocí prùhlednosti textury. Díky tomu je zapotøebí mnohem ménì geometrie. Toto øe¹ení v¹ak s~sebou nese jedno úskalí. {\em{OpenSceneGraph}} pro správné zobrazení prùhledných objektù obsahuje speciální ko¹. Geometrie typu {\texttt{{osg::Geometry}}} jsou pak v~tomto ko¹i vykreslovány postupnì odzadu dopøedu tak, aby byly i s~prùhledností vykresleny korektnì. Kvùli optimalizaci je v¹ak vhodné mít v¹echny objekty listù v~jedné geometrii, co¾ mù¾e mít za následek ¹patné seøazení objektù. Tato optimalizace tak mù¾e nìkdy zpùsobovat na okrajích listù halo efekt. Pro odstranìní tohoto efektu je mo¾né nastavit parametr {\texttt{{SeparateGeometryForTranslucent}}}, který vynutí pou¾ití oddìlených geometrií pro ka¾dý objekt listu. Listy jsou v~tomto módu korektnì seøazeny. Dochází v¹ak vinou velkého mno¾ství geometrií ke sní¾ení výkonu.
+
+% figure ------------------------------------------------------
+\begin{figure}[hbt]
+\hypertarget{pic06040201}{}%
+\begin{center}
+
+{{\includegraphics[]{06040201}}\hypertarget{id399946}{}%
+\label{id399946}
+}
+{{\caption[{Ukázka mapování textur listù.}]{{{Ukázka mapování textur listù.}}}\label{pic06040201}}}
+\end{center}
+\end{figure}
 
 % ------------------------   
 % Section 
 \section{Minimalizace pøíèného náklonu}
 \label{sec0605}\hypertarget{sec0605}{}%
 
-Interpretace ¾elví grafikou je bezesporu jednou z~velmi univerzálních metod pro interpretaci L-systémù. Pøiná¹í v¹ak s~sebou i mo¾né nevýhody. Jedno z~nich je i deformace válcù pøi provádìní rotace kolem osy H. V~ka¾dém kroku ¾elva generuje body válcovité geometrie podle své kontury a øídí se aktuální orientací ¾elvy a tedy jejího vektoru L. Pokud v~jednom kroku dojde k~pøíènému náklonu o~pøíli¹ velký úhel, mù¾e dojít k~deformaci geometrie. LINK OBRAZEK. Nìkdy mù¾e být tento efekt ¾ádoucí, vìt¹inou je ale lep¹í jeho odstranìní. Øe¹ením mù¾e být jeden z~nìkolika algoritmù pro minimalizaci pøíèného náklonu. Pro zásuvný modul LSystem byla zvolena Bloomenthalova metoda minimalizace rotace, kterou Bloomethal obdobnì pou¾il pøi generování svého modelu "Mohutný javor". Kromì polohové matice ¾elvy se zavádí navíc matice kontúry. Tato matice pak slou¾í ke generování bodù kontúry a vytvoøení válcovité geometrie, která nepodléhá pøíènému náklonu. Tato matice je vytvoøena na základì FRAME vektorového prostoru \ensuremath{(H, V, H \times V)} , kde H je smìrový vektor ¾elvy a V~je vektor, podle nìho¾ se bude generovat geometrie. Tento vektor je pøed interpretací slova nastaven jako shodný s~vektorem L.
+Interpretace ¾elví grafikou je bezesporu jednou z~velmi univerzálních metod pro interpretaci L-systémù. Pøiná¹í v¹ak s~sebou i mo¾né nevýhody. Jedno z~nich je deformace válcù pøi provádìní rotace kolem osy \ensuremath{\vec{H}}. V~ka¾dém kroku ¾elva generuje body válcovité geometrie podle své kontury a øídí se aktuální orientací ¾elvy. Poloha bodù závisí na orientaci vektoru \ensuremath{\vec{L}}. Pokud v~jednom kroku dojde k~pøíènému náklonu o~pøíli¹ velký úhel, mù¾e dojít k~deformaci geometrie.
+
+% figure ------------------------------------------------------
+\begin{figure}[hbt]
+\hypertarget{pic060502}{}%
+\begin{center}
+
+{{\includegraphics[]{060502}}\hypertarget{id400005}{}%
+\label{id400005}
+}
+{{\caption[{Porovnání vzhledu geometrie bez (a) a s~(b) pou¾itím minimalizace pøíèného náklonu pøi interpretaci øetìzce {\texttt{{F/F/F/F/F/F}}}.}]{{{Porovnání vzhledu geometrie bez (a) a s~(b) pou¾itím minimalizace pøíèného náklonu pøi interpretaci øetìzce {\texttt{{F/F/F/F/F/F}}}.}}}\label{pic060502}}}
+\end{center}
+\end{figure}
+
+Nìkdy mù¾e být tento efekt ¾ádoucí, vìt¹inou je ale lep¹í jej odstranit. Øe¹ením mù¾e být jeden z~nìkolika algoritmù pro minimalizaci pøíèného náklonu. Pro zásuvný modul {\em{LSystem}} byla zvolena Bloomenthalova metoda minimalizace rotace, kterou Bloomethal obdobnì pou¾il pøi generování svého modelu {\em{Mohutný javor}}. Kromì polohové matice ¾elvy se zavádí navíc matice kontúry. Tato matice pak slou¾í ke generování bodù kontúry a vytvoøení válcovité geometrie, která nepodléhá pøíènému náklonu. Tato matice je vytvoøena na základì ortogonální báze vektorového prostoru \ensuremath{( \vec{H} , \vec{V} , \vec{H} \times \vec{V} )}, kde \ensuremath{\vec{H}} je smìrový vektor ¾elvy a \ensuremath{\vec{V}} je vektor, podle nìho¾ se bude generovat geometrie. Tento vektor je pøed interpretací slova nastaven jako shodný s~vektorem \ensuremath{\vec{L}}.
 
 % figure ------------------------------------------------------
 \begin{figure}[hbt]
 \hypertarget{pic060501}{}%
 \begin{center}
 
-{{\includegraphics[]{060501}}\hypertarget{id410082}{}%
-\label{id410082}
+{{\includegraphics[]{060501}}\hypertarget{id400074}{}%
+\label{id400074}
 }
-{{\caption[{Princip minimalize pøíèného náklonu u~dvou následujících FRAMù ¾elvy}]{{{Princip minimalize pøíèného náklonu u~dvou následujících FRAMù ¾elvy}}}\label{pic060501}}}
+{{\caption[{Princip minimalize pøíèného náklonu u~dvou následujících bází polohy ¾elvy.}]{{{Princip minimalize pøíèného náklonu u~dvou následujících bází polohy ¾elvy.}}}\label{pic060501}}}
 \end{center}
 \end{figure}
 
-Pøi ka¾dém kroku ¾elvy kupøedu jsou v~metodì {\texttt{{adjustMatrices()}}} hodnoty vektorù upraveny. Pokud oznaèíme \ensuremath{H_1} jako smìrový vektor ¾elvy pùvodního FRAME a \ensuremath{H_2} oznaèíme smìrový vektor ¾elvy po vykonaném kroku vpøed, mù¾eme nový FRAME získat otoèením pùvodního FRAME kolem osy \ensuremath{H_1 \times H_2} o~úhel, který svírají vektory \ensuremath{H_1} a \ensuremath{H_2} . Úhel {\em{V}} pak bude v¾dy ve stejné rovinì s~úhlem {\em{L}}. Narozdíl od nìj v¹ak nebude podléhat pøíènému náklonu.
+Pøi ka¾dém kroku ¾elvy kupøedu jsou v~metodì {\texttt{{adjustMatrices()}}} upraveny hodnoty vektorù. Pokud oznaèíme \ensuremath{\vec{H_1}} jako smìrový vektor ¾elvy pùvodní báze a \ensuremath{\vec{H_2}} oznaèíme smìrový vektor ¾elvy po vykonaném kroku vpøed, mù¾eme novou bázi získat otoèením pùvodní ortogonální báze kolem osy \ensuremath{\vec{H_1} \times \vec{H_2}} o~úhel, který svírají vektory \ensuremath{\vec{H_1}} a \ensuremath{\vec{H_2}}. Vektor \ensuremath{\vec{V}} pak bude v¾dy ve stejné rovinì s~vektorem \ensuremath{\vec{L}}. Narozdíl od nìj v¹ak \ensuremath{\vec{V}} nebude podléhat pøíènému náklonu.
 
 % ------------------------   
 % Section 
@@ -1361,92 +1564,152 @@ Pøi aplikaci tìchto vlivù na ¾elvu, dochází pøi ka¾dém kroku ¾elvy ke korekci je
 \subsection{Geotropismus}
 \label{sec060601}\hypertarget{sec060601}{}%
 
-Pro implementaci tropismu byla pou¾ita metoda zalo¾ená na výpoètu zrychlení momentu síly. Lze tak vypoèítat úhel, o~který je tøeba otoèit smìrový vektor ¾elvy \ensuremath{\overrightarrow{H}} smìrem k~vektoru podnìtu \ensuremath{\overrightarrow{T}} .
+Pro implementaci tropismu byla pou¾ita metoda zalo¾ená na výpoètu zrychlení momentu síly. Lze tak vypoèítat úhel, o~který je tøeba otoèit smìrový vektor ¾elvy \ensuremath{\vec{H}} smìrem k~vektoru podnìtu \ensuremath{\vec{T}}.
 
 \begin{dbequation}
 \begin{center}
-\hypertarget{id410228}{}%
-\ensuremath{\beta = e  \vert \overrightarrow{H} \times \overrightarrow{T} \vert }{{\caption{Výpoèet korekèního úhlu pøi geotropismu.}\label{id410228}}}
+\hypertarget{id400238}{}%
+\ensuremath{\beta = e  \vert \vec{H} \times \vec{T} \vert }{{\caption{Výpoèet korekèního úhlu pøi geotropismu.}\label{id400238}}}
 \end{center}
 \end{dbequation}
 
-Dùle¾itou roli zde hraje parametr \ensuremath{e} , který udává pøizpùsobivost danému podnìtu. Napøíklad u~vìtví tento parametr udává jejich ohebnost. V~zásuvném modulu je geotropismus implementován oddìlenì od ostatních tropismù, nebo» se jedná o~velmi dùle¾itý podnìt. Úhel podnìtu smìøuje v¾dy smìrem k~zemi (proti smìrovému vektoru \ensuremath{\overrightarrow{H}} na poèátku interpretace). Nastavení se provádí pomocí parametru {\texttt{{GeotropismElasticity}}}.
+Dùle¾itou roli zde hraje parametr \ensuremath{e} , který udává pøizpùsobivost danému podnìtu. Napøíklad u~vìtví tento parametr udává jejich ohebnost. V~zásuvném modulu je geotropismus implementován oddìlenì od ostatních tropismù, nebo» se jedná o~velmi dùle¾itý podnìt. Úhel podnìtu smìøuje v¾dy smìrem k~zemi (proti smìrovému vektoru \ensuremath{\vec{H}} na poèátku interpretace). Nastavení se provádí pomocí parametru {\texttt{{GeotropismElasticity}}}.
+
+% figure ------------------------------------------------------
+\begin{figure}[hbt]
+\hypertarget{pic06060101}{}%
+\begin{center}
+
+{{\includegraphics[]{06060101}}\hypertarget{id400316}{}%
+\label{id400316}
+}
+{{\caption[{Ukázka vlivu geotropismu na ternární strom. Pøi generování stromù na obrázcích {\texttt{{a}}}, {\texttt{{b}}}, {\texttt{{c}}} a {\texttt{{d}}} byly pou¾ity hodnoty elasticity 0.0, 0.1, 0.2 a 0.3.}]{{{Ukázka vlivu geotropismu na ternární strom. Pøi generování stromù na obrázcích {\texttt{{a}}}, {\texttt{{b}}}, {\texttt{{c}}} a {\texttt{{d}}} byly pou¾ity hodnoty elasticity 0.0, 0.1, 0.2 a 0.3.}}}\label{pic06060101}}}
+\end{center}
+\end{figure}
 
 Pøi ka¾dém kroku ¾elvy je metodou {\texttt{{adjustMatrices()}}} vypoèten pomocí vý¹e zmiòovaného vzorce nový smìrový vektor a zbývající ortogonální vektory jsou adekvátnì dopoèítány.
 \subsection{Diatropismus}
 \label{sec060602}\hypertarget{sec060602}{}%
 
-Tento vzorec lze dále roz¹íøit na obecnìj¹í formu \hyperlink{eq06060201}{{\ref{eq06060201}}}. Jedná se o~takzvaný diatropismus, pøi nìm¾ se rostlinné orgány sna¾í se smìrovým vektorem podnìtu svírat úhel \ensuremath{\gamma} . Tato obecná forma tropismu lze vyu¾ít pro modelování rùzných jevù. Na obrázku lze vidìt ovlivnìní stromu pøi rùzných nastaveních. Implementace je obdobná jako u~geotropismu. Navíc jsou v¹ak dispozici parametry {\texttt{{TropismAngle}}} pro nastavení úhlu \ensuremath{\gamma} a {\texttt{{TropismVector}}} pro nastavení úhlu tropismu. Ohebnost se zde nastavuje parametrem {\texttt{{TropismElasticity}}}.
+Tento vzorec lze dále roz¹íøit na obecnìj¹í formu \hyperlink{eq06060201}{{\ref{eq06060201}}}. Jedná se o~takzvaný diatropismus, pøi nìm¾ se rostlinné orgány sna¾í se smìrovým vektorem podnìtu svírat úhel \ensuremath{\gamma}. Tato obecná forma tropismu lze vyu¾ít pro modelování rùzných jevù. Na obrázku lze vidìt ovlivnìní stromu pøi rùzných nastaveních. Implementace je obdobná jako u~geotropismu. Navíc jsou v¹ak dispozici parametry {\texttt{{TropismAngle}}} pro nastavení úhlu \ensuremath{\gamma} a {\texttt{{TropismVector}}} pro nastavení úhlu tropismu. Ohebnost se zde nastavuje parametrem {\texttt{{TropismElasticity}}}.
 
-Pro ka¾dý model lze nastavit maximálnì jeden takový podnìt. Zároveò v¹ak díky oddìlené implementaci lze v¾dy nastavit geotropismus.
+Pro ka¾dý model lze nastavit maximálnì jeden takový podnìt. Zároveò v¹ak díky oddìlené implementaci lze v¾dy zároveò nastavit i geotropismus.
 
 \begin{dbequation}
 \begin{center}
 \hypertarget{eq06060201}{}%
-\ensuremath{\beta = e \left( \cos ( \gamma ) - \sin ( \gamma )  \frac{ \overrightarrow{H} \cdot \overrightarrow{T} }
-                    { \bigl\vert \overrightarrow{H} \times \overrightarrow{T} \bigr\vert }  \right)}{{\caption{Výpoèet korekèního úhlu pøi diatropismu.}\label{eq06060201}}}
+\ensuremath{\beta = e \left( \cos ( \gamma ) - \sin ( \gamma )  \frac{ \vec{H} \cdot \vec{T} }
+                    { \bigl\vert \vec{H} \times \vec{T} \bigr\vert }  \right)}{{\caption{Výpoèet korekèního úhlu pøi diatropismu.}\label{eq06060201}}}
 \end{center}
 \end{dbequation}
 
+% figure ------------------------------------------------------
+\begin{figure}[hbt]
+\hypertarget{pic06060201}{}%
+\begin{center}
+
+{{\includegraphics[]{06060201}}\hypertarget{id400424}{}%
+\label{id400424}
+}
+{{\caption[{Stromy na obrázcích jsou generovány s~aplikovaným plagiotropismem dle parametrù v~tabulce LINK.}]{{{Stromy na obrázcích jsou generovány s~aplikovaným plagiotropismem dle parametrù v~tabulce LINK.}}}\label{pic06060201}}}
+\end{center}
+\end{figure}
+
 % ------------------------   
 % Section 
-\section{Odezva na smìrové podnìty}
+\section{Fluktuace úhlù}
 \label{sec0607}\hypertarget{sec0607}{}%
 
 Jedním z~velkých kladù L-systémù je, ¾e ka¾dé slovo pøesnì odpovídá generované rostlinì. Nìkdy je v¹ak ¾ádoucí, aby bylo mo¾né pomocí minimálních zmìn vytvoøit organismus, který bude topologicky shodný, ale vizuálnì mírnì odli¹ný. Tímto zpùsobem lze z~jednoho ji¾ vygenerovaného slova vytváøet ne zcela identické jedince. Druhým argumentem pro zavedení toho mechanismu je èasto absolutní matematická pøesnost úhlù generovaných rostlin. Mírným náhodným roztøesením úhlù lze odstranit viditelnou pravidelnost a dosáhnout tak mnohem lep¹ích vizuálních výsledkù.
 
-V~zásuvném modulu LSystem lze tohoto efektu dosáhnout nastavením parametru {\texttt{{AngleVariance}}}. Jde o~procentuální hodnotu, která udává o~kolik procent se mohou úhly maximálnì zmìnit. Pøi provádìní libovolné rotace ¾elvy kolem jedné z~jejich os, je pak úhel otoèení upraven náhodnou hodnotou získanou na základì tohoto parametru.
+% figure ------------------------------------------------------
+\begin{figure}[hbt]
+\hypertarget{pic060701}{}%
+\begin{center}
+
+{{\includegraphics[]{060701}}\hypertarget{id400476}{}%
+\label{id400476}
+}
+{{\caption[{Obrázek {\texttt{{a}}} je vykreslen bez fluktuace úhlù. Obrázky {\texttt{{b}}}, {\texttt{{c}}} a {\texttt{{d}}} mají fluktuaci nastavenou na 50\% a semínko 1, 2 a 3.}]{{{Obrázek {\texttt{{a}}} je vykreslen bez fluktuace úhlù. Obrázky {\texttt{{b}}}, {\texttt{{c}}} a {\texttt{{d}}} mají fluktuaci nastavenou na 50\% a semínko 1, 2 a 3.}}}\label{pic060701}}}
+\end{center}
+\end{figure}
+
+Nastavením parametru {\texttt{{AngleVariance}}} lze toho efektu dosáhnou i v~zásuvném modulu {\em{LSystem}}. Jde o~hodnotu v~procentech, která udává o~kolik procent se mohou úhly maximálnì zmìnit. Pøi provádìní libovolné rotace ¾elvy kolem jedné z~jejich os, je pak úhel otoèení vynásoben náhodnou hodnotou získanou na základì tohoto parametru. I~pøi této náhodnosti lze nastavit náhodné semínko. Nastavením parametru {\texttt{{AngleFluctuationSeed}}} na stejnou hodnotu lze vytvoøit vícekrát stejného jedince. Pokud tento parametr není nastaven v~konfiguraèním souboru ani v~souboru L-systému, je jako semínko pou¾it systémový èas.
 % ------------------------------------------- 
 %
 %  Bibliography - chapter
 %
 % ------------------------------------------- 
-\begin{thebibliography}{123}\hypertarget{id410385}{}
+\begin{thebibliography}{123}\hypertarget{id400506}{}
 
 % ............. biblioentry 
-\bibitem{Abel82}\docbooktolatexbibaux{id412023}{Abel82}
-\hypertarget{id412023}
+\bibitem{Abel82}\docbooktolatexbibaux{id401072}{Abel82}
+\hypertarget{id401072}
 Abelson, H. a DiSessa, A.: \emph{Turtle geometry}, M.I.T. Press, 1982. 
 
 % ............. biblioentry 
-\bibitem{Hanan92}\docbooktolatexbibaux{id410438}{Hanan92}
-\hypertarget{id410438}
+\bibitem{Bloom94}\docbooktolatexbibaux{id400592}{Bloom94}
+\hypertarget{id400592}
+Hanan, J.: \emph{Modeling the mighty maple}, Computer Graphics (SIGGRAPH '94 Conference Proceedings), 1985. 
+
+% ............. biblioentry 
+\bibitem{Hanan92}\docbooktolatexbibaux{id400559}{Hanan92}
+\hypertarget{id400559}
 Hanan, J.: \emph{Parametric L-systems and their application to the modelling and visualisation of plants}, , 1992. 
 
 % ............. biblioentry 
-\bibitem{Koch05}\docbooktolatexbibaux{id410470}{Koch05}
-\hypertarget{id410470}
+\bibitem{Holt94}\docbooktolatexbibaux{id400700}{Holt94}
+\hypertarget{id400700}
+Holton, M.: \emph{Strands, gravity and botanical tree imagery}, Computer Graphics Forum, 1994. 
+
+% ............. biblioentry 
+\bibitem{Kele86}\docbooktolatexbibaux{id401118}{Kele86}
+\hypertarget{id401118}
+Kelemenová, A.: \emph{Complexity of L-systems}, Springer-Verlag, 1986. 
+
+% ............. biblioentry 
+\bibitem{Koch05}\docbooktolatexbibaux{id400628}{Koch05}
+\hypertarget{id400628}
 von Koch, H.: \emph{Une méthode géométrique élémentaire pour l'étude de certaines questions de la théorie des courbes planes}, Acta mathematica, 1905. 
 
 % ............. biblioentry 
-\bibitem{Linden68}\docbooktolatexbibaux{id410506}{Linden68}
-\hypertarget{id410506}
+\bibitem{Linden68}\docbooktolatexbibaux{id400664}{Linden68}
+\hypertarget{id400664}
 Lindenmayer, A.: \emph{Mathematical models for cellular interaction in development, Díl I~a II}, Journal of Theoretical Biology, 1968. 
 
 % ............. biblioentry 
-\bibitem{Mitch1972}\docbooktolatexbibaux{id411860}{Mitch1972}
-\hypertarget{id411860}
+\bibitem{Mech97}\docbooktolatexbibaux{id400944}{Mech97}
+\hypertarget{id400944}
+Mìch, R. a Prusinkiewicz, P. a Hanan, J.: \emph{Extension to the graphical interpretion of L-systems based on turtle geometry}, CSIRO Publishing, 1997. 
+
+% ............. biblioentry 
+\bibitem{Mitch1972}\docbooktolatexbibaux{id400782}{Mitch1972}
+\hypertarget{id400782}
 Mitchinson, G. a Wilcox, M.: \emph{Rules governing cell division in Anabaena}, Nature, 1972. 
 
 % ............. biblioentry 
-\bibitem{Prusin04}\docbooktolatexbibaux{id410387}{Prusin04}
-\hypertarget{id410387}
+\bibitem{Prusin04}\docbooktolatexbibaux{id400509}{Prusin04}
+\hypertarget{id400509}
 Prusinkiewicz, P. a Lindenmayer, A.: \emph{The Algorithmic Beauty of Plants}, Springer-Verlag, 1990, 9780387972978. 
 
 % ............. biblioentry 
-\bibitem{Prusin94}\docbooktolatexbibaux{id411906}{Prusin94}
-\hypertarget{id411906}
-Prusinkiewicz, P. a Kari, L.: \emph{Subapical bracketed L-systems}, Proceedings of the Fifth International Workshop on Graph Grammars and
-their Application to Computer Science, 1994. 
+\bibitem{Prusin94}\docbooktolatexbibaux{id400829}{Prusin94}
+\hypertarget{id400829}
+Prusinkiewicz, P. a Kari, L.: \emph{Subapical bracketed L-systems}, Proceedings of the Fifth International Workshop on Graph Grammars and their Application to Computer Science, 1994. 
 
 % ............. biblioentry 
-\bibitem{Rozen1980}\docbooktolatexbibaux{id410542}{Rozen1980}
-\hypertarget{id410542}
+\bibitem{Prusin96}\docbooktolatexbibaux{id400876}{Prusin96}
+\hypertarget{id400876}
+Prusinkiewicz, P. a Hammel, M. a Hanan, J. a Mìch, R.: \emph{L-systems: from the Theory to Visual Models of Plants}, CSIRO Publishing, 1996. 
+
+% ............. biblioentry 
+\bibitem{Rozen1980}\docbooktolatexbibaux{id400736}{Rozen1980}
+\hypertarget{id400736}
 Rozenberg, G. a Saloma, A.: \emph{The mathematical theory of L-systems}, Academic Press, 1980. 
 
 % ............. biblioentry 
-\bibitem{Zara04}\docbooktolatexbibaux{id411953}{Zara04}
-\hypertarget{id411953}
+\bibitem{Zara04}\docbooktolatexbibaux{id401002}{Zara04}
+\hypertarget{id401002}
 ®ára, J. a Bene¹, B. a Sochor, J. a Felkel, P.: \emph{Moderní poèítaèová grafika}, Computer Press, a.s., 2004. 
 
 \end{thebibliography}
@@ -1464,12 +1727,39 @@ Rozenberg, G. a Saloma, A.: \emph{The mathematical theory of L-systems}, Academi
 \dbappendix{Pøehled interpretovaných pøíkazù pro ¾elví grafiku}
 \label{appA}\hypertarget{appA}{}%
 
-Pøi interpretaci se ¾elvy øídí moduly, je¾ obsahuje zpracovávané slovo. Tato pøíloha obsahuje pøehled v¹ech intepretovaných modulù, jejich identifikující znak a popis pøíkazu, který vykonají.
+V~intepretaèní fází prochází instance nìkterého z~interpretù celý zpracovávaný øetìzec modulù zleva doprava. Jednotlivé moduly pak pøevede na pøíkaz buï nìkteré z~¾elv nebo pøímo zásobníku s~¾elvami.Tato pøíloha obsahuje pøehled v¹ech intepretovaných modulù, jejich identifikující znak a popis pøíkazu, který vykonají. Vìt¹ina modulù umo¾òuje zadání parametru. Pokud není tento parametr zadán, pou¾ije se výchozí hodnota nastavená v~konfiguraci modulu LSystem.
+
+% ------------------------   
+% Section 
+\section{Rotace ¾elvy}
+\label{secA01}\hypertarget{secA01}{}%
+
+®elva mù¾e provádìt rotace pouze kolem nìkteré své osy.
+
+\begin{description}
+% \null and \mbox are tricks to induce different typesetting decisions
+\item[{+($\alpha$)}]\null{}
+Zmìní kurs rotací kolem osy U~o~$\alpha$° doleva.
+% \null and \mbox are tricks to induce different typesetting decisions
+\item[{-($\alpha$)}]\null{}
+Zmìní kurs rotací kolem osy U~o~$\alpha$° doprava.
+% \null and \mbox are tricks to induce different typesetting decisions
+\item[{\&($\alpha$)}]\null{}
+Provede podélný sklon rotací kolem osy L o~$\alpha$° dolù.
+\end{description}
+\noindent 
+% -------------------------------------------------------------
+% appendix:  Pøehled parametrù pro nastavení L-systémù 
+% ------------------------------------------------------------- 	
+\dbappendix{Pøehled parametrù pro nastavení L-systémù}
+\label{appB}\hypertarget{appB}{}%
+
+Zásuvný modul LSystem se pøi generování a interpretaci slova øídí celou øadou parametrù. Jejich globální nastavení nezávislé na konrétním L-systému lze provést v~konfiguraèním souboru. Parametry lze nastavit i pro konkrétní L-systém pøímo v~jeho souboru. Tato nastavení pak mají pøednost pøed globálními.
 
 % ------------------------   
 % Section 
 \section{Oddíl}
-\label{secA01}\hypertarget{secA01}{}%
+\label{secB01}\hypertarget{secB01}{}%
 
 \end{document}
 
