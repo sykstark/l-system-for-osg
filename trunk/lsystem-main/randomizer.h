@@ -20,7 +20,7 @@ public:
       */
 	static void init()
 	{
-		const variable_value * seed = Configuration::get()->getProperty( "AngleFluctuationSeed" );
+		const variable_value * seed = Configuration::get()->getProperty( "RandomSeed" );
 		if( seed )
 		{
 			srand( seed->as<unsigned int>() );

@@ -23,7 +23,7 @@ public:
       */
 	static void init()
 	{
-		const variable_value * seed = Configuration::get()->getProperty( "StochasticSeed" );
+		const variable_value * seed = Configuration::get()->getProperty( "RandomSeed" );
 		if( seed )
 		{
 			srand( seed->as<unsigned int>() );

@@ -30,7 +30,7 @@ int TurtleInterpret::parse(ParseableString * word)
 	{
 
 		// FREE SYMBOLS
-		// ! " # % ' * , . : ; < > @ [ ] _ ` { } ? ~
+		// " * , . < > @ _ ` { } ? ~
 		parameters.clear();
 		switch( word->next( parameters ) )
 		{
@@ -69,6 +69,9 @@ int TurtleInterpret::parse(ParseableString * word)
 			break;
 		case '=':
 			res = turtles.top()->rollUntilHorizontal( );
+			break;
+		case ':':
+			res = turtles.top()->multiplyAngle( parameters );
 			break;
 		case '\'':
 			res = turtles.top()->multiplyLength( parameters );
