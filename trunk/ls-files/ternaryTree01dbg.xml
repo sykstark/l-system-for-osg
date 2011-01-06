@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<LSystem>
+  <Name>ternarni strom</Name>
+  <Types>
+    <Type>0L</Type>
+  </Types>
+  <Constants>
+    <high>0.2</high>
+  </Constants>
+  <Parameters>
+    <Iteration>14</Iteration>
+    <TurtleType>STRAIGHT_PIPE</TurtleType>
+    <DefaultAngle>30.0</DefaultAngle>
+    <DefaultLength>10.0</DefaultLength>
+    <ContourDetail>10</ContourDetail>
+    <DefaultRadius>1.0</DefaultRadius>
+    <AngleVariance>0</AngleVariance>
+    <DiffuseTexture>data\ls\tex\bark\bark_20091031_02_512x512_seamless.jpg</DiffuseTexture>
+  </Parameters>
+  <Subsystems>
+    <Subsystem>d:\HCI\VRECKO\bin\data\ls\leaf01.ls</Subsystem>
+  </Subsystems>
+  <Axiom>F'(0.65)A</Axiom>
+  <Rules>
+    <Rule>A->!(0.577)'(0.87)[/(90.74)B][/(-132.63)B]B</Rule>
+    <Rule>B->^(33.95)Z[^^#{SerikList}][#{SerikList}]ZA</Rule>
+  </Rules>
+</LSystem>
