@@ -107,7 +107,7 @@ public:
             while((i = m_Axiom.find(subst->first,i))&&(i != std::string::npos))
             {
                 m_Axiom.replace(i,subst->first.length(),subst->second);
-                i += subst->first.length();
+                i += subst->second.length();
             }
         }
 
@@ -120,7 +120,7 @@ public:
                 while((i = rule->find(subst->first,i))&&(i != std::string::npos))
                 {
                     rule->replace(i,subst->first.length(),subst->second);
-                    i += subst->first.length();
+                    i += subst->second.length();
                 }
             }
         }
@@ -133,7 +133,7 @@ public:
                 while((i = rule->find(subst->first,i))&&(i != std::string::npos))
                 {
                     rule->replace(i,subst->first.length(),subst->second);
-                    i += subst->first.length();
+                    i += subst->second.length();
                 }
             }
         }

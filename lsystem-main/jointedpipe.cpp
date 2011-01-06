@@ -32,17 +32,19 @@ int JointedPipe::addHemisphereGeometry()
 	osg::Vec3dArray * n = dynamic_cast<osg::Vec3dArray*>(properties.geometry->getNormalArray());
 	osg::Vec2dArray * t = dynamic_cast<osg::Vec2dArray*>(properties.geometry->getTexCoordArray(0));
 
-	unsigned texSIndex = 0;
 	// TEXTURE S COORDINATE
+	unsigned texSIndex = 0;
 	//compute how much will be texture increment of one part of contour ( of one side of n-side contour polygon )
 	double texSInc = properties.texRepeatingS / static_cast<double>(properties.contourDetail);
 
-	
+
+	// TEXTURE T COORDINATE
 	double texTCoord, texSCoord = 0;
 	double texTInc = 1.0 / properties.contourDetail;
 
 	for(vector<osg::ref_ptr<osg::Vec3dArray> >::iterator i = properties.hemisphere.begin();i!=properties.hemisphere.end();i++,texSIndex++)
 	{
+		// generate one strip of hemisphere - from top to bottom
 		properties.geometry->addPrimitiveSet( 
 			new osg::DrawArrays(osg::PrimitiveSet::TRIANGLE_STRIP, v->size(), (*i)->size() ) );
 
@@ -71,90 +73,15 @@ int JointedPipe::addHemisphereGeometry()
 			else
 			{
 				//sude
-				//texSCoord = (texSInc * (texSIndex + 1 < properties.hemisphere.size())?(texSIndex + 1):(0));
 				texSCoord = (texSInc * (texSIndex + 1));
 			}
 
-			/*v->push_back(*cont * properties.radius) * properties.lastFrame * osg::Matrixd::translate(properties.matrix.getTrans());
-			n->push_back( *j );*/
 			t->push_back( osg::Vec2d(texSCoord,texTCoord));
-		}
-		//break;
-		
+		}		
 	}
 
 	return LS_OK;
 }
-
-
-/*
-int JointedPipe::drawStep(double dist)
-{
-	
-
-	osg::Matrixd translated = osg::Matrixd::translate(osg::Vec3d( 0.0, dist, 0.0 )) * properties.matrix;
-	//drawDebugGeometry();
-
-	osg::Vec3dArray * v = dynamic_cast<osg::Vec3dArray*>(properties.geometry->getVertexArray());
-	osg::Vec3dArray * n = dynamic_cast<osg::Vec3dArray*>(properties.geometry->getNormalArray());
-	unsigned int first = v->size();
-	
-	osg::Vec3dArray::iterator it;
-	for(it = properties.contour->begin(); it != properties.contour->end(); it++ )
-	{
-		geode->addDrawable( new osg::ShapeDrawable( new osg::Sphere( *it, 0.3 ) ) );
-		v->push_back( *it * properties.matrix );
-		v->push_back( *it * translated );
-		n->push_back( *it );
-		n->push_back( *it );
-	}
-
-	it = properties.contour->begin();
-	v->push_back( *it * properties.matrix );
-	v->push_back( *it * translated );
-
-	osg::Vec3d vn = *it;
-	vn.normalize();
-	n->push_back( vn );
-	n->push_back( vn );
-
-	properties.geometry->addPrimitiveSet( 
-		new osg::DrawArrays(osg::PrimitiveSet::TRIANGLE_STRIP, first, properties.contourDetail * 2 + 2 ) );
-
-	for(vector<osg::ref_ptr<osg::Vec3dArray> >::iterator i = properties.hemisphere.begin();i!=properties.hemisphere.end();i++)
-	{
-		first = v->size();
-		for(osg::Vec3dArray::iterator j = (*i)->begin(); j!= (*i)->end();j++)
-		{
-			v->push_back( *j * properties.radius * properties.matrix );
-			n->push_back( *j );
-		}
-		properties.geometry->addPrimitiveSet( 
-			new osg::DrawArrays(osg::PrimitiveSet::TRIANGLE_STRIP, first, (*i)->size() ) );
-
-	}
-
-	
-
-	osg::Quat q, q1 = osg::Quat( 0.0, UpVec ), q2 = osg::Quat( -osg::PI_2, UpVec );
-	osg::Quat qHead( -osg::PI_2, UpVec );
-	osg::Quat qLeft( 0.0, UpVec );
-	osg::Quat qCont( 0.0, properties.contour->at(1)^HeadVec );
-	osg::Quat qHead2( osg::PI_2, properties.contour->at(1)^HeadVec );
-
-	q1.slerp( 0.5, qHead2, qCont );
-	q.slerp( 0.5, qHead, qLeft );
-
-	geode->addDrawable( new osg::ShapeDrawable( new osg::Sphere( qHead * LeftVec * 5, 0.3 ) ) );
-	geode->addDrawable( new osg::ShapeDrawable( new osg::Sphere( qCont * properties.contour->at(1) * 5, 0.3 ) ) );
-	geode->addDrawable( new osg::ShapeDrawable( new osg::Sphere( q * LeftVec * 5, 0.3 ) ) );
-	geode->addDrawable( new osg::ShapeDrawable( new osg::Sphere( q1 * properties.contour->at(1) * 5, 0.3 ) ) );
-	geode->addDrawable( new osg::ShapeDrawable( new osg::Sphere( qLeft * LeftVec * 5, 0.3 ) ) );
-
-	properties.matrix = translated;
-
-	return LS_OK;
-}*/
 
 int JointedPipe::initialize()
 {
@@ -187,12 +114,12 @@ void JointedPipe::createHemisphere()
 				sin(i*k)*cos(j*l),
 				sin(j*l),
 				cos(i*k)*cos(j*l)));
-			drawVector( *strip->rbegin(), properties.matrix, osg::Vec4d(1.0,0.0,0.0,1.0) );
+			//drawVector( *strip->rbegin(), properties.matrix, osg::Vec4d(1.0,0.0,0.0,1.0) );
 			strip->push_back(osg::Vec3d(
 				sin( (( (i+1) < properties.contourDetail)?(i+1):(0))*k)*cos(j*l),
 				sin(j*l),
 				cos( (( (i+1) < properties.contourDetail)?(i+1):(0))*k)*cos(j*l)));
-			drawVector( *strip->rbegin(), properties.matrix, osg::Vec4d(0.0,1.0,0.0,1.0) );
+			//drawVector( *strip->rbegin(), properties.matrix, osg::Vec4d(0.0,1.0,0.0,1.0) );
 		}
 		properties.hemisphere.push_back(strip.get());
 	}

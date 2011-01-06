@@ -32,6 +32,8 @@ void LSObject::postInitialize()
 	// Schedule the parent EO for regular updates
 	getWorldPtr()->getSchedulerPtr()->addEntity(this, 60);
 
+	logger.debugLog( "LSystem started" );
+
 	ParseableString * pWord;	
 	try
 	{
