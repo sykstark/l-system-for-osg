@@ -10,15 +10,15 @@
   <Parameters>
     <Iteration>0</Iteration>
     <TurtleType>STRAIGHT_PIPE</TurtleType>
-    <DefaultAngle>5.0</DefaultAngle>
-    <DefaultLength>3.0</DefaultLength>
-    <ContourDetail>10</ContourDetail>
-    <DefaultRadius>2.0</DefaultRadius>
+    <DefaultAngle>45.0</DefaultAngle>
+    <DefaultLength>10.0</DefaultLength>
+    <ContourDetail>20</ContourDetail>
+    <DefaultRadius>1.0</DefaultRadius>
     <AngleVariance>0</AngleVariance>
-    <DiffuseTexture>data\ls\tex\test01.png</DiffuseTexture>
+    <DiffuseMaterial>1.0 1.0 0.0</DiffuseMaterial>
     <TextureSRepeatings>3</TextureSRepeatings>
   </Parameters>
-  <Axiom>FFFF[+F+F+F+F+F+F+F+F+F+F]-F-F-F-F-F-F-F-F-F-F</Axiom>
+  <Axiom>/F[+F]-F-F</Axiom>
   <Rules>
     <Rule>A->F[+A][-A]</Rule>
   </Rules>

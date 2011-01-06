@@ -23,6 +23,6 @@
   <Axiom>F'(0.65)A</Axiom>
   <Rules>
     <Rule>A->!(0.577)'(0.87)[/(90.74)B][/(-132.63)B]B</Rule>
-    <Rule>B->^(33.95)[^^#{Leaf01}][#{Leaf01}]Z[^^#{Leaf01}][#{Leaf01}]ZA</Rule>
+    <Rule>B->^(33.95)Z[^^#{SerikList}][#{SerikList}]Z[^^#{SerikList}][#{SerikList}]A</Rule>
   </Rules>
 </LSystem>
