@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<LSystem>
+  <Name>ternarni strom</Name>
+  <Types>
+    <Type>0L</Type>
+    <Type>STOCHASTIC</Type>
+  </Types>
+  <Constants>
+    <leafcut>15</leafcut>
+    <_a_>32</_a_>
+    <_b_>20</_b_>
+    <_c_>90</_c_>
+    <XX>'(0.96)!(0.707)</XX>
+    <YY>'(0.96)!(0.92)</YY>
+  </Constants>
+  <Parameters>
+    <Iteration>25</Iteration>
+    <TurtleType>STRAIGHT_PIPE</TurtleType>
+    <DefaultAngle>40.0</DefaultAngle>
+    <DefaultLength>1.0</DefaultLength>
+    <ContourDetail>7</ContourDetail>
+    <DefaultRadius>0.8</DefaultRadius>
+    <AngleVariance>60</AngleVariance>
+    <DiffuseTexture>data\ls\tex\kura02.jpg</DiffuseTexture>
+    <Ignore>+/-</Ignore>
+  </Parameters>
+  <Subsystems>
+    <Subsystem>d:\HCI\VRECKO\bin\data\ls\leafzivyplot.ls</Subsystem>
+  </Subsystems>
+  <Axiom>FA(1)</Axiom>
+  <Rules>
+    <Rule>A(k)->/(_c_)[+(_a_)XXL(0)A(k+1)]-(_b_)XXL(0)A(k+1):min(1,(2*k+1)/(k*k))</Rule>
+    <Rule>A(k)->/(_c_)-(_b_)YYL(0)A(k+1):max(0,1-((2*k+1)/(k*k)))</Rule>
+    <Rule>L(x)->L(x+1)</Rule>
+    <!-- <Rule>B(m)->[+(_a_)FA(1000000)]</Rule> -->
+  </Rules>
+  <Homomorphisms>
+     <Homomorphism>L(x):((leafcut)>x)->Z#{List}/(180)Z#{List}\(180)</Homomorphism>
+     <Homomorphism>L(x):(x>((leafcut)-1))->F</Homomorphism>  
+  </Homomorphisms>
+</LSystem>
