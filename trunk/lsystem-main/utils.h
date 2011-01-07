@@ -52,8 +52,8 @@ struct Parameter
 
     Parameter( void * value, Type type ):value(value),type(type){}
 
-	void * value;
-    Type type;
+    void * value;   ///< value of parameter
+    Type type;      ///< parameter type
 };
 }
 
