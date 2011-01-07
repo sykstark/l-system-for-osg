@@ -6,27 +6,29 @@
 #include "randomizer.h"
 
 namespace AP_LSystem {
-//class LSGeode;
-//struct TurtleProperties;
 
+/**
+  * Error codes that returns methods during interpretation. Error codes are used instead of exception because
+  * of higher performance.
+  */
 enum InterpretErrorCodes
 {
-	LS_OK,
-	LS_NOTDEFINED,
-	LS_ERR_PAR_BADTYPE,
-	LS_ERR_PAR_INVALIDCOUNT,
-	LS_ERR_DRAWFORWARD_NEGATIVEDISTANCE,
-	LS_ERR_STACK_UNKNOWN_TURTLE_TYPE,
-	LS_ERR_STACK_NULL_LSGEODE,
+    LS_OK,                                  ///< OK. No error.
+    LS_NOTDEFINED,                          ///< Method is not implemented.
+    LS_ERR_PAR_BADTYPE,                     ///< Module has a different type
+    LS_ERR_PAR_INVALIDCOUNT,                ///< Invalid count of module parameters
+    LS_ERR_DRAWFORWARD_NEGATIVEDISTANCE,    ///< Forward step has a negative length
+    LS_ERR_STACK_UNKNOWN_TURTLE_TYPE,       ///< Unknown turtle ID.
+    LS_ERR_STACK_NULL_LSGEODE,              ///< TODO
 
 };
 
-const osg::Vec3d HeadVec(0.0,1.0,0.0);
-const osg::Vec3d UpVec(1.0,0.0,0.0);
-const osg::Vec3d LeftVec(0.0,0.0,1.0);
-const osg::Vec3d Center(0.0,0.0,0.0);
+const osg::Vec3d HeadVec(0.0,1.0,0.0);      ///< Turtle head vector
+const osg::Vec3d UpVec(1.0,0.0,0.0);        ///< Turtle up vector
+const osg::Vec3d LeftVec(0.0,0.0,1.0);      ///< Turtle left vector
+const osg::Vec3d Center(0.0,0.0,0.0);       ///< Position of turtle
 
-const osg::Vec4d White(1.0,1.0,1.0,1.0);
+const osg::Vec4d White(1.0,1.0,1.0,1.0);    ///< White color
 
 /**
  *	Abstract class for all turtles with declarations of all necessary functions.
@@ -44,32 +46,59 @@ public:
 	virtual int initialize()	{ return 0;}			///< initialize turtle
 	virtual int finalize()		{ return 0;}
 	virtual int resetValues() { return 0;}//TODO	///< reset all values in properties to default value as set in Configuration
-	inline TurtleProperties & getProperties()	///< get Properties reference
+
+    /**
+      * Returns turtle properties
+      * @return properties
+      */
+    inline TurtleProperties & getProperties()
 	{
 		return properties;
 	}
 
-	virtual void setProperties( TurtleProperties p )	///< set Properties of turtle. Must be part of turtle initialization
+    /**
+      * Sets turtle properties. The setup must be part of turtle initialization.
+      * @param p properties
+      */
+    virtual void setProperties( TurtleProperties p )
 	{
 		properties = p;
 	}
 
+    /**
+      * Inherits some properties. This method is called if different L-system is detected. This
+      * subsystems has own properties, but some properties are inherited from the turtle on the stack.
+      * @param p properties
+      */
 	virtual void inheritProperties( TurtleProperties p ) ///> defines which properties shoul be inherited from parent to sub-system turtle
 	{
 		// inherit matrix
 		properties.matrix = p.matrix;
 	}
 
+    /**
+      * Binds a turtle with LSGeode. During interpretation, the turtle will generate geometry to this
+      * LSGeode.
+      * @param geode Geode to be binded.
+      */
 	inline void bindGeode( LSGeode * geode )	///< bind output geode with current turtle 
 	{
 		this->geode = geode;
 	}
 
+    /**
+      * Returns binded geode.
+      * @return binded geode.
+      */
 	inline LSGeode * getGeode( )
 	{
 		return geode;
 	}
 
+    /**
+      * Returns position matrix of turtle.
+      * @return position matrix
+      */
 	inline osg::Matrixd getMatrix()
 	{
 		return properties.matrix;

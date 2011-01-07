@@ -6,22 +6,58 @@
 using std::string;
 
 namespace AP_LSystem {
+/**
+  * This class opens and processes XML files with L-systems.
+  */
 class XmlFile : public AbstractFile
 {
 private:
-	xercesc::XercesDOMParser * m_FileParser;
-    std::map<string, string> defines;
+    xercesc::XercesDOMParser * m_FileParser;    ///< XML parser
+    std::map<string, string> defines;           ///< loaded constants with values - prepared for substitution
 
-	void processParameters(xercesc::DOMNode *);
-	void processRules(xercesc::DOMNode *);
-	void processHomomorphisms(xercesc::DOMNode *);
-	void processSubsystems(xercesc::DOMNode *);
-	void processConstants(xercesc::DOMNode *);
-	void processType(xercesc::DOMNode *);
+    /**
+      * Process all nodes in Parameters entity
+      * @param node <Parameters>
+      */
+    void processParameters(xercesc::DOMNode * node);
+
+    /**
+      * Process all nodes in Rules entity
+      * @param node <Rules>
+      */
+    void processRules(xercesc::DOMNode * node);
+
+    /**
+      * Process all nodes in Homomorphisms entity
+      * @param node <Homomorphisms>
+      */
+    void processHomomorphisms(xercesc::DOMNode * node);
+
+    /**
+      * Process all nodes in Subsystems entity
+      * @param node <Subsystems>
+      */
+    void processSubsystems(xercesc::DOMNode * node);
+
+    /**
+      * Process all nodes in Constants entity
+      * @param node <Constants>
+      */
+    void processConstants(xercesc::DOMNode * node);
+
+    /**
+      * Process all nodes in Types entity
+      * @param node <Types>
+      */
+    void processType(xercesc::DOMNode * node);
 public:
     XmlFile();
 
-    virtual void open( std::string & );
+    /**
+      * Opens XML file.
+      * @param filename name of XML file
+      */
+    virtual void open( std::string & filename );
 };
 }
 
