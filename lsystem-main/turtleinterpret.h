@@ -23,11 +23,6 @@ public:
 
 	~TurtleInterpret(void);
 
-    /**
-      * Interpretes a word by converting L-system modules to turtle commands.
-      * @param word interpreted word
-      * @return error code
-      */
     virtual int parse( ParseableString * word );
 };
 }

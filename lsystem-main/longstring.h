@@ -79,7 +79,7 @@ public:
     /**
       * Appends some parameter of any type declared in Parameter::Type. Can be used to
       * append module parameter.
-      * @param parameter
+      * @param par parameter
       */
 	template< class T >
 	void append( T par )
@@ -96,7 +96,7 @@ public:
 
     /**
       * Appends one byte.
-      * @param byte to append
+      * @param ch byte to append
       */
 	void append( const char ch );
 	
@@ -116,7 +116,11 @@ public:
 
     /**
       * Extracts parameters of same type from some position in string
-      * @param ls string to append
+      * @param pos start position of parameters
+	  * @param pParams array for storing parameters
+	  * @param paramsCnt number of found parameters
+	  * @return - false: invalid position
+	  *		    - true: success
       */
 	template< class T >
 	bool getParameters( unsigned int & pos, T * pParams, int & paramsCnt )
@@ -165,22 +169,26 @@ public:
     char * getSymbol( unsigned int & pos );
 
     /**
-      * Matches right context
-      * @param context right context
+      * Match right context
+	  * \todo Implement consider
+      * @param ch right context
       * @param pos initial position - might be right behind identifier character
-      * @param ignore string of characters that should bee ignored during matching algorithm
+      * @param ignore string of characters that should be ignored during matching algorithm
+	  * @param consider string of characters that shoul be considered during matching algorithm
       * @return position of matching context or -1 if not found
       */
-    int matchRight( char context, int pos, const std::string * ignore = NULL, const std::string * = NULL );
+    int matchRight( char ch, int pos, const std::string * ignore = NULL, const std::string * consider = NULL );
 
     /**
       * Matches left context
-      * @param context right context
+	  * \todo Implement consider
+      * @param ch left context
       * @param pos initial position - might be right behind identifier character
-      * @param ignore string of characters that should bee ignored during matching algorithm
+      * @param ignore string of characters that should be ignored during matching algorithm
+	  * @param consider string of characters that shoul be considered during matching algorithm
       * @return position of matching context or -1 if not found
       */
-	int matchLeft( char, int, const std::string * = NULL, const std::string * = NULL );
+	int matchLeft( char ch, int pos, const std::string * ignore = NULL, const std::string * consider = NULL );
 
     /**
       * Peek neighbouring symbol's identifier.
@@ -196,6 +204,12 @@ public:
       * @return position of matching bracket.
       */
     int findMatchingRightBracket( int pos );
+
+	/**
+      * Look for matching left bracket
+      * @param pos initial position
+      * @return position of matching bracket.
+      */
     int findMatchingLeftBracket( int pos );
     
     /**

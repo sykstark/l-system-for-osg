@@ -9,7 +9,7 @@ class LoftTurtle : public MovingTurtle
 protected:
 	virtual int drawStep( double dist)
 	{
-		int ret = LS_NOTDEFINED;
+		int ret = LS_OK;
 
 		preStep( );
 

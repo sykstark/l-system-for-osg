@@ -15,7 +15,7 @@ namespace AP_LSystem {
 class TurtleStack
 {
 private:
-    stack< AbstractTurtle * > turtles;      ///< stack with turtles
+    stack< AbstractTurtle * > m_Turtles;      ///< stack with turtles
 
     /**
      *	Creates an instance of turtle of selected type.
@@ -37,7 +37,6 @@ public:
      *	Adds turtle on the top of the stack. The turtle will have same type as current turtle on the top
      *  of the stack.
      *	Turtle is also binded with the same LSGeode.
-     *	@param geode Inserted turtle will be binded with this geode.
      *	@return error code
      */
     int push( );

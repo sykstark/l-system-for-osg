@@ -55,7 +55,7 @@ const void Configuration::writeAll(std::basic_ostream<char> & out, const string 
     out << "Iteration" <<'='<< getProperty( lsystemID, "Iteration" )->as<unsigned>();
 }
 
-bool Configuration::loadCfgFile(std::string filename)
+bool Configuration::loadCfgFile(string filename)
 {
     std::ifstream ifs(filename.c_str());
 
@@ -105,7 +105,7 @@ const int Configuration::getLSystemCount()
 	return lsystemProperties.size();
 }
 
-void Configuration::setProperty(const std::string &prop)
+void Configuration::setProperty(const string &prop)
 {
     std::stringstream stream;
     stream << prop;
@@ -126,7 +126,7 @@ void Configuration::setProperty(const std::string &prop)
     globalProperties.insert( *vm.begin( ) );
 }
 
-void Configuration::setProperty(const std::string &lsystemID, const std::string &prop)
+void Configuration::setProperty(const string &lsystemID, const string &prop)
 {
     // was variable map for this lsystem already created ?
     if( !lsystemNameMap.count( lsystemID ) )
@@ -145,7 +145,7 @@ void Configuration::setProperty(const std::string &lsystemID, const std::string 
     notify(lsystemProperties[ lsystemNameMap[lsystemID] ]);
 }
 
-void Configuration::setProperty(const std::string &lsystemID, const std::string & prop, const std::string & value)
+void Configuration::setProperty(const string &lsystemID, const string & prop, const string & value)
 {
     // was variable map for this lsystem already created ?
     if( !lsystemNameMap.count( lsystemID ) )
@@ -175,7 +175,7 @@ void Configuration::setProperty(const std::string &lsystemID, const std::string 
 	}
 }
 
-const variable_value * Configuration::getProperty(const std::string & name)
+const variable_value * Configuration::getProperty(const string & name)
 {
     if(!globalProperties.count(name))
 	{
@@ -187,7 +187,7 @@ const variable_value * Configuration::getProperty(const std::string & name)
 	}
 }
 
-const variable_value * Configuration::getProperty(const std::string &lsystemID, const std::string & name)
+const variable_value * Configuration::getProperty(const string &lsystemID, const string & name)
 {
     if(lsystemNameMap.count(lsystemID))
     {
@@ -206,7 +206,7 @@ const variable_value * Configuration::getProperty(const std::string &lsystemID, 
     }
 }
 
-const variable_value * Configuration::getProperty(const unsigned int lsystemIndex, const std::string & name)
+const variable_value * Configuration::getProperty(const unsigned int lsystemIndex, const string & name)
 {
     // index of existing lsystem ?
 	if(lsystemIndex < lsystemProperties.size( ))

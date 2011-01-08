@@ -13,41 +13,41 @@ class XmlFile : public AbstractFile
 {
 private:
     xercesc::XercesDOMParser * m_FileParser;    ///< XML parser
-    std::map<string, string> defines;           ///< loaded constants with values - prepared for substitution
+    std::map<string, string> m_Defines;           ///< loaded constants with values - prepared for substitution
 
     /**
       * Process all nodes in Parameters entity
-      * @param node <Parameters>
+      * @param node Parameters
       */
     void processParameters(xercesc::DOMNode * node);
 
     /**
       * Process all nodes in Rules entity
-      * @param node <Rules>
+      * @param node Rules
       */
     void processRules(xercesc::DOMNode * node);
 
     /**
       * Process all nodes in Homomorphisms entity
-      * @param node <Homomorphisms>
+      * @param node Homomorphisms
       */
     void processHomomorphisms(xercesc::DOMNode * node);
 
     /**
       * Process all nodes in Subsystems entity
-      * @param node <Subsystems>
+      * @param node Subsystems
       */
     void processSubsystems(xercesc::DOMNode * node);
 
     /**
       * Process all nodes in Constants entity
-      * @param node <Constants>
+      * @param node Constants
       */
     void processConstants(xercesc::DOMNode * node);
 
     /**
       * Process all nodes in Types entity
-      * @param node <Types>
+      * @param node Types
       */
     void processType(xercesc::DOMNode * node);
 public:

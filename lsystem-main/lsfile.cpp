@@ -12,7 +12,7 @@ LSFile::LSFile()
 {
 }
 
-void LSFile::open(std::string & filename)
+void LSFile::open(string & filename)
 {
     std::fstream * file = new std::fstream(filename.c_str());
 
@@ -94,7 +94,7 @@ void LSFile::open(std::string & filename)
                     }
                     throw ParsingException("Bad format of #define");
                 }
-                defines.insert(std::make_pair<std::string, std::string>(definition, value));
+                m_Defines.insert(std::make_pair<std::string, std::string>(definition, value));
             }
             else if(id=="#type")
             {
@@ -190,7 +190,7 @@ void LSFile::open(std::string & filename)
         }
 
 		// substitute all occurences of defined macros by their values
-		substitute( this->defines );
+		substitute( this->m_Defines );
     }
     else
     {

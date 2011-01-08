@@ -20,13 +20,13 @@ TurtleStack::~TurtleStack(void)
 
 AbstractTurtle * TurtleStack::top()
 {
-	return turtles.top();
+	return m_Turtles.top();
 }
 
 int TurtleStack::push( )
 {
 	int res = LS_OK;
-	LSGeode * geode = turtles.top()->getGeode( );
+	LSGeode * geode = m_Turtles.top()->getGeode( );
 	if ( !geode )
 		return LS_ERR_STACK_NULL_LSGEODE;
 	// create new turtle according to turtle type
@@ -35,7 +35,7 @@ int TurtleStack::push( )
 	if ( !pTurtleToPush )
 		return LS_ERR_STACK_UNKNOWN_TURTLE_TYPE;
 	// copy properties
-	pTurtleToPush->setProperties( turtles.top()->getProperties() );
+	pTurtleToPush->setProperties( m_Turtles.top()->getProperties() );
 	// bind with geode
 	pTurtleToPush->bindGeode( geode );
 	// initialize turtle
@@ -43,7 +43,7 @@ int TurtleStack::push( )
 	if(res)
 		return res;
 	// push new one on the top of the stack
-	turtles.push( pTurtleToPush );
+	m_Turtles.push( pTurtleToPush );
 	return res;
 }
 
@@ -60,31 +60,31 @@ int TurtleStack::push(LSGeode * geode)
 	// set default properties
 	pTurtle->setProperties( geode->getDefaultTurtleProperties( ) );
 	// inherit properties
-	if( !turtles.empty() )
-		pTurtle->inheritProperties( turtles.top()->getProperties() );
+	if( !m_Turtles.empty() )
+		pTurtle->inheritProperties( m_Turtles.top()->getProperties() );
 	// initialize turtle
 	res = pTurtle->initialize( );
 	if(res)
 		return res;
 	// push new one on the top of the stack
-	turtles.push( pTurtle );
+	m_Turtles.push( pTurtle );
 	return res;
 }
 
 int TurtleStack::pop()
 {
-	int res = turtles.top()->finalize();
+	int res = m_Turtles.top()->finalize();
 	if(res)
 		return res;
 	// TODO delete top
-	turtles.pop();
+	m_Turtles.pop();
 	return res;
 }
 
 void TurtleStack::clear()
 {
-	while(!turtles.empty())
-		turtles.pop();
+	while(!m_Turtles.empty())
+		m_Turtles.pop();
 }
 
 AbstractTurtle * TurtleStack::createTurtle(AP_LSystem::TurtleType type)

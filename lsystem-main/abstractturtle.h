@@ -9,17 +9,17 @@ namespace AP_LSystem {
 
 /**
   * Error codes that returns methods during interpretation. Error codes are used instead of exception because
-  * of higher performance.
+  * of higher performance. Can be translated to error messages using AbstractInterpret::errorText() method.
   */
 enum InterpretErrorCodes
 {
     LS_OK,                                  ///< OK. No error.
-    LS_NOTDEFINED,                          ///< Method is not implemented.
+    LS_NOTIMPLEMENTED,                      ///< Method is not implemented.
     LS_ERR_PAR_BADTYPE,                     ///< Module has a different type
     LS_ERR_PAR_INVALIDCOUNT,                ///< Invalid count of module parameters
     LS_ERR_DRAWFORWARD_NEGATIVEDISTANCE,    ///< Forward step has a negative length
     LS_ERR_STACK_UNKNOWN_TURTLE_TYPE,       ///< Unknown turtle ID.
-    LS_ERR_STACK_NULL_LSGEODE,              ///< TODO
+    LS_ERR_STACK_NULL_LSGEODE,              ///< Turtle not binded with LSGeode.
 
 };
 
@@ -43,12 +43,27 @@ public:
 //****************************************************************
 //**						OTHER								**
 //****************************************************************
-	virtual int initialize()	{ return 0;}			///< initialize turtle
+	/**
+	  * Process an initialization of turtle. This method is called when turtle is pushed onto the stack.
+	  * @return error code
+	  */
+	virtual int initialize()	{ return 0;}			
+	
+	/**
+	  * Process a finalization of turtle. This method is called when turtle is removed from the stack.
+	  * @return error code
+	  */
 	virtual int finalize()		{ return 0;}
-	virtual int resetValues() { return 0;}//TODO	///< reset all values in properties to default value as set in Configuration
+
+	/**
+	  * Reset all values in properties to default value as set in Configuration.
+	  * \todo Not implemented.
+	  * @return error code
+	  */
+	virtual int resetValues() { return 0;}			// TODO
 
     /**
-      * Returns turtle properties
+      * Get turtle properties
       * @return properties
       */
     inline TurtleProperties & getProperties()
@@ -57,7 +72,7 @@ public:
 	}
 
     /**
-      * Sets turtle properties. The setup must be part of turtle initialization.
+      * Set turtle properties. The setup must be part of turtle initialization.
       * @param p properties
       */
     virtual void setProperties( TurtleProperties p )
@@ -66,18 +81,18 @@ public:
 	}
 
     /**
-      * Inherits some properties. This method is called if different L-system is detected. This
+      * Inherit some properties. This method is called if different L-system is detected. This
       * subsystems has own properties, but some properties are inherited from the turtle on the stack.
       * @param p properties
       */
-	virtual void inheritProperties( TurtleProperties p ) ///> defines which properties shoul be inherited from parent to sub-system turtle
+	virtual void inheritProperties( TurtleProperties p ) 
 	{
 		// inherit matrix
 		properties.matrix = p.matrix;
 	}
 
     /**
-      * Binds a turtle with LSGeode. During interpretation, the turtle will generate geometry to this
+      * Bind a turtle with LSGeode. During interpretation, the turtle will generate geometry to this
       * LSGeode.
       * @param geode Geode to be binded.
       */
@@ -87,7 +102,7 @@ public:
 	}
 
     /**
-      * Returns binded geode.
+      * Get pointer to binded geode.
       * @return binded geode.
       */
 	inline LSGeode * getGeode( )
@@ -96,7 +111,7 @@ public:
 	}
 
     /**
-      * Returns position matrix of turtle.
+      * Get position matrix of turtle.
       * @return position matrix
       */
 	inline osg::Matrixd getMatrix()
@@ -108,7 +123,19 @@ public:
 //**						DEBUG								**
 //****************************************************************
 
-	virtual void drawFrame( osg::Matrixd &, osg::Vec4d * = NULL )				= 0;
+	/**
+	  * For debugging. Draw a turtle frame.
+	  * @param matrix position matrix of turtle
+	  * @param color color of all vectors. Default is red for heading, green for up and blue for left vector.
+	  */
+	virtual void drawFrame( osg::Matrixd & matrix, osg::Vec4d * color = NULL )				= 0;
+	
+	/**
+	  * For debugging. Draw a vector as arrow.
+	  * @param vector displayed vector
+	  * @param matrix position matrix of vector
+	  * @param color color of vector
+	  */
 	virtual void drawVector( const osg::Vec3d & vector, osg::Matrixd & matrix, osg::Vec4d & color)
 	{
 		double s = properties.debugGeometryScale;
@@ -133,6 +160,11 @@ public:
 //****************************************************************
 //**						ROTATION							**
 //****************************************************************
+	/**
+	  * Conditionally converts degrees to radians.
+	  * @param angle angle in degrees or radians
+	  * @return angle in radians
+	  */
 	inline double toRad( double angle )
 	{
 		if( properties.flags & TurtleProperties::DEGREES_TO_RADIANS )
@@ -141,6 +173,11 @@ public:
 			return angle;
 	}
 
+	/**
+	  * Conditionally fluctuate the angle.
+	  * @param angle input angle
+	  * @return conditionally randomized angle
+	  */
 	inline double rand( double angle )
 	{
 		if( properties.angleVariance )
@@ -148,34 +185,165 @@ public:
 		return angle;
 	}
 
-	virtual int turnLeft(std::vector<Parameter> &)			= 0;
-	virtual int turnRight(std::vector<Parameter> &)			= 0;
-	virtual int pitchDown(std::vector<Parameter> &)			= 0;
-	virtual int pitchUp(std::vector<Parameter> &)			= 0;
-	virtual int rollLeft(std::vector<Parameter> &)			= 0;
-	virtual int rollRight(std::vector<Parameter> &)			= 0;
+	/**
+	  * Make a rotation around vector U to the left.
+	  * @param p vector with parameters
+	  *				- 0 parameters: use default angle
+	  *				- 1 parameter: use this parameter as angle. Type is double.
+	  * @return error code
+	  */
+	virtual int turnLeft(std::vector<Parameter> & p)		= 0;
 
+	/**
+	  * Make a rotation around vector U to the right.
+	  * @param p vector with parameters
+	  *				- 0 parameters: use default angle
+	  *				- 1 parameter: use this parameter as angle. Type is double.
+	  * @return error code
+	  */
+	virtual int turnRight(std::vector<Parameter> & p)		= 0;
+
+	/**
+	  * Make a rotation around vector L down.
+	  * @param p vector with parameters
+	  *				- 0 parameters: use default angle
+	  *				- 1 parameter: use this parameter as angle. Type is double.
+	  * @return error code
+	  */
+	virtual int pitchDown(std::vector<Parameter> & p)		= 0;
+
+	/**
+	  * Make a rotation around vector L up.
+	  * @param p vector with parameters
+	  *				- 0 parameters: use default angle
+	  *				- 1 parameter: use this parameter as angle. Type is double.
+	  * @return error code
+	  */
+	virtual int pitchUp(std::vector<Parameter> & p)			= 0;
+
+	/**
+	  * Make a rotation around vector H to the left.
+	  * @param p vector with parameters
+	  *				- 0 parameters: use default angle
+	  *				- 1 parameter: use this parameter as angle. Type is double.
+	  * @return error code
+	  */
+	virtual int rollLeft(std::vector<Parameter> & p)		= 0;
+
+	/**
+	  * Make a rotation around vector H to the right.
+	  * @param p vector with parameters
+	  *				- 0 parameters: use default angle
+	  *				- 1 parameter: use this parameter as angle. Type is double.
+	  * @return error code
+	  */
+	virtual int rollRight(std::vector<Parameter> & p)		= 0;
+
+	/**
+	  * Make a 180° rotation around vector U.
+	  * @return error code
+	  */
 	virtual int turnArround()								= 0;
+
+	/**
+	  * Make a 180° rotation around vector U.
+	  * \todo Not implemented
+	  * @return error code
+	  */
 	virtual int rollArround()								= 0;
+
+	/**
+	  * Make a rotation around vector H until left vector is in horizontal position.
+	  * @return error code
+	  */
 	virtual int rollUntilHorizontal()						= 0;
-	virtual int randomTurnPitchRoll(std::vector<Parameter>&)= 0;
+
+	/**
+	  * Make a random rotation.
+	  * \todo Not implemented
+	  * @return error code
+	  */
+	virtual int randomTurnPitchRoll(std::vector<Parameter>& p)= 0;
 
 //****************************************************************
 //**				    CHANGE PROPERTIES						**
 //****************************************************************
-	virtual int multiplyLength(std::vector<Parameter> &)	= 0;
-	virtual int multiplyRadius(std::vector<Parameter> &)	= 0;
-	virtual int multiplyAngle(std::vector<Parameter> &)		= 0;
-	virtual int multiplyTropismElasticity(std::vector<Parameter> &)= 0;
-	virtual int multiplyGravitropismElasticity(std::vector<Parameter> &)= 0;
+	/**
+	  * Multiply a default lenght.
+	  * @param p vector with parameters
+	  *				- 0 parameters: multiply by default value
+	  *				- 1 parameter: use this parameter as multiplier. Type is double.
+	  * @return error code
+	  */
+	virtual int multiplyLength(std::vector<Parameter> & p)	= 0;
+
+	/**
+	  * Multiply a default radius/thickness.
+	  * @param p vector with parameters
+	  *				- 0 parameters: multiply by default value
+	  *				- 1 parameter: use this parameter as multiplier. Type is double.
+	  * @return error code
+	  */
+	virtual int multiplyRadius(std::vector<Parameter> & p)	= 0;
+
+	/**
+	  * Multiply a default angle.
+	  * @param p vector with parameters
+	  *				- 0 parameters: multiply by default value
+	  *				- 1 parameter: use this parameter as multiplier. Type is double.
+	  * @return error code
+	  */
+	virtual int multiplyAngle(std::vector<Parameter> & p)		= 0;
+
+	/**
+	  * Multiply a diatropism elasticity.
+	  * @param p vector with parameters
+	  *				- 0 parameters: multiply by default value
+	  *				- 1 parameter: use this parameter as multiplier. Type is double.
+	  * @return error code
+	  */
+	virtual int multiplyTropismElasticity(std::vector<Parameter> & p)= 0;
+
+	/**
+	  * Multiply a gravitropism/geotropism elasticity.
+	  * @param p vector with parameters
+	  *				- 0 parameters: multiply by default value
+	  *				- 1 parameter: use this parameter as multiplier. Type is double.
+	  * @return error code
+	  */
+	virtual int multiplyGravitropismElasticity(std::vector<Parameter> & p)= 0;
 
 //****************************************************************
 //**						MOVEMENT							**
 //****************************************************************
+	/**
+	  * Move forward and generate a geometry
+	  * @param p vector with parameters
+	  *				- 0 parameters: use a default distance/length for a movement
+	  *				- 1 parameter: use this parameter as distance for a movement. Type is double.
+	  * @return error code
+	  */
+	virtual int drawForward(std::vector<Parameter> & p)		= 0;
 
-	virtual int drawForward(std::vector<Parameter> &)		= 0;
+	/**
+	  * Move forward and generate a geometry. Use half of default length value for movement.
+	  * @return error code
+	  */
 	virtual int drawForwardHalf()							= 0;
-	virtual int moveForward(std::vector<Parameter> &)		= 0;
+
+	/**
+	  * Move forward and without generating a geometry
+	  * @param p vector with parameters
+	  *				- 0 parameters: use a default distance/length for a movement
+	  *				- 1 parameter: use this parameter as distance for a movement. Type is double.
+	  * @return error code
+	  */
+	virtual int moveForward(std::vector<Parameter> & p)		= 0;
+	
+	/**
+	  * Move forward without generating a geometry. Use half of default length value for movement.
+	  * @return error code
+	  */
 	virtual int moveForwardHalf()							= 0;
 	
 };

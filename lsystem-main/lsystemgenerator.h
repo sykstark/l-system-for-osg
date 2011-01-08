@@ -24,10 +24,17 @@ public:
       * Loads an L-system. File is specified by it's filename.
       * @param filename filename of file in one of supported L-system formats
       */
-    virtual void loadFile( std::string & str );
+    virtual void loadFile( std::string & filename );
 
+	/**
+      * Process next interation on the main L-system
+	  */
     virtual void nextIteration();
 
+	/**
+      * Get a final word.
+	  * @return word, ready for an interpretation.
+	  */
     virtual ParseableString * getWord();
 };
 }

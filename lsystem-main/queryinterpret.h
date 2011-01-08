@@ -9,12 +9,20 @@ namespace AP_LSystem {
 class QueryInterpret : public AbstractInterpret
 {
 private:
-	static QueryInterpret * interpret;
-	osg::Matrixd matrix;
+	static QueryInterpret * interpret;			///< singleton instance
+	osg::Matrixd matrix;						///< current turtle position matrix
+	
+	/**
+	  * Bitmap to determine if an update is necessary. If query is for a bit that is already set/dirty, an update must be
+	  * processed and all bits are cleared.
+	  */
 	unsigned dirty;
 
-	LongString * word;
+	LongString * word;							///< Pointer to word that will be parsed.
 
+	/**
+	  * Bit for every coordinate of all position vectors.
+	  */
 	enum dirtyBits
 	{
 		CLEAR			= 0x00000000,
@@ -37,10 +45,13 @@ private:
 		DIRTY			= 0xFFFFFFFF,
 	};
 
+	/**
+	  * Private constructor
+	  */
 	QueryInterpret()
 	{
 		// create group for geodes
-		pOwner = new osg::Group();
+		m_Owner = new osg::Group();
 
 		word = NULL;
 
@@ -48,12 +59,15 @@ private:
 
 		dirty = QueryInterpret::DIRTY;
 
-		for( vector<LSGeode *>::iterator it = geodes.begin(); it != geodes.end(); it++ )
+		for( vector<LSGeode *>::iterator it = m_Geodes.begin(); it != m_Geodes.end(); it++ )
 		{
 			(*it)->setTurtleType( LS_TURTLE_QUERY );
 		}
 	};
 
+	/**
+	  * Updates current position matrix by parsing binded word and getting position matrix of last parsed turtle.
+	  */
 	void update()
 	{
 		ParseableString * pW = new ParseableString( word );
@@ -64,70 +78,14 @@ private:
 		parse( pW );
 	}
 
-	virtual int parse( ParseableString * word)
-	{
-		// There won't be any subsystems, because quering is processed during derivation process for each
-		// l-system separately. And inserting subsystems into parent's word is part of final translation
-		// of word - ie. after whole derivation process.
-		vector<Parameter> parameters;
-
-		// TODO maybe specify
-		turtles.push( geodes[0] );
-
-		while(!word->eof( ))
-		{
-			// FREE SYMBOLS
-			// ! " # % ' * , . : ; < > @ _ ` ? ~
-			parameters.clear();
-			switch( word->next( parameters ) )
-			{
-			case 'F':
-				turtles.top()->drawForward( parameters );
-				break;
-			case 'Z':
-				turtles.top()->moveForwardHalf( );
-				break;
-			case '+':
-				turtles.top()->turnLeft( parameters );
-				break;
-			case '-':
-				turtles.top()->turnRight( parameters );
-				break;
-			case '&':
-				turtles.top()->pitchDown( parameters );
-				break;
-			case '^':
-				turtles.top()->pitchUp( parameters );
-				break;
-			case '\\':
-				turtles.top()->rollLeft( parameters );
-				break;
-			case '/':
-				turtles.top()->rollRight( parameters );
-				break;
-			case '|':
-				turtles.top()->turnArround( );
-				break;
-			case '=':
-				turtles.top()->rollUntilHorizontal( );
-				break;
-			case '[':
-				turtles.push( );
-				break;
-			case ']':
-				turtles.pop( );
-				break;
-			}	
-		}
-		// store complete matrix of turtle
-		matrix = turtles.top()->getMatrix();
-		turtles.clear();
-		return 0;
-	}
-	//QueryInterpret( );
+	virtual int parse( ParseableString * word);
+	
 	~QueryInterpret(void);
 	
 public:
+	/**
+	  * Get singleton instance
+	  */
 	static QueryInterpret * get()
 	{
 		if(!interpret) interpret = new QueryInterpret();
@@ -136,6 +94,9 @@ public:
 	}
 
 
+	/**
+	  * x coordinate of turtle position vector
+	  */
 	double positionX( )
 	{
 		if( dirty & QueryInterpret::POSITIONX )
@@ -153,6 +114,9 @@ public:
 		return matrix.getTrans().x();
 	}
 
+	/**
+	  * y coordinate of turtle position vector
+	  */
 	double positionY( )
 	{
 		if( dirty & QueryInterpret::POSITIONY )
@@ -170,6 +134,9 @@ public:
 		return matrix.getTrans().y();
 	}
 
+	/**
+	  * z coordinate of turtle position vector
+	  */
 	double positionZ( )
 	{
 		if( dirty & QueryInterpret::POSITIONZ )
@@ -187,6 +154,9 @@ public:
 		return matrix.getTrans().z();
 	}
 
+	/**
+	  * x coordinate of turtle heading vector
+	  */
 	double headingX( )
 	{
 		if( dirty & QueryInterpret::HEADINGX )
@@ -206,6 +176,9 @@ public:
 		return v.x();
 	}
 
+	/**
+	  * y coordinate of turtle heading vector
+	  */
 	double headingY( )
 	{
 		if( dirty & QueryInterpret::HEADINGY )
@@ -225,6 +198,9 @@ public:
 		return v.y();
 	}
 
+	/**
+	  * z coordinate of turtle heading vector
+	  */
 	double headingZ( )
 	{
 		if( dirty & QueryInterpret::HEADINGZ )
@@ -244,6 +220,9 @@ public:
 		return v.z();
 	}
 
+	/**
+	  * x coordinate of turtle up vector
+	  */
 	double upX( )
 	{
 		if( dirty & QueryInterpret::UPX )
@@ -263,6 +242,9 @@ public:
 		return v.x();
 	}
 
+	/**
+	  * y coordinate of turtle up vector
+	  */
 	double upY( )
 	{
 		if( dirty & QueryInterpret::UPY )
@@ -282,6 +264,9 @@ public:
 		return v.y();
 	}
 
+	/**
+	  * z coordinate of turtle up vector
+	  */
 	double upZ( )
 	{
 		if( dirty & QueryInterpret::UPZ )
@@ -301,6 +286,9 @@ public:
 		return v.z();
 	}
 
+	/**
+	  * x coordinate of turtle left vector
+	  */
 	double leftX( )
 	{
 		if( dirty & QueryInterpret::LEFTX )
@@ -320,6 +308,9 @@ public:
 		return v.x();
 	}
 
+	/**
+	  * y coordinate of turtle left vector
+	  */
 	double leftY( )
 	{
 		if( dirty & QueryInterpret::LEFTY )
@@ -339,6 +330,9 @@ public:
 		return v.y();
 	}
 
+	/**
+	  * z coordinate of turtle left vector
+	  */
 	double leftZ( )
 	{
 		if( dirty & QueryInterpret::LEFTZ )
@@ -358,6 +352,9 @@ public:
 		return v.z();
 	}
 
+	/**
+	  * Bind word with interpreter. Interpreter uses this word if update is needed (calling update() method).
+	  */
 	void bindWord( LongString * str)
 	{
 		word = str;

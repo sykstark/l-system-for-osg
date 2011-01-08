@@ -14,19 +14,19 @@ protected:
     virtual void processHomomorphismSuccessor( Rule &, string *, string::iterator &);
 
     /**
-      * Decides if L-system of passed type can by processed by parametric
-      * stochastic context-free L-system
-      * @param type type of L-system that will be compared with ParStoch0LSytem capabilities
-      * @return true if it is capable to process this type
+      * This method provides a transcription funkcionality. It substitutes all modules in word
+      * by their successors.
+      * @param rules container with rules
+      * @return true if succeeded
       */
-    virtual bool transcribe(multimap<char, Rule> &);
+    virtual bool transcribe(multimap<char, Rule> & rules);
 public:
     D0LSystem( AbstractFile * );
 
     /**
       * Decides if L-system of passed type can by processed by parametric
       * stochastic context-free L-system
-      * @param type type of L-system that will be compared with ParStoch0LSytem capabilities
+      * @param type type of L-system that will be compared with D0LSytem capabilities
       * @return true if it is capable to process this type
       */
     static bool isCapable( unsigned int type )
