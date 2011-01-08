@@ -132,7 +132,7 @@ void XmlFile::open(std::string & filename)
 		{
 			processConstants(node);
 			// substitute all occurences of defined macros by their values
-			substitute( this->defines );
+			substitute( this->m_Defines );
 		}
 	}
 	catch( xercesc::XMLException& e )
@@ -220,7 +220,7 @@ void XmlFile::processConstants(xercesc::DOMNode * node)
 			// Found node which is an Element. Re-cast node as element
 			DOMElement* currentElement = dynamic_cast< xercesc::DOMElement* >( currentNode );
 
-			defines.insert(std::make_pair<std::string, std::string>(
+			m_Defines.insert(std::make_pair<std::string, std::string>(
 				XMLString::transcode(currentElement->getTagName()),
 				XMLString::transcode(currentElement->getTextContent() ) ) );
 		}

@@ -16,7 +16,7 @@ namespace AP_LSystem{
 class LSFile : public AbstractFile
 {
 private:
-    std::map<string, string> defines;
+    std::map<string, string> m_Defines;
 
     /**
       * Process expression with type constants. Type of L-system is set according to parsed expression as

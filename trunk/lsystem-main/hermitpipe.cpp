@@ -6,7 +6,7 @@ using namespace AP_LSystem;
 
 int HermitPipe::drawStep( double dist)
 {
-	int ret = LS_NOTDEFINED;
+	int ret = LS_NOTIMPLEMENTED;
 
 	preStep( );
 

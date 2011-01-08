@@ -10,7 +10,7 @@ TurtleInterpret::TurtleInterpret( osg::Group * owner )
 	// TODO move to abstract
 	if( owner )
 	{
-		pOwner = owner;
+		m_Owner = owner;
 		createGeodes();
 	}
 }
@@ -35,64 +35,64 @@ int TurtleInterpret::parse(ParseableString * word)
 		switch( word->next( parameters ) )
 		{
 		case 'F':
-			res = turtles.top()->drawForward( parameters );
+			res = m_Turtles.top()->drawForward( parameters );
 			break;
 		case 'Z':
-			res = turtles.top()->drawForwardHalf( );
+			res = m_Turtles.top()->drawForwardHalf( );
 			break;
 		case 'f':
-			res = turtles.top()->moveForward( parameters );
+			res = m_Turtles.top()->moveForward( parameters );
 			break;
 		case 'z':
-			res = turtles.top()->moveForwardHalf( );
+			res = m_Turtles.top()->moveForwardHalf( );
 			break;
 		case '+':
-			res = turtles.top()->turnLeft( parameters );
+			res = m_Turtles.top()->turnLeft( parameters );
 			break;
 		case '-':
-			res = turtles.top()->turnRight( parameters );
+			res = m_Turtles.top()->turnRight( parameters );
 			break;
 		case '&':
-			res = turtles.top()->pitchDown( parameters );
+			res = m_Turtles.top()->pitchDown( parameters );
 			break;
 		case '^':
-			res = turtles.top()->pitchUp( parameters );
+			res = m_Turtles.top()->pitchUp( parameters );
 			break;
 		case '\\':
-			res = turtles.top()->rollLeft( parameters );
+			res = m_Turtles.top()->rollLeft( parameters );
 			break;
 		case '/':
-			res = turtles.top()->rollRight( parameters );
+			res = m_Turtles.top()->rollRight( parameters );
 			break;
 		case '|':
-			res = turtles.top()->turnArround( );
+			res = m_Turtles.top()->turnArround( );
 			break;
 		case '=':
-			res = turtles.top()->rollUntilHorizontal( );
+			res = m_Turtles.top()->rollUntilHorizontal( );
 			break;
 		case ':':
-			res = turtles.top()->multiplyAngle( parameters );
+			res = m_Turtles.top()->multiplyAngle( parameters );
 			break;
 		case '\'':
-			res = turtles.top()->multiplyLength( parameters );
+			res = m_Turtles.top()->multiplyLength( parameters );
 			break;
 		case '!':
-			res = turtles.top()->multiplyRadius( parameters );
+			res = m_Turtles.top()->multiplyRadius( parameters );
 			break;
 		case ';':
-			res = turtles.top()->multiplyTropismElasticity( parameters );
+			res = m_Turtles.top()->multiplyTropismElasticity( parameters );
 			break;
 		case '~':
-			res = turtles.top()->multiplyGravitropismElasticity( parameters );
+			res = m_Turtles.top()->multiplyGravitropismElasticity( parameters );
 			break;
 		case '$':
 			res = switchGeode( parameters );
 			break;
 		case '[':
-			turtles.push( );
+			m_Turtles.push( );
 			break;
 		case ']':
-			turtles.pop( );
+			m_Turtles.pop( );
 			break;
 		}	
 

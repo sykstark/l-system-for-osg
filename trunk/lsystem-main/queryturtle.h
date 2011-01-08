@@ -4,11 +4,11 @@
 #include "movingturtle.h"
 
 namespace AP_LSystem {
+/**
+ * Specialized turtle for query processing. Doesn't generate any geometry. Only for determination of position matrix.
+ */
 class QueryTurtle : public MovingTurtle
-{
-private:
-	
-	
+{	
 public:
 	QueryTurtle(void){};
 	~QueryTurtle(void){};

@@ -14,17 +14,17 @@ namespace AP_LSystem {
 
 LSObject::LSObject() : Ability("LSObject") 
 {
-	pEOOwner = NULL;
+	m_EOOwner = NULL;
 }
 
 LSObject::~LSObject() 
 {
-	pEOOwner = NULL;
+	m_EOOwner = NULL;
 }
 
 void LSObject::preInitialize() 
 {
-	pEOOwner = (EnvironmentObject *)pOwner;
+	m_EOOwner = (EnvironmentObject *)pOwner;
 }
 
 void LSObject::postInitialize() 
@@ -37,11 +37,11 @@ void LSObject::postInitialize()
 	ParseableString * pWord;	
 	try
 	{
-		Configuration::get()->loadCfgFile( configFile );
+		Configuration::get()->loadCfgFile( m_ConfigFileName );
 
-		generator = new LSystemGenerator( );
-		generator->loadFile( lsystemFile );
-		pWord = generator->getWord();
+		m_Generator = new LSystemGenerator( );
+		m_Generator->loadFile( m_LSystemFileName );
+		pWord = m_Generator->getWord();
 		logger.debugLog( "Word generated. Generator stats: Processed modules: %d, Rewritings: %d", 
 			Log::get()->getModuleCounter(), Log::get()->getRewritingCounter() );
 
@@ -55,16 +55,16 @@ void LSObject::postInitialize()
 		return;
 	}
 
-	AbstractInterpret * interpreter = new TurtleInterpret( pEOOwner );
-	int res = interpreter->parse( pWord ); 
+	m_Interpreter = new TurtleInterpret( m_EOOwner );
+	int res = m_Interpreter->parse( pWord ); 
 	if( res )
 	{
-		logger.errorLog( "Parser error: %s ", AbstractInterpret::errorText(res) );
+		logger.errorLog( "Interpreter error: %s ", AbstractInterpret::errorText(res) );
 		return;
 	}
 	else
 	{
-		logger.debugLog( "Geometry succesfulle generated. %d turtles processed.", Log::get()->getTurtleCounter() );	
+		logger.debugLog( "Geometry was successfuly generated. %d turtles processed.", Log::get()->getTurtleCounter() );	
 	}
 
 	return;
@@ -73,7 +73,7 @@ void LSObject::postInitialize()
 bool LSObject::loadXMLParameters(XERCES_CPP_NAMESPACE_QUALIFIER DOMNode *pParametersNode) 
 {
 	if (findXMLNode(pParametersNode, "LSystemFile")) {
-		ReaderWriter::getStringValue(this->lsystemFile, pParametersNode, "LSystemFile");
+		ReaderWriter::getStringValue(this->m_LSystemFileName, pParametersNode, "LSystemFile");
 	}
 	else
 	{
@@ -81,7 +81,7 @@ bool LSObject::loadXMLParameters(XERCES_CPP_NAMESPACE_QUALIFIER DOMNode *pParame
 	}
 
 	if (findXMLNode(pParametersNode, "ConfigFile")) {
-		ReaderWriter::getStringValue(this->configFile, pParametersNode, "ConfigFile");
+		ReaderWriter::getStringValue(this->m_ConfigFileName, pParametersNode, "ConfigFile");
 	}
 	else
 	{

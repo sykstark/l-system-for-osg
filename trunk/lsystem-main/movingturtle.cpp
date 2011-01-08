@@ -279,7 +279,7 @@ int MovingTurtle::rollUntilHorizontal( )
 
 int MovingTurtle::rollArround( )
 {
-	return LS_NOTDEFINED;
+	return LS_NOTIMPLEMENTED;
 }
 
 int MovingTurtle::turnArround( )
@@ -291,7 +291,7 @@ int MovingTurtle::turnArround( )
 
 int MovingTurtle::randomTurnPitchRoll(std::vector<Parameter> & p)
 {
-	return LS_NOTDEFINED;
+	return LS_NOTIMPLEMENTED;
 }
 
 int MovingTurtle::multiplyLength(std::vector<Parameter> & p)

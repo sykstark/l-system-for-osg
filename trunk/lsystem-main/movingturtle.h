@@ -25,33 +25,33 @@ public:
 	/**
 	  *
 	  */
-	virtual int turnLeft(std::vector<Parameter> &);
-	virtual int turnRight(std::vector<Parameter> &);
-	virtual int pitchDown(std::vector<Parameter> &);
-	virtual int pitchUp(std::vector<Parameter> &);
-	virtual int rollLeft(std::vector<Parameter> &);
-	virtual int rollRight(std::vector<Parameter> &);
+	virtual int turnLeft(std::vector<Parameter> & p);
+	virtual int turnRight(std::vector<Parameter> & p);
+	virtual int pitchDown(std::vector<Parameter> & p);
+	virtual int pitchUp(std::vector<Parameter> & p);
+	virtual int rollLeft(std::vector<Parameter> & p);
+	virtual int rollRight(std::vector<Parameter> & p);
 
 	virtual int turnArround();
 	virtual int rollArround();
 	virtual int rollUntilHorizontal();
-	virtual int randomTurnPitchRoll(std::vector<Parameter> &);
+	virtual int randomTurnPitchRoll(std::vector<Parameter> & p);
 
 //****************************************************************
 //**				    CHANGE PROPERTIES						**
 //****************************************************************
-	virtual int multiplyLength(std::vector<Parameter> &);
-	virtual int multiplyRadius(std::vector<Parameter> &);
-	virtual int multiplyAngle(std::vector<Parameter> &);
-	virtual int multiplyTropismElasticity(std::vector<Parameter> &);
-	virtual int multiplyGravitropismElasticity(std::vector<Parameter> &);
+	virtual int multiplyLength(std::vector<Parameter> & p);
+	virtual int multiplyRadius(std::vector<Parameter> & p);
+	virtual int multiplyAngle(std::vector<Parameter> & p);
+	virtual int multiplyTropismElasticity(std::vector<Parameter> & p);
+	virtual int multiplyGravitropismElasticity(std::vector<Parameter> & p);
 
 //****************************************************************
 //**						MOVEMENT							**
 //****************************************************************
-	virtual int drawForward(std::vector<Parameter> &);
+	virtual int drawForward(std::vector<Parameter> & p);
 	virtual int drawForwardHalf( );
-	virtual int moveForward(std::vector<Parameter> &);
+	virtual int moveForward(std::vector<Parameter> & p);
 	virtual int moveForwardHalf( );
 	
 	

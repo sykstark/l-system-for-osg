@@ -60,14 +60,14 @@ public:
 
     /**
       * Sets global property value
-      * @param prop property string in following form: <property>=<value>
+      * @param prop property string in following form: (property)=(value)
       */
     void setProperty(const string & prop);
 
     /**
       * Sets property only for one particular L-system
       * @param lsystemID name of L-system
-      * @param prop property string in following form: <property>=<value>
+      * @param prop property string in following form: (property)=(value)
       */
     void setProperty(const string & lsystemID, const string & prop);
 
