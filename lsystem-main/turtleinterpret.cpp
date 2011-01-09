@@ -7,7 +7,6 @@ using namespace AP_LSystem;
 
 TurtleInterpret::TurtleInterpret( osg::Group * owner )
 {
-	// TODO move to abstract
 	if( owner )
 	{
 		m_Owner = owner;
@@ -17,7 +16,6 @@ TurtleInterpret::TurtleInterpret( osg::Group * owner )
 
 TurtleInterpret::~TurtleInterpret( )
 {
-	// TODO delete geodes
 
 }
 

@@ -15,9 +15,12 @@ namespace AP_LSystem {
 class AbstractInterpret
 {
 protected:
-	vector< LSGeode *> m_Geodes;
-	osg::Group * m_Owner;
-	TurtleStack m_Turtles;
+	/**
+	  * Instances of LSGeode for each loaded L-system. It contains geometry and information about turtle type and settings.
+	  */
+	vector< LSGeode *> m_Geodes;	
+	osg::Group * m_Owner;		///< scene graph owner
+	TurtleStack m_Turtles;		///< stack for turtles
 public:
 	AbstractInterpret( )
 	{

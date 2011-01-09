@@ -21,8 +21,19 @@ protected:
     std::string m_Name;          ///< name of L-system
     unsigned int m_Iteration;    ///< number of processed iterations
 
+	/**
+	  * Add rule and convert it to instance of Rule class
+	  */
 	virtual void addRule( std::string * ) = 0;
+
+	/**
+	  * Add homomorphism and convert it to instance of Rule class
+	  */
     virtual void addHomomorphism( std::string * ) = 0;
+
+	/**
+	  * Set axiom. Inicialize word.
+	  */
     virtual void setAxiom( std::string & ) = 0;
 public:
     AbstractLSystem(): m_Name(""), m_Iteration(0) {}
