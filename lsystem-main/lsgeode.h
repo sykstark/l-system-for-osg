@@ -7,14 +7,17 @@ namespace AP_LSystem {
  */
 struct TurtleProperties
 {
+	/**
+	  * Boolean properties of turtle
+	  */
 	enum Flags
 	{
-		DRAW_DEBUG_GEOMETRY					= 0x00000001,
-		MINIMIZE_TWIST						= 0x00000002,
-		DEGREES_TO_RADIANS					= 0x00000004,
-		SEPARATE_GEOMETRY_FOR_TRANSLUCENT	= 0x00000008,
-		USE_QUERIES							= 0x00000010,
-		DRAW_PIPE_CAPS						= 0x00000100,
+		DRAW_DEBUG_GEOMETRY					= 0x00000001,		///< indicates if debug geometry will be displayed
+		MINIMIZE_TWIST						= 0x00000002,		///< turns on the twist minimalization
+		DEGREES_TO_RADIANS					= 0x00000004,		///< converts all angles to radians
+		SEPARATE_GEOMETRY_FOR_TRANSLUCENT	= 0x00000008,		///< for each translucent geometry will be created one geometry. It removes Halo efect but it is power consuming.
+		USE_QUERIES							= 0x00000010,		///< turns on the query processing
+		DRAW_PIPE_CAPS						= 0x00000100,		///< draw caps at the end of cylinders ?
 	};
 
 	TurtleProperties():modelFile(NULL){};
@@ -64,7 +67,7 @@ struct TurtleProperties
 	osg::ref_ptr<osg::Vec3dArray> contourLastN;	///< used for loft turtles - predecessing contour normals
 	unsigned int contourDetail;					///< detail of circle contour
 	
-	vector<osg::ref_ptr<osg::Vec3dArray> > hemisphere;
+	vector<osg::ref_ptr<osg::Vec3dArray> > hemisphere;	///< hemisphere template geometry
 
 	double debugGeometryScale;		///< scale of debug geometry
 };
@@ -73,12 +76,12 @@ struct TurtleProperties
  */
 enum TurtleType
 {
-	LS_TURTLE_JOINTEDPIPE,
-	LS_TURTLE_STRAIGHTPIPE,
-	LS_TURTLE_HERMITPIPE,
-	LS_TURTLE_OBJMODEL,
-	LS_TURTLE_RECTANGLE,
-	LS_TURTLE_QUERY,
+	LS_TURTLE_JOINTEDPIPE,			///< cylinders with hemispheres
+	LS_TURTLE_STRAIGHTPIPE,			///< straight cylinders
+	LS_TURTLE_HERMITPIPE,			///< hermit curve cylinders - not implemented
+	LS_TURTLE_OBJMODEL,				///< *.obj object loader - not implemented
+	LS_TURTLE_RECTANGLE,			///< rectangles - effective for translucent leaves
+	LS_TURTLE_QUERY,				///< specialized turtle for query processing
 };
 
 /**
@@ -89,11 +92,25 @@ enum TurtleType
 class LSGeode :	public osg::Geode
 {
 private:
-	TurtleType turtleType;
-	TurtleProperties defaultTurtleProperties;
+	TurtleType turtleType;						///< type of turtle that generates geometry into this LSGeode instance
+	TurtleProperties defaultTurtleProperties;	///< default turtle properties
 public:
-	void setTurtleType(std::string &);
+	/**
+	  * Set turtle type.
+	  * @param type string is converted to turtle type and assigned to this LSGeode instance
+	  */
+	void setTurtleType(std::string & type);
+
+	/**
+	  * Set turtle type.
+	  * @param type this type is assigned to this LSGeode instance
+	  */
 	void setTurtleType(TurtleType type);
+
+	/**
+	  * Set turtle type.
+	  * @param type string is converted to turtle type and assigned to this LSGeode instance
+	  */
 	TurtleType getTurtleType();
 	void setDefaultTurtleProperties( TurtleProperties & );
 	void setDefaultTurtleProperties( int );
