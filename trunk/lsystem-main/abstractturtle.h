@@ -20,7 +20,6 @@ enum InterpretErrorCodes
     LS_ERR_DRAWFORWARD_NEGATIVEDISTANCE,    ///< Forward step has a negative length
     LS_ERR_STACK_UNKNOWN_TURTLE_TYPE,       ///< Unknown turtle ID.
     LS_ERR_STACK_NULL_LSGEODE,              ///< Turtle not binded with LSGeode.
-
 };
 
 const osg::Vec3d HeadVec(0.0,1.0,0.0);      ///< Turtle head vector

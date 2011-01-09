@@ -10,13 +10,18 @@ using namespace vrecko;
 /**
  * @mainpage L-system plants modeler - module for Vrecko
  * @section About
- *  
+ * This DLL library was developed as part of my Master thesis. It is a plant modeler plug-in for virtual reality 
+ * system Vrecko. It is based on OpenSceneGraph. There is a parser for L-systems stored in LS or XML files. Many types of L-systems can be processed
+ * to generate a word. Word is then interpreted by turtle graphics. Interpretation process generates a geometry that
+ * is stored in scene graph. Vrecko then display this geometry.
  * @section Features
  * <ul>
  *    <li> generating plants using L-systems </li>
  *    <li> D0L-systems, parametric stochastic 0Lsystems, parametric stochastic 2L-systems </li>
  *    <li> generating plants geometry using Turtle interpretation </li>
  * </ul>
+ * @section Links
+ * Vrecko 
  */
 
 #pragma warning(disable:4190)

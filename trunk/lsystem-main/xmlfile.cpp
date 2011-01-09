@@ -36,8 +36,8 @@ void XmlFile::open(std::string & filename)
 {
 	struct stat fileStatus;
 	int iretStat = stat(filename.c_str(), &fileStatus);
-	if( iretStat == ENOENT )
-		throw FileException("Path file_name does not exist, or path is an empty string.");
+	if( (iretStat == ENOENT) || (iretStat == -1) )
+		throw FileException("XML file does not exist, or path is an empty string.");
 	else if( iretStat == ENOTDIR )
 		throw FileException("A component of the path is not a directory.");
 	else if( iretStat == EACCES )

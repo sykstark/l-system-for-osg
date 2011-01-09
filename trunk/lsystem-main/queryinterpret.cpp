@@ -55,15 +55,6 @@ int QueryInterpret::parse( ParseableString * word)
 		case '=':
 			m_Turtles.top()->rollUntilHorizontal( );
 			break;
-		case ':':
-			m_Turtles.top()->multiplyAngle( parameters );
-			break;
-		case '\'':
-			m_Turtles.top()->multiplyLength( parameters );
-			break;
-		case '!':
-			m_Turtles.top()->multiplyRadius( parameters );
-			break;
 		case '[':
 			m_Turtles.push( );
 			break;
