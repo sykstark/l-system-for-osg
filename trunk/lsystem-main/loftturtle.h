@@ -4,9 +4,17 @@
 #include "movingturtle.h"
 
 namespace AP_LSystem {
+/**
+  * Abstract turtle for loft geometry (typically stems). Provides operations with contour and loft operation with it.
+  */
 class LoftTurtle : public MovingTurtle
 {
 protected:
+	/**
+	  * Do a drawing step forward. Call preStep() before step, insideStep() in the middle of the step and postStep()
+	  * performing the step
+	  * @return error code
+	  */
 	virtual int drawStep( double dist)
 	{
 		int ret = LS_OK;
@@ -38,6 +46,9 @@ protected:
 		return ret;
 	}
 
+	/**
+	  * Creates a circle countour of predefined detail. This contour is then used for loft operations.
+	  */
 	void createCircleContour()
 	{
 		if(properties.contour.get())
@@ -55,8 +66,16 @@ protected:
 		}
 	}
 
+	/**
+	  * Creates a lofted contour.
+	  * @return error code
+	  */
 	virtual int addContourLoftGeometry();
 
+	/**
+	  * Create an openenig part of lofted geometry.
+	  * @return error code
+	  */
 	virtual int createLoftGeometryOpening();	
 
 	virtual int insideStep() { return 0; }
